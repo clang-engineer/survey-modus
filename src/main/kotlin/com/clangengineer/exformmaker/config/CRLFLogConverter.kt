@@ -2,7 +2,6 @@ package com.clangengineer.exformmaker.config
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.pattern.CompositeConverter
-
 import org.slf4j.Marker
 import org.slf4j.MarkerFactory
 import org.springframework.boot.ansi.AnsiColor

@@ -10,6 +10,8 @@ import com.clangengineer.exformmaker.service.dto.AdminUserDTO
 import com.clangengineer.exformmaker.service.mapper.UserMapper
 import com.clangengineer.exformmaker.web.rest.vm.ManagedUserVM
 import org.apache.commons.lang3.RandomStringUtils
+import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,15 +20,6 @@ import org.springframework.cache.CacheManager
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.transaction.annotation.Transactional
-
-import javax.persistence.EntityManager
-import java.time.Instant
-import java.util.UUID
-import java.util.function.Consumer
-
-import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -34,7 +27,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.transaction.annotation.Transactional
+import java.time.Instant
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -49,11 +44,8 @@ class UserResourceIT {
     @Autowired
     private lateinit var userRepository: UserRepository
 
-
-
     @Autowired
     private lateinit var userMapper: UserMapper
-
 
     @Autowired
     private lateinit var em: EntityManager
@@ -71,7 +63,6 @@ class UserResourceIT {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)!!.clear()
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)!!.clear()
     }
-
 
     @BeforeEach
     fun initTest() {
@@ -114,7 +105,6 @@ class UserResourceIT {
             assertThat(testUser.imageUrl).isEqualTo(DEFAULT_IMAGEURL)
             assertThat(testUser.langKey).isEqualTo(DEFAULT_LANGKEY)
         }
-
     }
 
     @Test
@@ -148,7 +138,6 @@ class UserResourceIT {
             // Validate the User in the database
             assertThat(userList).hasSize(databaseSizeBeforeCreate)
         }
-
     }
 
     @Test
@@ -180,7 +169,6 @@ class UserResourceIT {
             .andExpect(status().isBadRequest)
 
         assertPersistedUsers { userList -> assertThat(userList).hasSize(databaseSizeBeforeCreate) }
-
     }
 
     @Test
@@ -233,7 +221,6 @@ class UserResourceIT {
             .andExpect(jsonPath("\$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("\$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
             .andExpect(jsonPath("\$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)))
-
     }
 
     @Test
@@ -242,7 +229,6 @@ class UserResourceIT {
     fun getUser() {
         // Initialize the database
         userRepository.saveAndFlush(user)
-
 
         assertNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)!!.get(user.login!!))
 
@@ -258,7 +244,6 @@ class UserResourceIT {
             .andExpect(jsonPath("\$.langKey").value(DEFAULT_LANGKEY))
 
         assertNotNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)!!.get(user.login!!))
-
     }
 
     @Test
@@ -478,7 +463,6 @@ class UserResourceIT {
         assertNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)!!.get(user.login!!))
 
         assertPersistedUsers { userList -> assertThat(userList).hasSize(databaseSizeBeforeDelete - 1) }
-
     }
 
     @Test
@@ -623,8 +607,7 @@ class UserResourceIT {
             )
         }
 
-
-         /**
+        /**
          * Setups the database with one user.
          */
         @JvmStatic

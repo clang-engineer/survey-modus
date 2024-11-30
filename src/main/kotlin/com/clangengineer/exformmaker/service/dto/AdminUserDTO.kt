@@ -1,12 +1,10 @@
 package com.clangengineer.exformmaker.service.dto
 
 import com.clangengineer.exformmaker.config.LOGIN_REGEX
-import com.clangengineer.exformmaker.domain.Authority
 import com.clangengineer.exformmaker.domain.User
-
 import java.io.Serializable
-import javax.validation.constraints.*
 import java.time.Instant
+import javax.validation.constraints.*
 
 /**
  * A DTO representing a user, with his authorities.
@@ -46,7 +44,7 @@ open class AdminUserDTO(
     var lastModifiedDate: Instant? = null,
 
     var authorities: MutableSet<String> = mutableSetOf()
-): Serializable {
+) : Serializable {
 
     constructor(user: User?) : this(
         user?.id,

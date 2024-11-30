@@ -1,24 +1,22 @@
 package com.clangengineer.exformmaker.service
 
-import com.clangengineer.exformmaker.config.DEFAULT_LANGUAGE
 import com.clangengineer.exformmaker.IntegrationTest
+import com.clangengineer.exformmaker.config.DEFAULT_LANGUAGE
 import com.clangengineer.exformmaker.domain.User
-import tech.jhipster.config.JHipsterProperties
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Captor
 import org.mockito.Mockito.*
+import org.mockito.Mockito.atLeastOnce
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.mail.MailSendException
 import org.springframework.mail.javamail.JavaMailSender
-
-import javax.mail.Multipart
-import javax.mail.Session
-import javax.mail.internet.MimeBodyPart
-import javax.mail.internet.MimeMessage
-import javax.mail.internet.MimeMultipart
+import tech.jhipster.config.JHipsterProperties
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
@@ -27,11 +25,11 @@ import java.net.URI
 import java.nio.charset.Charset
 import java.util.Properties
 import java.util.regex.Pattern
-import org.springframework.boot.test.mock.mockito.MockBean
-
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
-import org.mockito.Mockito.atLeastOnce
+import javax.mail.Multipart
+import javax.mail.Session
+import javax.mail.internet.MimeBodyPart
+import javax.mail.internet.MimeMessage
+import javax.mail.internet.MimeMultipart
 import kotlin.test.assertNotNull
 
 private val languages = arrayOf<String>(

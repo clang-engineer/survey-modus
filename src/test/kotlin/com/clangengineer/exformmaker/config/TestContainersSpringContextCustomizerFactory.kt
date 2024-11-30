@@ -1,29 +1,21 @@
 package com.clangengineer.exformmaker.config
 
-import java.util.*
-
-import java.util.Arrays
-import tech.jhipster.config.JHipsterConstants
-
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
-import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry
+import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.core.annotation.AnnotatedElementUtils
-
 import org.springframework.test.context.ContextConfigurationAttributes
 import org.springframework.test.context.ContextCustomizer
 import org.springframework.test.context.ContextCustomizerFactory
-import org.springframework.beans.factory.support.DefaultListableBeanFactory
-import org.springframework.boot.test.util.TestPropertyValues
+import tech.jhipster.config.JHipsterConstants
+import java.util.*
 
-class TestContainersSpringContextCustomizerFactory: ContextCustomizerFactory {
+class TestContainersSpringContextCustomizerFactory : ContextCustomizerFactory {
 
     private val log = LoggerFactory.getLogger(TestContainersSpringContextCustomizerFactory::class.java)
 
     companion object {
         private var prodTestContainer: SqlTestContainer? = null
-    }    
+    }
 
     override fun createContextCustomizer(
         testClass: Class<*>,
@@ -58,5 +50,4 @@ class TestContainersSpringContextCustomizerFactory: ContextCustomizerFactory {
             testValues.applyTo(context)
         }
     }
-
 }

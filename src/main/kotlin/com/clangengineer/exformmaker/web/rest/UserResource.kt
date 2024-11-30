@@ -5,20 +5,15 @@ import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.repository.UserRepository
 import com.clangengineer.exformmaker.security.ADMIN
 import com.clangengineer.exformmaker.service.MailService
-import org.springframework.data.domain.Sort
 import com.clangengineer.exformmaker.service.UserService
 import com.clangengineer.exformmaker.service.dto.AdminUserDTO
 import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
 import com.clangengineer.exformmaker.web.rest.errors.EmailAlreadyUsedException
 import com.clangengineer.exformmaker.web.rest.errors.LoginAlreadyUsedException
-
-import tech.jhipster.web.util.HeaderUtil
-import tech.jhipster.web.util.PaginationUtil
-import tech.jhipster.web.util.ResponseUtil
-
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -29,14 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import org.springframework.web.bind.annotation.RestController
-
-import javax.validation.constraints.Pattern
-import javax.validation.Valid
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import tech.jhipster.web.util.HeaderUtil
+import tech.jhipster.web.util.PaginationUtil
+import tech.jhipster.web.util.ResponseUtil
 import java.net.URI
 import java.net.URISyntaxException
+import javax.validation.Valid
+import javax.validation.constraints.Pattern
 
 /**
  * REST controller for managing users.
@@ -159,7 +155,6 @@ class UserResource(
     private fun onlyContainsAllowedProperties(pageable: Pageable) =
         pageable.sort.map(Sort.Order::getProperty).all { ALLOWED_ORDERED_PROPERTIES.contains(it) }
 
-
     /**
      * `GET /admin/users/:login` : get the "login" user.
      *
@@ -172,7 +167,8 @@ class UserResource(
         log.debug("REST request to get User : $login")
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
-                .map { AdminUserDTO(it) })
+                .map { AdminUserDTO(it) }
+        )
     }
 
     /**

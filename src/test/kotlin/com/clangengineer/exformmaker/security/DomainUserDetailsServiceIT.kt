@@ -3,19 +3,16 @@ package com.clangengineer.exformmaker.security
 import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.repository.UserRepository
-
 import org.apache.commons.lang3.RandomStringUtils
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.transaction.annotation.Transactional
-
 import java.util.Locale
-
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatExceptionOfType
 
 private const val USER_ONE_LOGIN = "test-user-one"
 private const val USER_ONE_EMAIL = "test-user-one@localhost"

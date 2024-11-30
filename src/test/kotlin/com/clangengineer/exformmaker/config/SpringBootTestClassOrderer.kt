@@ -1,11 +1,9 @@
 package com.clangengineer.exformmaker.config
 
-
+import com.clangengineer.exformmaker.IntegrationTest
 import org.junit.jupiter.api.ClassDescriptor
 import org.junit.jupiter.api.ClassOrderer
 import org.junit.jupiter.api.ClassOrdererContext
-import com.clangengineer.exformmaker.IntegrationTest
-
 import java.util.Comparator
 
 class SpringBootTestClassOrderer : ClassOrderer {

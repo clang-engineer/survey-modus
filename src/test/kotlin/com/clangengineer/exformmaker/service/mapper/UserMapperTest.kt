@@ -2,13 +2,10 @@ package com.clangengineer.exformmaker.service.mapper
 
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.service.dto.AdminUserDTO
-import com.clangengineer.exformmaker.service.dto.UserDTO
 import org.apache.commons.lang3.RandomStringUtils
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-
-import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -76,7 +73,7 @@ class UserMapperTest {
 
     @Test
     fun userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
-        userDto.authorities =  mutableSetOf<String>()
+        userDto.authorities = mutableSetOf<String>()
 
         val usersDto = listOf(userDto)
 
@@ -101,7 +98,7 @@ class UserMapperTest {
 
     @Test
     fun userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
-        userDto.authorities =  mutableSetOf<String>()
+        userDto.authorities = mutableSetOf<String>()
 
         val user = userMapper.userDTOToUser(userDto)
 

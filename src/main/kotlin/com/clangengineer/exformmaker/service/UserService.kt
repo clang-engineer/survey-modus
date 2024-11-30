@@ -1,17 +1,13 @@
 package com.clangengineer.exformmaker.service
 
 import com.clangengineer.exformmaker.config.DEFAULT_LANGUAGE
-import com.clangengineer.exformmaker.config.SYSTEM_ACCOUNT
-import com.clangengineer.exformmaker.domain.Authority
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.repository.AuthorityRepository
 import com.clangengineer.exformmaker.repository.UserRepository
 import com.clangengineer.exformmaker.security.USER
 import com.clangengineer.exformmaker.security.getCurrentUserLogin
+import com.clangengineer.exformmaker.service.dto.AdminUserDTO
 import com.clangengineer.exformmaker.service.dto.UserDTO
-import tech.jhipster.security.RandomUtil
-
 import org.slf4j.LoggerFactory
 import org.springframework.cache.CacheManager
 import org.springframework.data.domain.Page
@@ -20,7 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
+import tech.jhipster.security.RandomUtil
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.Optional
@@ -68,12 +64,12 @@ class UserService(
     fun requestPasswordReset(mail: String): Optional<User> {
         return userRepository.findOneByEmailIgnoreCase(mail)
             .filter { it.activated == true }
-                .map {
-                    it.resetKey = RandomUtil.generateResetKey()
-                    it.resetDate = Instant.now()
-                    clearUserCaches(it)
-                    it
-                }
+            .map {
+                it.resetKey = RandomUtil.generateResetKey()
+                it.resetDate = Instant.now()
+                clearUserCaches(it)
+                it
+            }
     }
 
     fun registerUser(userDTO: AdminUserDTO, password: String): User {
@@ -140,15 +136,14 @@ class UserService(
             activated = true,
             authorities = userDTO.authorities?.let { authorities ->
                 authorities.map { authorityRepository.findById(it) }
-                        .filter { it.isPresent }
-                        .mapTo(mutableSetOf()) { it.get() }
+                    .filter { it.isPresent }
+                    .mapTo(mutableSetOf()) { it.get() }
             } ?: mutableSetOf()
         )
         userRepository.save(user)
         clearUserCaches(user)
         log.debug("Created Information for User: $user")
         return user
-            
     }
 
     /**
@@ -164,7 +159,7 @@ class UserService(
             .map { user ->
                 clearUserCaches(user)
                 user.apply {
-                    login = userDTO.login?.let{it.toLowerCase()}
+                    login = userDTO.login?.let { it.toLowerCase() }
                     firstName = userDTO.firstName
                     lastName = userDTO.lastName
                     email = userDTO.email?.toLowerCase()
@@ -204,32 +199,32 @@ class UserService(
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    fun updateUser(firstName: String?, lastName: String?, email: String?, langKey: String?, imageUrl: String?)  {
+    fun updateUser(firstName: String?, lastName: String?, email: String?, langKey: String?, imageUrl: String?) {
         getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
-            .ifPresent{
+            .ifPresent {
 
                 it.firstName = firstName
                 it.lastName = lastName
                 it.email = email?.toLowerCase()
                 it.langKey = langKey
                 it.imageUrl = imageUrl
-                    clearUserCaches(it)
-                    log.debug("Changed Information for User: $it")
-                }
+                clearUserCaches(it)
+                log.debug("Changed Information for User: $it")
+            }
     }
 
     @Transactional
     fun changePassword(currentClearTextPassword: String, newPassword: String) {
         getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
-                .ifPresent { user ->
-                    val currentEncryptedPassword = user.password
-                    if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
-                        throw InvalidPasswordException()
-                    }
-                    val encryptedPassword = passwordEncoder.encode(newPassword)
-                    user.password = encryptedPassword
+            .ifPresent { user ->
+                val currentEncryptedPassword = user.password
+                if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
+                    throw InvalidPasswordException()
+                }
+                val encryptedPassword = passwordEncoder.encode(newPassword)
+                user.password = encryptedPassword
                 clearUserCaches(user)
                 log.debug("Changed password for User: $user")
                 user
@@ -245,7 +240,6 @@ class UserService(
     fun getAllPublicUsers(pageable: Pageable): Page<UserDTO> {
         return userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map { UserDTO(it) }
     }
-
 
     @Transactional(readOnly = true)
     fun getUserWithAuthoritiesByLogin(login: String): Optional<User> =
@@ -273,7 +267,6 @@ class UserService(
             }
     }
 
-
     /**
      * @return a list of all the authorities
      */
@@ -281,9 +274,8 @@ class UserService(
     fun getAuthorities() =
         authorityRepository.findAll().asSequence().map { it.name }.filterNotNullTo(mutableListOf())
 
-
     private fun clearUserCaches(user: User) {
-        user.login?.let{
+        user.login?.let {
             cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)?.evict(it)
         }
         user.email?.let {

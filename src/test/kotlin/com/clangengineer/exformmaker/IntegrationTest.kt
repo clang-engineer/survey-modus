@@ -1,11 +1,9 @@
 package com.clangengineer.exformmaker
 
-import com.clangengineer.exformmaker.ExformmakerApp
 import com.clangengineer.exformmaker.config.AsyncSyncConfiguration
 import com.clangengineer.exformmaker.config.EmbeddedSQL
-
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.annotation.DirtiesContext
 
 /**
  * Base composite annotation for integration tests.
@@ -15,5 +13,4 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest(classes = [ExformmakerApp::class, AsyncSyncConfiguration::class])
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-annotation class IntegrationTest {
-}
+annotation class IntegrationTest

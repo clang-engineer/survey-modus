@@ -3,9 +3,7 @@ package com.clangengineer.exformmaker.web.rest
 import com.clangengineer.exformmaker.security.jwt.JWTFilter
 import com.clangengineer.exformmaker.security.jwt.TokenProvider
 import com.clangengineer.exformmaker.web.rest.vm.LoginVM
-
 import com.fasterxml.jackson.annotation.JsonProperty
-
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
 import javax.validation.Valid
 
 /**

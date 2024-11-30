@@ -4,19 +4,18 @@ import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.repository.UserRepository
 import com.clangengineer.exformmaker.web.rest.vm.LoginVM
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.http.MediaType
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.transaction.annotation.Transactional
-
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
-import org.hamcrest.Matchers.*
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * Integration tests for the [UserJWTController] REST controller.

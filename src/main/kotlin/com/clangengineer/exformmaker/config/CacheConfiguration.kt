@@ -1,30 +1,26 @@
 package com.clangengineer.exformmaker.config
 
-import java.time.Duration
-
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
 import org.ehcache.config.builders.ResourcePoolsBuilder
 import org.ehcache.jsr107.Eh107Configuration
-
-import tech.jhipster.config.JHipsterProperties
-
 import org.hibernate.cache.jcache.ConfigSettings
-
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer
 import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.info.GitProperties
-import org.springframework.cache.interceptor.KeyGenerator
-import org.springframework.beans.factory.annotation.Autowired
-import tech.jhipster.config.cache.PrefixedKeyGenerator
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import tech.jhipster.config.JHipsterProperties
+import tech.jhipster.config.cache.PrefixedKeyGenerator
+import java.time.Duration
 
 @Configuration
 @EnableCaching
-class CacheConfiguration(    @Autowired val gitProperties: GitProperties?,
+class CacheConfiguration(
+    @Autowired val gitProperties: GitProperties?,
     @Autowired val buildProperties: BuildProperties?,
     private val jHipsterProperties: JHipsterProperties
 ) {
@@ -45,8 +41,9 @@ class CacheConfiguration(    @Autowired val gitProperties: GitProperties?,
     }
 
     @Bean
-    fun hibernatePropertiesCustomizer(cacheManager: javax.cache.CacheManager) =  HibernatePropertiesCustomizer  {
-        hibernateProperties -> hibernateProperties[ConfigSettings.CACHE_MANAGER] = cacheManager
+    fun hibernatePropertiesCustomizer(cacheManager: javax.cache.CacheManager) = HibernatePropertiesCustomizer {
+        hibernateProperties ->
+        hibernateProperties[ConfigSettings.CACHE_MANAGER] = cacheManager
     }
 
     @Bean
@@ -70,6 +67,6 @@ class CacheConfiguration(    @Autowired val gitProperties: GitProperties?,
         }
     }
 
-        @Bean
-        fun keyGenerator() = PrefixedKeyGenerator(gitProperties, buildProperties)
+    @Bean
+    fun keyGenerator() = PrefixedKeyGenerator(gitProperties, buildProperties)
 }

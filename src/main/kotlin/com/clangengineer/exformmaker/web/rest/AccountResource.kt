@@ -4,27 +4,22 @@ import com.clangengineer.exformmaker.repository.UserRepository
 import com.clangengineer.exformmaker.security.getCurrentUserLogin
 import com.clangengineer.exformmaker.service.MailService
 import com.clangengineer.exformmaker.service.UserService
-import com.clangengineer.exformmaker.service.dto.PasswordChangeDTO
 import com.clangengineer.exformmaker.service.dto.AdminUserDTO
+import com.clangengineer.exformmaker.service.dto.PasswordChangeDTO
 import com.clangengineer.exformmaker.web.rest.errors.EmailAlreadyUsedException
 import com.clangengineer.exformmaker.web.rest.errors.InvalidPasswordException
 import com.clangengineer.exformmaker.web.rest.errors.LoginAlreadyUsedException
 import com.clangengineer.exformmaker.web.rest.vm.KeyAndPasswordVM
 import com.clangengineer.exformmaker.web.rest.vm.ManagedUserVM
-
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
-
 import org.springframework.web.bind.annotation.GetMapping
-
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
