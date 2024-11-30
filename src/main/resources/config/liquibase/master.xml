@@ -3,10 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml"
-        relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20241130110923_added_entity_Point.xml"
-        relativeToChangelogFile="false"/>
+
     <property dbms="h2" name="now" value="now()"/>
     <property dbms="h2" name="floatType" value="float4"/>
     <property dbms="h2" name="uuidType" value="uuid"/>
@@ -23,4 +20,7 @@
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241130110923_added_entity_Point.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241130190100_added_entity_Group.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
