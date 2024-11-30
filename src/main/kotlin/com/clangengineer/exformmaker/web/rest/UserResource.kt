@@ -17,20 +17,14 @@ import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import tech.jhipster.web.util.HeaderUtil
 import tech.jhipster.web.util.PaginationUtil
 import tech.jhipster.web.util.ResponseUtil
 import java.net.URI
 import java.net.URISyntaxException
+import java.util.*
 import javax.validation.Valid
 import javax.validation.constraints.Pattern
 
@@ -94,7 +88,7 @@ class UserResource(
         if (userDTO.id != null) {
             throw BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists")
             // Lowercase the user login before comparing with database
-        } else if (userRepository.findOneByLogin(userDTO.login!!.toLowerCase()).isPresent) {
+        } else if (userRepository.findOneByLogin(userDTO.login!!.lowercase(Locale.getDefault())).isPresent) {
             throw LoginAlreadyUsedException()
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.email).isPresent) {
             throw EmailAlreadyUsedException()
@@ -123,7 +117,7 @@ class UserResource(
         if (existingUser.isPresent && existingUser.get().id != userDTO.id) {
             throw EmailAlreadyUsedException()
         }
-        existingUser = userRepository.findOneByLogin(userDTO.login!!.toLowerCase())
+        existingUser = userRepository.findOneByLogin(userDTO.login!!.lowercase(Locale.getDefault()))
         if (existingUser.isPresent && existingUser.get().id != userDTO.id) {
             throw LoginAlreadyUsedException()
         }
@@ -152,6 +146,7 @@ class UserResource(
         val headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page)
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }
+
     private fun onlyContainsAllowedProperties(pageable: Pageable) =
         pageable.sort.map(Sort.Order::getProperty).all { ALLOWED_ORDERED_PROPERTIES.contains(it) }
 

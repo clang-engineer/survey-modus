@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row, Button } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Row } from 'reactstrap';
 import { Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -23,7 +23,13 @@ export const PasswordResetFinishPage = () => {
     []
   );
 
-  const handleValidSubmit = ({ newPassword }) => dispatch(handlePasswordResetFinish({ key, newPassword }));
+  const handleValidSubmit = ({ newPassword }) =>
+    dispatch(
+      handlePasswordResetFinish({
+        key,
+        newPassword,
+      })
+    );
 
   const updatePassword = event => setPassword(event.target.value);
 
@@ -36,9 +42,18 @@ export const PasswordResetFinishPage = () => {
           placeholder={translate('global.form.newpassword.placeholder')}
           type="password"
           validate={{
-            required: { value: true, message: translate('global.messages.validate.newpassword.required') },
-            minLength: { value: 4, message: translate('global.messages.validate.newpassword.minlength') },
-            maxLength: { value: 50, message: translate('global.messages.validate.newpassword.maxlength') },
+            required: {
+              value: true,
+              message: translate('global.messages.validate.newpassword.required'),
+            },
+            minLength: {
+              value: 4,
+              message: translate('global.messages.validate.newpassword.minlength'),
+            },
+            maxLength: {
+              value: 50,
+              message: translate('global.messages.validate.newpassword.maxlength'),
+            },
           }}
           onChange={updatePassword}
           data-cy="resetPassword"
@@ -50,9 +65,18 @@ export const PasswordResetFinishPage = () => {
           placeholder={translate('global.form.confirmpassword.placeholder')}
           type="password"
           validate={{
-            required: { value: true, message: translate('global.messages.validate.confirmpassword.required') },
-            minLength: { value: 4, message: translate('global.messages.validate.confirmpassword.minlength') },
-            maxLength: { value: 50, message: translate('global.messages.validate.confirmpassword.maxlength') },
+            required: {
+              value: true,
+              message: translate('global.messages.validate.confirmpassword.required'),
+            },
+            minLength: {
+              value: 4,
+              message: translate('global.messages.validate.confirmpassword.minlength'),
+            },
+            maxLength: {
+              value: 50,
+              message: translate('global.messages.validate.confirmpassword.maxlength'),
+            },
             validate: v => v === password || translate('global.messages.error.dontmatch'),
           }}
           data-cy="confirmResetPassword"

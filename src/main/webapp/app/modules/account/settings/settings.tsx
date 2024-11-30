@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button, Col, Row } from 'reactstrap';
-import { Translate, translate, ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
+import { isEmail, translate, Translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { toast } from 'react-toastify';
 
-import { locales, languages } from 'app/config/translation';
+import { languages, locales } from 'app/config/translation';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getSession } from 'app/shared/reducers/authentication';
-import { saveAccountSettings, reset } from './settings.reducer';
+import { reset, saveAccountSettings } from './settings.reducer';
 
 export const SettingsPage = () => {
   const dispatch = useAppDispatch();
@@ -51,9 +51,18 @@ export const SettingsPage = () => {
               id="firstName"
               placeholder={translate('settings.form.firstname.placeholder')}
               validate={{
-                required: { value: true, message: translate('settings.messages.validate.firstname.required') },
-                minLength: { value: 1, message: translate('settings.messages.validate.firstname.minlength') },
-                maxLength: { value: 50, message: translate('settings.messages.validate.firstname.maxlength') },
+                required: {
+                  value: true,
+                  message: translate('settings.messages.validate.firstname.required'),
+                },
+                minLength: {
+                  value: 1,
+                  message: translate('settings.messages.validate.firstname.minlength'),
+                },
+                maxLength: {
+                  value: 50,
+                  message: translate('settings.messages.validate.firstname.maxlength'),
+                },
               }}
               data-cy="firstname"
             />
@@ -63,9 +72,18 @@ export const SettingsPage = () => {
               id="lastName"
               placeholder={translate('settings.form.lastname.placeholder')}
               validate={{
-                required: { value: true, message: translate('settings.messages.validate.lastname.required') },
-                minLength: { value: 1, message: translate('settings.messages.validate.lastname.minlength') },
-                maxLength: { value: 50, message: translate('settings.messages.validate.lastname.maxlength') },
+                required: {
+                  value: true,
+                  message: translate('settings.messages.validate.lastname.required'),
+                },
+                minLength: {
+                  value: 1,
+                  message: translate('settings.messages.validate.lastname.minlength'),
+                },
+                maxLength: {
+                  value: 50,
+                  message: translate('settings.messages.validate.lastname.maxlength'),
+                },
               }}
               data-cy="lastname"
             />
@@ -75,9 +93,18 @@ export const SettingsPage = () => {
               placeholder={translate('global.form.email.placeholder')}
               type="email"
               validate={{
-                required: { value: true, message: translate('global.messages.validate.email.required') },
-                minLength: { value: 5, message: translate('global.messages.validate.email.minlength') },
-                maxLength: { value: 254, message: translate('global.messages.validate.email.maxlength') },
+                required: {
+                  value: true,
+                  message: translate('global.messages.validate.email.required'),
+                },
+                minLength: {
+                  value: 5,
+                  message: translate('global.messages.validate.email.minlength'),
+                },
+                maxLength: {
+                  value: 254,
+                  message: translate('global.messages.validate.email.maxlength'),
+                },
                 validate: v => isEmail(v) || translate('global.messages.validate.email.invalid'),
               }}
               data-cy="email"

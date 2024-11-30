@@ -1,15 +1,13 @@
 package com.clangengineer.exformmaker.service.dto
 
-import org.junit.jupiter.api.Test
-import org.assertj.core.api.Assertions.assertThat
 import com.clangengineer.exformmaker.web.rest.equalsVerifier
-
-import java.util.UUID
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class PointDTOTest {
 
     @Test
-    fun dtoEqualsVerifier(){
+    fun dtoEqualsVerifier() {
         equalsVerifier(PointDTO::class)
         val pointDTO1 = PointDTO()
         pointDTO1.id = 1L

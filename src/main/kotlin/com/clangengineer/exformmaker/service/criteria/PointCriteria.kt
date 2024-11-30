@@ -1,10 +1,13 @@
 package com.clangengineer.exformmaker.service.criteria
 
-import java.io.Serializable
-import tech.jhipster.service.Criteria
-import org.springdoc.api.annotations.ParameterObject
 import com.clangengineer.exformmaker.domain.enumeration.level
-import tech.jhipster.service.filter.*
+import org.springdoc.api.annotations.ParameterObject
+import tech.jhipster.service.Criteria
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.LongFilter
+import tech.jhipster.service.filter.StringFilter
+import java.io.Serializable
 
 /**
  * Criteria class for the [com.clangengineer.exformmaker.domain.Point] entity. This class is used in
@@ -33,7 +36,7 @@ data class PointCriteria(
             other.description?.copy(),
             other.activated?.copy(),
             other.type?.copy(),
-           other.distinct
+            other.distinct
         )
 
     /**

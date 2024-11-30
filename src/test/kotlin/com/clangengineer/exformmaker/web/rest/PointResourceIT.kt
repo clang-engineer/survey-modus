@@ -3,37 +3,28 @@ package com.clangengineer.exformmaker.web.rest
 
 import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Point
+import com.clangengineer.exformmaker.domain.enumeration.level
 import com.clangengineer.exformmaker.repository.PointRepository
-import com.clangengineer.exformmaker.service.dto.PointDTO
 import com.clangengineer.exformmaker.service.mapper.PointMapper
-import com.clangengineer.exformmaker.service.criteria.PointCriteria
-import kotlin.test.assertNotNull
+import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-import java.util.Random
-import java.util.concurrent.atomic.AtomicLong
-import java.util.stream.Stream
-
-import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-
-
-import com.clangengineer.exformmaker.domain.enumeration.level
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.Validator
+import java.util.*
+import java.util.concurrent.atomic.AtomicLong
+import javax.persistence.EntityManager
+import kotlin.test.assertNotNull
 
 /**
  * Integration tests for the [PointResource] REST controller.
@@ -66,7 +57,6 @@ class PointResourceIT {
     private lateinit var restPointMockMvc: MockMvc
 
     private lateinit var point: Point
-
 
 
     @BeforeEach
@@ -148,15 +138,16 @@ class PointResourceIT {
         pointRepository.saveAndFlush(point)
 
         // Get all the pointList
-        restPointMockMvc.perform(get(ENTITY_API_URL+ "?sort=id,desc"))
+        restPointMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(point.id?.toInt())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))    }
-    
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+    }
+
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -175,24 +166,26 @@ class PointResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))    }
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+    }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun getPointsByIdFiltering()  {
-      // Initialize the database
-      pointRepository.saveAndFlush(point)
-      val id = point.id
+    fun getPointsByIdFiltering() {
+        // Initialize the database
+        pointRepository.saveAndFlush(point)
+        val id = point.id
 
-      defaultPointShouldBeFound("id.equals=$id")
-      defaultPointShouldNotBeFound("id.notEquals=$id")
-      defaultPointShouldBeFound("id.greaterThanOrEqual=$id")
-      defaultPointShouldNotBeFound("id.greaterThan=$id")
+        defaultPointShouldBeFound("id.equals=$id")
+        defaultPointShouldNotBeFound("id.notEquals=$id")
+        defaultPointShouldBeFound("id.greaterThanOrEqual=$id")
+        defaultPointShouldNotBeFound("id.greaterThan=$id")
 
-      defaultPointShouldBeFound("id.lessThanOrEqual=$id")
-      defaultPointShouldNotBeFound("id.lessThan=$id")
+        defaultPointShouldBeFound("id.lessThanOrEqual=$id")
+        defaultPointShouldNotBeFound("id.lessThan=$id")
     }
+
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -234,10 +227,11 @@ class PointResourceIT {
         // Get all the pointList where title is null
         defaultPointShouldNotBeFound("title.specified=false")
     }
+
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllPointsByTitleContainsSomething(){
+    fun getAllPointsByTitleContainsSomething() {
         // Initialize the database
         pointRepository.saveAndFlush(point)
 
@@ -303,10 +297,11 @@ class PointResourceIT {
         // Get all the pointList where description is null
         defaultPointShouldNotBeFound("description.specified=false")
     }
+
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllPointsByDescriptionContainsSomething(){
+    fun getAllPointsByDescriptionContainsSomething() {
         // Initialize the database
         pointRepository.saveAndFlush(point)
 
@@ -372,6 +367,7 @@ class PointResourceIT {
         // Get all the pointList where activated is null
         defaultPointShouldNotBeFound("activated.specified=false")
     }
+
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -417,7 +413,7 @@ class PointResourceIT {
     /**
      * Executes the search, and checks that the default entity is returned
      */
-    
+
     @Throws(Exception::class)
     private fun defaultPointShouldBeFound(filter: String) {
         restPointMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc&$filter"))
@@ -436,7 +432,7 @@ class PointResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"))
     }
-    
+
 
     /**
      * Executes the search, and checks that the default entity is not returned
@@ -455,6 +451,7 @@ class PointResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"))
     }
+
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -463,6 +460,7 @@ class PointResourceIT {
         restPointMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE))
             .andExpect(status().isNotFound)
     }
+
     @Test
     @Transactional
     fun putExistingPoint() {
@@ -565,35 +563,35 @@ class PointResourceIT {
     @Throws(Exception::class)
     fun partialUpdatePointWithPatch() {
         pointRepository.saveAndFlush(point)
-        
-        
-val databaseSizeBeforeUpdate = pointRepository.findAll().size
+
+
+        val databaseSizeBeforeUpdate = pointRepository.findAll().size
 
 // Update the point using partial update
-val partialUpdatedPoint = Point().apply {
-    id = point.id
-
-    
-        title = UPDATED_TITLE
-        description = UPDATED_DESCRIPTION
-        activated = UPDATED_ACTIVATED
-        type = UPDATED_TYPE
-}
+        val partialUpdatedPoint = Point().apply {
+            id = point.id
 
 
-restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
-.contentType("application/merge-patch+json")
-.content(convertObjectToJsonBytes(partialUpdatedPoint)))
-.andExpect(status().isOk)
+            title = UPDATED_TITLE
+            description = UPDATED_DESCRIPTION
+            activated = UPDATED_ACTIVATED
+            type = UPDATED_TYPE
+        }
+
+
+        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
+            .contentType("application/merge-patch+json")
+            .content(convertObjectToJsonBytes(partialUpdatedPoint)))
+            .andExpect(status().isOk)
 
 // Validate the Point in the database
-val pointList = pointRepository.findAll()
-assertThat(pointList).hasSize(databaseSizeBeforeUpdate)
-val testPoint = pointList.last()
-    assertThat(testPoint.title).isEqualTo(UPDATED_TITLE)
-    assertThat(testPoint.description).isEqualTo(UPDATED_DESCRIPTION)
-    assertThat(testPoint.activated).isEqualTo(UPDATED_ACTIVATED)
-    assertThat(testPoint.type).isEqualTo(UPDATED_TYPE)
+        val pointList = pointRepository.findAll()
+        assertThat(pointList).hasSize(databaseSizeBeforeUpdate)
+        val testPoint = pointList.last()
+        assertThat(testPoint.title).isEqualTo(UPDATED_TITLE)
+        assertThat(testPoint.description).isEqualTo(UPDATED_DESCRIPTION)
+        assertThat(testPoint.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testPoint.type).isEqualTo(UPDATED_TYPE)
     }
 
     @Test
@@ -601,35 +599,35 @@ val testPoint = pointList.last()
     @Throws(Exception::class)
     fun fullUpdatePointWithPatch() {
         pointRepository.saveAndFlush(point)
-        
-        
-val databaseSizeBeforeUpdate = pointRepository.findAll().size
+
+
+        val databaseSizeBeforeUpdate = pointRepository.findAll().size
 
 // Update the point using partial update
-val partialUpdatedPoint = Point().apply {
-    id = point.id
-
-    
-        title = UPDATED_TITLE
-        description = UPDATED_DESCRIPTION
-        activated = UPDATED_ACTIVATED
-        type = UPDATED_TYPE
-}
+        val partialUpdatedPoint = Point().apply {
+            id = point.id
 
 
-restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
-.contentType("application/merge-patch+json")
-.content(convertObjectToJsonBytes(partialUpdatedPoint)))
-.andExpect(status().isOk)
+            title = UPDATED_TITLE
+            description = UPDATED_DESCRIPTION
+            activated = UPDATED_ACTIVATED
+            type = UPDATED_TYPE
+        }
+
+
+        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
+            .contentType("application/merge-patch+json")
+            .content(convertObjectToJsonBytes(partialUpdatedPoint)))
+            .andExpect(status().isOk)
 
 // Validate the Point in the database
-val pointList = pointRepository.findAll()
-assertThat(pointList).hasSize(databaseSizeBeforeUpdate)
-val testPoint = pointList.last()
-    assertThat(testPoint.title).isEqualTo(UPDATED_TITLE)
-    assertThat(testPoint.description).isEqualTo(UPDATED_DESCRIPTION)
-    assertThat(testPoint.activated).isEqualTo(UPDATED_ACTIVATED)
-    assertThat(testPoint.type).isEqualTo(UPDATED_TYPE)
+        val pointList = pointRepository.findAll()
+        assertThat(pointList).hasSize(databaseSizeBeforeUpdate)
+        val testPoint = pointList.last()
+        assertThat(testPoint.title).isEqualTo(UPDATED_TITLE)
+        assertThat(testPoint.description).isEqualTo(UPDATED_DESCRIPTION)
+        assertThat(testPoint.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testPoint.type).isEqualTo(UPDATED_TYPE)
     }
 
     @Throws(Exception::class)
@@ -731,9 +729,7 @@ val testPoint = pointList.last()
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
 
         private val random: Random = Random()
-        private val count: AtomicLong = AtomicLong(random.nextInt().toLong() + ( 2 * Integer.MAX_VALUE ))
-
-
+        private val count: AtomicLong = AtomicLong(random.nextInt().toLong() + (2 * Integer.MAX_VALUE))
 
 
         /**

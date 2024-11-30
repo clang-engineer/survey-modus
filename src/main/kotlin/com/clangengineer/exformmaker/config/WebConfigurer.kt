@@ -82,7 +82,7 @@ class WebConfigurer(
     fun corsFilter(): CorsFilter {
         val source = UrlBasedCorsConfigurationSource()
         val config = jHipsterProperties.cors
-        if (!CollectionUtils.isEmpty(config.allowedOrigins) || ! CollectionUtils.isEmpty(config.allowedOriginPatterns)) {
+        if (!CollectionUtils.isEmpty(config.allowedOrigins) || !CollectionUtils.isEmpty(config.allowedOriginPatterns)) {
             log.debug("Registering CORS filter")
             source.apply {
                 registerCorsConfiguration("/api/**", config)

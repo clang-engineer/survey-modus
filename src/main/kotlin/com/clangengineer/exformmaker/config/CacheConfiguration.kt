@@ -41,8 +41,7 @@ class CacheConfiguration(
     }
 
     @Bean
-    fun hibernatePropertiesCustomizer(cacheManager: javax.cache.CacheManager) = HibernatePropertiesCustomizer {
-        hibernateProperties ->
+    fun hibernatePropertiesCustomizer(cacheManager: javax.cache.CacheManager) = HibernatePropertiesCustomizer { hibernateProperties ->
         hibernateProperties[ConfigSettings.CACHE_MANAGER] = cacheManager
     }
 

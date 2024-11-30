@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IPoint } from 'app/shared/model/point.model';
 import { level } from 'app/shared/model/enumerations/level.model';
-import { getEntity, updateEntity, createEntity, reset } from './point.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './point.reducer';
 
 export const PointUpdate = () => {
   const dispatch = useAppDispatch();
@@ -98,8 +93,14 @@ export const PointUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  minLength: { value: 20, message: translate('entity.validation.minlength', { min: 20 }) },
-                  maxLength: { value: 100, message: translate('entity.validation.maxlength', { max: 100 }) },
+                  minLength: {
+                    value: 20,
+                    message: translate('entity.validation.minlength', { min: 20 }),
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: translate('entity.validation.maxlength', { max: 100 }),
+                  },
                 }}
               />
               <ValidatedField

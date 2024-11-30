@@ -5,9 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.spy
+import org.mockito.Mockito.*
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.mock.env.MockEnvironment

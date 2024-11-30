@@ -7,7 +7,6 @@ import org.springframework.test.context.ContextConfigurationAttributes
 import org.springframework.test.context.ContextCustomizer
 import org.springframework.test.context.ContextCustomizerFactory
 import tech.jhipster.config.JHipsterConstants
-import java.util.*
 
 class TestContainersSpringContextCustomizerFactory : ContextCustomizerFactory {
 

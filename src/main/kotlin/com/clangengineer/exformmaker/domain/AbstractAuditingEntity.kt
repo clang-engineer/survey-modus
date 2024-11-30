@@ -18,7 +18,7 @@ import javax.persistence.MappedSuperclass
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-@JsonIgnoreProperties(value = [ "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate" ], allowGetters = true)
+@JsonIgnoreProperties(value = ["createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate"], allowGetters = true)
 abstract class AbstractAuditingEntity<T>(
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)

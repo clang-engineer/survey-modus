@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.test.util.ReflectionTestUtils
 import tech.jhipster.config.JHipsterProperties
 import java.security.Key
-import java.util.Date
+import java.util.*
 
 private const val ONE_MINUTE: Long = 60000
 

@@ -280,7 +280,7 @@ class AccountResourceIT {
             createdDate = firstUser.createdDate
             lastModifiedBy = firstUser.lastModifiedBy
             lastModifiedDate = firstUser.lastModifiedDate
-            authorities = firstUser.authorities?.toMutableSet()
+            authorities = firstUser.authorities.toMutableSet()
         }
 
         // First user
@@ -349,7 +349,7 @@ class AccountResourceIT {
             email = firstUser.email
             imageUrl = firstUser.imageUrl
             langKey = firstUser.langKey
-            authorities = firstUser.authorities?.toMutableSet()
+            authorities = firstUser.authorities.toMutableSet()
         }
 
         // Register second (non activated) user
@@ -376,7 +376,7 @@ class AccountResourceIT {
             email = "TEST-register-duplicate-email@example.com"
             imageUrl = firstUser.imageUrl
             langKey = firstUser.langKey
-            authorities = firstUser.authorities?.toMutableSet()
+            authorities = firstUser.authorities.toMutableSet()
         }
 
         // Register third (not activated) user
@@ -493,7 +493,7 @@ class AccountResourceIT {
         )
             .andExpect(status().isOk)
 
-        val updatedUser = userRepository.findOneWithAuthoritiesByLogin(user?.login!!).orElse(null)
+        val updatedUser = userRepository.findOneWithAuthoritiesByLogin(user.login!!).orElse(null)
         assertThat(updatedUser?.firstName).isEqualTo(userDTO.firstName)
         assertThat(updatedUser?.lastName).isEqualTo(userDTO.lastName)
         assertThat(updatedUser?.email).isEqualTo(userDTO.email)
@@ -587,7 +587,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("save-existing-email-and-login")
-    @Throws(Exception::class) fun testSaveExistingEmailAndLogin() {
+    @Throws(Exception::class)
+    fun testSaveExistingEmailAndLogin() {
         val user = User(
             login = "save-existing-email-and-login",
             email = "save-existing-email-and-login@example.com",
@@ -621,7 +622,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("change-password-wrong-existing-password")
-    @Throws(Exception::class) fun testChangePasswordWrongExistingPassword() {
+    @Throws(Exception::class)
+    fun testChangePasswordWrongExistingPassword() {
         val currentPassword = RandomStringUtils.randomAlphanumeric(60)
         val user = User(
             password = passwordEncoder.encode(currentPassword),
@@ -646,7 +648,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("change-password")
-    @Throws(Exception::class) fun testChangePassword() {
+    @Throws(Exception::class)
+    fun testChangePassword() {
         val currentPassword = RandomStringUtils.randomAlphanumeric(60)
         val user = User(
             password = passwordEncoder.encode(currentPassword),
@@ -670,7 +673,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("change-password-too-small")
-    @Throws(Exception::class) fun testChangePasswordTooSmall() {
+    @Throws(Exception::class)
+    fun testChangePasswordTooSmall() {
         val currentPassword = RandomStringUtils.randomAlphanumeric(60)
         val user = User(
             password = passwordEncoder.encode(currentPassword),
@@ -696,7 +700,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("change-password-too-long")
-    @Throws(Exception::class) fun testChangePasswordTooLong() {
+    @Throws(Exception::class)
+    fun testChangePasswordTooLong() {
         val currentPassword = RandomStringUtils.randomAlphanumeric(60)
         val user = User(
             password = passwordEncoder.encode(currentPassword),
@@ -722,7 +727,8 @@ class AccountResourceIT {
     @Test
     @Transactional
     @WithMockUser("change-password-empty")
-    @Throws(Exception::class) fun testChangePasswordEmpty() {
+    @Throws(Exception::class)
+    fun testChangePasswordEmpty() {
         val currentPassword = RandomStringUtils.randomAlphanumeric(60)
         val user = User(
             password = passwordEncoder.encode(currentPassword),

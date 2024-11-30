@@ -70,7 +70,7 @@ class SecurityUtilsUnitTest {
     fun testHasCurrentUserAnyOfAuthorities() {
         val securityContext = SecurityContextHolder.createEmptyContext()
         val authorities = listOf(SimpleGrantedAuthority(USER))
-        securityContext.setAuthentication(UsernamePasswordAuthenticationToken("user", "user", authorities))
+        securityContext.authentication = UsernamePasswordAuthenticationToken("user", "user", authorities)
         SecurityContextHolder.setContext(securityContext)
 
         assertThat(hasCurrentUserAnyOfAuthorities(USER, ADMIN)).isTrue
@@ -81,7 +81,7 @@ class SecurityUtilsUnitTest {
     fun testHasCurrentUserNoneOfAuthorities() {
         val securityContext = SecurityContextHolder.createEmptyContext()
         val authorities = listOf(SimpleGrantedAuthority(USER))
-        securityContext.setAuthentication(UsernamePasswordAuthenticationToken("user", "user", authorities))
+        securityContext.authentication = UsernamePasswordAuthenticationToken("user", "user", authorities)
         SecurityContextHolder.setContext(securityContext)
 
         assertThat(hasCurrentUserNoneOfAuthorities(USER, ADMIN)).isFalse

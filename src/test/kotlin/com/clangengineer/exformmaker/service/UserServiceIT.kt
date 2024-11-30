@@ -18,7 +18,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAccessor
-import java.util.Optional
+import java.util.*
 import kotlin.test.assertNotNull
 
 private const val DEFAULT_LOGIN = "johndoe"
@@ -168,7 +168,7 @@ class UserServiceIT {
     @Transactional
     fun assertThatNotActivatedUsersWithNullActivationKeyCreatedBefore3DaysAreNotDeleted() {
         val now = Instant.now()
-        `when`(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)))
+        `when`(dateTimeProvider.now).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)))
         user.activated = false
         val dbUser = userRepository.saveAndFlush(user)
         dbUser.createdDate = now.minus(4, ChronoUnit.DAYS)

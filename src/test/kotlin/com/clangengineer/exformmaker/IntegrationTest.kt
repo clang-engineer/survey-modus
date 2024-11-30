@@ -8,8 +8,8 @@ import org.springframework.test.annotation.DirtiesContext
 /**
  * Base composite annotation for integration tests.
  */
-@kotlin.annotation.Target(AnnotationTarget.CLASS)
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
 @SpringBootTest(classes = [ExformmakerApp::class, AsyncSyncConfiguration::class])
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)

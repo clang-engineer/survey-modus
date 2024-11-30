@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { TranslatorContext } from 'react-jhipster';
 
-import locale, { setLocale, updateLocale, loaded, addTranslationSourcePrefix } from 'app/shared/reducers/locale';
+import locale, { addTranslationSourcePrefix, loaded, setLocale, updateLocale } from 'app/shared/reducers/locale';
 
 const defaultLocale = 'en';
 
@@ -73,7 +73,13 @@ describe('Locale reducer tests', () => {
     describe('with no language loaded', () => {
       let store;
       beforeEach(() => {
-        store = configureStore([thunk])({ locale: { sourcePrefixes: [], loadedLocales: [], loadedKeys: [] } });
+        store = configureStore([thunk])({
+          locale: {
+            sourcePrefixes: [],
+            loadedLocales: [],
+            loadedKeys: [],
+          },
+        });
         axios.get = sinon.stub().returns(Promise.resolve({ key: 'value' }));
       });
 
@@ -106,7 +112,12 @@ describe('Locale reducer tests', () => {
       let store;
       beforeEach(() => {
         store = configureStore([thunk])({
-          locale: { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: [], loadedKeys: [] },
+          locale: {
+            currentLocale: defaultLocale,
+            sourcePrefixes: [],
+            loadedLocales: [],
+            loadedKeys: [],
+          },
         });
         axios.get = sinon.stub().returns(Promise.resolve({ key: 'value' }));
       });
@@ -132,7 +143,12 @@ describe('Locale reducer tests', () => {
       let store;
       beforeEach(() => {
         store = configureStore([thunk])({
-          locale: { currentLocale: defaultLocale, sourcePrefixes: [sourcePrefix], loadedLocales: [], loadedKeys: [] },
+          locale: {
+            currentLocale: defaultLocale,
+            sourcePrefixes: [sourcePrefix],
+            loadedLocales: [],
+            loadedKeys: [],
+          },
         });
         axios.get = sinon.stub().returns(Promise.resolve({ key: 'value' }));
       });
@@ -157,7 +173,12 @@ describe('Locale reducer tests', () => {
       let store;
       beforeEach(() => {
         store = configureStore([thunk])({
-          locale: { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: [], loadedKeys: [`${sourcePrefix}${defaultLocale}`] },
+          locale: {
+            currentLocale: defaultLocale,
+            sourcePrefixes: [],
+            loadedLocales: [],
+            loadedKeys: [`${sourcePrefix}${defaultLocale}`],
+          },
         });
         axios.get = sinon.stub().returns(Promise.resolve({ key: 'value' }));
       });
@@ -183,32 +204,57 @@ describe('Locale reducer tests', () => {
     describe('with empty state', () => {
       let initialState;
       beforeEach(() => {
-        initialState = { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: [], loadedKeys: [] };
+        initialState = {
+          currentLocale: defaultLocale,
+          sourcePrefixes: [],
+          loadedLocales: [],
+          loadedKeys: [],
+        };
       });
 
       it("and empty parameter, don't adds anything", () => {
-        const expectedState = { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: [], loadedKeys: [] };
+        const expectedState = {
+          currentLocale: defaultLocale,
+          sourcePrefixes: [],
+          loadedLocales: [],
+          loadedKeys: [],
+        };
 
         const localeState = locale(initialState, loaded({}));
         expect(localeState).toMatchObject(expectedState);
       });
 
       it('and keys parameter, adds to loadedKeys', () => {
-        const expectedState = { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: [], loadedKeys: ['foo'] };
+        const expectedState = {
+          currentLocale: defaultLocale,
+          sourcePrefixes: [],
+          loadedLocales: [],
+          loadedKeys: ['foo'],
+        };
 
         const localeState = locale(initialState, loaded({ keys: ['foo'] }));
         expect(localeState).toMatchObject(expectedState);
       });
 
       it('and sourcePrefix parameter, adds to sourcePrefixes', () => {
-        const expectedState = { currentLocale: defaultLocale, sourcePrefixes: ['foo'], loadedLocales: [], loadedKeys: [] };
+        const expectedState = {
+          currentLocale: defaultLocale,
+          sourcePrefixes: ['foo'],
+          loadedLocales: [],
+          loadedKeys: [],
+        };
 
         const localeState = locale(initialState, loaded({ sourcePrefix: 'foo' }));
         expect(localeState).toMatchObject(expectedState);
       });
 
       it('and locale parameter, adds to loadedLocales', () => {
-        const expectedState = { currentLocale: defaultLocale, sourcePrefixes: [], loadedLocales: ['foo'], loadedKeys: [] };
+        const expectedState = {
+          currentLocale: defaultLocale,
+          sourcePrefixes: [],
+          loadedLocales: ['foo'],
+          loadedKeys: [],
+        };
 
         const localeState = locale(initialState, loaded({ locale: 'foo' }));
         expect(localeState).toMatchObject(expectedState);

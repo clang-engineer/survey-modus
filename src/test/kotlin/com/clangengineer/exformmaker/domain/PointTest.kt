@@ -1,10 +1,8 @@
 package com.clangengineer.exformmaker.domain
 
-import org.junit.jupiter.api.Test
-import org.assertj.core.api.Assertions.assertThat
 import com.clangengineer.exformmaker.web.rest.equalsVerifier
-
-import java.util.UUID
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class PointTest {
 

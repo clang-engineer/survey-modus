@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.util.Locale
+import java.util.*
 
 /**
  * Authenticate a user from the database.
@@ -30,7 +30,7 @@ class DomainUserDetailsService(private val userRepository: UserRepository) : Use
                 .orElseThrow { UsernameNotFoundException("User with email $login was not found in the database") }
         }
 
-        val lowercaseLogin = login.toLowerCase(Locale.ENGLISH)
+        val lowercaseLogin = login.lowercase(Locale.ENGLISH)
         return userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin)
             .map { createSpringSecurityUser(lowercaseLogin, it) }
             .orElseThrow { UsernameNotFoundException("User $lowercaseLogin was not found in the database") }

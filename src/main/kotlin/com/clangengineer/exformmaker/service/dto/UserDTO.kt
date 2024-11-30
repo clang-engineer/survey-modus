@@ -2,6 +2,7 @@ package com.clangengineer.exformmaker.service.dto
 
 import com.clangengineer.exformmaker.domain.User
 import java.io.Serializable
+
 /**
  * A DTO representing a user, with only the public attributes.
  */

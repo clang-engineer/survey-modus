@@ -1,9 +1,10 @@
 package com.clangengineer.exformmaker.service.dto
 
-import java.util.Objects
-import javax.validation.constraints.*
-import java.io.Serializable
 import com.clangengineer.exformmaker.domain.enumeration.level
+import java.io.Serializable
+import java.util.*
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 
 /**
@@ -30,11 +31,11 @@ data class PointDTO(
         if (this === other) return true
         if (other !is PointDTO) return false
         val pointDTO = other
-        if (this.id == null){
-            return false;
+        if (this.id == null) {
+            return false
         }
-        return Objects.equals(this.id, pointDTO.id);
+        return Objects.equals(this.id, pointDTO.id)
     }
 
-    override fun hashCode() =        Objects.hash(this.id)
+    override fun hashCode() = Objects.hash(this.id)
 }

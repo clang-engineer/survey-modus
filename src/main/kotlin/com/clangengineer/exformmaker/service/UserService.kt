@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 import tech.jhipster.security.RandomUtil
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-import java.util.Optional
+import java.util.*
 
 /**
  * Service class for managing users.
@@ -51,7 +51,9 @@ class UserService(
     fun completePasswordReset(newPassword: String, key: String): Optional<User> {
         log.debug("Reset user password for reset key $key")
         return userRepository.findOneByResetKey(key)
-            .filter { user -> user.resetDate?.isAfter(Instant.now().minus(1, ChronoUnit.DAYS)) ?: false }
+            .filter { user ->
+                user.resetDate?.isAfter(Instant.now().minus(1, ChronoUnit.DAYS)) ?: false
+            }
             .map {
                 it.password = passwordEncoder.encode(newPassword)
                 it.resetKey = null
@@ -75,7 +77,7 @@ class UserService(
     fun registerUser(userDTO: AdminUserDTO, password: String): User {
         val login = userDTO.login ?: throw IllegalArgumentException("Empty login not allowed")
         val email = userDTO.email
-        userRepository.findOneByLogin(login.toLowerCase()).ifPresent { existingUser ->
+        userRepository.findOneByLogin(login.lowercase(Locale.getDefault())).ifPresent { existingUser ->
             val removed = removeNonActivatedUser(existingUser)
             if (!removed) {
                 throw UsernameAlreadyUsedException()
@@ -90,12 +92,12 @@ class UserService(
         val newUser = User()
         val encryptedPassword = passwordEncoder.encode(password)
         newUser.apply {
-            this.login = login.toLowerCase()
+            this.login = login.lowercase(Locale.getDefault())
             // new user gets initially a generated password
             this.password = encryptedPassword
             firstName = userDTO.firstName
             lastName = userDTO.lastName
-            this.email = email?.toLowerCase()
+            this.email = email?.lowercase(Locale.getDefault())
             imageUrl = userDTO.imageUrl
             langKey = userDTO.langKey
             // new user is not active
@@ -123,10 +125,10 @@ class UserService(
 
     fun createUser(userDTO: AdminUserDTO): User {
         val user = User(
-            login = userDTO.login?.toLowerCase(),
+            login = userDTO.login?.lowercase(Locale.getDefault()),
             firstName = userDTO.firstName,
             lastName = userDTO.lastName,
-            email = userDTO.email?.toLowerCase(),
+            email = userDTO.email?.lowercase(Locale.getDefault()),
             imageUrl = userDTO.imageUrl,
             // default language
             langKey = userDTO.langKey ?: DEFAULT_LANGUAGE,
@@ -134,11 +136,11 @@ class UserService(
             resetKey = RandomUtil.generateResetKey(),
             resetDate = Instant.now(),
             activated = true,
-            authorities = userDTO.authorities?.let { authorities ->
+            authorities = userDTO.authorities.let { authorities ->
                 authorities.map { authorityRepository.findById(it) }
-                    .filter { it.isPresent }
-                    .mapTo(mutableSetOf()) { it.get() }
-            } ?: mutableSetOf()
+                        .filter { it.isPresent }
+                        .mapTo(mutableSetOf()) { it.get() }
+            }
         )
         userRepository.save(user)
         clearUserCaches(user)
@@ -159,10 +161,10 @@ class UserService(
             .map { user ->
                 clearUserCaches(user)
                 user.apply {
-                    login = userDTO.login?.let { it.toLowerCase() }
+                    login = userDTO.login?.let { it.lowercase(Locale.getDefault()) }
                     firstName = userDTO.firstName
                     lastName = userDTO.lastName
-                    email = userDTO.email?.toLowerCase()
+                    email = userDTO.email?.lowercase(Locale.getDefault())
                     imageUrl = userDTO.imageUrl
                     activated = userDTO.activated
                     langKey = userDTO.langKey
@@ -170,7 +172,7 @@ class UserService(
                 val managedAuthorities = user.authorities
                 managedAuthorities.clear()
 
-                userDTO.authorities?.apply {
+                userDTO.authorities.apply {
                     this.asSequence()
                         .map { authorityRepository.findById(it) }
                         .filter { it.isPresent }
@@ -190,6 +192,7 @@ class UserService(
             log.debug("Deleted User: $user")
         }
     }
+
     /**
      * Update basic information (first name, last name, email, language) for the current user.
      *
@@ -206,7 +209,7 @@ class UserService(
 
                 it.firstName = firstName
                 it.lastName = lastName
-                it.email = email?.toLowerCase()
+                it.email = email?.lowercase(Locale.getDefault())
                 it.langKey = langKey
                 it.imageUrl = imageUrl
                 clearUserCaches(it)

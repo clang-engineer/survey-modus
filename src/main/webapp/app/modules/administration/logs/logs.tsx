@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Translate } from 'react-jhipster';
 
-import { getLoggers, changeLogLevel } from '../administration.reducer';
+import { changeLogLevel, getLoggers } from '../administration.reducer';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 export const LogsPage = () => {
@@ -22,7 +22,12 @@ export const LogsPage = () => {
 
   const filterFn = l => l.name.toUpperCase().includes(filter.toUpperCase());
 
-  const loggers = logs ? Object.entries(logs.loggers).map((e: any) => ({ name: e[0], level: e[1].effectiveLevel })) : [];
+  const loggers = logs
+    ? Object.entries(logs.loggers).map((e: any) => ({
+        name: e[0],
+        level: e[1].effectiveLevel,
+      }))
+    : [];
 
   return (
     <div>

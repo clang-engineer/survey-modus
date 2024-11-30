@@ -17,7 +17,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler
 import tech.jhipster.config.JHipsterProperties
 import java.security.Principal
-import java.util.Optional
+import java.util.*
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -75,7 +75,7 @@ class WebsocketConfiguration(
                 request: ServerHttpRequest,
                 wsHandler: WebSocketHandler?,
                 attributes: Map<String, Any>?
-            ): Principal? {
+            ): Principal {
                 var principal: Principal? = request.principal
                 if (principal == null) {
                     val authorities = mutableListOf<SimpleGrantedAuthority>()

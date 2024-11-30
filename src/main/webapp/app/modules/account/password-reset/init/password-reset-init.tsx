@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Translate, translate, ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
-import { Button, Alert, Col, Row } from 'reactstrap';
+import { isEmail, translate, Translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Alert, Button, Col, Row } from 'reactstrap';
 import { toast } from 'react-toastify';
 
 import { handlePasswordResetInit, reset } from '../password-reset.reducer';
@@ -47,9 +47,18 @@ export const PasswordResetInit = () => {
               placeholder={translate('global.form.email.placeholder')}
               type="email"
               validate={{
-                required: { value: true, message: translate('global.messages.validate.email.required') },
-                minLength: { value: 5, message: translate('global.messages.validate.email.minlength') },
-                maxLength: { value: 254, message: translate('global.messages.validate.email.maxlength') },
+                required: {
+                  value: true,
+                  message: translate('global.messages.validate.email.required'),
+                },
+                minLength: {
+                  value: 5,
+                  message: translate('global.messages.validate.email.minlength'),
+                },
+                maxLength: {
+                  value: 254,
+                  message: translate('global.messages.validate.email.maxlength'),
+                },
                 validate: v => isEmail(v) || translate('global.messages.validate.email.invalid'),
               }}
               data-cy="emailResetPassword"

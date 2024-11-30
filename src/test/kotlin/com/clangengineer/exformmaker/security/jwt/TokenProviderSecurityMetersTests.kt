@@ -18,7 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.test.util.ReflectionTestUtils
 import tech.jhipster.config.JHipsterProperties
 import java.security.Key
-import java.util.Date
+import java.util.*
 
 private const val ONE_MINUTE = 60000
 private const val INVALID_TOKENS_METER_EXPECTED_NAME = "security.authentication.invalid-tokens"

@@ -1,24 +1,18 @@
 package com.clangengineer.exformmaker.service
 
-import javax.persistence.criteria.JoinType
-
+import com.clangengineer.exformmaker.domain.Point
+import com.clangengineer.exformmaker.domain.Point_
+import com.clangengineer.exformmaker.repository.PointRepository
+import com.clangengineer.exformmaker.service.criteria.PointCriteria
+import com.clangengineer.exformmaker.service.dto.PointDTO
+import com.clangengineer.exformmaker.service.mapper.PointMapper
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
 import tech.jhipster.service.QueryService
-import tech.jhipster.service.filter.Filter
-
-import com.clangengineer.exformmaker.domain.Point
-import com.clangengineer.exformmaker.domain.* // for static metamodels
-import com.clangengineer.exformmaker.repository.PointRepository 
-import com.clangengineer.exformmaker.service.criteria.PointCriteria
-import com.clangengineer.exformmaker.service.dto.PointDTO
-import com.clangengineer.exformmaker.service.mapper.PointMapper
-import java.util.UUID
 
 /**
  * Service for executing complex queries for [Point] entities in the database.
@@ -29,8 +23,8 @@ import java.util.UUID
 @Service
 @Transactional(readOnly = true)
 class PointQueryService(
-        private val pointRepository: PointRepository,
-        private val pointMapper: PointMapper,
+    private val pointRepository: PointRepository,
+    private val pointMapper: PointMapper,
 ) : QueryService<Point>() {
 
     private val log = LoggerFactory.getLogger(javaClass)
@@ -84,7 +78,7 @@ class PointQueryService(
             // This has to be called first, because the distinct method returns null
             val distinctCriteria = criteria.distinct
             if (distinctCriteria != null) {
-                specification = specification.and(distinct(distinctCriteria));
+                specification = specification.and(distinct(distinctCriteria))
             }
             if (criteria.id != null) {
                 specification = specification.and(buildRangeSpecification(criteria.id, Point_.id))

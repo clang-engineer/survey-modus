@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 
 const formatDiskSpaceOutput = rawValue => {

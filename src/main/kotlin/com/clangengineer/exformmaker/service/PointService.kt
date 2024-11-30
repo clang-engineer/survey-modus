@@ -5,12 +5,11 @@ import com.clangengineer.exformmaker.repository.PointRepository
 import com.clangengineer.exformmaker.service.dto.PointDTO
 import com.clangengineer.exformmaker.service.mapper.PointMapper
 import org.slf4j.LoggerFactory
-
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.Optional
+import java.util.*
 
 /**
  * Service Implementation for managing [Point].
@@ -18,8 +17,8 @@ import java.util.Optional
 @Service
 @Transactional
 class PointService(
-            private val pointRepository: PointRepository,
-        private val pointMapper: PointMapper,
+    private val pointRepository: PointRepository,
+    private val pointMapper: PointMapper,
 ) {
 
     private val log = LoggerFactory.getLogger(javaClass)
@@ -38,35 +37,35 @@ class PointService(
     }
 
     /**
-        * Update a point.
-        *
-        * @param pointDTO the entity to save.
-        * @return the persisted entity.
-    */
-     fun update(pointDTO: PointDTO): PointDTO{
-            log.debug("Request to update Point : {}", pointDTO);
-            var point = pointMapper.toEntity(pointDTO)
+     * Update a point.
+     *
+     * @param pointDTO the entity to save.
+     * @return the persisted entity.
+     */
+    fun update(pointDTO: PointDTO): PointDTO {
+        log.debug("Request to update Point : {}", pointDTO)
+        var point = pointMapper.toEntity(pointDTO)
         point = pointRepository.save(point)
         return pointMapper.toDto(point)
-        }
+    }
 
     /**
-        * Partially updates a point.
-        *
-        * @param pointDTO the entity to update partially.
-        * @return the persisted entity.
-        */
+     * Partially updates a point.
+     *
+     * @param pointDTO the entity to update partially.
+     * @return the persisted entity.
+     */
     fun partialUpdate(pointDTO: PointDTO): Optional<PointDTO> {
         log.debug("Request to partially update Point : {}", pointDTO)
 
 
-         return pointRepository.findById(pointDTO.id)
+        return pointRepository.findById(pointDTO.id)
             .map {
-pointMapper.partialUpdate(it, pointDTO)
-               it
+                pointMapper.partialUpdate(it, pointDTO)
+                it
             }
             .map { pointRepository.save(it) }
-.map { pointMapper.toDto(it) }
+            .map { pointMapper.toDto(it) }
 
     }
 

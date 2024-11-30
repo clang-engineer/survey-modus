@@ -4,7 +4,10 @@ import com.clangengineer.exformmaker.config.LOGIN_REGEX
 import com.clangengineer.exformmaker.domain.User
 import java.io.Serializable
 import java.time.Instant
-import javax.validation.constraints.*
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
 /**
  * A DTO representing a user, with his authorities.

@@ -4,48 +4,48 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="com.clangengineer.exformmaker" level="INFO"/>
+    <logger level="INFO" name="com.clangengineer.exformmaker"/>
 
-    <logger name="tech.jhipster" level="WARN"/>
+    <logger level="WARN" name="tech.jhipster"/>
 
     <!-- https://www.testcontainers.org/supported_docker_environment/logging_config/ -->
-    <logger name="org.testcontainers" level="INFO"/>
-    <logger name="com.github.dockerjava" level="WARN"/>
+    <logger level="INFO" name="org.testcontainers"/>
+    <logger level="WARN" name="com.github.dockerjava"/>
 
-    <logger name="javax.activation" level="WARN"/>
-    <logger name="javax.mail" level="WARN"/>
-    <logger name="javax.xml.bind" level="WARN"/>
-    <logger name="ch.qos.logback" level="WARN"/>
-    <logger name="com.jayway.jsonpath" level="WARN"/>
-    <logger name="com.ryantenney" level="WARN"/>
-    <logger name="com.sun" level="WARN"/>
-    <logger name="com.zaxxer" level="WARN"/>
-    <logger name="io.undertow" level="WARN"/>
-    <logger name="io.undertow.websockets.jsr" level="ERROR"/>
-    <logger name="org.ehcache" level="WARN"/>
-    <logger name="org.apache" level="WARN"/>
-    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
-    <logger name="org.bson" level="WARN"/>
-    <logger name="org.hibernate.validator" level="WARN"/>
-    <logger name="org.hibernate" level="WARN"/>
-    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
-    <logger name="org.postgresql.jdbc" level="WARN"/>
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.springframework.security" level="WARN"/>
-    <logger name="org.springframework.cache" level="WARN"/>
-    <logger name="org.thymeleaf" level="WARN"/>
-    <logger name="org.xnio" level="WARN"/>
-    <logger name="io.swagger.v3" level="INFO"/>
-    <logger name="sun.rmi" level="WARN"/>
-    <logger name="liquibase" level="WARN"/>
-    <logger name="LiquibaseSchemaResolver" level="INFO"/>
-    <logger name="sun.rmi.transport" level="WARN"/>
-    <logger name="com.tngtech.archunit.core.importer" level="ERROR"/>
+    <logger level="WARN" name="javax.activation"/>
+    <logger level="WARN" name="javax.mail"/>
+    <logger level="WARN" name="javax.xml.bind"/>
+    <logger level="WARN" name="ch.qos.logback"/>
+    <logger level="WARN" name="com.jayway.jsonpath"/>
+    <logger level="WARN" name="com.ryantenney"/>
+    <logger level="WARN" name="com.sun"/>
+    <logger level="WARN" name="com.zaxxer"/>
+    <logger level="WARN" name="io.undertow"/>
+    <logger level="ERROR" name="io.undertow.websockets.jsr"/>
+    <logger level="WARN" name="org.ehcache"/>
+    <logger level="WARN" name="org.apache"/>
+    <logger level="OFF" name="org.apache.catalina.startup.DigesterFactory"/>
+    <logger level="WARN" name="org.bson"/>
+    <logger level="WARN" name="org.hibernate.validator"/>
+    <logger level="WARN" name="org.hibernate"/>
+    <logger level="OFF" name="org.hibernate.ejb.HibernatePersistence"/>
+    <logger level="WARN" name="org.postgresql.jdbc"/>
+    <logger level="WARN" name="org.springframework"/>
+    <logger level="WARN" name="org.springframework.web"/>
+    <logger level="WARN" name="org.springframework.security"/>
+    <logger level="WARN" name="org.springframework.cache"/>
+    <logger level="WARN" name="org.thymeleaf"/>
+    <logger level="WARN" name="org.xnio"/>
+    <logger level="INFO" name="io.swagger.v3"/>
+    <logger level="WARN" name="sun.rmi"/>
+    <logger level="WARN" name="liquibase"/>
+    <logger level="INFO" name="LiquibaseSchemaResolver"/>
+    <logger level="WARN" name="sun.rmi.transport"/>
+    <logger level="ERROR" name="com.tngtech.archunit.core.importer"/>
 
     <root>
-        <level>WARN</level>
         <appender-ref ref="CONSOLE"/>
+        <level>WARN</level>
     </root>
 
 </configuration>

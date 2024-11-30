@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.transaction.annotation.Transactional
-import java.util.Locale
+import java.util.*
 
 private const val USER_ONE_LOGIN = "test-user-one"
 private const val USER_ONE_EMAIL = "test-user-one@localhost"
@@ -80,7 +80,7 @@ class DomainUserDetailsServiceIT {
 
     @Test
     fun assertThatUserCanBeFoundByLoginIgnoreCase() {
-        val userDetails = domainUserDetailsService.loadUserByUsername(USER_ONE_LOGIN.toUpperCase(Locale.ENGLISH))
+        val userDetails = domainUserDetailsService.loadUserByUsername(USER_ONE_LOGIN.uppercase(Locale.ENGLISH))
         assertThat(userDetails).isNotNull
         assertThat(userDetails.username).isEqualTo(USER_ONE_LOGIN)
     }
@@ -94,7 +94,7 @@ class DomainUserDetailsServiceIT {
 
     @Test
     fun assertThatUserCanBeFoundByEmailIgnoreCase() {
-        val userDetails = domainUserDetailsService.loadUserByUsername(USER_TWO_EMAIL.toUpperCase(Locale.ENGLISH))
+        val userDetails = domainUserDetailsService.loadUserByUsername(USER_TWO_EMAIL.uppercase(Locale.ENGLISH))
         assertThat(userDetails).isNotNull
         assertThat(userDetails.username).isEqualTo(USER_TWO_LOGIN)
     }

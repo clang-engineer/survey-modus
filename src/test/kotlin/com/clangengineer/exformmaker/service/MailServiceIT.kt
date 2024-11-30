@@ -11,7 +11,6 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Captor
 import org.mockito.Mockito.*
-import org.mockito.Mockito.atLeastOnce
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.mail.MailSendException
@@ -23,7 +22,7 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.net.URI
 import java.nio.charset.Charset
-import java.util.Properties
+import java.util.*
 import java.util.regex.Pattern
 import javax.mail.Multipart
 import javax.mail.Session
@@ -232,11 +231,11 @@ class MailServiceIT {
         var javaLangKey = langKey
         val matcher2 = PATTERN_LOCALE_2.matcher(langKey)
         if (matcher2.matches()) {
-            javaLangKey = "${matcher2.group(1)}_${matcher2.group(2).toUpperCase()}"
+            javaLangKey = "${matcher2.group(1)}_${matcher2.group(2).uppercase(Locale.getDefault())}"
         }
         val matcher3 = PATTERN_LOCALE_3.matcher(langKey)
         if (matcher3.matches()) {
-            javaLangKey = "${matcher3.group(1)}_${matcher3.group(2)}_${matcher3.group(3).toUpperCase()}"
+            javaLangKey = "${matcher3.group(1)}_${matcher3.group(2)}_${matcher3.group(3).uppercase(Locale.getDefault())}"
         }
         return javaLangKey
     }
