@@ -1,0 +1,10 @@
+{
+  "exformmakerApp": {
+    "level": {
+      "null": "",
+      "EASY": "EASY",
+      "NORMAL": "NORMAL",
+      "HARD": "HARD"
+    }
+  }
+}
