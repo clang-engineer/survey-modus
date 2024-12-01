@@ -131,9 +131,9 @@ export const PointUpdate = () => {
                 type="checkbox"
               />
               <ValidatedField label={translate('exformmakerApp.point.type')} id="point-type" name="type" data-cy="type" type="select">
-                {levelValues.map(level => (
-                  <option value={level} key={level}>
-                    {translate('exformmakerApp.level.' + level)}
+                {levelValues.map(l => (
+                  <option value={l} key={l}>
+                    {translate('exformmakerApp.level.' + l)}
                   </option>
                 ))}
               </ValidatedField>
