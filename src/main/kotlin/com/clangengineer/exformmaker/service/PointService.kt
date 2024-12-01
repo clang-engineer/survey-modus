@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.Optional
 
 /**
  * Service Implementation for managing [Point].
@@ -58,7 +58,6 @@ class PointService(
     fun partialUpdate(pointDTO: PointDTO): Optional<PointDTO> {
         log.debug("Request to partially update Point : {}", pointDTO)
 
-
         return pointRepository.findById(pointDTO.id)
             .map {
                 pointMapper.partialUpdate(it, pointDTO)
@@ -66,7 +65,6 @@ class PointService(
             }
             .map { pointRepository.save(it) }
             .map { pointMapper.toDto(it) }
-
     }
 
     /**
@@ -82,6 +80,13 @@ class PointService(
             .map(pointMapper::toDto)
     }
 
+    /**
+     * Get all the points with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    fun findAllWithEagerRelationships(pageable: Pageable) =
+        pointRepository.findAllWithEagerRelationships(pageable).map(pointMapper::toDto)
 
     /**
      * Get one point by id.
@@ -92,7 +97,7 @@ class PointService(
     @Transactional(readOnly = true)
     fun findOne(id: Long): Optional<PointDTO> {
         log.debug("Request to get Point : $id")
-        return pointRepository.findById(id)
+        return pointRepository.findOneWithEagerRelationships(id)
             .map(pointMapper::toDto)
     }
 

@@ -116,6 +116,9 @@ export const Point = () => {
                 <th className="hand" onClick={sort('type')}>
                   <Translate contentKey="exformmakerApp.point.type">Type</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="exformmakerApp.point.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -133,6 +136,7 @@ export const Point = () => {
                   <td>
                     <Translate contentKey={`exformmakerApp.level.${point.type}`} />
                   </td>
+                  <td>{point.user ? point.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/point/${point.id}`} color="info" size="sm" data-cy="entityDetailsButton">

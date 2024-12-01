@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
-import { Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Row, Col, FormText } from 'reactstrap';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IPoint } from 'app/shared/model/point.model';
 import { level } from 'app/shared/model/enumerations/level.model';
-import { createEntity, getEntity, reset, updateEntity } from './point.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './point.reducer';
 
 export const PointUpdate = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +22,7 @@ export const PointUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const users = useAppSelector(state => state.userManagement.users);
   const pointEntity = useAppSelector(state => state.point.entity);
   const loading = useAppSelector(state => state.point.loading);
   const updating = useAppSelector(state => state.point.updating);
@@ -31,6 +39,8 @@ export const PointUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -43,6 +53,7 @@ export const PointUpdate = () => {
     const entity = {
       ...pointEntity,
       ...values,
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -58,6 +69,7 @@ export const PointUpdate = () => {
       : {
           type: 'EASY',
           ...pointEntity,
+          user: pointEntity?.user?.id,
         };
 
   return (
@@ -125,6 +137,26 @@ export const PointUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
+              <ValidatedField
+                id="point-user"
+                name="user"
+                data-cy="user"
+                label={translate('exformmakerApp.point.user')}
+                type="select"
+                required
+              >
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.login}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/point" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

@@ -1,7 +1,7 @@
 package com.clangengineer.exformmaker.service
 
+import com.clangengineer.exformmaker.domain.* // for static metamodels
 import com.clangengineer.exformmaker.domain.Point
-import com.clangengineer.exformmaker.domain.Point_
 import com.clangengineer.exformmaker.repository.PointRepository
 import com.clangengineer.exformmaker.service.criteria.PointCriteria
 import com.clangengineer.exformmaker.service.dto.PointDTO
@@ -13,6 +13,8 @@ import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import tech.jhipster.service.QueryService
+import tech.jhipster.service.filter.Filter
+import javax.persistence.criteria.JoinType
 
 /**
  * Service for executing complex queries for [Point] entities in the database.
@@ -94,6 +96,13 @@ class PointQueryService(
             }
             if (criteria.type != null) {
                 specification = specification.and(buildSpecification(criteria.type, Point_.type))
+            }
+            if (criteria.userId != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.userId as Filter<Long>) {
+                        it.join(Point_.user, JoinType.LEFT).get(User_.id)
+                    }
+                )
             }
         }
         return specification

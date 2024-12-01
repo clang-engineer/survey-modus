@@ -26,6 +26,7 @@ data class PointCriteria(
     var description: StringFilter? = null,
     var activated: BooleanFilter? = null,
     var type: levelFilter? = null,
+    var userId: LongFilter? = null,
     var distinct: Boolean? = null
 ) : Serializable, Criteria {
 
@@ -36,6 +37,7 @@ data class PointCriteria(
             other.description?.copy(),
             other.activated?.copy(),
             other.type?.copy(),
+            other.userId?.copy(),
             other.distinct
         )
 

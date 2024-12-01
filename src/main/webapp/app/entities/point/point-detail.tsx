@@ -54,6 +54,10 @@ export const PointDetail = () => {
             </span>
           </dt>
           <dd>{pointEntity.type}</dd>
+          <dt>
+            <Translate contentKey="exformmakerApp.point.user">User</Translate>
+          </dt>
+          <dd>{pointEntity.user ? pointEntity.user.login : ''}</dd>
         </dl>
         <Button tag={Link} to="/point" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -1,8 +1,8 @@
 package com.clangengineer.exformmaker.web.rest
 
-
 import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Point
+import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.domain.enumeration.level
 import com.clangengineer.exformmaker.repository.PointRepository
 import com.clangengineer.exformmaker.service.mapper.PointMapper
@@ -10,6 +10,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver
@@ -21,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.validation.Validator
-import java.util.*
+import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
 import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
@@ -410,6 +412,30 @@ class PointResourceIT {
         defaultPointShouldNotBeFound("type.specified=false")
     }
 
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun getAllPointsByUserIsEqualToSomething() {
+        var user: User
+        if (findAll(em, User::class).isEmpty()) {
+            pointRepository.saveAndFlush(point)
+            user = UserResourceIT.createEntity(em)
+        } else {
+            user = findAll(em, User::class)[0]
+        }
+        em.persist(user)
+        em.flush()
+        point.user = user
+        pointRepository.saveAndFlush(point)
+        val userId = user?.id
+
+        // Get all the pointList where user equals to userId
+        defaultPointShouldBeFound("userId.equals=$userId")
+
+        // Get all the pointList where user equals to (userId?.plus(1))
+        defaultPointShouldNotBeFound("userId.equals=${(userId?.plus(1))}")
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -751,7 +777,11 @@ class PointResourceIT {
 
             )
 
-
+            // Add required entity
+            val user = UserResourceIT.createEntity(em)
+            em.persist(user)
+            em.flush()
+            point.user = user
             return point
         }
 
@@ -774,9 +804,12 @@ class PointResourceIT {
 
             )
 
-
+            // Add required entity
+            val user = UserResourceIT.createEntity(em)
+            em.persist(user)
+            em.flush()
+            point.user = user
             return point
         }
-
     }
 }

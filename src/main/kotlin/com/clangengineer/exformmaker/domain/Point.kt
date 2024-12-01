@@ -50,7 +50,13 @@ data class Point(
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 ) : Serializable {
-
+    @ManyToOne(optional = false)
+    @NotNull
+    var user: User? = null
+    fun user(user: User?): Point {
+        this.user = user
+        return this
+    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

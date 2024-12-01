@@ -21,7 +21,8 @@
       "title": "Title",
       "description": "Description",
       "activated": "Activated",
-      "type": "Type"
+      "type": "Type",
+      "user": "User"
     }
   }
 }

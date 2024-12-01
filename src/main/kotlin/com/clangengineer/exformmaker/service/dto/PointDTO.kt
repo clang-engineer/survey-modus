@@ -6,7 +6,6 @@ import java.util.*
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
-
 /**
  * A DTO for the [com.clangengineer.exformmaker.domain.Point] entity.
  */
@@ -23,9 +22,10 @@ data class PointDTO(
 
     var activated: Boolean? = null,
 
-    var type: level? = null
-) : Serializable {
+    var type: level? = null,
 
+    var user: UserDTO? = null
+) : Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

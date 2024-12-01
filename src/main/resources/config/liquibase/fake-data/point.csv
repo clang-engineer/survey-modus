@@ -1,11 +1,11 @@
-id;title;description;activated;type
-1;Generic Gloves Knoll;turquoise maroon Programmable;false;EASY
-2;Secured LoanXXXXXXXX;District redundant;true;NORMAL
-3;Mandatory NebraskaXX;Cove Adaptive Credit;true;NORMAL
-4;Baby Up-sized Administrator;violet Games Stream;false;EASY
-5;ComputersXXXXXXXXXXX;optical deliver;false;EASY
-6;depositXXXXXXXXXXXXX;Albania;false;EASY
-7;Towels bifurcatedXXX;Plastic Front-line robust;false;EASY
-8;SteelXXXXXXXXXXXXXXX;Terrace;false;NORMAL
-9;Kwacha AvonXXXXXXXXX;interactive;false;HARD
-10;Fresh orchestrate Rand;Nebraska;true;NORMAL
+id;title;description;activated;type;user_id
+1;Generic Gloves Knoll;turquoise maroon Programmable;false;EASY;1
+2;Secured LoanXXXXXXXX;District redundant;true;NORMAL;2
+3;Mandatory NebraskaXX;Cove Adaptive Credit;true;NORMAL;2
+4;Baby Up-sized Administrator;violet Games Stream;false;EASY;2
+5;ComputersXXXXXXXXXXX;optical deliver;false;EASY;1
+6;depositXXXXXXXXXXXXX;Albania;false;EASY;1
+7;Towels bifurcatedXXX;Plastic Front-line robust;false;EASY;1
+8;SteelXXXXXXXXXXXXXXX;Terrace;false;NORMAL;2
+9;Kwacha AvonXXXXXXXXX;interactive;false;HARD;2
+10;Fresh orchestrate Rand;Nebraska;true;NORMAL;1
