@@ -138,8 +138,8 @@ class UserService(
             activated = true,
             authorities = userDTO.authorities.let { authorities ->
                 authorities.map { authorityRepository.findById(it) }
-                        .filter { it.isPresent }
-                        .mapTo(mutableSetOf()) { it.get() }
+                    .filter { it.isPresent }
+                    .mapTo(mutableSetOf()) { it.get() }
             }
         )
         userRepository.save(user)

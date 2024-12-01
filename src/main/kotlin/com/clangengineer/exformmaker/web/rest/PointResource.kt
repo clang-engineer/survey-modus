@@ -89,7 +89,6 @@ class PointResource(
             throw BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid")
         }
 
-
         if (!pointRepository.existsById(id)) {
             throw BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound")
         }
@@ -133,7 +132,6 @@ class PointResource(
         if (!pointRepository.existsById(id)) {
             throw BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound")
         }
-
 
         val result = pointService.partialUpdate(pointDTO)
 

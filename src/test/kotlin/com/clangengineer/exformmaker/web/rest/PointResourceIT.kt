@@ -50,16 +50,13 @@ class PointResourceIT {
     @Autowired
     private lateinit var validator: Validator
 
-
     @Autowired
     private lateinit var em: EntityManager
-
 
     @Autowired
     private lateinit var restPointMockMvc: MockMvc
 
     private lateinit var point: Point
-
 
     @BeforeEach
     fun initTest() {
@@ -451,14 +448,12 @@ class PointResourceIT {
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
 
-
         // Check, that the count call also returns 1
         restPointMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"))
     }
-
 
     /**
      * Executes the search, and checks that the default entity is not returned
@@ -531,9 +526,11 @@ class PointResourceIT {
         val pointDTO = pointMapper.toDto(point)
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restPointMockMvc.perform(put(ENTITY_API_URL_ID, pointDTO.id)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(convertObjectToJsonBytes(pointDTO)))
+        restPointMockMvc.perform(
+            put(ENTITY_API_URL_ID, pointDTO.id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(pointDTO))
+        )
             .andExpect(status().isBadRequest)
 
         // Validate the Point in the database
@@ -574,9 +571,11 @@ class PointResourceIT {
         val pointDTO = pointMapper.toDto(point)
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restPointMockMvc.perform(put(ENTITY_API_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(convertObjectToJsonBytes(pointDTO)))
+        restPointMockMvc.perform(
+            put(ENTITY_API_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(pointDTO))
+        )
             .andExpect(status().isMethodNotAllowed)
 
         // Validate the Point in the database
@@ -590,13 +589,11 @@ class PointResourceIT {
     fun partialUpdatePointWithPatch() {
         pointRepository.saveAndFlush(point)
 
-
         val databaseSizeBeforeUpdate = pointRepository.findAll().size
 
 // Update the point using partial update
         val partialUpdatedPoint = Point().apply {
             id = point.id
-
 
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
@@ -604,10 +601,11 @@ class PointResourceIT {
             type = UPDATED_TYPE
         }
 
-
-        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
-            .contentType("application/merge-patch+json")
-            .content(convertObjectToJsonBytes(partialUpdatedPoint)))
+        restPointMockMvc.perform(
+            patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
+                .contentType("application/merge-patch+json")
+                .content(convertObjectToJsonBytes(partialUpdatedPoint))
+        )
             .andExpect(status().isOk)
 
 // Validate the Point in the database
@@ -626,13 +624,11 @@ class PointResourceIT {
     fun fullUpdatePointWithPatch() {
         pointRepository.saveAndFlush(point)
 
-
         val databaseSizeBeforeUpdate = pointRepository.findAll().size
 
 // Update the point using partial update
         val partialUpdatedPoint = Point().apply {
             id = point.id
-
 
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
@@ -640,10 +636,11 @@ class PointResourceIT {
             type = UPDATED_TYPE
         }
 
-
-        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
-            .contentType("application/merge-patch+json")
-            .content(convertObjectToJsonBytes(partialUpdatedPoint)))
+        restPointMockMvc.perform(
+            patch(ENTITY_API_URL_ID, partialUpdatedPoint.id)
+                .contentType("application/merge-patch+json")
+                .content(convertObjectToJsonBytes(partialUpdatedPoint))
+        )
             .andExpect(status().isOk)
 
 // Validate the Point in the database
@@ -665,9 +662,11 @@ class PointResourceIT {
         val pointDTO = pointMapper.toDto(point)
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, pointDTO.id)
-            .contentType("application/merge-patch+json")
-            .content(convertObjectToJsonBytes(pointDTO)))
+        restPointMockMvc.perform(
+            patch(ENTITY_API_URL_ID, pointDTO.id)
+                .contentType("application/merge-patch+json")
+                .content(convertObjectToJsonBytes(pointDTO))
+        )
             .andExpect(status().isBadRequest)
 
         // Validate the Point in the database
@@ -686,9 +685,11 @@ class PointResourceIT {
         val pointDTO = pointMapper.toDto(point)
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restPointMockMvc.perform(patch(ENTITY_API_URL_ID, count.incrementAndGet())
-            .contentType("application/merge-patch+json")
-            .content(convertObjectToJsonBytes(pointDTO)))
+        restPointMockMvc.perform(
+            patch(ENTITY_API_URL_ID, count.incrementAndGet())
+                .contentType("application/merge-patch+json")
+                .content(convertObjectToJsonBytes(pointDTO))
+        )
             .andExpect(status().isBadRequest)
 
         // Validate the Point in the database
@@ -707,9 +708,11 @@ class PointResourceIT {
         val pointDTO = pointMapper.toDto(point)
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restPointMockMvc.perform(patch(ENTITY_API_URL)
-            .contentType("application/merge-patch+json")
-            .content(convertObjectToJsonBytes(pointDTO)))
+        restPointMockMvc.perform(
+            patch(ENTITY_API_URL)
+                .contentType("application/merge-patch+json")
+                .content(convertObjectToJsonBytes(pointDTO))
+        )
             .andExpect(status().isMethodNotAllowed)
 
         // Validate the Point in the database
@@ -735,7 +738,6 @@ class PointResourceIT {
         assertThat(pointList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-
     companion object {
 
         private const val DEFAULT_TITLE = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
@@ -750,13 +752,11 @@ class PointResourceIT {
         private val DEFAULT_TYPE: level = level.EASY
         private val UPDATED_TYPE: level = level.NORMAL
 
-
         private val ENTITY_API_URL: String = "/api/points"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
 
         private val random: Random = Random()
         private val count: AtomicLong = AtomicLong(random.nextInt().toLong() + (2 * Integer.MAX_VALUE))
-
 
         /**
          * Create an entity for this test.

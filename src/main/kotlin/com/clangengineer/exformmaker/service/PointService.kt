@@ -106,7 +106,7 @@ class PointService(
      *
      * @param id the id of the entity.
      */
-    fun delete(id: Long): Unit {
+    fun delete(id: Long) {
         log.debug("Request to delete Point : $id")
 
         pointRepository.deleteById(id)

@@ -8,7 +8,6 @@ import javax.persistence.*
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
-
 /**
  * A Point.
  */
@@ -20,29 +19,23 @@ import javax.validation.constraints.Size
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class Point(
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     var id: Long? = null,
 
-
     @get: NotNull
     @get: Size(min = 20, max = 100)
-
 
     @Column(name = "title", length = 100, nullable = false)
     var title: String? = null,
 
-
     @Column(name = "description")
     var description: String? = null,
 
-
     @Column(name = "activated")
     var activated: Boolean? = null,
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
