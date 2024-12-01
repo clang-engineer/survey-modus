@@ -10,6 +10,9 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/point">
         <Translate contentKey="global.menu.entities.point"/>
       </MenuItem>
+      <MenuItem icon="asterisk" to="/user-point">
+        <Translate contentKey="global.menu.entities.userPoint" />
+      </MenuItem>
       <MenuItem icon="asterisk" to="/group">
         <Translate contentKey="global.menu.entities.group" />
       </MenuItem>

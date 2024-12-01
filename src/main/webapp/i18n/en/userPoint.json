@@ -1,0 +1,25 @@
+{
+  "exformmakerApp": {
+    "userPoint": {
+      "home": {
+        "title": "User Points",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Point",
+        "createOrEditLabel": "Create or edit a User Point",
+        "notFound": "No User Points found"
+      },
+      "created": "A new User Point is created with identifier {{ param }}",
+      "updated": "A User Point is updated with identifier {{ param }}",
+      "deleted": "A User Point is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Point {{ id }}?"
+      },
+      "detail": {
+        "title": "User Point"
+      },
+      "id": "ID",
+      "user": "User",
+      "point": "Point"
+    }
+  }
+}
