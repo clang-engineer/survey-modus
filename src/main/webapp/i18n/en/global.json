@@ -8,6 +8,7 @@
       "entities": {
         "main": "Entities",
         "point": "Point",
+        "group": "Group ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
