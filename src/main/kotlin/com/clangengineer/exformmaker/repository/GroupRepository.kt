@@ -14,7 +14,7 @@ import java.util.*
 @Repository
 interface GroupRepository : JpaRepository<Group, Long>, JpaSpecificationExecutor<Group> {
 
-    @Query("select group from Group group where group.user.login = ?#{principal.username}")
+    @Query("select g from Group g where g.user.login = ?#{principal.username}")
     fun findByUserIsCurrentUser(): MutableList<Group>
 
     @Query(
@@ -23,7 +23,7 @@ interface GroupRepository : JpaRepository<Group, Long>, JpaSpecificationExecutor
     )
     fun findAllWithToOneRelationships(pageable: Pageable): Page<Group>
 
-    @Query("select distinct group from Group g left join fetch g.user")
+    @Query("select distinct g from Group g left join fetch g.user")
     fun findAllWithToOneRelationships(): MutableList<Group>
 
     @Query("select g from Group g left join fetch g.user where g.id =:id")
