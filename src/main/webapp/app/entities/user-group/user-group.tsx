@@ -123,7 +123,7 @@ export const UserGroup = () => {
                     </Button>
                   </td>
                   <td>{userGroup.user ? userGroup.user.login : ''}</td>
-                  <td>{userGroup.group ? <Link to={`/group/${userGroup.group.id}`}>{userGroup.group.id}</Link> : ''}</td>
+                  <td>{userGroup.group ? <Link to={`/group/${userGroup.group.id}`}>{userGroup.group.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/user-group/${userGroup.id}`} color="info" size="sm" data-cy="entityDetailsButton">
