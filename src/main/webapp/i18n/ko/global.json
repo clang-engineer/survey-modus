@@ -10,6 +10,7 @@
         "point": "Point",
         "group": "Group ",
         "userPoint": "User Point",
+        "userGroup": "User Group",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
