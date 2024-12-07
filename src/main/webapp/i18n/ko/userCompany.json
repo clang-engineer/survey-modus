@@ -1,0 +1,25 @@
+{
+  "exformmakerApp": {
+    "userCompany": {
+      "home": {
+        "title": "User Companys",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Company",
+        "createOrEditLabel": "Create or edit a User Company",
+        "notFound": "No User Companys found"
+      },
+      "created": "A new User Company is created with identifier {{ param }}",
+      "updated": "A User Company is updated with identifier {{ param }}",
+      "deleted": "A User Company is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Company {{ id }}?"
+      },
+      "detail": {
+        "title": "User Company"
+      },
+      "id": "ID",
+      "user": "User",
+      "company": "Company"
+    }
+  }
+}
