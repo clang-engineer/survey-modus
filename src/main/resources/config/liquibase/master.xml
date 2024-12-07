@@ -26,4 +26,5 @@
     <include file="config/liquibase/changelog/20241130190100_added_entity_Group.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241207000000_added_entity_UserGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241207210700_added_entity_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241207213500_added_entity_UserCompany.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

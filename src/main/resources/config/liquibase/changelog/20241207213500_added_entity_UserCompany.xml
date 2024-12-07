@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20241207213500-1" author="clang">
+        <createTable tableName="tbl_user_company">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="company_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20241207213500-2" author="clang">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+            baseTableName="tbl_user_company"
+            constraintName="fk_user_company__user_id"
+            referencedColumnNames="id"
+            referencedTableName="tbl_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_id"
+            baseTableName="tbl_user_company"
+            constraintName="fk_user_company__company_id"
+            referencedColumnNames="id"
+            referencedTableName="tbl_company"/>
+    </changeSet>
+
+    <changeSet id="20241207213500-1-data" author="clang" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/user_company.csv"
+                  separator=";"
+                  tableName="tbl_user_company"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
+            <column name="company_id" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
