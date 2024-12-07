@@ -32,3 +32,24 @@
 - 그룹에 접근 권한있는 회사를 설정할 수 있다.
 - 그룹에 시스템에 가입된 사용자를 초대할 수 있다.
 - 그룹에 초대된 사용자는 해당 그룹의 회사 정보(폼 목록)에 접근할 수 있다.
+
+---
+
+# 작업 진척률
+
+## erd 설계 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+
+## 메타 및 관리자 ui 개발 &nbsp;&nbsp; ![in progress](https://progress-bar.xyz/30/?title=in%20progress)
+
+- 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- 사용자 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- 사용자 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- 사용자 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- 필드 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- mongo db 연동 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+
+- 실사용자 접근 api 및 ui 개발 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- 스태프 접근 api 및 ui 개발 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
