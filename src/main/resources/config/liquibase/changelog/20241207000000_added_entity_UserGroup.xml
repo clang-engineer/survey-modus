@@ -25,7 +25,7 @@
             baseTableName="tbl_user_group"
             constraintName="fk_user_group__user_id"
             referencedColumnNames="id"
-            referencedTableName="jhi_user"/>
+            referencedTableName="tbl_user"/>
 
         <addForeignKeyConstraint baseColumnNames="group_id"
             baseTableName="tbl_user_group"

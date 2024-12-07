@@ -13,7 +13,7 @@
         The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
     -->
     <changeSet author="jhipster" id="00000000000001">
-        <createTable tableName="jhi_user">
+        <createTable tableName="tbl_user">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -44,13 +44,13 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <createTable tableName="jhi_authority">
+        <createTable tableName="tbl_authority">
             <column name="name" type="varchar(50)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
         </createTable>
 
-        <createTable tableName="jhi_user_authority">
+        <createTable tableName="tbl_user_authority">
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -59,30 +59,30 @@
             </column>
         </createTable>
         <dropDefaultValue columnDataType="${datetimeType}" columnName="created_date"
-            tableName="jhi_user"/>
+            tableName="tbl_user"/>
 
         <addForeignKeyConstraint baseColumnNames="authority_name"
-            baseTableName="jhi_user_authority"
+            baseTableName="tbl_user_authority"
             constraintName="fk_authority_name"
             referencedColumnNames="name"
-            referencedTableName="jhi_authority"/>
+            referencedTableName="tbl_authority"/>
 
         <addForeignKeyConstraint baseColumnNames="user_id"
-            baseTableName="jhi_user_authority"
+            baseTableName="tbl_user_authority"
             constraintName="fk_user_id"
             referencedColumnNames="id"
-            referencedTableName="jhi_user"/>
+            referencedTableName="tbl_user"/>
 
         <addNotNullConstraint columnDataType="varchar(60)"
             columnName="password_hash"
-            tableName="jhi_user"/>
+            tableName="tbl_user"/>
 
-        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="tbl_user_authority"/>
 
         <loadData
             file="config/liquibase/data/user.csv"
             separator=";"
-            tableName="jhi_user"
+            tableName="tbl_user"
             usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="activated" type="boolean"/>
@@ -91,23 +91,23 @@
         <loadData
             file="config/liquibase/data/authority.csv"
             separator=";"
-            tableName="jhi_authority"
+            tableName="tbl_authority"
             usePreparedStatements="true">
             <column name="name" type="string"/>
         </loadData>
         <loadData
             file="config/liquibase/data/user_authority.csv"
             separator=";"
-            tableName="jhi_user_authority"
+            tableName="tbl_user_authority"
             usePreparedStatements="true">
             <column name="user_id" type="numeric"/>
         </loadData>
     </changeSet>
 
     <changeSet author="jhipster" context="test" id="00000000000002">
-        <createTable tableName="jhi_date_time_wrapper">
+        <createTable tableName="tbl_date_time_wrapper">
             <column name="id" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="jhi_date_time_wrapperPK"/>
+                <constraints primaryKey="true" primaryKeyName="tbl_date_time_wrapperPK"/>
             </column>
             <column name="instant" type="timestamp"/>
             <column name="local_date_time" type="timestamp"/>

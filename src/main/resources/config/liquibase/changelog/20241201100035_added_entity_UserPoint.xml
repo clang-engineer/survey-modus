@@ -30,7 +30,7 @@
             baseTableName="user_point"
             constraintName="fk_user_point__user_id"
             referencedColumnNames="id"
-            referencedTableName="jhi_user"/>
+            referencedTableName="tbl_user"/>
 
         <addForeignKeyConstraint baseColumnNames="point_id"
             baseTableName="user_point"

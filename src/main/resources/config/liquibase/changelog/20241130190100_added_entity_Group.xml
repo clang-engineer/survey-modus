@@ -29,7 +29,7 @@
                                  baseTableName="tbl_group"
                                  constraintName="fk_group_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="tbl_user"/>
     </changeSet>
 
     <changeSet author="clang" context="faker" id="20241130110923-1-data">

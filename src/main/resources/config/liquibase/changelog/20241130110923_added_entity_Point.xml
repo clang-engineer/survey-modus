@@ -34,7 +34,7 @@
             baseTableName="point"
             constraintName="fk_point__user_id"
             referencedColumnNames="id"
-            referencedTableName="jhi_user"/>
+            referencedTableName="tbl_user"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
