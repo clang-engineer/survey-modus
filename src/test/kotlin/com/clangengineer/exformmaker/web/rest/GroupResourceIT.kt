@@ -12,15 +12,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
 import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 import javax.persistence.EntityManager
@@ -35,15 +32,6 @@ class GroupResourceIT {
 
     @Autowired
     private lateinit var groupMapper: GroupMapper
-
-    @Autowired
-    private lateinit var jacksonMessageConverter: MappingJackson2HttpMessageConverter
-
-    @Autowired
-    private lateinit var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
-
-    @Autowired
-    private lateinit var validator: Validator
 
     @Autowired
     private lateinit var em: EntityManager
@@ -64,7 +52,6 @@ class GroupResourceIT {
     fun createGroup() {
         val databaseSizeBeforeCreate = groupRepository.findAll().size
 
-        // Create the Group
         val groupDTO = groupMapper.toDto(group)
         restGroupMockMvc.perform(
             post(ENTITY_API_URL)
@@ -72,7 +59,6 @@ class GroupResourceIT {
                 .content(convertObjectToJsonBytes(groupDTO))
         ).andExpect(status().isCreated)
 
-        // Validate the Group in the database
         val groupList = groupRepository.findAll()
         assertThat(groupList).hasSize(databaseSizeBeforeCreate + 1)
         val testGroup = groupList[groupList.size - 1]
@@ -86,19 +72,17 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun createGroupWithExistingId() {
-        // Create the Group with an existing ID
         group.id = 1L
         val groupDTO = groupMapper.toDto(group)
 
         val databaseSizeBeforeCreate = groupRepository.findAll().size
-        // An entity with an existing ID cannot be created, so this API call must fail
+
         restGroupMockMvc.perform(
             post(ENTITY_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(groupDTO))
         ).andExpect(status().isBadRequest)
 
-        // Validate the Group in the database
         val groupList = groupRepository.findAll()
         assertThat(groupList).hasSize(databaseSizeBeforeCreate)
     }
@@ -108,10 +92,9 @@ class GroupResourceIT {
     @Throws(Exception::class)
     fun checkTitleIsRequired() {
         val databaseSizeBeforeTest = groupRepository.findAll().size
-        // set the field null
+
         group.title = null
 
-        // Create the Group, which fails.
         val groupDTO = groupMapper.toDto(group)
 
         restGroupMockMvc.perform(
@@ -128,10 +111,8 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroups() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList
         restGroupMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -145,13 +126,11 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getGroup() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
         val id = group.id
         assertNotNull(id)
 
-        // Get the group
         restGroupMockMvc.perform(get(ENTITY_API_URL_ID, group.id))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -165,7 +144,6 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getGroupsByIdFiltering() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
         val id = group.id
 
@@ -183,13 +161,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByTitleIsEqualToSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where title equals to DEFAULT_TITLE
         defaultGroupShouldBeFound("title.equals=$DEFAULT_TITLE")
 
-        // Get all the groupList where title equals to UPDATED_TITLE
         defaultGroupShouldNotBeFound("title.equals=$UPDATED_TITLE")
     }
 
@@ -197,13 +172,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByTitleIsInShouldWork() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where title in DEFAULT_TITLE or UPDATED_TITLE
         defaultGroupShouldBeFound("title.in=$DEFAULT_TITLE,$UPDATED_TITLE")
 
-        // Get all the groupList where title equals to UPDATED_TITLE
         defaultGroupShouldNotBeFound("title.in=$UPDATED_TITLE")
     }
 
@@ -211,13 +183,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByTitleIsNullOrNotNull() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where title is not null
         defaultGroupShouldBeFound("title.specified=true")
 
-        // Get all the groupList where title is null
         defaultGroupShouldNotBeFound("title.specified=false")
     }
 
@@ -225,13 +194,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByTitleContainsSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where title contains DEFAULT_TITLE
         defaultGroupShouldBeFound("title.contains=$DEFAULT_TITLE")
 
-        // Get all the groupList where title contains UPDATED_TITLE
         defaultGroupShouldNotBeFound("title.contains=$UPDATED_TITLE")
     }
 
@@ -239,13 +205,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByTitleNotContainsSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where title does not contain DEFAULT_TITLE
         defaultGroupShouldNotBeFound("title.doesNotContain=$DEFAULT_TITLE")
 
-        // Get all the groupList where title does not contain UPDATED_TITLE
         defaultGroupShouldBeFound("title.doesNotContain=$UPDATED_TITLE")
     }
 
@@ -253,13 +216,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByDescriptionIsEqualToSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where description equals to DEFAULT_DESCRIPTION
         defaultGroupShouldBeFound("description.equals=$DEFAULT_DESCRIPTION")
 
-        // Get all the groupList where description equals to UPDATED_DESCRIPTION
         defaultGroupShouldNotBeFound("description.equals=$UPDATED_DESCRIPTION")
     }
 
@@ -267,13 +227,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByDescriptionIsInShouldWork() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
         defaultGroupShouldBeFound("description.in=$DEFAULT_DESCRIPTION,$UPDATED_DESCRIPTION")
 
-        // Get all the groupList where description equals to UPDATED_DESCRIPTION
         defaultGroupShouldNotBeFound("description.in=$UPDATED_DESCRIPTION")
     }
 
@@ -281,13 +238,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByDescriptionIsNullOrNotNull() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where description is not null
         defaultGroupShouldBeFound("description.specified=true")
 
-        // Get all the groupList where description is null
         defaultGroupShouldNotBeFound("description.specified=false")
     }
 
@@ -295,13 +249,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByDescriptionContainsSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where description contains DEFAULT_DESCRIPTION
         defaultGroupShouldBeFound("description.contains=$DEFAULT_DESCRIPTION")
 
-        // Get all the groupList where description contains UPDATED_DESCRIPTION
         defaultGroupShouldNotBeFound("description.contains=$UPDATED_DESCRIPTION")
     }
 
@@ -309,13 +260,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByDescriptionNotContainsSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where description does not contain DEFAULT_DESCRIPTION
         defaultGroupShouldNotBeFound("description.doesNotContain=$DEFAULT_DESCRIPTION")
 
-        // Get all the groupList where description does not contain UPDATED_DESCRIPTION
         defaultGroupShouldBeFound("description.doesNotContain=$UPDATED_DESCRIPTION")
     }
 
@@ -323,13 +271,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByActivatedIsEqualToSomething() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where activated equals to DEFAULT_ACTIVATED
         defaultGroupShouldBeFound("activated.equals=$DEFAULT_ACTIVATED")
 
-        // Get all the groupList where activated equals to UPDATED_ACTIVATED
         defaultGroupShouldNotBeFound("activated.equals=$UPDATED_ACTIVATED")
     }
 
@@ -337,13 +282,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByActivatedIsInShouldWork() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where activated in DEFAULT_ACTIVATED or UPDATED_ACTIVATED
         defaultGroupShouldBeFound("activated.in=$DEFAULT_ACTIVATED,$UPDATED_ACTIVATED")
 
-        // Get all the groupList where activated equals to UPDATED_ACTIVATED
         defaultGroupShouldNotBeFound("activated.in=$UPDATED_ACTIVATED")
     }
 
@@ -351,13 +293,10 @@ class GroupResourceIT {
     @Transactional
     @Throws(Exception::class)
     fun getAllGroupsByActivatedIsNullOrNotNull() {
-        // Initialize the database
         groupRepository.saveAndFlush(group)
 
-        // Get all the groupList where activated is not null
         defaultGroupShouldBeFound("activated.specified=true")
 
-        // Get all the groupList where activated is null
         defaultGroupShouldNotBeFound("activated.specified=false")
     }
 
@@ -378,10 +317,8 @@ class GroupResourceIT {
         groupRepository.saveAndFlush(group)
         val userId = user?.id
 
-        // Get all the pointList where user equals to userId
         defaultGroupShouldBeFound("userId.equals=$userId")
 
-        // Get all the pointList where user equals to (userId?.plus(1))
         defaultGroupShouldNotBeFound("userId.equals=${(userId?.plus(1))}")
     }
 
@@ -395,16 +332,12 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
 
-        // Check, that the count call also returns 1
         restGroupMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"))
     }
 
-    /**
-     * Executes the search, and checks that the default entity is not returned
-     */
     @Throws(Exception::class)
     private fun defaultGroupShouldNotBeFound(filter: String) {
         restGroupMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc&$filter"))
@@ -413,7 +346,6 @@ class GroupResourceIT {
             .andExpect(jsonPath("$").isArray)
             .andExpect(jsonPath("$").isEmpty)
 
-        // Check, that the count call also returns 0
         restGroupMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -448,7 +380,6 @@ class GroupResourceIT {
                 .content(convertObjectToJsonBytes(groupDTO))
         ).andExpect(status().isOk)
 
-        // Validate the Group in the database
         val groupList = groupRepository.findAll()
         assertThat(groupList).hasSize(databaseSizeBeforeUpdate)
         val testGroup = groupList[groupList.size - 1]
@@ -512,7 +443,6 @@ class GroupResourceIT {
         )
             .andExpect(status().isMethodNotAllowed)
 
-        // Validate the Group in the database
         val groupList = groupRepository.findAll()
         assertThat(groupList).hasSize(databaseSizeBeforeUpdate)
     }

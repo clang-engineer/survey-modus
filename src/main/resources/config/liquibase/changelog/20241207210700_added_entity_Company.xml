@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="clang" id="20241207210700-1">
+        <createTable tableName="tbl_company">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="activated" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="clang" id="20241207210700-2">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="tbl_company"
+                                 constraintName="fk_company_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tbl_user"/>
+    </changeSet>
+
+    <changeSet author="clang" context="faker" id="20241207210700-1-data">
+        <loadData
+            file="config/liquibase/fake-data/company.csv"
+            separator=";"
+            tableName="tbl_company"
+            usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
+            <column name="activated" type="boolean"/>
+            <column name="user_id" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
