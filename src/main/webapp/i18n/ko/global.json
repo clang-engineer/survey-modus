@@ -8,9 +8,10 @@
       "entities": {
         "main": "Entities",
         "point": "Point",
-        "group": "Group ",
         "userPoint": "User Point",
+        "group": "Group ",
         "userGroup": "User Group",
+        "company": "Company ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
