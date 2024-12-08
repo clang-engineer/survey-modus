@@ -1,12 +1,10 @@
-import dashboard from './dashboard';
-import application from './application';
-import other from './other';
 import { NavItemType } from 'app/berry/types';
+import administration from 'app/berry/menu-items/administration';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems: { items: NavItemType[] } = {
-  items: [dashboard, application, other],
+  items: [administration],
 };
 
 export default menuItems;
