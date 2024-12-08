@@ -233,7 +233,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }: NavGroupProps) => {
               sx={{ mr: 1 }}
               primary={
                 <Typography variant={selectedID === currentItem.id ? 'h5' : 'body1'} color="inherit">
-                  {currentItem.id === lastItemId ? <FormattedMessage id="more-items" /> : currentItem.title}
+                  {currentItem.id === lastItemId ? 'more-items' : currentItem.title}
                 </Typography>
               }
             />

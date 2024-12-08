@@ -261,13 +261,7 @@ const ProfileSection = () => {
                             <ListItemIcon>
                               <IconSettings stroke={1.5} size="20px" />
                             </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Typography variant="body2">
-                                  <FormattedMessage id="account-settings" />
-                                </Typography>
-                              }
-                            />
+                            <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                           </ListItemButton>
                           <ListItemButton
                             sx={{ borderRadius: `${borderRadius}px` }}
@@ -283,9 +277,7 @@ const ProfileSection = () => {
                               primary={
                                 <Grid container spacing={1} justifyContent="space-between">
                                   <Grid item>
-                                    <Typography variant="body2">
-                                      <FormattedMessage id="social-profile" />
-                                    </Typography>
+                                    <Typography variant="body2">social-profile</Typography>
                                   </Grid>
                                   <Grid item>
                                     <Chip
@@ -305,13 +297,7 @@ const ProfileSection = () => {
                             <ListItemIcon>
                               <IconLogout stroke={1.5} size="20px" />
                             </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Typography variant="body2">
-                                  <FormattedMessage id="logout" />
-                                </Typography>
-                              }
-                            />
+                            <ListItemText primary={<Typography variant="body2">logout</Typography>} />
                           </ListItemButton>
                         </List>
                       </Box>

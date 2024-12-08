@@ -26,7 +26,7 @@ export const Menu = () => {
     return subChildrenLis?.map((subList: NavItemType) => {
       return {
         ...subList,
-        title: <FormattedMessage id={`${subList.title}`} />,
+        title: subList.title,
         // @ts-ignore
         icon: icons[subList.icon],
       };
@@ -36,7 +36,7 @@ export const Menu = () => {
   const menuItem = (subList: NavItemType) => {
     let list: NavItemType = {
       ...subList,
-      title: <FormattedMessage id={`${subList.title}`} />,
+      title: subList.title,
       // @ts-ignore
       icon: icons[subList.icon],
     };
@@ -53,7 +53,7 @@ export const Menu = () => {
 
   const menuList: NavItemType = {
     ...menu,
-    title: <FormattedMessage id={`${menu.title}`} />,
+    title: menu.title,
     // @ts-ignore
     icon: icons[menu.icon],
     children: ChildrenList,
