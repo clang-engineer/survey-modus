@@ -69,7 +69,7 @@
 - [x] 사용자 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 사용자 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- [ ] 카테고리 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [x] 카테고리 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [ ] 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [ ] 사용자 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [ ] 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
