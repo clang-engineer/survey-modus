@@ -9,10 +9,11 @@
         "main": "Entities",
         "point": "Point",
         "userPoint": "User Point ",
-        "group": "group ",
+        "group": "Group ",
         "userGroup": "User Group ",
-        "company": "company ",
+        "company": "Company ",
         "userCompany": "User Company ",
+        "category": "Category ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

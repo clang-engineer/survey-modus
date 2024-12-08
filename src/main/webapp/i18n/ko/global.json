@@ -13,6 +13,7 @@
         "userGroup": "User Group",
         "company": "Company ",
         "userCompany": "User Company",
+        "category": "Category ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
