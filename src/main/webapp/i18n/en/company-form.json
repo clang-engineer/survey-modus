@@ -1,0 +1,25 @@
+{
+  "exformmakerApp": {
+    "companyForm": {
+      "home": {
+        "title": "Company Forms",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Company Form",
+        "createOrEditLabel": "Create or edit a Company Form",
+        "notFound": "No Company Forms found"
+      },
+      "created": "A new Company Form is created with identifier {{ param }}",
+      "updated": "A Company Form is updated with identifier {{ param }}",
+      "deleted": "A Company Form is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Company Form {{ id }}?"
+      },
+      "detail": {
+        "title": "Company Form"
+      },
+      "id": "ID",
+      "company": "Company",
+      "form": "Form"
+    }
+  }
+}
