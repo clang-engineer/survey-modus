@@ -29,4 +29,5 @@
     <include file="config/liquibase/changelog/20241207213500_added_entity_GroupCompany.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241208100000_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241208110000_added_entity_Form.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241208160000_added_entity_CompanyForm.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
