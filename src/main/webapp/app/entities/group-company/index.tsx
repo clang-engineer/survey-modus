@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom';
 
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
-import UserPoint from './user-company';
-import UserCompanyDetail from './user-company-detail';
-import UserCompanyUpdate from './user-company-update';
-import UserCompanyDeleteDialog from './user-company-delete-dialog';
+import UserPoint from './group-company';
+import UserCompanyDetail from './group-company-detail';
+import UserCompanyUpdate from './group-company-update';
+import UserCompanyDeleteDialog from './group-company-delete-dialog';
 
 const UserPointRoutes = () => (
   <ErrorBoundaryRoutes>

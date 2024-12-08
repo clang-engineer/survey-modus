@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { getSortState, JhiItemCount, JhiPagination, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntities } from './group-company.reducer';
 
-import { IUserCompany } from 'app/shared/model/user-company.model';
-import { getEntities } from './user-company.reducer';
-
-export const UserCompany = () => {
+export const GroupCompany = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -22,9 +18,9 @@ export const UserCompany = () => {
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
   );
 
-  const userCompanyList = useAppSelector(state => state.userCompany.entities);
-  const loading = useAppSelector(state => state.userCompany.loading);
-  const totalItems = useAppSelector(state => state.userCompany.totalItems);
+  const groupCompanyList = useAppSelector(state => state.groupCompany.entities);
+  const loading = useAppSelector(state => state.groupCompany.loading);
+  const totalItems = useAppSelector(state => state.groupCompany.totalItems);
 
   const getAllEntities = () => {
     dispatch(
@@ -83,50 +79,52 @@ export const UserCompany = () => {
 
   return (
     <div>
-      <h2 id="user-company-heading" data-cy="UserCompanyHeading">
-        <Translate contentKey="exformmakerApp.userCompany.home.title">User Companys</Translate>
+      <h2 id="group-company-heading" data-cy="UserCompanyHeading">
+        <Translate contentKey="exformmakerApp.groupCompany.home.title">User Companys</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="exformmakerApp.userCompany.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="exformmakerApp.groupCompany.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/user-company/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/group-company/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="exformmakerApp.userCompany.home.createLabel">Create new User Company</Translate>
+            <Translate contentKey="exformmakerApp.groupCompany.home.createLabel">Create new User Company</Translate>
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
-        {userCompanyList && userCompanyList.length > 0 ? (
+        {groupCompanyList && groupCompanyList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="exformmakerApp.userCompany.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupCompany.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="exformmakerApp.userCompany.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupCompany.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="exformmakerApp.userCompany.company">Company</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupCompany.company">Company</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {userCompanyList.map((userCompany, i) => (
+              {groupCompanyList.map((groupCompany, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/user-company/${userCompany.id}`} color="link" size="sm">
-                      {userCompany.id}
+                    <Button tag={Link} to={`/group-company/${groupCompany.id}`} color="link" size="sm">
+                      {groupCompany.id}
                     </Button>
                   </td>
-                  <td>{userCompany.user ? userCompany.user.login : ''}</td>
-                  <td>{userCompany.company ? <Link to={`/company/${userCompany.company.id}`}>{userCompany.company.title}</Link> : ''}</td>
+                  <td>{groupCompany.group ? groupCompany.group.title : ''}</td>
+                  <td>
+                    {groupCompany.company ? <Link to={`/company/${groupCompany.company.id}`}>{groupCompany.company.title}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-company flex-btn-company-container">
-                      <Button tag={Link} to={`/user-company/${userCompany.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/group-company/${groupCompany.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -134,7 +132,7 @@ export const UserCompany = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-company/${userCompany.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/group-company/${groupCompany.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -146,7 +144,7 @@ export const UserCompany = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-company/${userCompany.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/group-company/${groupCompany.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"
@@ -165,13 +163,13 @@ export const UserCompany = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="exformmakerApp.userCompany.home.notFound">No User Companys found</Translate>
+              <Translate contentKey="exformmakerApp.groupCompany.home.notFound">No User Companys found</Translate>
             </div>
           )
         )}
       </div>
       {totalItems ? (
-        <div className={userCompanyList && userCompanyList.length > 0 ? '' : 'd-none'}>
+        <div className={groupCompanyList && groupCompanyList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
@@ -192,4 +190,4 @@ export const UserCompany = () => {
   );
 };
 
-export default UserCompany;
+export default GroupCompany;

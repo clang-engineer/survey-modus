@@ -1,10 +1,10 @@
 package com.clangengineer.exformmaker.web.rest
 
-import com.clangengineer.exformmaker.repository.UserCompanyRepository
-import com.clangengineer.exformmaker.service.UserCompanyQueryService
-import com.clangengineer.exformmaker.service.UserCompanyService
-import com.clangengineer.exformmaker.service.criteria.UserCompanyCriteria
-import com.clangengineer.exformmaker.service.dto.UserCompanyDTO
+import com.clangengineer.exformmaker.repository.GroupCompanyRepository
+import com.clangengineer.exformmaker.service.GroupCompanyQueryService
+import com.clangengineer.exformmaker.service.GroupCompanyService
+import com.clangengineer.exformmaker.service.criteria.GroupCompanyCriteria
+import com.clangengineer.exformmaker.service.dto.GroupCompanyDTO
 import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -24,9 +24,9 @@ import javax.validation.constraints.NotNull
 @RestController
 @RequestMapping("/api")
 class UserCompanyResource(
-    private val userCompanyService: UserCompanyService,
-    private val userCompanyRepository: UserCompanyRepository,
-    private val userCompanyQueryService: UserCompanyQueryService,
+    private val groupCompanyService: GroupCompanyService,
+    private val groupCompanyRepository: GroupCompanyRepository,
+    private val groupCompanyQueryService: GroupCompanyQueryService,
 ) {
 
     private val log = LoggerFactory.getLogger(javaClass)
@@ -38,105 +38,105 @@ class UserCompanyResource(
     @Value("\${jhipster.clientApp.name}")
     private var applicationName: String? = null
 
-    @PostMapping("/user-companys")
-    fun createUserCompany(@Valid @RequestBody userCompanyDTO: UserCompanyDTO): ResponseEntity<UserCompanyDTO> {
-        log.debug("REST request to save UserCompany : $userCompanyDTO")
-        if (userCompanyDTO.id != null) {
+    @PostMapping("/group-companys")
+    fun createUserCompany(@Valid @RequestBody groupCompanyDTO: GroupCompanyDTO): ResponseEntity<GroupCompanyDTO> {
+        log.debug("REST request to save GroupCompany : $groupCompanyDTO")
+        if (groupCompanyDTO.id != null) {
             throw BadRequestAlertException(
                 "A new userCompany cannot already have an ID",
                 ENTITY_NAME, "idexists"
             )
         }
-        val result = userCompanyService.save(userCompanyDTO)
-        return ResponseEntity.created(URI("/api/user-companys/${result.id}"))
+        val result = groupCompanyService.save(groupCompanyDTO)
+        return ResponseEntity.created(URI("/api/group-companys/${result.id}"))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.id.toString()))
             .body(result)
     }
 
-    @PutMapping("/user-companys/{id}")
+    @PutMapping("/group-companys/{id}")
     fun updateUserCompany(
         @PathVariable(value = "id", required = false) id: Long,
-        @Valid @RequestBody userCompanyDTO: UserCompanyDTO
-    ): ResponseEntity<UserCompanyDTO> {
-        log.debug("REST request to update UserCompany : {}, {}", id, userCompanyDTO)
-        if (userCompanyDTO.id == null) {
+        @Valid @RequestBody groupCompanyDTO: GroupCompanyDTO
+    ): ResponseEntity<GroupCompanyDTO> {
+        log.debug("REST request to update GroupCompany : {}, {}", id, groupCompanyDTO)
+        if (groupCompanyDTO.id == null) {
             throw BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull")
         }
 
-        if (!Objects.equals(id, userCompanyDTO.id)) {
+        if (!Objects.equals(id, groupCompanyDTO.id)) {
             throw BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid")
         }
 
-        if (!userCompanyRepository.existsById(id)) {
+        if (!groupCompanyRepository.existsById(id)) {
             throw BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound")
         }
 
-        val result = userCompanyService.update(userCompanyDTO)
+        val result = groupCompanyService.update(groupCompanyDTO)
         return ResponseEntity.ok()
             .headers(
                 HeaderUtil.createEntityUpdateAlert(
                     applicationName, true, ENTITY_NAME,
-                    userCompanyDTO.id.toString()
+                    groupCompanyDTO.id.toString()
                 )
             )
             .body(result)
     }
 
-    @PatchMapping(value = ["/user-companys/{id}"], consumes = ["application/json", "application/merge-patch+json"])
+    @PatchMapping(value = ["/group-companys/{id}"], consumes = ["application/json", "application/merge-patch+json"])
     @Throws(URISyntaxException::class)
     fun partialUpdateUserCompany(
         @PathVariable(value = "id", required = false) id: Long,
-        @NotNull @RequestBody userCompanyDTO: UserCompanyDTO
-    ): ResponseEntity<UserCompanyDTO> {
-        log.debug("REST request to partial update UserCompany partially : {}, {}", id, userCompanyDTO)
-        if (userCompanyDTO.id == null) {
+        @NotNull @RequestBody groupCompanyDTO: GroupCompanyDTO
+    ): ResponseEntity<GroupCompanyDTO> {
+        log.debug("REST request to partial update GroupCompany partially : {}, {}", id, groupCompanyDTO)
+        if (groupCompanyDTO.id == null) {
             throw BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull")
         }
-        if (!Objects.equals(id, userCompanyDTO.id)) {
+        if (!Objects.equals(id, groupCompanyDTO.id)) {
             throw BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid")
         }
 
-        if (!userCompanyRepository.existsById(id)) {
+        if (!groupCompanyRepository.existsById(id)) {
             throw BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound")
         }
 
-        val result = userCompanyService.partialUpdate(userCompanyDTO)
+        val result = groupCompanyService.partialUpdate(groupCompanyDTO)
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCompanyDTO.id.toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupCompanyDTO.id.toString())
         )
     }
 
-    @GetMapping("/user-companys") fun getAllUserCompanys(
-        criteria: UserCompanyCriteria,
+    @GetMapping("/group-companys") fun getAllUserCompanys(
+        criteria: GroupCompanyCriteria,
         @org.springdoc.api.annotations.ParameterObject pageable: Pageable
 
-    ): ResponseEntity<MutableList<UserCompanyDTO>> {
+    ): ResponseEntity<MutableList<GroupCompanyDTO>> {
         log.debug("REST request to get UserCompanys by criteria: $criteria")
-        val page = userCompanyQueryService.findByCriteria(criteria, pageable)
+        val page = groupCompanyQueryService.findByCriteria(criteria, pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page)
         return ResponseEntity.ok().headers(headers).body(page.content)
     }
 
-    @GetMapping("/user-companys/count")
-    fun countUserCompanys(criteria: UserCompanyCriteria): ResponseEntity<Long> {
+    @GetMapping("/group-companys/count")
+    fun countUserCompanys(criteria: GroupCompanyCriteria): ResponseEntity<Long> {
         log.debug("REST request to count UserCompanys by criteria: $criteria")
-        return ResponseEntity.ok().body(userCompanyQueryService.countByCriteria(criteria))
+        return ResponseEntity.ok().body(groupCompanyQueryService.countByCriteria(criteria))
     }
 
-    @GetMapping("/user-companys/{id}")
-    fun getUserCompany(@PathVariable id: Long): ResponseEntity<UserCompanyDTO> {
-        log.debug("REST request to get UserCompany : $id")
-        val userCompanyDTO = userCompanyService.findOne(id)
+    @GetMapping("/group-companys/{id}")
+    fun getUserCompany(@PathVariable id: Long): ResponseEntity<GroupCompanyDTO> {
+        log.debug("REST request to get GroupCompany : $id")
+        val userCompanyDTO = groupCompanyService.findOne(id)
         return ResponseUtil.wrapOrNotFound(userCompanyDTO)
     }
 
-    @DeleteMapping("/user-companys/{id}")
+    @DeleteMapping("/group-companys/{id}")
     fun deleteUserCompany(@PathVariable id: Long): ResponseEntity<Void> {
-        log.debug("REST request to delete UserCompany : $id")
+        log.debug("REST request to delete GroupCompany : $id")
 
-        userCompanyService.delete(id)
+        groupCompanyService.delete(id)
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build()
     }

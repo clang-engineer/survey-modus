@@ -9,12 +9,12 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
   partialUpdateEntity,
   reset,
-} from './user-company.reducer';
+  updateEntity,
+} from './group-company.reducer';
 import { EntityState } from 'app/shared/reducers/reducer.utils';
-import { IUserCompany, defaultValue } from 'app/shared/model/user-company.model';
+import { defaultValue, IGroupCompany } from 'app/shared/model/group-company.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -25,7 +25,7 @@ describe('Entities reducer tests', () => {
     }
   }
 
-  const initialState: EntityState<IUserCompany> = {
+  const initialState: EntityState<IGroupCompany> = {
     loading: false,
     errorMessage: null,
     entities: [],

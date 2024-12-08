@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import { createAsyncThunk, isFulfilled, isPending } from '@reduxjs/toolkit';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
-import { IUserCompany, defaultValue } from 'app/shared/model/user-company.model';
+import { createEntitySlice, EntityState, IQueryParams, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
+import { defaultValue, IGroupCompany } from 'app/shared/model/group-company.model';
 
-const initialState: EntityState<IUserCompany> = {
+const initialState: EntityState<IGroupCompany> = {
   loading: false,
   errorMessage: null,
   entities: [],
@@ -15,28 +15,28 @@ const initialState: EntityState<IUserCompany> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/user-companys';
+const apiUrl = 'api/group-companys';
 
 // Actions
 
-export const getEntities = createAsyncThunk('userCompany/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('groupCompany/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
-  return axios.get<IUserCompany[]>(requestUrl);
+  return axios.get<IGroupCompany[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk(
-  'userCompany/fetch_entity',
+  'groupCompany/fetch_entity',
   async (id: string | number) => {
     const requestUrl = `${apiUrl}/${id}`;
-    return axios.get<IUserCompany>(requestUrl);
+    return axios.get<IGroupCompany>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
 export const createEntity = createAsyncThunk(
-  'userCompany/create_entity',
-  async (entity: IUserCompany, thunkAPI) => {
-    const result = await axios.post<IUserCompany>(apiUrl, cleanEntity(entity));
+  'groupCompany/create_entity',
+  async (entity: IGroupCompany, thunkAPI) => {
+    const result = await axios.post<IGroupCompany>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -44,9 +44,9 @@ export const createEntity = createAsyncThunk(
 );
 
 export const updateEntity = createAsyncThunk(
-  'userCompany/update_entity',
-  async (entity: IUserCompany, thunkAPI) => {
-    const result = await axios.put<IUserCompany>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'groupCompany/update_entity',
+  async (entity: IGroupCompany, thunkAPI) => {
+    const result = await axios.put<IGroupCompany>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -54,9 +54,9 @@ export const updateEntity = createAsyncThunk(
 );
 
 export const partialUpdateEntity = createAsyncThunk(
-  'userCompany/partial_update_entity',
-  async (entity: IUserCompany, thunkAPI) => {
-    const result = await axios.patch<IUserCompany>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'groupCompany/partial_update_entity',
+  async (entity: IGroupCompany, thunkAPI) => {
+    const result = await axios.patch<IGroupCompany>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -64,10 +64,10 @@ export const partialUpdateEntity = createAsyncThunk(
 );
 
 export const deleteEntity = createAsyncThunk(
-  'userCompany/delete_entity',
+  'groupCompany/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IUserCompany>(requestUrl);
+    const result = await axios.delete<IGroupCompany>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -76,8 +76,8 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const UserCompanySlice = createEntitySlice({
-  name: 'userCompany',
+export const GroupCompanySlice = createEntitySlice({
+  name: 'groupCompany',
   initialState,
   extraReducers(builder) {
     builder
@@ -119,7 +119,7 @@ export const UserCompanySlice = createEntitySlice({
   },
 });
 
-export const { reset } = UserCompanySlice.actions;
+export const { reset } = GroupCompanySlice.actions;
 
 // Reducer
-export default UserCompanySlice.reducer;
+export default GroupCompanySlice.reducer;

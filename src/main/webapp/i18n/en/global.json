@@ -12,7 +12,7 @@
         "group": "Group ",
         "groupUser": "Group User ",
         "company": "Company ",
-        "userCompany": "User Company ",
+        "groupCompany": "Group Company ",
         "category": "Category ",
         "form": "Form ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"

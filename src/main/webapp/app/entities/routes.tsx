@@ -8,7 +8,7 @@ import UserPoint from './user-point';
 import Group from './group';
 import GroupUser from './group-user';
 import Company from './company';
-import UserCompany from './user-company';
+import UserCompany from './group-company';
 import Category from './category';
 import Form from './form';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
@@ -23,7 +23,7 @@ export default () => {
         <Route path="group/*" element={<Group />} />
         <Route path="group-user/*" element={<GroupUser />} />
         <Route path="company/*" element={<Company />} />
-        <Route path="user-company/*" element={<UserCompany />} />
+        <Route path="group-company/*" element={<UserCompany />} />
         <Route path="category/*" element={<Category />} />
         <Route path="form/*" element={<Form />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}

@@ -1,17 +1,16 @@
 package com.clangengineer.exformmaker.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
 import javax.persistence.*
-import javax.validation.constraints.*
+import javax.validation.constraints.NotNull
 
 @Entity
-@Table(name = "tbl_user_company ")
+@Table(name = "tbl_group_company")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-data class UserCompany(
+data class GroupCompany(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -21,23 +20,17 @@ data class UserCompany(
 
     @ManyToOne(optional = false)
     @NotNull
-    var user: User? = null
+    var group: Group? = null
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(
-        value = [
-            "user",
-        ],
-        allowSetters = true
-    )
     var company: Company? = null
 
-    fun user(user: User?): UserCompany {
-        this.user = user
+    fun group(group: Group?): GroupCompany {
+        this.group = group
         return this
     }
-    fun company(company: Company?): UserCompany {
+    fun company(company: Company?): GroupCompany {
         this.company = company
         return this
     }
@@ -50,12 +43,12 @@ data class UserCompany(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is UserCompany) return false
+        if (other !is GroupCompany) return false
         return id != null && other.id != null && id == other.id
     }
 
     override fun toString(): String {
-        return "UserCompany{" +
+        return "GroupCompany{" +
             "id=" + id +
             "}"
     }

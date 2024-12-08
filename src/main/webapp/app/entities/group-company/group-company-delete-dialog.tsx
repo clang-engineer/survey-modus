@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './user-company.reducer';
+import { deleteEntity, getEntity } from './group-company.reducer';
 
-export const UserCompanyDeleteDialog = () => {
+export const GroupCompanyDeleteDialog = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -21,11 +21,11 @@ export const UserCompanyDeleteDialog = () => {
     setLoadModal(true);
   }, []);
 
-  const userCompanyEntity = useAppSelector(state => state.userCompany.entity);
-  const updateSuccess = useAppSelector(state => state.userCompany.updateSuccess);
+  const groupCompanyEntity = useAppSelector(state => state.groupCompany.entity);
+  const updateSuccess = useAppSelector(state => state.groupCompany.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-company' + location.search);
+    navigate('/group-company' + location.search);
   };
 
   useEffect(() => {
@@ -36,17 +36,17 @@ export const UserCompanyDeleteDialog = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(userCompanyEntity.id));
+    dispatch(deleteEntity(groupCompanyEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="userCompanyDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="groupCompanyDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.userCompany.delete.question">
-        <Translate contentKey="exformmakerApp.userCompany.delete.question" interpolate={{ id: userCompanyEntity.id }}>
-          Are you sure you want to delete this UserCompany?
+      <ModalBody id="exformmakerApp.groupCompany.delete.question">
+        <Translate contentKey="exformmakerApp.groupCompany.delete.question" interpolate={{ id: groupCompanyEntity.id }}>
+          Are you sure you want to delete this GroupCompany?
         </Translate>
       </ModalBody>
       <ModalFooter>
@@ -55,7 +55,7 @@ export const UserCompanyDeleteDialog = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="jhi-confirm-delete-userCompany" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="jhi-confirm-delete-groupCompany" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -65,4 +65,4 @@ export const UserCompanyDeleteDialog = () => {
   );
 };
 
-export default UserCompanyDeleteDialog;
+export default GroupCompanyDeleteDialog;

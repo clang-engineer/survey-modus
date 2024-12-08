@@ -22,8 +22,8 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/company">
         <Translate contentKey="global.menu.entities.company" />
       </MenuItem>
-      <MenuItem icon="asterisk" to="/user-company">
-        <Translate contentKey="global.menu.entities.userCompany" />
+      <MenuItem icon="asterisk" to="/group-company">
+        <Translate contentKey="global.menu.entities.groupCompany" />
       </MenuItem>
       <MenuItem icon="asterisk" to="/category">
         <Translate contentKey="global.menu.entities.category" />
