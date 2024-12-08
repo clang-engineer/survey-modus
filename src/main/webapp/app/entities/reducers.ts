@@ -5,6 +5,7 @@ import userGroup from 'app/entities/user-group/user-group.reducer';
 import company from 'app/entities/company/company.reducer';
 import userCompany from 'app/entities/user-company/user-company.reducer';
 import category from 'app/entities/category/category.reducer';
+import form from 'app/entities/form/form.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -15,6 +16,7 @@ const entitiesReducers = {
   company,
   userCompany,
   category,
+  form,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 
