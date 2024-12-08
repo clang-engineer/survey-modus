@@ -1,4 +1,7 @@
 // eslint-disable-next-line
+import * as createPalette from '@mui/material/styles/createPalette';
+import { PaletteColorOptions } from '@mui/material/styles/createPalette';
+import { PaletteColor } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles/createPalette' {
   interface PaletteColor {
@@ -28,4 +31,8 @@ declare module '@mui/material/styles/createPalette' {
     dark: PaletteColor;
     icon: IconPaletteColor;
   }
+
+  interface IconPaletteColorOptions {}
+
+  interface IconPaletteColor {}
 }
