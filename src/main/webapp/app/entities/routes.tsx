@@ -6,7 +6,7 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import Point from './point';
 import UserPoint from './user-point';
 import Group from './group';
-import UserGroup from './user-group';
+import GroupUser from './group-user';
 import Company from './company';
 import UserCompany from './user-company';
 import Category from './category';
@@ -21,7 +21,7 @@ export default () => {
         <Route path="point/*" element={<Point/>}/>
         <Route path="user-point/*" element={<UserPoint />} />
         <Route path="group/*" element={<Group />} />
-        <Route path="user-group/*" element={<UserGroup />} />
+        <Route path="group-user/*" element={<GroupUser />} />
         <Route path="company/*" element={<Company />} />
         <Route path="user-company/*" element={<UserCompany />} />
         <Route path="category/*" element={<Category />} />

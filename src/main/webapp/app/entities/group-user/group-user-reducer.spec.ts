@@ -9,12 +9,12 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
   partialUpdateEntity,
   reset,
-} from './user-group.reducer';
+  updateEntity,
+} from './group-user.reducer';
 import { EntityState } from 'app/shared/reducers/reducer.utils';
-import { IUserGroup, defaultValue } from 'app/shared/model/user-group.model';
+import { defaultValue, IGroupUser } from 'app/shared/model/group-user.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -25,7 +25,7 @@ describe('Entities reducer tests', () => {
     }
   }
 
-  const initialState: EntityState<IUserGroup> = {
+  const initialState: EntityState<IGroupUser> = {
     loading: false,
     errorMessage: null,
     entities: [],

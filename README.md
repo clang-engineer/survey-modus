@@ -65,10 +65,10 @@
 
 ## 메타 및 관리자 ui 개발 &nbsp;&nbsp; ![in progress](https://progress-bar.xyz/30/?title=in%20progress)
 
-- [x] 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- [x] 사용자 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- [x] 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- [x] 사용자 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- [x] 그룹관리(Group) &nbsp;&nbsp; ![100%](https://progress-bar.xyz100)
+- [x] 사용자 그룹관리(GroupUser) &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- [x] 회사관리(Company) &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- [x] 그룹 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 카테고리 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [ ] 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [ ] 사용자 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)

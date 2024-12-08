@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './user-group.reducer';
+import { deleteEntity, getEntity } from './group-user.reducer';
 
-export const UserGroupDeleteDialog = () => {
+export const GroupUserDeleteDialog = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -21,11 +21,11 @@ export const UserGroupDeleteDialog = () => {
     setLoadModal(true);
   }, []);
 
-  const userGroupEntity = useAppSelector(state => state.userGroup.entity);
-  const updateSuccess = useAppSelector(state => state.userGroup.updateSuccess);
+  const groupUserEntity = useAppSelector(state => state.groupUser.entity);
+  const updateSuccess = useAppSelector(state => state.groupUser.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-group' + location.search);
+    navigate('/group-user' + location.search);
   };
 
   useEffect(() => {
@@ -36,17 +36,17 @@ export const UserGroupDeleteDialog = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(userGroupEntity.id));
+    dispatch(deleteEntity(groupUserEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="userGroupDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="groupUserDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.userGroup.delete.question">
-        <Translate contentKey="exformmakerApp.userGroup.delete.question" interpolate={{ id: userGroupEntity.id }}>
-          Are you sure you want to delete this UserGroup?
+      <ModalBody id="exformmakerApp.groupUser.delete.question">
+        <Translate contentKey="exformmakerApp.groupUser.delete.question" interpolate={{ id: groupUserEntity.id }}>
+          Are you sure you want to delete this groupUser?
         </Translate>
       </ModalBody>
       <ModalFooter>
@@ -55,7 +55,7 @@ export const UserGroupDeleteDialog = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="jhi-confirm-delete-userGroup" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="jhi-confirm-delete-groupUser" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -65,4 +65,4 @@ export const UserGroupDeleteDialog = () => {
   );
 };
 
-export default UserGroupDeleteDialog;
+export default GroupUserDeleteDialog;

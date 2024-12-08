@@ -1,10 +1,10 @@
 import { IUser } from 'app/shared/model/user.model';
 import { IGroup } from 'app/shared/model/group.model';
 
-export interface IUserGroup {
+export interface IGroupUser {
   id?: number;
-  user?: IUser;
   group?: IGroup;
+  user?: IUser;
 }
 
-export const defaultValue: Readonly<IUserGroup> = {};
+export const defaultValue: Readonly<IGroupUser> = {};

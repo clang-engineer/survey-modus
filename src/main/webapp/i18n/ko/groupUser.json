@@ -1,0 +1,25 @@
+{
+  "exformmakerApp": {
+    "groupUser": {
+      "home": {
+        "title": "Group Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Group User",
+        "createOrEditLabel": "Create or edit a Group User",
+        "notFound": "No Group Users found"
+      },
+      "created": "A new Group User is created with identifier {{ param }}",
+      "updated": "A Group User is updated with identifier {{ param }}",
+      "deleted": "A Group User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Group User {{ id }}?"
+      },
+      "detail": {
+        "title": "Group User"
+      },
+      "id": "ID",
+      "user": "User",
+      "group": "Group"
+    }
+  }
+}

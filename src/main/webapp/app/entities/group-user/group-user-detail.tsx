@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { getEntity } from './user-group.reducer';
+import { getEntity } from './group-user.reducer';
 
-export const UserGroupDetail = () => {
+export const GroupUserDetail = () => {
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
@@ -18,12 +16,12 @@ export const UserGroupDetail = () => {
     dispatch(getEntity(id));
   }, []);
 
-  const userGroupEntity = useAppSelector(state => state.userGroup.entity);
+  const groupUserEntity = useAppSelector(state => state.groupUser.entity);
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="userGroupDetailsHeading">
-          <Translate contentKey="exformmakerApp.userGroup.detail.title">UserGroup</Translate>
+        <h2 data-cy="groupUserDetailsHeading">
+          <Translate contentKey="exformmakerApp.groupUser.detail.title">groupUser</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -31,24 +29,24 @@ export const UserGroupDetail = () => {
               <Translate contentKey="global.field.id">ID</Translate>
             </span>
           </dt>
-          <dd>{userGroupEntity.id}</dd>
+          <dd>{groupUserEntity.id}</dd>
           <dt>
-            <Translate contentKey="exformmakerApp.userGroup.user">User</Translate>
+            <Translate contentKey="exformmakerApp.groupUser.user">User</Translate>
           </dt>
-          <dd>{userGroupEntity.user ? userGroupEntity.user.login : ''}</dd>
+          <dd>{groupUserEntity.user ? groupUserEntity.user.login : ''}</dd>
           <dt>
-            <Translate contentKey="exformmakerApp.userGroup.group">Group</Translate>
+            <Translate contentKey="exformmakerApp.groupUser.group">Group</Translate>
           </dt>
-          <dd>{userGroupEntity.group ? userGroupEntity.group.title : ''}</dd>
+          <dd>{groupUserEntity.group ? groupUserEntity.group.title : ''}</dd>
         </dl>
-        <Button tag={Link} to="/user-group" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/group-user" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/user-group/${userGroupEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/group-user/${groupUserEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>
@@ -59,4 +57,4 @@ export const UserGroupDetail = () => {
   );
 };
 
-export default UserGroupDetail;
+export default GroupUserDetail;

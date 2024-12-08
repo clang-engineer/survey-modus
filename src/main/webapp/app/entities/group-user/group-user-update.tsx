@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, FormText, Row } from 'reactstrap';
+import { Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IGroup } from 'app/shared/model/group.model';
 import { getEntities as getGroups } from 'app/entities/group/group.reducer';
-import { IUserGroup } from 'app/shared/model/user-group.model';
-import { getEntity, updateEntity, createEntity, reset } from './user-group.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './group-user.reducer';
 
-export const UserGroupUpdate = () => {
+export const GroupUserUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -25,13 +18,13 @@ export const UserGroupUpdate = () => {
 
   const users = useAppSelector(state => state.userManagement.users);
   const groups = useAppSelector(state => state.group.entities);
-  const userGroupEntity = useAppSelector(state => state.userGroup.entity);
-  const loading = useAppSelector(state => state.userGroup.loading);
-  const updating = useAppSelector(state => state.userGroup.updating);
-  const updateSuccess = useAppSelector(state => state.userGroup.updateSuccess);
+  const groupUserEntity = useAppSelector(state => state.groupUser.entity);
+  const loading = useAppSelector(state => state.groupUser.loading);
+  const updating = useAppSelector(state => state.groupUser.updating);
+  const updateSuccess = useAppSelector(state => state.groupUser.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-group' + location.search);
+    navigate('/group-user' + location.search);
   };
 
   useEffect(() => {
@@ -53,7 +46,7 @@ export const UserGroupUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...userGroupEntity,
+      ...groupUserEntity,
       ...values,
       user: users.find(it => it.id.toString() === values.user.toString()),
       group: groups.find(it => it.id.toString() === values.group.toString()),
@@ -70,17 +63,17 @@ export const UserGroupUpdate = () => {
     isNew
       ? {}
       : {
-          ...userGroupEntity,
-          user: userGroupEntity?.user?.id,
-          group: userGroupEntity?.group?.id,
+          ...groupUserEntity,
+          user: groupUserEntity?.user?.id,
+          group: groupUserEntity?.group?.id,
         };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="exformmakerApp.userGroup.home.createOrEditLabel" data-cy="UserGroupCreateUpdateHeading">
-            <Translate contentKey="exformmakerApp.userGroup.home.createOrEditLabel">Create or edit a UserGroup</Translate>
+          <h2 id="exformmakerApp.groupUser.home.createOrEditLabel" data-cy="groupUserCreateUpdateHeading">
+            <Translate contentKey="exformmakerApp.groupUser.home.createOrEditLabel">Create or edit a groupUser</Translate>
           </h2>
         </Col>
       </Row>
@@ -95,16 +88,16 @@ export const UserGroupUpdate = () => {
                   name="id"
                   required
                   readOnly
-                  id="user-group-id"
+                  id="group-user-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
                 />
               ) : null}
               <ValidatedField
-                id="user-group-user"
+                id="group-user-user"
                 name="user"
                 data-cy="user"
-                label={translate('exformmakerApp.userGroup.user')}
+                label={translate('exformmakerApp.groupUser.user')}
                 type="select"
                 required
               >
@@ -121,10 +114,10 @@ export const UserGroupUpdate = () => {
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
               <ValidatedField
-                id="user-group-group"
+                id="group-user-group"
                 name="group"
                 data-cy="group"
-                label={translate('exformmakerApp.userGroup.group')}
+                label={translate('exformmakerApp.groupUser.group')}
                 type="select"
                 required
               >
@@ -140,7 +133,7 @@ export const UserGroupUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/user-group" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/group-user" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
@@ -161,4 +154,4 @@ export const UserGroupUpdate = () => {
   );
 };
 
-export default UserGroupUpdate;
+export default GroupUserUpdate;

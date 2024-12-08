@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20241207000000-1" author="clang">
-        <createTable tableName="tbl_user_group">
+        <createTable tableName="tbl_group_user">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="bigint">
+            <column name="group_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="group_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="20241207000000-2" author="clang">
-        <addForeignKeyConstraint baseColumnNames="user_id"
-            baseTableName="tbl_user_group"
-            constraintName="fk_user_group__user_id"
-            referencedColumnNames="id"
-            referencedTableName="tbl_user"/>
-
         <addForeignKeyConstraint baseColumnNames="group_id"
-            baseTableName="tbl_user_group"
-            constraintName="fk_user_group__group_id"
+            baseTableName="tbl_group_user"
+            constraintName="fk_group_user__group_id"
             referencedColumnNames="id"
             referencedTableName="tbl_group"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+            baseTableName="tbl_group_user"
+            constraintName="fk_group_user__user_id"
+            referencedColumnNames="id"
+            referencedTableName="tbl_user"/>
     </changeSet>
 
     <changeSet id="20241207000000-1-data" author="clang" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/user_group.csv"
+                  file="config/liquibase/fake-data/group_user.csv"
                   separator=";"
-                  tableName="tbl_user_group"
+                  tableName="tbl_group_user"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="user_id" type="numeric"/>
             <column name="group_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

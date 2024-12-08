@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { getSortState, JhiItemCount, JhiPagination, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntities } from './group-user.reducer';
 
-import { IUserGroup } from 'app/shared/model/user-group.model';
-import { getEntities } from './user-group.reducer';
-
-export const UserGroup = () => {
+export const GroupUser = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -22,9 +18,9 @@ export const UserGroup = () => {
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
   );
 
-  const userGroupList = useAppSelector(state => state.userGroup.entities);
-  const loading = useAppSelector(state => state.userGroup.loading);
-  const totalItems = useAppSelector(state => state.userGroup.totalItems);
+  const groupUserList = useAppSelector(state => state.groupUser.entities);
+  const loading = useAppSelector(state => state.groupUser.loading);
+  const totalItems = useAppSelector(state => state.groupUser.totalItems);
 
   const getAllEntities = () => {
     dispatch(
@@ -83,50 +79,50 @@ export const UserGroup = () => {
 
   return (
     <div>
-      <h2 id="user-group-heading" data-cy="UserGroupHeading">
-        <Translate contentKey="exformmakerApp.userGroup.home.title">User Groups</Translate>
+      <h2 id="group-user-heading" data-cy="groupUserHeading">
+        <Translate contentKey="exformmakerApp.groupUser.home.title">Group Users</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="exformmakerApp.userGroup.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="exformmakerApp.groupUser.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/user-group/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/group-user/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="exformmakerApp.userGroup.home.createLabel">Create new User Group</Translate>
+            <Translate contentKey="exformmakerApp.groupUser.home.createLabel">Create new Group User</Translate>
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
-        {userGroupList && userGroupList.length > 0 ? (
+        {groupUserList && groupUserList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="exformmakerApp.userGroup.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupUser.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="exformmakerApp.userGroup.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupUser.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="exformmakerApp.userGroup.group">Group</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupUser.group">Group</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {userGroupList.map((userGroup, i) => (
+              {groupUserList.map((groupUser, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/user-group/${userGroup.id}`} color="link" size="sm">
-                      {userGroup.id}
+                    <Button tag={Link} to={`/group-user/${groupUser.id}`} color="link" size="sm">
+                      {groupUser.id}
                     </Button>
                   </td>
-                  <td>{userGroup.user ? userGroup.user.login : ''}</td>
-                  <td>{userGroup.group ? <Link to={`/group/${userGroup.group.id}`}>{userGroup.group.title}</Link> : ''}</td>
+                  <td>{groupUser.user ? groupUser.user.login : ''}</td>
+                  <td>{groupUser.group ? <Link to={`/group/${groupUser.group.id}`}>{groupUser.group.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/user-group/${userGroup.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/group-user/${groupUser.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -134,7 +130,7 @@ export const UserGroup = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-group/${userGroup.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/group-user/${groupUser.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -146,7 +142,7 @@ export const UserGroup = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-group/${userGroup.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/group-user/${groupUser.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"
@@ -165,13 +161,13 @@ export const UserGroup = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="exformmakerApp.userGroup.home.notFound">No User Groups found</Translate>
+              <Translate contentKey="exformmakerApp.groupUser.home.notFound">No Group Users found</Translate>
             </div>
           )
         )}
       </div>
       {totalItems ? (
-        <div className={userGroupList && userGroupList.length > 0 ? '' : 'd-none'}>
+        <div className={groupUserList && groupUserList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
@@ -192,4 +188,4 @@ export const UserGroup = () => {
   );
 };
 
-export default UserGroup;
+export default GroupUser;

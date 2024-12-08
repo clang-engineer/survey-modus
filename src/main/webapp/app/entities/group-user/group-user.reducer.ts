@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import { createAsyncThunk, isFulfilled, isPending } from '@reduxjs/toolkit';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
-import { IUserGroup, defaultValue } from 'app/shared/model/user-group.model';
+import { createEntitySlice, EntityState, IQueryParams, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
+import { defaultValue, IGroupUser } from 'app/shared/model/group-user.model';
 
-const initialState: EntityState<IUserGroup> = {
+const initialState: EntityState<IGroupUser> = {
   loading: false,
   errorMessage: null,
   entities: [],
@@ -15,28 +15,28 @@ const initialState: EntityState<IUserGroup> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/user-groups';
+const apiUrl = 'api/group-users';
 
 // Actions
 
-export const getEntities = createAsyncThunk('userGroup/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('groupUser/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
-  return axios.get<IUserGroup[]>(requestUrl);
+  return axios.get<IGroupUser[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk(
-  'userGroup/fetch_entity',
+  'groupUser/fetch_entity',
   async (id: string | number) => {
     const requestUrl = `${apiUrl}/${id}`;
-    return axios.get<IUserGroup>(requestUrl);
+    return axios.get<IGroupUser>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
 export const createEntity = createAsyncThunk(
-  'userGroup/create_entity',
-  async (entity: IUserGroup, thunkAPI) => {
-    const result = await axios.post<IUserGroup>(apiUrl, cleanEntity(entity));
+  'groupUser/create_entity',
+  async (entity: IGroupUser, thunkAPI) => {
+    const result = await axios.post<IGroupUser>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -44,9 +44,9 @@ export const createEntity = createAsyncThunk(
 );
 
 export const updateEntity = createAsyncThunk(
-  'userGroup/update_entity',
-  async (entity: IUserGroup, thunkAPI) => {
-    const result = await axios.put<IUserGroup>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'groupUser/update_entity',
+  async (entity: IGroupUser, thunkAPI) => {
+    const result = await axios.put<IGroupUser>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -54,9 +54,9 @@ export const updateEntity = createAsyncThunk(
 );
 
 export const partialUpdateEntity = createAsyncThunk(
-  'userGroup/partial_update_entity',
-  async (entity: IUserGroup, thunkAPI) => {
-    const result = await axios.patch<IUserGroup>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'groupUser/partial_update_entity',
+  async (entity: IGroupUser, thunkAPI) => {
+    const result = await axios.patch<IGroupUser>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -64,10 +64,10 @@ export const partialUpdateEntity = createAsyncThunk(
 );
 
 export const deleteEntity = createAsyncThunk(
-  'userGroup/delete_entity',
+  'groupUser/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IUserGroup>(requestUrl);
+    const result = await axios.delete<IGroupUser>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -76,8 +76,8 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const UserGroupSlice = createEntitySlice({
-  name: 'userGroup',
+export const groupUserSlice = createEntitySlice({
+  name: 'groupUser',
   initialState,
   extraReducers(builder) {
     builder
@@ -119,7 +119,7 @@ export const UserGroupSlice = createEntitySlice({
   },
 });
 
-export const { reset } = UserGroupSlice.actions;
+export const { reset } = groupUserSlice.actions;
 
 // Reducer
-export default UserGroupSlice.reducer;
+export default groupUserSlice.reducer;

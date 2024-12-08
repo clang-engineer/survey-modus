@@ -2,12 +2,12 @@ package com.clangengineer.exformmaker.service.mapper
 
 import org.junit.jupiter.api.BeforeEach
 
-class UserGroupMapperTest {
+class GroupUserMapperTest {
 
-    private lateinit var userGroupMapper: UserGroupMapper
+    private lateinit var groupUserMapper: GroupUserMapper
 
     @BeforeEach
     fun setUp() {
-        userGroupMapper = UserGroupMapperImpl()
+        groupUserMapper = GroupUserMapperImpl()
     }
 }
