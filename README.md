@@ -69,11 +69,18 @@
 - [x] 사용자 그룹관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 사용자 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- 사용자 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- 필드 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- mongo db 연동 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ] 카테고리 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ] 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ] 사용자 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ] 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ] 필드 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [ ]mongo db 연동 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 
 - 실사용자 접근 api 및 ui 개발 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - 스태프 접근 api 및 ui 개발 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+
+---
+
+# ERD
+
+<iframe width="600" height="336" src="https://www.erdcloud.com/p/DwEHf4YkCGfA3y3Cq" frameborder="0" allowfullscreen></iframe>
