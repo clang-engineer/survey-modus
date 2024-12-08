@@ -74,6 +74,17 @@ module.exports = async options => {
             include: [utils.root('./src/main/webapp/app')],
             exclude: [utils.root('node_modules')],
           },
+          {
+            test: /\.svg$/,
+            issuer: /\.tsx?$/,
+            use: ['@svgr/webpack'],
+          },
+          {
+            test: /\.(png|jpe?g|gif|ico|svg|webp)$/i,
+            issuer: /\.tsx?$/,
+            use: 'file-loader',
+          },
+
           /*
        ,
        Disabled due to https://github.com/jhipster/generator-jhipster/issues/16116
