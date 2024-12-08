@@ -26,12 +26,12 @@ import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
 import useConfig from 'app/berry/hooks/useConfig';
 import Transitions from 'app/berry/ui-component/extended/Transitions';
-import { dispatch, useSelector } from 'app/berry/store';
 
 // assets
 import { IconChevronDown, IconChevronRight, IconMinusVertical } from '@tabler/icons';
 import { NavItemType } from 'app/berry/types';
 import { activeID } from 'app/berry/store/slices/menu';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 // mini-menu - wrapper
 const PopperStyled = styled(Popper)(({ theme }) => ({
@@ -72,7 +72,8 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }: NavGroupProps) => {
   const theme = useTheme();
 
   const { pathname } = useLocation();
-  const { drawerOpen, selectedID } = useSelector(state => state.menu);
+  const dispatch = useAppDispatch();
+  const { drawerOpen, selectedID } = useAppSelector(state => state.menu);
   const { layout, borderRadius } = useConfig();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const [anchorEl, setAnchorEl] = useState<VirtualElement | (() => VirtualElement) | null | undefined>(null);

@@ -17,10 +17,10 @@ import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
 import { drawerWidth } from 'app/berry/store/constant';
 import { openDrawer } from 'app/berry/store/slices/menu';
-import { useDispatch, useSelector } from 'app/berry/store';
 
 // assets
 import { IconChevronRight } from '@tabler/icons';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 interface MainStyleProps {
   theme: Theme;
@@ -87,8 +87,8 @@ const MainLayout = () => {
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const dispatch = useDispatch();
-  const { drawerOpen } = useSelector(state => state.menu);
+  const dispatch = useAppDispatch();
+  const { drawerOpen } = useAppSelector(state => state.menu);
   const { drawerType, container, layout } = useConfig();
 
   useEffect(() => {

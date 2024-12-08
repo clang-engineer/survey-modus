@@ -15,6 +15,7 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
+import MainLayout from 'app/berry/layout/MainLayout';
 
 const loading = <div>loading ...</div>;
 
@@ -64,13 +65,22 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="*"
           element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER]}>
-              <EntitiesRoutes />
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
+              <MainLayout />{' '}
             </PrivateRoute>
           }
-        />
+        >
+          <Route
+            path="*"
+            element={
+              <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER]}>
+                <EntitiesRoutes />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>

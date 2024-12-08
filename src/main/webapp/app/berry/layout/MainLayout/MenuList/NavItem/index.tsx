@@ -8,12 +8,12 @@ import { Avatar, ButtonBase, Chip, ListItemButton, ListItemIcon, ListItemText, T
 // project imports
 import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
-import { useDispatch, useSelector } from 'app/berry/store';
 import { activeID, activeItem, openDrawer } from 'app/berry/store/slices/menu';
 
 // assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { LinkTarget, NavItemType } from 'app/berry/types';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
@@ -28,11 +28,11 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const { layout, borderRadius } = useConfig();
 
-  const { selectedItem, drawerOpen } = useSelector(state => state.menu);
+  const { selectedItem, drawerOpen } = useAppSelector(state => state.menu);
   const isSelected = selectedItem.findIndex(id => id === item.id) > -1;
 
   const Icon = item?.icon!;

@@ -18,13 +18,13 @@ const icons = {
 
 const dashboard: NavItemType = {
   id: 'dashboard',
-  title: <FormattedMessage id="dashboard" />,
+  title: 'Dashboard',
   icon: icons.IconDashboard,
   type: 'group',
   children: [
     {
       id: 'default',
-      title: <FormattedMessage id="default" />,
+      title: 'Default',
       type: 'item',
       url: '/dashboard/default',
       icon: icons.IconDashboard,
@@ -32,7 +32,7 @@ const dashboard: NavItemType = {
     },
     {
       id: 'analytics',
-      title: <FormattedMessage id="analytics" />,
+      title: 'Analytics',
       type: 'item',
       url: '/dashboard/analytics',
       icon: icons.IconDeviceAnalytics,

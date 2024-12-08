@@ -23,7 +23,7 @@ const other: NavItemType = {
   children: [
     {
       id: 'sample-page',
-      title: <FormattedMessage id="sample-page" />,
+      title: 'sample-page',
       type: 'item',
       url: '/sample-page',
       icon: icons.IconBrandChrome,
@@ -31,7 +31,7 @@ const other: NavItemType = {
     },
     {
       id: 'documentation',
-      title: <FormattedMessage id="documentation" />,
+      title: 'documentation',
       type: 'item',
       url: 'https://codedthemes.gitbook.io/berry/',
       icon: icons.IconHelp,
@@ -40,7 +40,7 @@ const other: NavItemType = {
     },
     {
       id: 'roadmap',
-      title: <FormattedMessage id="roadmap" />,
+      title: 'roadmap',
       type: 'item',
       url: 'https://codedthemes.gitbook.io/berry/roadmap',
       icon: icons.IconSitemap,

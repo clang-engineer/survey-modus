@@ -10,13 +10,13 @@ import useConfig from 'app/berry/hooks/useConfig';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 // color import
-import colors from 'assets/scss/_themes-vars.module.scss';
-import theme1 from 'assets/scss/_theme1.module.scss';
-import theme2 from 'assets/scss/_theme2.module.scss';
-import theme3 from 'assets/scss/_theme3.module.scss';
-import theme4 from 'assets/scss/_theme4.module.scss';
-import theme5 from 'assets/scss/_theme5.module.scss';
-import theme6 from 'assets/scss/_theme6.module.scss';
+import colors from 'app/berry/assets/scss/_themes-vars.module.scss';
+import theme1 from 'app/berry/assets/scss/_theme1.module.scss';
+import theme2 from 'app/berry/assets/scss/_theme2.module.scss';
+import theme3 from 'app/berry/assets/scss/_theme3.module.scss';
+import theme4 from 'app/berry/assets/scss/_theme4.module.scss';
+import theme5 from 'app/berry/assets/scss/_theme5.module.scss';
+import theme6 from 'app/berry/assets/scss/_theme6.module.scss';
 
 // types
 import { StringColorProps } from 'app/berry/types';

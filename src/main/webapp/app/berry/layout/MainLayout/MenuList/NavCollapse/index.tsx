@@ -21,7 +21,6 @@ import {
 import NavItem from '../NavItem';
 import Transitions from 'app/berry/ui-component/extended/Transitions';
 
-import { useSelector } from 'app/berry/store';
 import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
 
@@ -29,6 +28,7 @@ import useConfig from 'app/berry/hooks/useConfig';
 import { IconChevronDown, IconChevronRight, IconChevronUp } from '@tabler/icons';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { NavItemType } from 'app/berry/types';
+import { useAppSelector } from 'app/config/store';
 
 // mini-menu - wrapper
 const PopperStyledMini = styled(Popper)(({ theme }) => ({
@@ -100,7 +100,7 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const { layout, borderRadius } = useConfig();
-  const { drawerOpen } = useSelector(state => state.menu);
+  const { drawerOpen } = useAppSelector(state => state.menu);
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null | undefined>(null);

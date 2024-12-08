@@ -18,8 +18,8 @@ import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
 import { drawerWidth } from 'app/berry/store/constant';
 
-import { useDispatch, useSelector } from 'app/berry/store';
 import { openDrawer } from 'app/berry/store/slices/menu';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
@@ -28,8 +28,8 @@ const Sidebar = () => {
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const dispatch = useDispatch();
-  const { drawerOpen } = useSelector(state => state.menu);
+  const dispatch = useAppDispatch();
+  const { drawerOpen } = useAppSelector(state => state.menu);
 
   const { layout, drawerType } = useConfig();
 
@@ -48,7 +48,7 @@ const Sidebar = () => {
       {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && <MenuCard />}
       {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && (
         <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-          <Chip label={process.env.REACT_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
+          <Chip label={VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
         </Stack>
       )}
     </>

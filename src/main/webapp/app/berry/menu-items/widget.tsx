@@ -4,11 +4,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 // project import
-import { useSelector } from 'app/berry/store';
 
 // assets
 import { IconChartArcs, IconClipboardList, IconChartInfographic } from '@tabler/icons';
 import { NavItemType } from 'app/berry/types';
+import { useAppSelector } from 'app/config/store';
 
 const icons = {
   widget: IconChartArcs,
@@ -20,7 +20,7 @@ const icons = {
 // ==============================|| MENU ITEMS - API ||============================== //
 
 export const Menu = () => {
-  const { menu } = useSelector(state => state.menu);
+  const { menu } = useAppSelector(state => state.menu);
 
   const SubChildrenLis = (subChildrenLis: NavItemType[]) => {
     return subChildrenLis?.map((subList: NavItemType) => {

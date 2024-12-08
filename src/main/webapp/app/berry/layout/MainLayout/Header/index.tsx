@@ -15,19 +15,19 @@ import LocalizationSection from './LocalizationSection';
 import MegaMenuSection from './MegaMenuSection';
 import NotificationSection from './NotificationSection';
 
-import { useDispatch, useSelector } from 'app/berry/store';
 import { openDrawer } from 'app/berry/store/slices/menu';
 
 // assets
 import { IconMenu2 } from '@tabler/icons';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = () => {
   const theme = useTheme();
 
-  const dispatch = useDispatch();
-  const { drawerOpen } = useSelector(state => state.menu);
+  const dispatch = useAppDispatch();
+  const { drawerOpen } = useAppSelector(state => state.menu);
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const { layout } = useConfig();

@@ -34,7 +34,7 @@ import MainCard from 'app/berry/ui-component/cards/MainCard';
 import Transitions from 'app/berry/ui-component/extended/Transitions';
 import UpgradePlanCard from './UpgradePlanCard';
 import useAuth from 'app/berry/hooks/useAuth';
-import User1 from 'assets/images/users/user-round.svg';
+import User1 from 'app/berry/assets/images/users/user-round.svg';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
