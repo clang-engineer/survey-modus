@@ -3,7 +3,7 @@ import userPoint from 'app/entities/user-point/user-point.reducer';
 import group from 'app/entities/group/group.reducer';
 import groupUser from 'app/entities/group-user/group-user.reducer';
 import company from 'app/entities/company/company.reducer';
-import userCompany from 'app/entities/group-company/group-company.reducer';
+import groupCompany from 'app/entities/group-company/group-company.reducer';
 import category from 'app/entities/category/category.reducer';
 import form from 'app/entities/form/form.reducer';
 import companyForm from 'app/entities/company-form/company-form.reducer';
@@ -16,7 +16,7 @@ const entitiesReducers = {
   group,
   groupUser,
   company,
-  userCompany,
+  groupCompany,
   category,
   form,
   companyForm,
