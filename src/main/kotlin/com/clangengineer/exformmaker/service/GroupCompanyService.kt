@@ -21,16 +21,16 @@ class GroupCompanyService(
 
     fun save(groupCompanyDTO: GroupCompanyDTO): GroupCompanyDTO {
         log.debug("Request to save GroupCompany : $groupCompanyDTO")
-        var userCompany = groupCompanyMapper.toEntity(groupCompanyDTO)
-        userCompany = groupCompanyRepository.save(userCompany)
-        return groupCompanyMapper.toDto(userCompany)
+        var groupCompany = groupCompanyMapper.toEntity(groupCompanyDTO)
+        groupCompany = groupCompanyRepository.save(groupCompany)
+        return groupCompanyMapper.toDto(groupCompany)
     }
 
     fun update(groupCompanyDTO: GroupCompanyDTO): GroupCompanyDTO {
         log.debug("Request to update GroupCompany : {}", groupCompanyDTO)
-        var userCompany = groupCompanyMapper.toEntity(groupCompanyDTO)
-        userCompany = groupCompanyRepository.save(userCompany)
-        return groupCompanyMapper.toDto(userCompany)
+        var groupCompany = groupCompanyMapper.toEntity(groupCompanyDTO)
+        groupCompany = groupCompanyRepository.save(groupCompany)
+        return groupCompanyMapper.toDto(groupCompany)
     }
 
     fun partialUpdate(groupCompanyDTO: GroupCompanyDTO): Optional<GroupCompanyDTO> {
@@ -47,7 +47,7 @@ class GroupCompanyService(
 
     @Transactional(readOnly = true)
     fun findAll(pageable: Pageable): Page<GroupCompanyDTO> {
-        log.debug("Request to get all UserCompanys")
+        log.debug("Request to get all GroupCompanys")
         return groupCompanyRepository.findAll(pageable)
             .map(groupCompanyMapper::toDto)
     }

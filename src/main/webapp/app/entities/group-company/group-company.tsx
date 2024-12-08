@@ -79,8 +79,8 @@ export const GroupCompany = () => {
 
   return (
     <div>
-      <h2 id="group-company-heading" data-cy="UserCompanyHeading">
-        <Translate contentKey="exformmakerApp.groupCompany.home.title">User Companys</Translate>
+      <h2 id="group-company-heading" data-cy="GroupCompanyHeading">
+        <Translate contentKey="exformmakerApp.groupCompany.home.title">Group Companys</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
@@ -89,7 +89,7 @@ export const GroupCompany = () => {
           <Link to="/group-company/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="exformmakerApp.groupCompany.home.createLabel">Create new User Company</Translate>
+            <Translate contentKey="exformmakerApp.groupCompany.home.createLabel">Create new Group Company</Translate>
           </Link>
         </div>
       </h2>
@@ -102,7 +102,7 @@ export const GroupCompany = () => {
                   <Translate contentKey="exformmakerApp.groupCompany.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="exformmakerApp.groupCompany.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="exformmakerApp.groupCompany.group">Group</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="exformmakerApp.groupCompany.company">Company</Translate> <FontAwesomeIcon icon="sort" />
@@ -163,7 +163,7 @@ export const GroupCompany = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="exformmakerApp.groupCompany.home.notFound">No User Companys found</Translate>
+              <Translate contentKey="exformmakerApp.groupCompany.home.notFound">No Group Companys found</Translate>
             </div>
           )
         )}

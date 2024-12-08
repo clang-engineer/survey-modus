@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull
 
 @RestController
 @RequestMapping("/api")
-class UserCompanyResource(
+class GroupCompanyResource(
     private val groupCompanyService: GroupCompanyService,
     private val groupCompanyRepository: GroupCompanyRepository,
     private val groupCompanyQueryService: GroupCompanyQueryService,
@@ -32,18 +32,18 @@ class UserCompanyResource(
     private val log = LoggerFactory.getLogger(javaClass)
 
     companion object {
-        const val ENTITY_NAME = "userCompany"
+        const val ENTITY_NAME = "groupCompany"
     }
 
     @Value("\${jhipster.clientApp.name}")
     private var applicationName: String? = null
 
     @PostMapping("/group-companys")
-    fun createUserCompany(@Valid @RequestBody groupCompanyDTO: GroupCompanyDTO): ResponseEntity<GroupCompanyDTO> {
+    fun createGroupCompany(@Valid @RequestBody groupCompanyDTO: GroupCompanyDTO): ResponseEntity<GroupCompanyDTO> {
         log.debug("REST request to save GroupCompany : $groupCompanyDTO")
         if (groupCompanyDTO.id != null) {
             throw BadRequestAlertException(
-                "A new userCompany cannot already have an ID",
+                "A new groupCompany cannot already have an ID",
                 ENTITY_NAME, "idexists"
             )
         }
@@ -54,7 +54,7 @@ class UserCompanyResource(
     }
 
     @PutMapping("/group-companys/{id}")
-    fun updateUserCompany(
+    fun updateGroupCompany(
         @PathVariable(value = "id", required = false) id: Long,
         @Valid @RequestBody groupCompanyDTO: GroupCompanyDTO
     ): ResponseEntity<GroupCompanyDTO> {
@@ -84,7 +84,7 @@ class UserCompanyResource(
 
     @PatchMapping(value = ["/group-companys/{id}"], consumes = ["application/json", "application/merge-patch+json"])
     @Throws(URISyntaxException::class)
-    fun partialUpdateUserCompany(
+    fun partialUpdateGroupCompany(
         @PathVariable(value = "id", required = false) id: Long,
         @NotNull @RequestBody groupCompanyDTO: GroupCompanyDTO
     ): ResponseEntity<GroupCompanyDTO> {
@@ -108,32 +108,32 @@ class UserCompanyResource(
         )
     }
 
-    @GetMapping("/group-companys") fun getAllUserCompanys(
+    @GetMapping("/group-companys") fun getAllGroupCompanys(
         criteria: GroupCompanyCriteria,
         @org.springdoc.api.annotations.ParameterObject pageable: Pageable
 
     ): ResponseEntity<MutableList<GroupCompanyDTO>> {
-        log.debug("REST request to get UserCompanys by criteria: $criteria")
+        log.debug("REST request to get GroupCompanys by criteria: $criteria")
         val page = groupCompanyQueryService.findByCriteria(criteria, pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page)
         return ResponseEntity.ok().headers(headers).body(page.content)
     }
 
     @GetMapping("/group-companys/count")
-    fun countUserCompanys(criteria: GroupCompanyCriteria): ResponseEntity<Long> {
-        log.debug("REST request to count UserCompanys by criteria: $criteria")
+    fun countGroupCompanys(criteria: GroupCompanyCriteria): ResponseEntity<Long> {
+        log.debug("REST request to count GroupCompanys by criteria: $criteria")
         return ResponseEntity.ok().body(groupCompanyQueryService.countByCriteria(criteria))
     }
 
     @GetMapping("/group-companys/{id}")
-    fun getUserCompany(@PathVariable id: Long): ResponseEntity<GroupCompanyDTO> {
+    fun getGroupCompany(@PathVariable id: Long): ResponseEntity<GroupCompanyDTO> {
         log.debug("REST request to get GroupCompany : $id")
-        val userCompanyDTO = groupCompanyService.findOne(id)
-        return ResponseUtil.wrapOrNotFound(userCompanyDTO)
+        val groupCompanyDTO = groupCompanyService.findOne(id)
+        return ResponseUtil.wrapOrNotFound(groupCompanyDTO)
     }
 
     @DeleteMapping("/group-companys/{id}")
-    fun deleteUserCompany(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteGroupCompany(@PathVariable id: Long): ResponseEntity<Void> {
         log.debug("REST request to delete GroupCompany : $id")
 
         groupCompanyService.delete(id)
