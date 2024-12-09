@@ -197,11 +197,16 @@ export const Group = () => {
         )
       )}
       {totalItems ? (
-        <Box className={groupList && groupList.length > 0 ? '' : 'd-none'}>
-          <Box display="flex" justifyContent="center">
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          className={`${(groupList && groupList.length > 0) ?? 'd-none'} mt-3`}
+        >
+          <Box display="flex" justifyContent="center" className="mt-2">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </Box>
-          <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="center" className="mt-2">
             <Pagination
               page={paginationState.activePage}
               onChange={(e, page) => handlePagination(page)}
