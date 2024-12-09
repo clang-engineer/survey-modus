@@ -8,7 +8,7 @@ import { Avatar, Box, useMediaQuery } from '@mui/material';
 import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
 import LogoSection from '../LogoSection';
-// import SearchSection from './SearchSection';
+import SearchSection from './SearchSection';
 import MobileSection from './MobileSection';
 import ProfileSection from './ProfileSection';
 import LocalizationSection from './LocalizationSection';
@@ -71,7 +71,7 @@ const Header = () => {
       </Box>
 
       {/* header search */}
-      {/*<SearchSection />*/}
+      <SearchSection />
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 

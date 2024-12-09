@@ -29,7 +29,7 @@ interface MainStyleProps {
 }
 
 // styles
-const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open, layout }: MainStyleProps) => ({
+const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<MainStyleProps>(({ theme, open, layout }: MainStyleProps) => ({
   ...theme.typography.mainContent,
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
