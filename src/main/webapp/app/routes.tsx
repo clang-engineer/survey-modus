@@ -16,6 +16,7 @@ import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
+import JhLayout from 'app/shared/layout/jh-layout';
 
 const loading = <div>loading ...</div>;
 
@@ -37,23 +38,25 @@ const AppRoutes = () => {
   return (
     <div className="view-routes">
       <ErrorBoundaryRoutes>
-        <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="logout" element={<Logout />} />
-        <Route path="account">
-          <Route
-            path="*"
-            element={
-              <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
-                <Account />
-              </PrivateRoute>
-            }
-          />
-          <Route path="register" element={<Register />} />
-          <Route path="activate" element={<Activate />} />
-          <Route path="reset">
-            <Route path="request" element={<PasswordResetInit />} />
-            <Route path="finish" element={<PasswordResetFinish />} />
+        <Route element={<JhLayout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />} />
+          <Route path="account">
+            <Route
+              path="*"
+              element={
+                <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
+                  <Account />
+                </PrivateRoute>
+              }
+            />
+            <Route path="register" element={<Register />} />
+            <Route path="activate" element={<Activate />} />
+            <Route path="reset">
+              <Route path="request" element={<PasswordResetInit />} />
+              <Route path="finish" element={<PasswordResetFinish />} />
+            </Route>
           </Route>
         </Route>
         <Route
@@ -80,7 +83,6 @@ const AppRoutes = () => {
             }
           />
         </Route>
-
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>
