@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { getSortState, JhiItemCount, JhiPagination, Translate } from 'react-jhipster';
+import { Link as BaseLink, useLocation, useNavigate } from 'react-router-dom';
+import { getSortState, JhiItemCount, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from './group.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Box, Button, Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import { IconArrowsSort, IconEye, IconPencil, IconTrash, IconRefresh } from '@tabler/icons';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 export const Group = () => {
   const dispatch = useAppDispatch();
@@ -78,124 +82,137 @@ export const Group = () => {
   };
 
   return (
-    <div>
-      <h2 id="group-heading" data-cy="GroupHeading">
-        <Translate contentKey="exformmakerApp.group.home.title">Groups</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+    <MainCard>
+      <Box id="group-heading" data-cy="GroupHeading">
+        <Box display="flex" justifyContent="flex-end" alignItems="center">
+          <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
+            <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
             <Translate contentKey="exformmakerApp.group.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/group/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+            onClick={() => navigate('/group/new')}
+          >
+            <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="exformmakerApp.group.home.createLabel">Create new Group</Translate>
-          </Link>
-        </div>
-      </h2>
-      <div className="table-responsive">
-        {groupList && groupList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="exformmakerApp.group.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="exformmakerApp.group.title">Title</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="exformmakerApp.group.description">Description</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('activated')}>
-                  <Translate contentKey="exformmakerApp.group.activated">Activated</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="exformmakerApp.group.user">User</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {groupList.map((group, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`/group/${group.id}`} color="link" size="sm">
-                      {group.id}
+          </Button>
+        </Box>
+      </Box>
+      {groupList && groupList.length > 0 ? (
+        <Table
+          sx={{
+            '& .MuiTableCell-head, & .MuiTableCell-body': {
+              textAlign: 'center',
+            },
+          }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell className="hand" onClick={sort('id')}>
+                <Translate contentKey="exformmakerApp.group.id">ID</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('title')}>
+                <Translate contentKey="exformmakerApp.group.title">Title</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('description')}>
+                <Translate contentKey="exformmakerApp.group.description">Description</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('activated')}>
+                <Translate contentKey="exformmakerApp.group.activated">Activated</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('user.login')}>
+                <Translate contentKey="exformmakerApp.group.user">User</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {groupList.map((group, i) => (
+              <TableRow key={`entity-${i}`} data-cy="entityTable">
+                <TableCell>
+                  <Link component={BaseLink} to={`/group/${group.id}`}>
+                    {group.id}
+                  </Link>
+                </TableCell>
+                <TableCell>{group.title}</TableCell>
+                <TableCell>{group.description}</TableCell>
+                <TableCell>{group.activated ? 'true' : 'false'}</TableCell>
+                <TableCell>{group.user ? group.user.login : ''}</TableCell>
+                <TableCell className="text-end">
+                  <ButtonGroup size={'small'}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/group/${group.id}`)}>
+                      <IconEye size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.view">View</Translate>
+                      </Typography>
                     </Button>
-                  </td>
-                  <td>{group.title}</td>
-                  <td>{group.description}</td>
-                  <td>{group.activated ? 'true' : 'false'}</td>
-                  <td>{group.user ? group.user.login : ''}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/group/${group.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/group/${group.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/group/${group.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="exformmakerApp.group.home.notFound">No Groups found</Translate>
-            </div>
-          )
-        )}
-      </div>
+                    <Button
+                      data-cy="entityEditButton"
+                      color={'secondary'}
+                      onClick={() =>
+                        navigate(
+                          `/group/${group.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                        )
+                      }
+                    >
+                      <IconPencil size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.edit">Edit</Translate>
+                      </Typography>
+                    </Button>
+                    <Button
+                      data-cy="entityDeleteButton"
+                      color={'error'}
+                      onClick={() =>
+                        navigate(
+                          `/group/${group.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                        )
+                      }
+                    >
+                      <IconTrash size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.delete">Delete</Translate>
+                      </Typography>
+                    </Button>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        !loading && (
+          <div className="alert alert-warning">
+            <Translate contentKey="exformmakerApp.group.home.notFound">No Groups found</Translate>
+          </div>
+        )
+      )}
       {totalItems ? (
-        <div className={groupList && groupList.length > 0 ? '' : 'd-none'}>
-          <div className="justify-content-center d-flex">
+        <Box className={groupList && groupList.length > 0 ? '' : 'd-none'}>
+          <Box display="flex" justifyContent="center">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
-          </div>
-          <div className="justify-content-center d-flex">
-            <JhiPagination
-              activePage={paginationState.activePage}
-              onSelect={handlePagination}
-              maxButtons={5}
-              itemsPerPage={paginationState.itemsPerPage}
-              totalItems={totalItems}
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Pagination
+              page={paginationState.activePage}
+              onChange={(e, page) => handlePagination(page)}
+              count={Math.ceil(totalItems / paginationState.itemsPerPage)}
             />
-          </div>
-        </div>
+          </Box>
+        </Box>
       ) : (
         ''
       )}
-    </div>
+    </MainCard>
   );
 };
 
