@@ -25,31 +25,41 @@ export const GroupDetail = () => {
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Translate contentKey="global.field.id">ID</Translate>
+            <Typography variant="h4">
+              <Translate contentKey="global.field.id">ID</Translate>
+            </Typography>
             <Typography>{groupEntity.id}</Typography>
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Translate contentKey="exformmakerApp.group.title">Title</Translate>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.title">Title</Translate>
+            </Typography>
             <Typography> {groupEntity.title} </Typography>
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Translate contentKey="exformmakerApp.group.description">Description</Translate>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.description">Description</Translate>
+            </Typography>
             <Typography> {groupEntity.description} </Typography>
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Translate contentKey="exformmakerApp.group.activated">Activated</Translate>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.activated">Activated</Translate>
+            </Typography>
             <Typography> {groupEntity.activated ? 'true' : 'false'} </Typography>
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Translate contentKey="exformmakerApp.group.user">User</Translate>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.user">User</Translate>
+            </Typography>
             <Typography> {groupEntity.user ? groupEntity.user.login : ''} </Typography>
           </Stack>
         </Grid>
