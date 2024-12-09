@@ -57,20 +57,20 @@ const AppRoutes = () => {
           </Route>
         </Route>
         <Route
-          path="admin/*"
-          element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-              <Admin />
-            </PrivateRoute>
-          }
-        />
-        <Route
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
               <MainLayout />{' '}
             </PrivateRoute>
           }
         >
+          <Route
+            path="admin/*"
+            element={
+              <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+                <Admin />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="*"
             element={
