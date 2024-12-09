@@ -1,10 +1,10 @@
 import { NavItemType } from 'app/berry/types';
-import administration from 'app/berry/menu-items/administration';
+import system from 'app/berry/menu-items/system';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems: { items: NavItemType[] } = {
-  items: [administration],
+  items: [system],
 };
 
 export default menuItems;
