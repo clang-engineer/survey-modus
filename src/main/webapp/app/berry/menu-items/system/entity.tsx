@@ -22,7 +22,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/group',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
       {
         id: 'group-user',
@@ -30,7 +30,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/group-user',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
       {
         id: 'company',
@@ -38,7 +38,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/company',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
       {
         id: 'group-company',
@@ -46,7 +46,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/group-company',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
       {
         id: 'category',
@@ -54,7 +54,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/category',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
       {
         id: 'form',
@@ -62,7 +62,7 @@ const entity: NavItemType[] = [
         type: 'item',
         url: '/form',
         icon: icons.IconBrandChrome,
-        breadcrumbs: false,
+        breadcrumbs: true,
       },
     ],
   },
