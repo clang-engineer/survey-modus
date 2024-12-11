@@ -21,7 +21,13 @@ export const GroupDetail = () => {
 
   const groupEntity = useAppSelector(state => state.group.entity);
   return (
-    <MainCard>
+    <MainCard
+      title={
+        <Typography variant="h4">
+          <Translate contentKey="exformmakerApp.group.detail.title">Group</Translate> [<b>{groupEntity.id}</b>]
+        </Typography>
+      }
+    >
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>

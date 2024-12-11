@@ -21,7 +21,13 @@ export const FieldDetail = () => {
 
   const fieldEntity = useAppSelector(state => state.field.entity);
   return (
-    <MainCard>
+    <MainCard
+      title={
+        <Typography variant="h4">
+          <Translate contentKey="exformmakerApp.field.detail.title">Field</Translate> [<b>{fieldEntity.id}</b>]
+        </Typography>
+      }
+    >
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
