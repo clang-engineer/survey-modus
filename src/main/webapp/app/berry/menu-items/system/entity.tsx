@@ -64,6 +64,14 @@ const entity: NavItemType[] = [
         icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
+      {
+        id: 'field',
+        title: 'field',
+        type: 'item',
+        url: '/field',
+        icon: icons.IconBrandChrome,
+        breadcrumbs: true,
+      },
     ],
   },
 ];
