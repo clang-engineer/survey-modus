@@ -1,18 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IGroup } from 'app/shared/model/group.model';
-import { level } from 'app/shared/model/enumerations/level.model';
-import { getEntity, updateEntity, createEntity, reset } from './group.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './group.reducer';
+
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+
+import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
+
+import {
+  Button,
+  ButtonGroup,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material';
+import Loader from 'app/berry/ui-component/Loader';
+import { gridSpacing } from 'app/berry/store/constant';
 
 export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +40,32 @@ export const GroupUpdate = () => {
   const loading = useAppSelector(state => state.group.loading);
   const updating = useAppSelector(state => state.group.updating);
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
-  const levelValues = Object.keys(level);
+
+  const formik = useFormik({
+    initialValues: {
+      id: 0,
+      title: '',
+      description: '',
+      activated: false,
+      user: { id: 0 },
+    },
+    validationSchema: yup.object({
+      id: yup.string(),
+      title: yup
+        .string()
+        .min(5, translate('entity.validation.minlength', { min: 5 }))
+        .max(100, translate('entity.validation.maxlength', { max: 100 }))
+        .required(translate('entity.validation.required')),
+      description: yup.string(),
+      activated: yup.boolean().required(translate('entity.validation.required')),
+      user: yup.object({
+        id: yup.number().required(translate('entity.validation.required')),
+      }),
+    }),
+    onSubmit: values => {
+      saveEntity(values);
+    },
+  });
 
   const handleClose = () => {
     navigate('/group' + location.search);
@@ -49,11 +87,17 @@ export const GroupUpdate = () => {
     }
   }, [updateSuccess]);
 
+  useEffect(() => {
+    if (!isNew) {
+      formik.setValues(groupEntity);
+    }
+  }, [groupEntity]);
+
   const saveEntity = values => {
     const entity = {
       ...groupEntity,
       ...values,
-      user: users.find(it => it.id.toString() === values.user.toString()),
+      // user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -63,111 +107,111 @@ export const GroupUpdate = () => {
     }
   };
 
-  const defaultValues = () =>
-    isNew
-      ? {}
-      : {
-          type: 'EASY',
-          ...groupEntity,
-          user: groupEntity?.user?.id,
-        };
+  const MainCardTitle = () => {
+    return (
+      <Typography variant="h4" id="exformmakerApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading">
+        <Translate contentKey="exformmakerApp.group.home.createOrEditLabel">Create or edit a Group</Translate>
+        {!isNew ?? (
+          <Typography variant="caption" display="block" gutterBottom>
+            `: ${groupEntity.id}`
+          </Typography>
+        )}
+      </Typography>
+    );
+  };
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="exformmakerApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading">
-            <Translate contentKey="exformmakerApp.group.home.createOrEditLabel">Create or edit a Group</Translate>
-          </h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col md="8">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? (
-                <ValidatedField
-                  name="id"
-                  required
-                  readOnly
-                  id="group-id"
-                  label={translate('global.field.id')}
-                  validate={{ required: true }}
-                />
-              ) : null}
-              <ValidatedField
-                label={translate('exformmakerApp.group.title')}
-                id="group-title"
-                name="title"
-                data-cy="title"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  minLength: {
-                    value: 20,
-                    message: translate('entity.validation.minlength', { min: 20 }),
-                  },
-                  maxLength: {
-                    value: 100,
-                    message: translate('entity.validation.maxlength', { max: 100 }),
-                  },
-                }}
+    <MainCard title={<MainCardTitle />}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            {!isNew ? (
+              <TextField
+                fullWidth
+                id="group-id"
+                name="id"
+                label={translate('global.field.id')}
+                value={groupEntity.id}
+                onChange={formik.handleChange}
+                disabled
+                variant="outlined"
               />
-              <ValidatedField
-                label={translate('exformmakerApp.group.description')}
-                id="group-description"
-                name="description"
-                data-cy="description"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('exformmakerApp.group.activated')}
-                id="group-activated"
-                name="activated"
-                data-cy="activated"
-                check
-                type="checkbox"
-              />
-              <ValidatedField
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="group-title"
+              name="title"
+              label={translate('exformmakerApp.group.title')}
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="group-description"
+              name="description"
+              label={translate('exformmakerApp.group.description')}
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              error={formik.touched.description && Boolean(formik.errors.description)}
+              helperText={formik.touched.description && formik.errors.description}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox id="group-activated" name="activated" checked={formik.values.activated} onChange={formik.handleChange} />}
+              label={translate('exformmakerApp.group.activated')}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
+              <InputLabel id="group-user-label"> {translate('exformmakerApp.group.user')}</InputLabel>
+              <Select
+                labelId="group-user-label"
                 id="group-user"
                 name="user"
-                data-cy="user"
+                value={formik.values.user?.id}
+                onChange={e => formik.setFieldValue('user', { id: e.target.value })}
                 label={translate('exformmakerApp.group.user')}
-                type="select"
-                required
               >
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/group" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
+                <MenuItem value="-" disabled>
+                  <em>None</em>
+                </MenuItem>
+                {users.map(user => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.login}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <ButtonGroup size="small">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/group')} color="primary">
+                <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
-                &nbsp;
+              <Button color="secondary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <IconDeviceFloppy size={'1rem'} /> &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-            </ValidatedForm>
-          )}
-        </Col>
-      </Row>
-    </div>
+            </ButtonGroup>
+          </Grid>
+        </Grid>
+      </form>
+      {loading ?? <Loader />}
+    </MainCard>
   );
 };
 
