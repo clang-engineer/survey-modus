@@ -16,6 +16,7 @@
         "category": "Category ",
         "form": "Form ",
         "companyForm": "Company Form",
+        "field": "Field ",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
