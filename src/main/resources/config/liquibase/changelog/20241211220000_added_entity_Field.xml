@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="clang" id="20241211220000-1">
+        <createTable tableName="tbl_field">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="activated" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="form_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="clang" id="20241211220000-2">
+        <addForeignKeyConstraint baseColumnNames="form_id"
+            baseTableName="tbl_field"
+            constraintName="fk_field_form_id"
+            referencedColumnNames="id"
+            referencedTableName="tbl_form"/>
+    </changeSet>
+
+    <changeSet author="clang" context="faker" id="20241211220000-1-data">
+        <loadData
+            file="config/liquibase/fake-data/field.csv"
+            separator=";"
+            tableName="tbl_field"
+            usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
+            <column name="activated" type="boolean"/>
+            <column name="form_id" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
