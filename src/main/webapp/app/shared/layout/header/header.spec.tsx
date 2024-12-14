@@ -12,13 +12,11 @@ describe('Header', () => {
     isAuthenticated: true,
     isAdmin: true,
     currentLocale: 'en',
-    ribbonEnv: 'dev',
     isInProduction: false,
     isOpenAPIEnabled: true,
   };
   const prodProps = {
     ...devProps,
-    ribbonEnv: 'prod',
     isInProduction: true,
     isOpenAPIEnabled: false,
   };
@@ -52,7 +50,7 @@ describe('Header', () => {
   });
 
   // All tests will go here
-  it('Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon.', () => {
+  it('Renders a Header component with LoadingBar, Navbar, Nav and dev ribbon.', () => {
     const html = wrapper();
 
     // Find Navbar component
@@ -63,23 +61,6 @@ describe('Header', () => {
     expect(html).toContain('entity-menu');
     // Find AccountMenu component
     expect(html).toContain('account-menu');
-    // Ribbon
-    expect(html).toContain('ribbon');
-  });
-
-  it('Renders a Header component in prod profile with LoadingBar, Navbar, Nav.', () => {
-    const html = wrapper(prodProps);
-
-    // Find Navbar component
-    expect(html).toContain('navbar');
-    // Find AdminMenu component
-    expect(html).toContain('admin-menu');
-    // Find EntitiesMenu component
-    expect(html).toContain('entity-menu');
-    // Find AccountMenu component
-    expect(html).toContain('account-menu');
-    // No Ribbon
-    expect(html).not.toContain('ribbon');
   });
 
   it('Renders a Header component in prod profile with logged in User', () => {
