@@ -19,8 +19,9 @@ const apiUrl = 'api/groups';
 
 // Actions
 
-export const getEntities = createAsyncThunk('group/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('group/fetch_entity_list', async ({ page, size, sort, query }: IQueryParams) => {
+  // const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}${query || ''}`;
   return axios.get<IGroup[]>(requestUrl);
 });
 

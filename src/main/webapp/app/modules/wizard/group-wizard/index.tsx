@@ -1,17 +1,17 @@
 import React from 'react';
-import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Route } from 'react-router-dom';
 
-import { Grid } from '@mui/material';
-import { gridSpacing } from 'app/berry/store/constant';
+import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
+import GroupWizardList from 'app/modules/wizard/group-wizard/group-wizard-list';
+import GroupWizardDetail from 'app/modules/wizard/group-wizard/group-wizard-detail';
 
-const GroupWizard = () => {
-  return (
-    <MainCard title="Group Wizard">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}></Grid>
-      </Grid>
-    </MainCard>
-  );
-};
+const GroupWizardRoutes = () => (
+  <ErrorBoundaryRoutes>
+    <Route index element={<GroupWizardList />} />
+    <Route path=":id">
+      <Route index element={<GroupWizardDetail />} />
+    </Route>
+  </ErrorBoundaryRoutes>
+);
 
-export default GroupWizard;
+export default GroupWizardRoutes;
