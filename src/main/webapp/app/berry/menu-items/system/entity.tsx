@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { IconBrandChrome, IconHelp, IconSitemap } from '@tabler/icons';
 import { NavItemType } from 'app/berry/types';
 
@@ -25,34 +23,10 @@ const entity: NavItemType[] = [
         breadcrumbs: true,
       },
       {
-        id: 'group-user',
-        title: 'group-user',
-        type: 'item',
-        url: '/group-user',
-        icon: icons.IconBrandChrome,
-        breadcrumbs: true,
-      },
-      {
         id: 'company',
         title: 'company',
         type: 'item',
         url: '/company',
-        icon: icons.IconBrandChrome,
-        breadcrumbs: true,
-      },
-      {
-        id: 'group-company',
-        title: 'group-company',
-        type: 'item',
-        url: '/group-company',
-        icon: icons.IconBrandChrome,
-        breadcrumbs: true,
-      },
-      {
-        id: 'category',
-        title: 'category',
-        type: 'item',
-        url: '/category',
         icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
@@ -65,10 +39,42 @@ const entity: NavItemType[] = [
         breadcrumbs: true,
       },
       {
+        id: 'category',
+        title: 'category',
+        type: 'item',
+        url: '/category',
+        icon: icons.IconBrandChrome,
+        breadcrumbs: true,
+      },
+      {
         id: 'field',
         title: 'field',
         type: 'item',
         url: '/field',
+        icon: icons.IconBrandChrome,
+        breadcrumbs: true,
+      },
+      {
+        id: 'group-user',
+        title: 'group-user',
+        type: 'item',
+        url: '/group-user',
+        icon: icons.IconBrandChrome,
+        breadcrumbs: true,
+      },
+      {
+        id: 'group-company',
+        title: 'group-company',
+        type: 'item',
+        url: '/group-company',
+        icon: icons.IconBrandChrome,
+        breadcrumbs: true,
+      },
+      {
+        id: 'company-form',
+        title: 'company-form',
+        type: 'item',
+        url: '/company-form',
         icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
