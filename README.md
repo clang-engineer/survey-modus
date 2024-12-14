@@ -90,3 +90,7 @@
 ```html
 <iframe width="600" height="336" src="https://www.erdcloud.com/p/DwEHf4YkCGfA3y3Cq" frameborder="0" allowfullscreen></iframe>
 ```
+
+1. form 만들기 >> 필수
+2. 회사 만들기 (폼 할당, 직원 추가) >> 필수
+3. 그룹 만들기 (회사 할당, 사용자 추가) >> 필수 아님
