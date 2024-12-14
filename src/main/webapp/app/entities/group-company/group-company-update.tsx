@@ -16,7 +16,7 @@ export const GroupCompanyUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const groups = useAppSelector(state => state.groupManagement.groups);
+  const groups = useAppSelector(state => state.group.entities);
   const companys = useAppSelector(state => state.company.entities);
   const groupCompanyEntity = useAppSelector(state => state.groupCompany.entity);
   const loading = useAppSelector(state => state.groupCompany.loading);
@@ -105,7 +105,7 @@ export const GroupCompanyUpdate = () => {
                 {groups
                   ? groups.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
+                        {otherEntity.title}
                       </option>
                     ))
                   : null}
