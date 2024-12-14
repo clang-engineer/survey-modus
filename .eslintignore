@@ -6,3 +6,8 @@ target/
 build/
 node/
 postcss.config.js
+
+
+// custom ignore
+src/main/webapp/app/berry/*
+src/main/webapp/app/react-app-env.d.ts
