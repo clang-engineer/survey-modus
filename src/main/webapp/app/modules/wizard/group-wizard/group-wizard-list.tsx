@@ -97,7 +97,7 @@ const GroupWizardList = () => {
             size="small"
             id="jh-create-entity"
             data-cy="entityCreateButton"
-            onClick={() => navigate('/group/new')}
+            onClick={() => navigate('/wizard/group/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="exformmakerApp.group.home.createLabel">Create new Group</Translate>
@@ -151,7 +151,7 @@ const GroupWizardList = () => {
                       color={'secondary'}
                       onClick={() =>
                         navigate(
-                          `/wizard/group/${group.id}?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/wizard/group/${group.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >

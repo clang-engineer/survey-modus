@@ -8,8 +8,10 @@ import GroupWizardDetail from 'app/modules/wizard/group-wizard/group-wizard-deta
 const GroupWizardRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<GroupWizardList />} />
+
+    <Route path="new" element={<GroupWizardDetail />} />
     <Route path=":id">
-      <Route index element={<GroupWizardDetail />} />
+      <Route path="edit" element={<GroupWizardDetail />} />
     </Route>
   </ErrorBoundaryRoutes>
 );
