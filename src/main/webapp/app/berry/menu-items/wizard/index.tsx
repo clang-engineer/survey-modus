@@ -1,6 +1,6 @@
 import { NavItemType } from 'app/berry/types';
 
-import { IconSitemap } from '@tabler/icons';
+import { IconSitemap, IconUsers } from '@tabler/icons';
 
 const wizard: NavItemType = {
   id: 'wizard',
@@ -9,8 +9,8 @@ const wizard: NavItemType = {
   children: [
     {
       id: 'wizard-group',
-      title: 'group',
-      icon: IconSitemap,
+      title: 'group wizard',
+      icon: IconUsers,
       type: 'item',
       url: '/wizard/group',
     },

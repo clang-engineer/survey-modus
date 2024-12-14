@@ -112,7 +112,11 @@
     },
     "detail": {
       "field": "필드",
-      "value": "값"
+      "value": "값",
+      "createdBy": "생성자",
+      "createdDate": "생성일",
+      "lastModifiedBy": "최종 수정자",
+      "lastModifiedDate": "최종 수정일"
     },
     "delete": {
       "title": "삭제 확인"

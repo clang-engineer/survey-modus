@@ -112,7 +112,11 @@
     },
     "detail": {
       "field": "Field",
-      "value": "Value"
+      "value": "Value",
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Last modified by",
+      "lastModifiedDate": "Last modified date"
     },
     "delete": {
       "title": "Confirm delete operation"
