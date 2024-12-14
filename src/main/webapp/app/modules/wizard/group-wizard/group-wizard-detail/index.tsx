@@ -4,44 +4,18 @@ import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntities as getCompanys } from 'app/entities/company/company.reducer';
-import { createEntity, getEntity, reset, updateEntity } from 'app/entities/group/group.reducer';
+import { getEntity, reset } from 'app/entities/group/group.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
 import { Theme, useTheme } from '@mui/material/styles';
+import Autocomplete from '@mui/material/Autocomplete';
+import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 
-import {
-  Button,
-  ButtonGroup,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-  Chip,
-  OutlinedInput,
-  Box,
-} from '@mui/material';
+import { Button, ButtonGroup, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
-import GroupWizardDetailCompany from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail-company';
-import GroupWizardDetailUser from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail-user';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 export const GroupWizardDetail = () => {
   const dispatch = useAppDispatch();
@@ -168,10 +142,48 @@ export const GroupWizardDetail = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <GroupWizardDetailCompany formik={formik} companyList={companys} />
+            <Autocomplete
+              multiple
+              id="multi-companys"
+              disableCloseOnSelect
+              options={companys}
+              getOptionLabel={option => option.title}
+              defaultValue={formik.values.companys}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank fontSize="small" />}
+                    checkedIcon={<CheckBox fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.title}
+                </li>
+              )}
+              renderInput={params => <TextField {...params} label="companys" placeholder="search company" />}
+            />
           </Grid>
           <Grid item xs={12}>
-            <GroupWizardDetailUser formik={formik} userList={users} />
+            <Autocomplete
+              multiple
+              id="multi-users"
+              disableCloseOnSelect
+              options={users}
+              getOptionLabel={option => option.login}
+              defaultValue={formik.values.users}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank fontSize="small" />}
+                    checkedIcon={<CheckBox fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.login}
+                </li>
+              )}
+              renderInput={params => <TextField {...params} label="users" placeholder="search user" />}
+            />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
