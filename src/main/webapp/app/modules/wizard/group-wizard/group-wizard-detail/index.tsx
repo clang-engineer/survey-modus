@@ -8,7 +8,7 @@ import { getEntity, reset } from 'app/entities/group/group.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
-import { Theme, useTheme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import Autocomplete from '@mui/material/Autocomplete';
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 
@@ -21,7 +21,6 @@ export const GroupWizardDetail = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
@@ -53,7 +52,7 @@ export const GroupWizardDetail = () => {
     }
 
     dispatch(getUsers({}));
-    dispatch(getCompanys({}));
+    dispatch(getCompanys({ query: `userId.equals=${currentUser.id}` }));
   }, []);
 
   useEffect(() => {
