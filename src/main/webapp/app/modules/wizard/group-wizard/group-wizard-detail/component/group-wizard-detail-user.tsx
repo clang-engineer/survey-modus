@@ -6,26 +6,26 @@ import { FormikProps } from 'formik';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { SelectChangeEvent } from '@mui/material/Select';
 import MuiSelectMenuProps from 'app/modules/wizard/group-wizard/group-wizard-detail/mui-select-menu-props';
-import { ICompany } from 'app/shared/model/company.model';
+import { IUser } from 'app/shared/model/user.model';
 
-const GroupWizardDetailCompany = (props: { formik: FormikProps<any>; companyList: ICompany[] }) => {
-  const { formik, companyList } = props;
+const GroupWizardDetailUser = (props: { formik: FormikProps<any>; userList: IUser[] }) => {
+  const { formik, userList } = props;
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="multiple-companys-label">Company</InputLabel>
+      <InputLabel id="multiple-users-label">User</InputLabel>
       <Select
-        labelId="multiple-companys-label"
-        id="multiple-companys"
+        labelId="multiple-users-label"
+        id="multiple-users"
         multiple
-        label="Company"
-        value={formik.values.companys.map(item => item.id) || []}
+        label="User"
+        value={formik.values.users.map(item => item.id) || []}
         onChange={(event: SelectChangeEvent<any>) => {
           const {
             target: { value },
           } = event;
           formik.setFieldValue(
-            'companys',
+            'users',
             value.map((item: any) => {
               return { id: item };
             })
@@ -34,18 +34,18 @@ const GroupWizardDetailCompany = (props: { formik: FormikProps<any>; companyList
         renderValue={selected => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map(value => {
-              const company = companyList.find(item => item.id === value);
+              const user = userList.find(item => item.id === value);
               return (
                 <Chip
                   key={value}
-                  label={`${company?.title}`}
+                  label={`${user.login}`}
                   variant="outlined"
                   clickable
                   deleteIcon={<CancelIcon onMouseDown={event => event.stopPropagation()} />}
                   onDelete={() => {
                     formik.setFieldValue(
-                      'companys',
-                      formik.values.companys.filter((item: any) => item.id !== value)
+                      'users',
+                      formik.values.users.filter((item: any) => item.id !== value)
                     );
                   }}
                 />
@@ -55,14 +55,14 @@ const GroupWizardDetailCompany = (props: { formik: FormikProps<any>; companyList
         )}
         MenuProps={MuiSelectMenuProps}
       >
-        {companyList.map(company => (
+        {userList.map(user => (
           <MenuItem
-            key={company.id}
-            value={company.id}
-            // style={getStyles(company, personName, theme)}
+            key={user.id}
+            value={user.id}
+            // style={getStyles(user, personName, theme)}
           >
-            <Checkbox size="small" checked={formik.values.companys.map(item => item.id).indexOf(company.id) > -1} />
-            <ListItemText primary={`${company.title}`} />
+            <Checkbox size="small" checked={formik.values.users.map(item => item.id).indexOf(user.id) > -1} />
+            <ListItemText primary={`${user.login}`} />
           </MenuItem>
         ))}
       </Select>
@@ -70,4 +70,4 @@ const GroupWizardDetailCompany = (props: { formik: FormikProps<any>; companyList
   );
 };
 
-export default GroupWizardDetailCompany;
+export default GroupWizardDetailUser;

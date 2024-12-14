@@ -28,8 +28,9 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
-import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.formik';
+import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
 import GroupWizardDetailCompany from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail-company';
+import GroupWizardDetailUser from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail-user';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -169,31 +170,9 @@ export const GroupWizardDetail = () => {
           <Grid item xs={12}>
             <GroupWizardDetailCompany formik={formik} companyList={companys} />
           </Grid>
-          {/*<Grid item xs={12}>*/}
-          {/*  <FormControl component="fieldset" fullWidth*/}
-          {/*               error={formik.touched.user && Boolean(formik.errors.user)}*/}
-          {/*               variant="outlined">*/}
-          {/*    <InputLabel*/}
-          {/*      id="group-user-label"> {translate('exformmakerApp.group.user')}</InputLabel>*/}
-          {/*    <Select*/}
-          {/*      labelId="group-user-label"*/}
-          {/*      id="group-user"*/}
-          {/*      name="user"*/}
-          {/*      value={formik.values.user?.id}*/}
-          {/*      onChange={e => formik.setFieldValue('user', {id: e.target.value})}*/}
-          {/*      label={translate('exformmakerApp.group.user')}*/}
-          {/*    >*/}
-          {/*      <MenuItem value="-" disabled>*/}
-          {/*        <em>None</em>*/}
-          {/*      </MenuItem>*/}
-          {/*      {users.map(user => (*/}
-          {/*        <MenuItem key={user.id} value={user.id}>*/}
-          {/*          {user.login}*/}
-          {/*        </MenuItem>*/}
-          {/*      ))}*/}
-          {/*    </Select>*/}
-          {/*  </FormControl>*/}
-          {/*</Grid>*/}
+          <Grid item xs={12}>
+            <GroupWizardDetailUser formik={formik} userList={users} />
+          </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
               <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/group')} color="primary">
