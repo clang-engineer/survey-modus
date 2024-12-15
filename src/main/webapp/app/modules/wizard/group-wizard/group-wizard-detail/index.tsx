@@ -18,6 +18,7 @@ import { gridSpacing } from 'app/berry/store/constant';
 import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
 
 import { getEntities as getGroupCompanys } from 'app/entities/group-company/group-company.reducer';
+import GroupWizardDetailCompanys from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.companys';
 
 export const GroupWizardDetail = () => {
   const dispatch = useAppDispatch();
@@ -139,44 +140,7 @@ export const GroupWizardDetail = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Autocomplete
-              multiple
-              id="multi-companys"
-              disableCloseOnSelect
-              options={companys}
-              getOptionLabel={option => option.title}
-              value={formik.values.companys}
-              onChange={(event, newValue) => {
-                formik.setFieldValue('companys', newValue);
-              }}
-              renderOption={(props, option, { selected }) => {
-                const isChecked = formik.values.companys.some(c => c.id === option.id);
-                return (
-                  <li
-                    {...props}
-                    onClick={() => {
-                      if (isChecked) {
-                        formik.setFieldValue(
-                          'companys',
-                          formik.values.companys.filter(c => c.id !== option.id)
-                        );
-                      } else {
-                        formik.setFieldValue('companys', [...formik.values.companys, option]);
-                      }
-                    }}
-                  >
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlank fontSize="small" />}
-                      checkedIcon={<CheckBox fontSize="small" />}
-                      style={{ marginRight: 8 }}
-                      checked={isChecked}
-                    />
-                    {option.title}
-                  </li>
-                );
-              }}
-              renderInput={params => <TextField {...params} label="companys" placeholder="search company" />}
-            />
+            <GroupWizardDetailCompanys formik={formik} companys={companys} />
           </Grid>
           <Grid item xs={12}>
             <Autocomplete
