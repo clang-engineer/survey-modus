@@ -8,9 +8,6 @@ import { getEntity, reset } from 'app/entities/group/group.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
-import { Theme } from '@mui/material/styles';
-import Autocomplete from '@mui/material/Autocomplete';
-import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 
 import { Button, ButtonGroup, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
@@ -18,7 +15,9 @@ import { gridSpacing } from 'app/berry/store/constant';
 import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
 
 import { getEntities as getGroupCompanys } from 'app/entities/group-company/group-company.reducer';
+import { getEntities as getGroupUsers } from 'app/entities/group-user/group-user.reducer';
 import GroupWizardDetailCompanys from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.companys';
+import GroupWizardDetailUsers from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.users';
 
 export const GroupWizardDetail = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +32,7 @@ export const GroupWizardDetail = () => {
   const companys = useAppSelector(state => state.company.entities);
   const groupEntity = useAppSelector(state => state.group.entity);
   const groupCompanyList = useAppSelector(state => state.groupCompany.entities);
+  const groupUserList = useAppSelector(state => state.groupUser.entities);
   const loading = useAppSelector(state => state.group.loading);
   const updating = useAppSelector(state => state.group.updating);
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
@@ -58,6 +58,7 @@ export const GroupWizardDetail = () => {
     dispatch(getUsers({}));
     dispatch(getCompanys({ query: `userId.equals=${currentUser.id}` }));
     dispatch(getGroupCompanys({ query: `groupId.equals=${id}` }));
+    dispatch(getGroupUsers({ query: `groupId.equals=${id}` }));
   }, []);
 
   useEffect(() => {
@@ -71,10 +72,10 @@ export const GroupWizardDetail = () => {
       formik.setValues({
         ...groupEntity,
         companys: groupCompanyList.filter(gc => companys.some(c => c.id === gc.company.id)).map(gc => gc.company),
-        users: [],
+        users: groupUserList.filter(gu => users.some(u => u.id === gu.user.id)).map(gu => gu.user),
       });
     }
-  }, [groupEntity, companys, groupCompanyList]);
+  }, [groupEntity, companys, groupCompanyList, groupUserList]);
 
   const MainCardTitle = () => {
     return (
@@ -143,26 +144,7 @@ export const GroupWizardDetail = () => {
             <GroupWizardDetailCompanys formik={formik} companys={companys} />
           </Grid>
           <Grid item xs={12}>
-            <Autocomplete
-              multiple
-              id="multi-users"
-              disableCloseOnSelect
-              options={users}
-              getOptionLabel={option => option.login}
-              defaultValue={formik.values.users}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlank fontSize="small" />}
-                    checkedIcon={<CheckBox fontSize="small" />}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {option.login}
-                </li>
-              )}
-              renderInput={params => <TextField {...params} label="users" placeholder="search user" />}
-            />
+            <GroupWizardDetailUsers formik={formik} users={users} />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
