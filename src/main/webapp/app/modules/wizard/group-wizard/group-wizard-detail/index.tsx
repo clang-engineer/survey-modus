@@ -148,7 +148,7 @@ export const GroupWizardDetail = () => {
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
-              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/group')} color="primary">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/wizard/group')} color="primary">
                 <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">
