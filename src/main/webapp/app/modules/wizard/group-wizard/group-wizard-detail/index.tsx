@@ -53,12 +53,12 @@ export const GroupWizardDetail = () => {
       dispatch(reset());
     } else {
       dispatch(getEntity(id));
+      dispatch(getGroupCompanys({ query: `groupId.equals=${id}` }));
+      dispatch(getGroupUsers({ query: `groupId.equals=${id}` }));
     }
 
     dispatch(getUsers({}));
     dispatch(getCompanys({ query: `userId.equals=${currentUser.id}` }));
-    dispatch(getGroupCompanys({ query: `groupId.equals=${id}` }));
-    dispatch(getGroupUsers({ query: `groupId.equals=${id}` }));
   }, []);
 
   useEffect(() => {
