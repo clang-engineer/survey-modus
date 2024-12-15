@@ -17,6 +17,8 @@ import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
 
+import { getEntities as getGroupCompanys } from 'app/entities/group-company/group-company.reducer';
+
 export const GroupWizardDetail = () => {
   const dispatch = useAppDispatch();
 
@@ -29,6 +31,7 @@ export const GroupWizardDetail = () => {
   const users = useAppSelector(state => state.userManagement.users);
   const companys = useAppSelector(state => state.company.entities);
   const groupEntity = useAppSelector(state => state.group.entity);
+  const groupCompanyList = useAppSelector(state => state.groupCompany.entities);
   const loading = useAppSelector(state => state.group.loading);
   const updating = useAppSelector(state => state.group.updating);
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
@@ -53,6 +56,7 @@ export const GroupWizardDetail = () => {
 
     dispatch(getUsers({}));
     dispatch(getCompanys({ query: `userId.equals=${currentUser.id}` }));
+    dispatch(getGroupCompanys({ query: `groupId.equals=${id}` }));
   }, []);
 
   useEffect(() => {
@@ -65,17 +69,11 @@ export const GroupWizardDetail = () => {
     if (!isNew) {
       formik.setValues({
         ...groupEntity,
-        companys: [],
+        companys: groupCompanyList.filter(gc => companys.some(c => c.id === gc.company.id)).map(gc => gc.company),
         users: [],
       });
     }
-  }, [groupEntity]);
-
-  function getStyles(id: string, idArray: readonly string[], theme: Theme) {
-    return {
-      fontWeight: idArray?.includes(id) ? theme.typography.fontWeightMedium : theme.typography.fontWeightRegular,
-    };
-  }
+  }, [groupEntity, companys, groupCompanyList]);
 
   const MainCardTitle = () => {
     return (
@@ -147,18 +145,36 @@ export const GroupWizardDetail = () => {
               disableCloseOnSelect
               options={companys}
               getOptionLabel={option => option.title}
-              defaultValue={formik.values.companys}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlank fontSize="small" />}
-                    checkedIcon={<CheckBox fontSize="small" />}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {option.title}
-                </li>
-              )}
+              value={formik.values.companys}
+              onChange={(event, newValue) => {
+                formik.setFieldValue('companys', newValue);
+              }}
+              renderOption={(props, option, { selected }) => {
+                const isChecked = formik.values.companys.some(c => c.id === option.id);
+                return (
+                  <li
+                    {...props}
+                    onClick={() => {
+                      if (isChecked) {
+                        formik.setFieldValue(
+                          'companys',
+                          formik.values.companys.filter(c => c.id !== option.id)
+                        );
+                      } else {
+                        formik.setFieldValue('companys', [...formik.values.companys, option]);
+                      }
+                    }}
+                  >
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlank fontSize="small" />}
+                      checkedIcon={<CheckBox fontSize="small" />}
+                      style={{ marginRight: 8 }}
+                      checked={isChecked}
+                    />
+                    {option.title}
+                  </li>
+                );
+              }}
               renderInput={params => <TextField {...params} label="companys" placeholder="search company" />}
             />
           </Grid>
