@@ -46,16 +46,11 @@ const GroupWizardList = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">{group.title}</Typography>
         <ButtonGroup variant="text" size="small">
-          <Button>
-            <IconPencil size={'1rem'} strokeWidth={1.5} onClick={() => navigate(`/wizard/group/${group.id}/edit`)} />
+          <Button onClick={() => navigate(`/wizard/group/${group.id}/edit`)}>
+            <IconPencil size={'1rem'} strokeWidth={1.5} />
           </Button>
-          <Button>
-            <IconTrash
-              size={'1rem'}
-              strokeWidth={1.5}
-              onClick={() => navigate(`/wizard/group/${group.id}/delete`)}
-              color={theme.palette.error.light}
-            />
+          <Button onClick={() => navigate(`/wizard/group/${group.id}/delete`)}>
+            <IconTrash size={'1rem'} strokeWidth={1.5} color={theme.palette.error.light} />
           </Button>
         </ButtonGroup>
       </Box>

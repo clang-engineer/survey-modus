@@ -79,11 +79,11 @@ export const GroupWizardDetail = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="exformmakerApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading">
+      <Typography variant="h4" id="exformmakerApp.group.home.createOrEditLabel">
         <Translate contentKey="exformmakerApp.group.home.createOrEditLabel">Create or edit a Group</Translate>
-        {!isNew ?? (
+        {!isNew && (
           <Typography variant="caption" display="block" gutterBottom>
-            `: ${groupEntity.id}`
+            {groupEntity.id}
           </Typography>
         )}
       </Typography>
