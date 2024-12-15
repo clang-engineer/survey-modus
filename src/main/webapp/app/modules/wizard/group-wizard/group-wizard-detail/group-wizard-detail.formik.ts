@@ -18,7 +18,7 @@ const groupWizardDetailFormik = (props: { groupEntity: IGroup; isNew: boolean; u
       users: [],
     },
     validationSchema: yup.object({
-      id: yup.string(),
+      id: yup.number(),
       title: yup
         .string()
         .min(5, translate('entity.validation.minlength', { min: 5 }))

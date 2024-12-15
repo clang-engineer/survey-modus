@@ -101,7 +101,7 @@ export const GroupWizardDetail = () => {
                 id="group-id"
                 name="id"
                 label={translate('global.field.id')}
-                value={groupEntity.id}
+                value={groupEntity.id || 0}
                 onChange={formik.handleChange}
                 disabled
                 variant="outlined"
