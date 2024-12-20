@@ -45,7 +45,7 @@ export const GroupWizardDetail = () => {
   });
 
   const handleClose = () => {
-    navigate('/group' + location.search);
+    navigate('/wizard/group' + location.search);
   };
 
   useEffect(() => {
