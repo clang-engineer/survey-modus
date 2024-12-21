@@ -395,19 +395,8 @@ class GroupResourceIT {
         val updatedUser = UserResourceIT.createEntity(em)
         em.persist(updatedUser)
 
-        val updatedUsers = mutableSetOf<User>()
-        for (i in 0 until 3) {
-            val user = UserResourceIT.createEntity(em)
-            em.persist(user)
-            updatedUsers.add(user)
-        }
-
-        val updatedCompanies = mutableSetOf<Company>()
-        for (i in 0 until 3) {
-            val company = CompanyResourceIT.createEntity(em)
-            em.persist(company)
-            updatedCompanies.add(company)
-        }
+        val updatedUsers = getNewUserList(em)
+        val updatedCompanies = getNewCompanyList(em)
         em.flush()
 
         updatedGroup.user = updatedUser
@@ -656,19 +645,8 @@ class GroupResourceIT {
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
 
-            val users = mutableSetOf<User>()
-            for (i in 0 until 3) {
-                val user = UserResourceIT.createEntity(em)
-                em.persist(user)
-                users.add(user)
-            }
-
-            val companies = mutableSetOf<Company>()
-            for (i in 0 until 3) {
-                val company = CompanyResourceIT.createEntity(em)
-                em.persist(company)
-                companies.add(company)
-            }
+            val users = getNewUserList(em)
+            val companies = getNewCompanyList(em)
 
             em.flush()
             group.user = user
@@ -689,19 +667,8 @@ class GroupResourceIT {
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
 
-            val users = mutableSetOf<User>()
-            for (i in 0 until 3) {
-                val user = UserResourceIT.createEntity(em)
-                em.persist(user)
-                users.add(user)
-            }
-
-            val companies = mutableSetOf<Company>()
-            for (i in 0 until 3) {
-                val company = CompanyResourceIT.createEntity(em)
-                em.persist(company)
-                companies.add(company)
-            }
+            val users = getNewUserList(em)
+            val companies = getNewCompanyList(em)
 
             em.flush()
             group.user = user
@@ -709,6 +676,25 @@ class GroupResourceIT {
             group.companies = companies
 
             return group
+        }
+        fun getNewUserList(em: EntityManager): MutableSet<User> {
+            val users = mutableSetOf<User>()
+            for (i in 0 until 3) {
+                val user = UserResourceIT.createEntity(em)
+                em.persist(user)
+                users.add(user)
+            }
+            return users
+        }
+
+        fun getNewCompanyList(em: EntityManager): MutableSet<Company> {
+            val companies = mutableSetOf<Company>()
+            for (i in 0 until 3) {
+                val company = CompanyResourceIT.createEntity(em)
+                em.persist(company)
+                companies.add(company)
+            }
+            return companies
         }
     }
 }
