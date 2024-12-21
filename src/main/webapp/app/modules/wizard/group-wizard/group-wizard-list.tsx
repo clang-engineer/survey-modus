@@ -8,7 +8,7 @@ import { Alert, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IGroup } from 'app/shared/model/group.model';
-import { IconPencil, IconTrash } from '@tabler/icons';
+import { IconPencil, IconTrash, IconUsers, IconBuildingStore } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -83,22 +83,22 @@ const GroupWizardList = () => {
           ? groupList.map((group, i) => (
               <Grid item xs={12} md={6} xl={4} key={i}>
                 <SubCard title={<SubCardTitle group={group} />}>
-                  <Box>
-                    <Typography variant="body1" color="text.primary">
-                      {group.description}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" justifyContent="flex-end">
-                    <Typography
-                      sx={{
-                        ...theme.typography.subMenuCaption,
-                        color: theme.palette.text.secondary,
-                      }}
-                    >
-                      <Translate contentKey="entity.detail.createdDate">Created Date</Translate>: {group.createdDate}
-                      <Translate contentKey="entity.detail.lastModifiedDate">Last Modified Date</Translate>: {group.lastModifiedDate}
-                    </Typography>
-                  </Box>
+                  <Grid container spacing={gridSpacing}>
+                    <Grid item xs={12} marginBottom={2}>
+                      <Typography variant="body1" color="text.primary">
+                        {group.description}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
+                      <Typography variant="body1" color="text.primary">
+                        <IconUsers size={20} strokeWidth={1.5} /> {group.users?.length ?? 0}
+                      </Typography>
+                      &nbsp;&nbsp;
+                      <Typography variant="body1" color="text.primary">
+                        <IconBuildingStore size={20} strokeWidth={1.5} /> {group.groups?.length ?? 0}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </SubCard>
               </Grid>
             ))
