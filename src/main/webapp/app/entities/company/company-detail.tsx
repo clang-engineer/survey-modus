@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './company.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
+import { gridSpacing } from 'app/berry/store/constant';
+import { IconArrowBack, IconPencil } from '@tabler/icons';
 
 export const CompanyDetail = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
 
@@ -18,56 +21,85 @@ export const CompanyDetail = () => {
 
   const companyEntity = useAppSelector(state => state.company.entity);
   return (
-    <Row>
-      <Col md="8">
-        <h2 data-cy="companyDetailsHeading">
-          <Translate contentKey="exformmakerApp.company.detail.title">Company</Translate>
-        </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="id">
+    <MainCard
+      title={
+        <Typography variant="h4">
+          <Translate contentKey="exformmakerApp.company.detail.title">Company</Translate> [<b>{companyEntity.id}</b>]
+        </Typography>
+      }
+    >
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="global.field.id">ID</Translate>
-            </span>
-          </dt>
-          <dd>{companyEntity.id}</dd>
-          <dt>
-            <span id="title">
+            </Typography>
+            <Typography>{companyEntity.id}</Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="exformmakerApp.company.title">Title</Translate>
-            </span>
-          </dt>
-          <dd>{companyEntity.title}</dd>
-          <dt>
-            <span id="description">
+            </Typography>
+            <Typography> {companyEntity.title} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="exformmakerApp.company.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{companyEntity.description}</dd>
-          <dt>
-            <span id="activated">
+            </Typography>
+            <Typography> {companyEntity.description} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="exformmakerApp.company.activated">Activated</Translate>
-            </span>
-          </dt>
-          <dd>{companyEntity.activated ? 'true' : 'false'}</dd>
-          <dt>
-            <Translate contentKey="exformmakerApp.company.user">User</Translate>
-          </dt>
-          <dd>{companyEntity.user ? companyEntity.user.login : ''}</dd>
-        </dl>
-        <Button tag={Link} to="/company" replace color="info" data-cy="entityDetailsBackButton">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/company/${companyEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
-      </Col>
-    </Row>
+            </Typography>
+            <Typography> {companyEntity.activated ? 'true' : 'false'} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.company.user">User</Translate>
+            </Typography>
+            <Typography> {companyEntity.user ? companyEntity.user.login : ''} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.company.forms">Form List</Translate>
+            </Typography>
+            <Typography>
+              {companyEntity.forms
+                ? companyEntity.forms.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.title}</>
+                      {index === companyEntity.forms.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <ButtonGroup variant="contained" size="small">
+            <Button onClick={() => navigate('/company')} data-cy="entityDetailsBackButton">
+              <IconArrowBack size={'1rem'} />
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </Button>
+            <Button onClick={() => navigate(`/company/${companyEntity.id}/edit`)} color="secondary">
+              <IconPencil size={'1rem'} />
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </Button>
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    </MainCard>
   );
 };
 
