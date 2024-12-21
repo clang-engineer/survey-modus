@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
+import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 
 import {
   Button,
@@ -26,6 +27,8 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
+import GroupUserMultiselect from 'app/entities/group/component/group-user-multiselect';
+import GroupCompanyMultiselect from 'app/entities/group/component/group-company-multiselect';
 
 export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +39,7 @@ export const GroupUpdate = () => {
   const isNew = id === undefined;
 
   const users = useAppSelector(state => state.userManagement.users);
+  const companies = useAppSelector(state => state.company.entities);
   const groupEntity = useAppSelector(state => state.group.entity);
   const loading = useAppSelector(state => state.group.loading);
   const updating = useAppSelector(state => state.group.updating);
@@ -48,6 +52,8 @@ export const GroupUpdate = () => {
       description: '',
       activated: false,
       user: { id: 0 },
+      users: [],
+      companies: [],
     },
     validationSchema: yup.object({
       id: yup.string(),
@@ -61,6 +67,16 @@ export const GroupUpdate = () => {
       user: yup.object({
         id: yup.number().required(translate('entity.validation.required')),
       }),
+      users: yup.array().of(
+        yup.object({
+          id: yup.number(),
+        })
+      ),
+      companies: yup.array().of(
+        yup.object({
+          id: yup.number(),
+        })
+      ),
     }),
     onSubmit: values => {
       saveEntity(values);
@@ -79,6 +95,7 @@ export const GroupUpdate = () => {
     }
 
     dispatch(getUsers({}));
+    dispatch(getCompanies({}));
   }, []);
 
   useEffect(() => {
@@ -191,6 +208,12 @@ export const GroupUpdate = () => {
                 ))}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <GroupUserMultiselect formik={formik} users={users} />
+          </Grid>
+          <Grid item xs={12}>
+            <GroupCompanyMultiselect formik={formik} companies={companies} />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
