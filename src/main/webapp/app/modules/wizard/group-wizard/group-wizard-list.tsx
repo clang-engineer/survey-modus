@@ -4,11 +4,11 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from 'app/entities/group/group.reducer';
-import { Alert, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
+import { Alert, Box, Button, ButtonGroup, Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IGroup } from 'app/shared/model/group.model';
-import { IconPencil, IconTrash, IconUsers, IconBuildingStore } from '@tabler/icons';
+import { IconBuildingStore, IconPencil, IconTrash, IconUsers } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -90,13 +90,27 @@ const GroupWizardList = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                      <Typography variant="body1" color="text.primary">
-                        <IconUsers size={20} strokeWidth={1.5} /> {group.users?.length ?? 0}
-                      </Typography>
+                      <Box display="flex" alignItems="center">
+                        <Tooltip title="Users">
+                          <IconButton>
+                            <IconUsers size={'15px'} strokeWidth={1.2} />
+                          </IconButton>
+                        </Tooltip>
+                        <Typography variant="caption" color="text.primary">
+                          {group.users?.length ?? 0}
+                        </Typography>
+                      </Box>
                       &nbsp;&nbsp;
-                      <Typography variant="body1" color="text.primary">
-                        <IconBuildingStore size={20} strokeWidth={1.5} /> {group.groups?.length ?? 0}
-                      </Typography>
+                      <Box display="flex" alignItems="center">
+                        <Tooltip title="Companies">
+                          <IconButton>
+                            <IconBuildingStore size={'15px'} strokeWidth={1.2} />
+                          </IconButton>
+                        </Tooltip>
+                        <Typography variant="caption" color="text.primary">
+                          {group.companies?.length ?? 0}
+                        </Typography>
+                      </Box>
                     </Grid>
                   </Grid>
                 </SubCard>
