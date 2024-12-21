@@ -85,13 +85,9 @@ export const GroupUpdate = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="exformmakerApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading">
-        <Translate contentKey="exformmakerApp.group.home.createOrEditLabel">Create or edit a Group</Translate>
-        {!isNew && (
-          <Typography variant="caption" display="block" gutterBottom>
-            `: ${groupEntity.id}`
-          </Typography>
-        )}
+      <Typography variant="h4" id="exformmakerApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading" gutterBottom>
+        <Translate contentKey="exformmakerApp.group.home.createOrEditLabel">Create or edit a Group </Translate> &nbsp;
+        {!isNew && `(ID: ${groupEntity.id})`}
       </Typography>
     );
   };
