@@ -4,9 +4,6 @@ import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './group.reducer';
-
-import * as yup from 'yup';
-import { useFormik } from 'formik';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
@@ -29,6 +26,7 @@ import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import GroupUserMultiselect from 'app/entities/group/component/group-user-multiselect';
 import GroupCompanyMultiselect from 'app/entities/group/component/group-company-multiselect';
+import groupUpdateFormik from 'app/entities/group/component/group-update.formik';
 
 export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
@@ -44,44 +42,6 @@ export const GroupUpdate = () => {
   const loading = useAppSelector(state => state.group.loading);
   const updating = useAppSelector(state => state.group.updating);
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
-
-  const formik = useFormik({
-    initialValues: {
-      id: 0,
-      title: '',
-      description: '',
-      activated: false,
-      user: { id: 0 },
-      users: [],
-      companies: [],
-    },
-    validationSchema: yup.object({
-      id: yup.string(),
-      title: yup
-        .string()
-        .min(5, translate('entity.validation.minlength', { min: 5 }))
-        .max(100, translate('entity.validation.maxlength', { max: 100 }))
-        .required(translate('entity.validation.required')),
-      description: yup.string(),
-      activated: yup.boolean().required(translate('entity.validation.required')),
-      user: yup.object({
-        id: yup.number().required(translate('entity.validation.required')),
-      }),
-      users: yup.array().of(
-        yup.object({
-          id: yup.number(),
-        })
-      ),
-      companies: yup.array().of(
-        yup.object({
-          id: yup.number(),
-        })
-      ),
-    }),
-    onSubmit: values => {
-      saveEntity(values);
-    },
-  });
 
   const handleClose = () => {
     navigate('/group' + location.search);
@@ -114,7 +74,6 @@ export const GroupUpdate = () => {
     const entity = {
       ...groupEntity,
       ...values,
-      // user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -136,6 +95,10 @@ export const GroupUpdate = () => {
       </Typography>
     );
   };
+
+  const formik = groupUpdateFormik({
+    saveEntity: saveEntity,
+  });
 
   return (
     <MainCard title={<MainCardTitle />}>
