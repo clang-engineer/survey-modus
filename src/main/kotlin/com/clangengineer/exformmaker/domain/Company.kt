@@ -19,7 +19,7 @@ data class Company(
     var id: Long? = null,
 
     @get: NotNull
-    @get: Size(min = 20, max = 100)
+    @get: Size(min = 5, max = 100)
     @Column(name = "title", length = 100, nullable = false)
     var title: String? = null,
 
