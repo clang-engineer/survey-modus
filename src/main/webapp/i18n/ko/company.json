@@ -21,7 +21,8 @@
       "title": "Title",
       "description": "Description",
       "activated": "Activated",
-      "user": "User"
+      "user": "User",
+      "forms": "Forms"
     }
   }
 }
