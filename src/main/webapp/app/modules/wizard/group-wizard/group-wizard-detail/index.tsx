@@ -14,8 +14,6 @@ import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import groupWizardDetailFormik from 'app/modules/wizard/group-wizard/group-wizard-detail/group-wizard-detail.formik';
 
-import { getEntities as getGroupCompanys } from 'app/entities/group-company/group-company.reducer';
-import { getEntities as getGroupUsers } from 'app/entities/group-user/group-user.reducer';
 import GroupWizardDetailCompanys from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.companys';
 import GroupWizardDetailUsers from 'app/modules/wizard/group-wizard/group-wizard-detail/component/group-wizard-detail.users';
 
@@ -53,8 +51,6 @@ export const GroupWizardDetail = () => {
       dispatch(reset());
     } else {
       dispatch(getEntity(id));
-      dispatch(getGroupCompanys({ query: `groupId.equals=${id}` }));
-      dispatch(getGroupUsers({ query: `groupId.equals=${id}` }));
     }
 
     dispatch(getUsers({}));

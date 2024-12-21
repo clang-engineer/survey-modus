@@ -55,22 +55,6 @@ const entity: NavItemType[] = [
         breadcrumbs: true,
       },
       {
-        id: 'group-user',
-        title: 'group-user',
-        type: 'item',
-        url: '/group-user',
-        icon: icons.IconBrandChrome,
-        breadcrumbs: true,
-      },
-      {
-        id: 'group-company',
-        title: 'group-company',
-        type: 'item',
-        url: '/group-company',
-        icon: icons.IconBrandChrome,
-        breadcrumbs: true,
-      },
-      {
         id: 'company-form',
         title: 'company-form',
         type: 'item',
