@@ -15,7 +15,7 @@ data class PointDTO(
     var id: Long? = null,
 
     @get: NotNull
-    @get: Size(min = 20, max = 100)
+    @get: Size(min = 5, max = 100)
     var title: String? = null,
 
     var description: String? = null,
