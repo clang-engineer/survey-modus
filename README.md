@@ -67,13 +67,13 @@
 
 - [x] 회사관리(Company) &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
 - [x] 그룹관리(Group) &nbsp;&nbsp; ![100%](https://progress-bar.xyz100)
-- [x] 그룹 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
-- [x] 그룹 사용자관리(GroupUser) &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100)
+- [x] 그룹 회사관리 &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100) >> @ManyToMany로 처리
+- [x] 그룹 사용자관리(GroupUser) &nbsp;&nbsp; ![100%](https://progress-bar.xyz/100) >> @ManyToMany로 처리
 - [x] 카테고리 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 - [x] 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- [x] 회사 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- [ ] 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
-- [ ] 필드 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
+- [x] 회사 폼관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0) >> @ManyToMany로 처리
+- [ ] 스태프 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0) >> @Embedded로 처리
+- [ ] 필드 관리 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0) >> @ManyToOne로 처리
 - [ ] mongo db 연동 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
 
 - [ ] 실사용자 접근 api 및 ui 개발 &nbsp;&nbsp; ![0%](https://progress-bar.xyz/0)
