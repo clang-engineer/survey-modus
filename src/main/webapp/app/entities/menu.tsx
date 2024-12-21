@@ -25,9 +25,6 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/form">
         <Translate contentKey="global.menu.entities.form" />
       </MenuItem>
-      <MenuItem icon="asterisk" to="/company-form">
-        <Translate contentKey="global.menu.entities.companyForm" />
-      </MenuItem>
       <MenuItem icon="asterisk" to="/field">
         <Translate contentKey="global.menu.entities.field" />
       </MenuItem>

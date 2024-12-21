@@ -49,13 +49,6 @@ const entity: NavItemType[] = [
         url: '/field',
         breadcrumbs: true,
       },
-      {
-        id: 'company-form',
-        title: 'company-form',
-        type: 'item',
-        url: '/company-form',
-        breadcrumbs: true,
-      },
     ],
   },
 ];

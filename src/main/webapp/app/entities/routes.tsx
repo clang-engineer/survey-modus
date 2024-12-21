@@ -9,7 +9,6 @@ import Group from './group';
 import Company from './company';
 import Category from './category';
 import Form from './form';
-import CompanyForm from './company-form';
 import Field from './field';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
@@ -24,7 +23,6 @@ export default () => {
         <Route path="company/*" element={<Company />} />
         <Route path="category/*" element={<Category />} />
         <Route path="form/*" element={<Form />} />
-        <Route path="company-form/*" element={<CompanyForm />} />
         <Route path="field/*" element={<Field />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
