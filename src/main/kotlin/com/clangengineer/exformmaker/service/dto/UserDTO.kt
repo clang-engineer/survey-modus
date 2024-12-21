@@ -9,6 +9,9 @@ import java.io.Serializable
 open class UserDTO(
     var id: Long? = null,
     var login: String? = null,
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var email: String? = null,
 ) : Serializable {
 
     constructor(user: User) : this(user.id, user.login)
