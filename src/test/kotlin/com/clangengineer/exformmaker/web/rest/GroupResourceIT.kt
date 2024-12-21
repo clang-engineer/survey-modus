@@ -8,6 +8,7 @@ import com.clangengineer.exformmaker.domain.enumeration.level
 import com.clangengineer.exformmaker.repository.GroupRepository
 import com.clangengineer.exformmaker.service.mapper.GroupMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -117,6 +118,9 @@ class GroupResourceIT {
     fun getAllGroups() {
         groupRepository.saveAndFlush(group)
 
+        val expectedUserIds = group.users.map { it.id?.toInt() }.toTypedArray()
+        val expectedCompanyIds = group.companies.map { it.id?.toInt() }.toTypedArray()
+
         restGroupMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -124,6 +128,8 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].users[*].id").value(Matchers.containsInAnyOrder(*expectedUserIds)))
+            .andExpect(jsonPath("$.[*].companies[*].id").value(Matchers.containsInAnyOrder(*expectedCompanyIds)))
     }
 
     @Test
@@ -135,6 +141,9 @@ class GroupResourceIT {
         val id = group.id
         assertNotNull(id)
 
+        val expectedUserIds = group.users.map { it.id?.toInt() }.toTypedArray()
+        val expectedCompanyIds = group.companies.map { it.id?.toInt() }.toTypedArray()
+
         restGroupMockMvc.perform(get(ENTITY_API_URL_ID, group.id))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -142,6 +151,9 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.user.id").value(group.user?.id?.toInt()))
+            .andExpect(jsonPath("$.users[*].id").value(Matchers.containsInAnyOrder(*expectedUserIds)))
+            .andExpect(jsonPath("$.companies[*].id").value(Matchers.containsInAnyOrder(*expectedCompanyIds)))
     }
 
     @Test
@@ -335,6 +347,9 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].user.id").value(hasItem(group.user?.id?.toInt())))
+            .andExpect(jsonPath("$.[*].users[*].id").value(hasItem(group.users.first().id?.toInt())))
+            .andExpect(jsonPath("$.[*].companies[*].id").value(hasItem(group.companies.first().id?.toInt())))
 
         restGroupMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
