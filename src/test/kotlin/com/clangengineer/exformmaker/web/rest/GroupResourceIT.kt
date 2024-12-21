@@ -391,6 +391,29 @@ class GroupResourceIT {
         updatedGroup.title = UPDATED_TITLE
         updatedGroup.description = UPDATED_DESCRIPTION
         updatedGroup.activated = UPDATED_ACTIVATED
+
+        val updatedUser = UserResourceIT.createEntity(em)
+        em.persist(updatedUser)
+
+        val updatedUsers = mutableSetOf<User>()
+        for (i in 0 until 3) {
+            val user = UserResourceIT.createEntity(em)
+            em.persist(user)
+            updatedUsers.add(user)
+        }
+
+        val updatedCompanies = mutableSetOf<Company>()
+        for (i in 0 until 3) {
+            val company = CompanyResourceIT.createEntity(em)
+            em.persist(company)
+            updatedCompanies.add(company)
+        }
+        em.flush()
+
+        updatedGroup.user = updatedUser
+        updatedGroup.users = updatedUsers
+        updatedGroup.companies = updatedCompanies
+
         val groupDTO = groupMapper.toDto(updatedGroup)
 
         restGroupMockMvc.perform(
@@ -405,6 +428,9 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(UPDATED_TITLE)
         assertThat(testGroup.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testGroup.user).isEqualTo(updatedUser)
+        assertThat(testGroup.users).isEqualTo(updatedUsers)
+        assertThat(testGroup.companies).isEqualTo(updatedCompanies)
     }
 
     @Test
