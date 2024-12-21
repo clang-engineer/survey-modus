@@ -37,6 +37,23 @@ data class Group(
         this.user = user
         return this
     }
+
+    @ManyToMany
+    @JoinTable(
+        name = "tbl_group_user",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]
+    )
+    var users: MutableSet<User> = mutableSetOf()
+
+    @ManyToMany
+    @JoinTable(
+        name = "tbl_group_company",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "company_id", referencedColumnName = "id")]
+    )
+    var companies: MutableSet<Company> = mutableSetOf()
+
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }

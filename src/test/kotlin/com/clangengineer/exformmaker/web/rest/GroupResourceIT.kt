@@ -1,6 +1,7 @@
 package com.clangengineer.exformmaker.web.rest
 
 import com.clangengineer.exformmaker.IntegrationTest
+import com.clangengineer.exformmaker.domain.Company
 import com.clangengineer.exformmaker.domain.Group
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.domain.enumeration.level
@@ -66,6 +67,9 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testGroup.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(DEFAULT_ACTIVATED)
+        assertThat(testGroup.user).isEqualTo(group.user)
+        assertThat(testGroup.users).isEqualTo(group.users)
+        assertThat(testGroup.companies).isEqualTo(group.companies)
     }
 
     @Test
@@ -610,9 +614,25 @@ class GroupResourceIT {
 
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
+
+            val users = mutableSetOf<User>()
+            for (i in 0 until 3) {
+                val user = UserResourceIT.createEntity(em)
+                em.persist(user)
+                users.add(user)
+            }
+
+            val companies = mutableSetOf<Company>()
+            for (i in 0 until 3) {
+                val company = CompanyResourceIT.createEntity(em)
+                em.persist(company)
+                companies.add(company)
+            }
+
             em.flush()
             group.user = user
-            return group
+            group.users = users
+            group.companies = companies
 
             return group
         }
@@ -627,9 +647,25 @@ class GroupResourceIT {
 
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
+
+            val users = mutableSetOf<User>()
+            for (i in 0 until 3) {
+                val user = UserResourceIT.createEntity(em)
+                em.persist(user)
+                users.add(user)
+            }
+
+            val companies = mutableSetOf<Company>()
+            for (i in 0 until 3) {
+                val company = CompanyResourceIT.createEntity(em)
+                em.persist(company)
+                companies.add(company)
+            }
+
             em.flush()
             group.user = user
-            return group
+            group.users = users
+            group.companies = companies
 
             return group
         }

@@ -17,7 +17,11 @@ data class GroupDTO(
 
     var activated: Boolean? = null,
 
-    var user: UserDTO? = null
+    var user: UserDTO? = null,
+
+    var users: MutableSet<UserDTO> = mutableSetOf(),
+
+    var companies: MutableSet<CompanyDTO> = mutableSetOf(),
 ) : Serializable {
 
     override fun equals(other: Any?): Boolean {
