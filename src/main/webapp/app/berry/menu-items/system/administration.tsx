@@ -21,7 +21,6 @@ const administration: NavItemType[] = [
         title: 'user-management',
         type: 'item',
         url: '/admin/user-management',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -29,7 +28,6 @@ const administration: NavItemType[] = [
         title: 'tracker',
         type: 'item',
         url: '/admin/tracker',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -37,7 +35,6 @@ const administration: NavItemType[] = [
         title: 'health',
         type: 'item',
         url: '/admin/health',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -45,7 +42,6 @@ const administration: NavItemType[] = [
         title: 'metrics',
         type: 'item',
         url: '/admin/metrics',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -53,7 +49,6 @@ const administration: NavItemType[] = [
         title: 'configuration',
         type: 'item',
         url: '/admin/configuration',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -61,7 +56,6 @@ const administration: NavItemType[] = [
         title: 'logs',
         type: 'item',
         url: '/admin/logs',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -69,7 +63,6 @@ const administration: NavItemType[] = [
         title: 'docs',
         type: 'item',
         url: '/admin/docs',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
     ],

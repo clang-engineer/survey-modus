@@ -19,7 +19,6 @@ const entity: NavItemType[] = [
         title: 'group',
         type: 'item',
         url: '/group',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -27,7 +26,6 @@ const entity: NavItemType[] = [
         title: 'company',
         type: 'item',
         url: '/company',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -35,7 +33,6 @@ const entity: NavItemType[] = [
         title: 'form',
         type: 'item',
         url: '/form',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -43,7 +40,6 @@ const entity: NavItemType[] = [
         title: 'category',
         type: 'item',
         url: '/category',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -51,7 +47,6 @@ const entity: NavItemType[] = [
         title: 'field',
         type: 'item',
         url: '/field',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
       {
@@ -59,7 +54,6 @@ const entity: NavItemType[] = [
         title: 'company-form',
         type: 'item',
         url: '/company-form',
-        icon: icons.IconBrandChrome,
         breadcrumbs: true,
       },
     ],
