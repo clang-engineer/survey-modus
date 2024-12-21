@@ -11,7 +11,20 @@ import { IGroup } from 'app/shared/model/group.model';
 import { IconBuildingStore, IconPencil, IconTrash, IconUsers } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
+import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
+import GroupUserTooltipContent from 'app/modules/wizard/group-wizard/component/group-user-tootip-content';
+import GroupCompaniesTooltipContent from 'app/modules/wizard/group-wizard/component/group-companies-tooltip-content';
 
+const slotProps = {
+  tooltip: {
+    sx: {
+      color: '#514E6A',
+      backgroundColor: '#ffff',
+      padding: '10px',
+      boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.08)',
+    },
+  },
+};
 const GroupWizardList = () => {
   const dispatch = useAppDispatch();
 
@@ -91,22 +104,30 @@ const GroupWizardList = () => {
                     </Grid>
                     <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
                       <Box display="flex" alignItems="center">
-                        <Tooltip title="Users">
+                        <CustomWidthTooltip
+                          title={<GroupUserTooltipContent users={group.users} />}
+                          sx={{ fontSize: '30' }}
+                          slotProps={slotProps}
+                        >
                           <IconButton>
                             <IconUsers size={'15px'} strokeWidth={1.2} />
                           </IconButton>
-                        </Tooltip>
+                        </CustomWidthTooltip>
                         <Typography variant="caption" color="text.primary">
                           {group.users?.length ?? 0}
                         </Typography>
                       </Box>
                       &nbsp;&nbsp;
                       <Box display="flex" alignItems="center">
-                        <Tooltip title="Companies">
+                        <CustomWidthTooltip
+                          title={<GroupCompaniesTooltipContent companies={group.companies} />}
+                          sx={{ fontSize: '30' }}
+                          slotProps={slotProps}
+                        >
                           <IconButton>
                             <IconBuildingStore size={'15px'} strokeWidth={1.2} />
                           </IconButton>
-                        </Tooltip>
+                        </CustomWidthTooltip>
                         <Typography variant="caption" color="text.primary">
                           {group.companies?.length ?? 0}
                         </Typography>
