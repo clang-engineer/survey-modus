@@ -13,4 +13,6 @@ export interface IGroup {
 
 export const defaultValue: Readonly<IGroup> = {
   activated: false,
+  users: [],
+  companies: [],
 };

@@ -6,8 +6,6 @@ import { Autocomplete, Checkbox, TextField } from '@mui/material';
 const GroupUserMultiselect = (props: { formik: any; users: any }) => {
   const { formik, users } = props;
 
-  if (!users || users.length === 0) return null;
-
   return (
     <Autocomplete
       multiple

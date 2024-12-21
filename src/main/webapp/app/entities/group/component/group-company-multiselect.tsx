@@ -11,8 +11,6 @@ import Chip from '@mui/material/Chip';
 const GroupCompanyMultiselect = (props: { formik: FormikProps<any>; companies: Array<ICompany> }) => {
   const { formik, companies } = props;
 
-  if (!companies || companies.length === 0) return null;
-
   return (
     <Autocomplete
       multiple
