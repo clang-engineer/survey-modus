@@ -37,6 +37,19 @@ data class Company(
         this.user = user
         return this
     }
+
+    @ManyToMany
+    @JoinTable(
+        name = "tbl_company_form",
+        joinColumns = [JoinColumn(name = "company_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "form_id", referencedColumnName = "id")]
+    )
+    var forms: MutableSet<Form> = mutableSetOf()
+    fun forms(forms: MutableSet<Form>): Company {
+        this.forms = forms
+        return this
+    }
+
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }

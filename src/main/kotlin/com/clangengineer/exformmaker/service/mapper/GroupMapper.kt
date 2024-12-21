@@ -11,20 +11,20 @@ import org.mapstruct.*
 @Mapper(componentModel = "spring")
 interface GroupMapper : EntityMapper<GroupDTO, Group> {
     @Mappings(
-        Mapping(target = "user", source = "user", qualifiedByName = ["userDetails"]),
+        Mapping(target = "user", source = "user", qualifiedByName = ["userLogin"]),
         Mapping(target = "users", source = "users", qualifiedByName = ["userList"]),
         Mapping(target = "companies", source = "companies", qualifiedByName = ["companyList"])
     )
     override fun toDto(s: Group): GroupDTO
 
-    @Named("userDetails")
+    @Named("userLogin")
     @BeanMapping(ignoreByDefault = true)
     @Mappings(Mapping(target = "id", source = "id"), Mapping(target = "login", source = "login"))
     fun toDtoUserLogin(user: User): UserDTO
 
     @Named("userList")
     @BeanMapping(ignoreByDefault = true)
-    @IterableMapping(qualifiedByName = ["userDetails"])
+    @IterableMapping(qualifiedByName = ["userLogin"])
     fun toDtoUsers(users: MutableSet<User>): MutableSet<UserDTO>
 
     @Named("companyList")

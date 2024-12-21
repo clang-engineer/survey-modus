@@ -2,12 +2,13 @@ package com.clangengineer.exformmaker.web.rest
 
 import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Company
+import com.clangengineer.exformmaker.domain.Form
 import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.domain.enumeration.level
 import com.clangengineer.exformmaker.repository.CompanyRepository
 import com.clangengineer.exformmaker.service.mapper.CompanyMapper
 import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -66,6 +67,8 @@ class CompanyResourceIT {
         assertThat(testCompany.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testCompany.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testCompany.activated).isEqualTo(DEFAULT_ACTIVATED)
+        assertThat(testCompany.user).isEqualTo(company.user)
+        assertThat(testCompany.forms).isEqualTo(company.forms)
     }
 
     @Test
@@ -113,6 +116,8 @@ class CompanyResourceIT {
     fun getAllCompanys() {
         companyRepository.saveAndFlush(company)
 
+        val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
+
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -120,6 +125,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
     }
 
     @Test
@@ -131,6 +137,8 @@ class CompanyResourceIT {
         val id = company.id
         assertNotNull(id)
 
+        val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
+
         restCompanyMockMvc.perform(get(ENTITY_API_URL_ID, company.id))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -138,6 +146,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
     }
 
     @Test
@@ -331,6 +340,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].forms[*].id").value(hasItem(company.forms.first().id?.toInt())))
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -610,10 +620,12 @@ class CompanyResourceIT {
 
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
-            em.flush()
-            company.user = user
-            return company
 
+            val forms = getNewForms(em)
+            em.flush()
+
+            company.user = user
+            company.forms = forms
             return company
         }
 
@@ -627,11 +639,22 @@ class CompanyResourceIT {
 
             val user = UserResourceIT.createEntity(em)
             em.persist(user)
-            em.flush()
-            company.user = user
-            return company
 
+            val forms = getNewForms(em)
+            em.flush()
+
+            company.user = user
+            company.forms = forms
             return company
+        }
+
+        fun getNewForms(em: EntityManager): MutableSet<Form> {
+            val form1 = FormResourceIT.createEntity(em)
+            val form2 = FormResourceIT.createEntity(em)
+
+            em.persist(form1)
+            em.persist(form2)
+            return mutableSetOf(form1, form2)
         }
     }
 }
