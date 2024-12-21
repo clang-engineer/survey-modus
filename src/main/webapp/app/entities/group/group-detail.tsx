@@ -70,6 +70,40 @@ export const GroupDetail = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.users">User List</Translate>
+            </Typography>
+            <Typography>
+              {groupEntity.users
+                ? groupEntity.users.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.login}</>
+                      {index === groupEntity.users.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.group.companies">Company List</Translate>
+            </Typography>
+            <Typography>
+              {groupEntity.companies
+                ? groupEntity.companies.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.title}</>
+                      {index === groupEntity.companies.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
           <ButtonGroup variant="contained" size="small">
             <Button onClick={() => navigate('/group')} data-cy="entityDetailsBackButton">
               <IconArrowBack size={'1rem'} />

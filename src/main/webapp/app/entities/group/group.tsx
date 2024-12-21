@@ -132,6 +132,12 @@ export const Group = () => {
                 <Translate contentKey="exformmakerApp.group.user">User</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
+              <TableCell className="hand">
+                <Translate contentKey="exformmakerApp.group.users">Users</Translate>
+              </TableCell>
+              <TableCell className="hand">
+                <Translate contentKey="exformmakerApp.group.companies">Companies</Translate>
+              </TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -147,6 +153,26 @@ export const Group = () => {
                 <TableCell>{group.description}</TableCell>
                 <TableCell>{group.activated ? 'true' : 'false'}</TableCell>
                 <TableCell>{group.user ? group.user.login : ''}</TableCell>
+                <TableCell>
+                  {group.users
+                    ? group.users.map((val, j) => (
+                        <Link component={BaseLink} to={`/admin/user-management/${val.login}`} key={j}>
+                          {val.login}
+                          {j === group.users.length - 1 ? '' : ', '}
+                        </Link>
+                      ))
+                    : null}
+                </TableCell>
+                <TableCell>
+                  {group.companies
+                    ? group.companies.map((val, j) => (
+                        <Link component={BaseLink} to={`/company/${val.id}`} key={j}>
+                          {val.title}
+                          {j === group.companies.length - 1 ? '' : ', '}
+                        </Link>
+                      ))
+                    : null}
+                </TableCell>
                 <TableCell className="text-end">
                   <ButtonGroup size={'small'}>
                     <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/group/${group.id}`)}>

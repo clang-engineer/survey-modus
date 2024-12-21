@@ -21,7 +21,9 @@
       "title": "Title",
       "description": "Description",
       "activated": "Activated",
-      "user": "User"
+      "user": "User",
+      "users": "User List",
+      "companies": "Company List"
     }
   }
 }

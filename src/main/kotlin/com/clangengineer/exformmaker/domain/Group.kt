@@ -45,6 +45,10 @@ data class Group(
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]
     )
     var users: MutableSet<User> = mutableSetOf()
+    fun users(users: MutableSet<User>): Group {
+        this.users = users
+        return this
+    }
 
     @ManyToMany
     @JoinTable(
@@ -53,6 +57,10 @@ data class Group(
         inverseJoinColumns = [JoinColumn(name = "company_id", referencedColumnName = "id")]
     )
     var companies: MutableSet<Company> = mutableSetOf()
+    fun companies(companies: MutableSet<Company>): Group {
+        this.companies = companies
+        return this
+    }
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

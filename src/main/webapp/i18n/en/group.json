@@ -22,7 +22,9 @@
       "description": "Description",
       "activated": "Activated",
       "type": "Type",
-      "user": "User"
+      "user": "User",
+      "users": "User List",
+      "companies": "Company List"
     }
   }
 }

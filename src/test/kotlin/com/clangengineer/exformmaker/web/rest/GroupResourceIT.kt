@@ -481,6 +481,7 @@ class GroupResourceIT {
         assertThat(groupList).hasSize(databaseSizeBeforeUpdate)
     }
 
+    // todo: fix this test
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -511,6 +512,7 @@ class GroupResourceIT {
         assertThat(testGroup.activated).isEqualTo(UPDATED_ACTIVATED)
     }
 
+    // todo: fix this test
     @Test
     @Transactional
     @Throws(Exception::class)
