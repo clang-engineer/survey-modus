@@ -57,7 +57,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
                     />
                     <Typography>Email: {staff.email}</Typography>
                     <Typography>Phone: {staff.phone}</Typography>
-                    <Typography>Active: {staff.active ? 'true' : 'false'}</Typography>
+                    <Typography>Active: {staff.activated ? 'Yes' : 'No'}</Typography>
                   </Box>
                   <Box display="flex" justifyContent="flex-end">
                     <ButtonGroup variant="text" size="small">

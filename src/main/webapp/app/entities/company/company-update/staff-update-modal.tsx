@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 
-import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  Grid,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 import { useFormik } from 'formik';
@@ -120,13 +132,16 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
               <FormikErrorText formik={staffFormik} fieldName={'phone'} />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="outlined-basic-staff-activated"
-                fullWidth
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={staffFormik.values.activated}
+                    onChange={(e: any) => staffFormik.setFieldValue('activated', e.target.checked)}
+                    name="activated"
+                    color="primary"
+                  />
+                }
                 label="Activated"
-                value={staffFormik.values.activated}
-                onChange={(e: any) => staffFormik.setFieldValue('activated', e.target.value)}
-                error={staffFormik.touched.activated && Boolean(staffFormik.errors.activated)}
               />
               <FormikErrorText formik={staffFormik} fieldName={'activated'} />
             </Grid>
