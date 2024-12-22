@@ -13,6 +13,7 @@ import {
   Button,
   ButtonGroup,
   Checkbox,
+  Divider,
   FormControl,
   FormControlLabel,
   Grid,
@@ -26,6 +27,7 @@ import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import CompanyFormMultiselect from 'app/entities/company/component/company-form-multiselect';
 import companyUpdateFormik from 'app/entities/company/component/company-update.formik';
+import CompanyStaffCardList from 'app/entities/company/component/company-staff-card-list';
 
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();
@@ -171,6 +173,15 @@ export const CompanyUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <CompanyFormMultiselect formik={formik} forms={forms} />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Divider sx={{ borderStyle: 'dashed' }} />
+          </Grid>
+          <Grid item xs={12}>
+            <CompanyStaffCardList formik={formik} />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Divider sx={{ borderStyle: 'dashed' }} />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
