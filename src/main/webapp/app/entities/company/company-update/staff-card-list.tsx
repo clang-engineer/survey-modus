@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Alert, Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Alert, Box, ButtonGroup, Divider, Grid, IconButton, Typography, Switch } from '@mui/material';
 import { IconPencil, IconTrash, IconUserCircle, IconUserPlus, IconUserOff, IconUser, IconCircle } from '@tabler/icons';
 import CompanyStaffUpdateModal from 'app/entities/company/company-update/staff-update-modal';
 
@@ -85,7 +85,18 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
                     <Typography>Phone: {staff.phone}</Typography>
                     <Typography>Active: {staff.activated ? 'yes' : 'no'}</Typography>
                   </Box>
-                  <Box display="flex" justifyContent="flex-end">
+                  <Box display="flex" justifyContent="flex-end" alignItems="center">
+                    <Switch
+                      size="small"
+                      checked={staff.activated}
+                      onChange={(e: any) => {
+                        formik.setFieldValue(
+                          'staffs',
+                          formik.values.staffs.map((s: any, i: number) => (i === index ? { ...s, activated: e.target.checked } : s))
+                        );
+                      }}
+                      name="activated"
+                    />
                     <ButtonGroup variant="text" size="small">
                       <IconButton
                         onClick={() => {
