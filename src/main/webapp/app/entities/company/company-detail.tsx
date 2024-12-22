@@ -87,6 +87,23 @@ export const CompanyDetail = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.company.staffs">Staff List</Translate>
+            </Typography>
+            <Typography>
+              {companyEntity.staffs
+                ? companyEntity.staffs.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.name}</>
+                      {index === companyEntity.staffs.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
           <ButtonGroup variant="contained" size="small">
             <Button onClick={() => navigate('/company')} data-cy="entityDetailsBackButton">
               <IconArrowBack size={'1rem'} />

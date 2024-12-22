@@ -11,6 +11,7 @@ const companyUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
       activated: false,
       user: { id: 0 },
       forms: [],
+      staffs: [],
     },
     validationSchema: yup.object({
       id: yup.string(),
@@ -27,6 +28,18 @@ const companyUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
       forms: yup.array().of(
         yup.object({
           id: yup.number(),
+        })
+      ),
+      staffs: yup.array().of(
+        yup.object({
+          email: yup.string().email(translate('entity.validation.email')),
+          name: yup
+            .string()
+            .min(5, translate('entity.validation.minlength', { min: 5 }))
+            .max(100, translate('entity.validation.maxlength', { max: 100 }))
+            .required(translate('entity.validation.required')),
+          phone: yup.string().matches(/^[0-9]{10}$/, translate('entity.validation.pattern', { pattern: '^[0-9]{10}$' })),
+          activated: yup.boolean(),
         })
       ),
     }),

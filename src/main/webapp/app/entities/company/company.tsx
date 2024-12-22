@@ -135,6 +135,9 @@ export const Company = () => {
               <TableCell className="hand">
                 <Translate contentKey="exformmakerApp.company.forms">Forms</Translate>
               </TableCell>
+              <TableCell className="hand">
+                <Translate contentKey="exformmakerApp.company.staffs">Staffs</Translate>
+              </TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -157,6 +160,16 @@ export const Company = () => {
                           {val.title}
                           {j === company.forms.length - 1 ? '' : ', '}
                         </Link>
+                      ))
+                    : null}
+                </TableCell>
+                <TableCell>
+                  {company.staffs
+                    ? company.staffs.map((val, j) => (
+                        <Typography key={j} variant={'subtitle2'} color={'inherit'}>
+                          {val.name}
+                          {j === company.staffs.length - 1 ? '' : ', '}
+                        </Typography>
                       ))
                     : null}
                 </TableCell>
