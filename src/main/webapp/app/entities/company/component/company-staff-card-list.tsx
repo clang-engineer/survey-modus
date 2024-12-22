@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
-import { IconPencil, IconTrash, IconUserPlus } from '@tabler/icons';
+import { Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { IconPencil, IconTrash, IconUserCircle, IconUserPlus } from '@tabler/icons';
 import CompanyStaffUpdateModal from 'app/entities/company/component/company-staff-update-modal';
 
-const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
+const CompanyStaffCardList = (props: { formik: any; staffs: any }) => {
   const { formik, staffs } = props;
 
   const [localStaffs, setLocalStaffs] = React.useState(staffs);
@@ -49,8 +49,14 @@ const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
               <Grid item xs={12} md={3}>
                 <Box sx={{ border: '1px dotted #ccc', padding: 2, borderRadius: 2 }}>
                   <Box>
-                    <Typography variant="h4">Staff {index + 1}</Typography>
-                    <Typography>Name: {staff.name}</Typography>
+                    <Typography variant="h5" gutterBottom>
+                      <IconUserCircle size={'1rem'} /> {staff.name}
+                    </Typography>
+                    <Divider
+                      sx={{
+                        marginBottom: 1,
+                      }}
+                    />
                     <Typography>Email: {staff.email}</Typography>
                     <Typography>Phone: {staff.phone}</Typography>
                     <Typography>Active: {staff.active ? 'true' : 'false'}</Typography>
@@ -82,4 +88,4 @@ const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
   );
 };
 
-export default CompanyStaffDynamicInput;
+export default CompanyStaffCardList;
