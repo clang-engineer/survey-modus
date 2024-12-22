@@ -5,7 +5,7 @@ import { translate } from 'react-jhipster';
 const companyUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
   return useFormik({
     initialValues: {
-      id: 0,
+      id: undefined,
       title: '',
       description: '',
       activated: false,
