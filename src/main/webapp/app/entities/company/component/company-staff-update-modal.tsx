@@ -44,7 +44,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
       phone: yup
         .string()
         .required('Phone is required')
-        .matches(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, 'Invalid phone number')
+        .matches(/^\d{3}-?\d{3,4}-?\d{4}$/, 'Invalid phone number')
         .max(13, 'Phone number must be at most 13 characters'),
       activated: yup.boolean().required('Activated is required'),
     }),
