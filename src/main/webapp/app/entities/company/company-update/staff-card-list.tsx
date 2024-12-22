@@ -5,6 +5,8 @@ import CompanyStaffUpdateModal from 'app/entities/company/company-update/staff-u
 
 import { FormikProps } from 'formik';
 import { useTheme } from '@mui/material/styles';
+import { create } from 'react-modal-promise';
+import PromiseModal from 'app/shared/component/promise-modal';
 
 const StaffCardList = (props: { formik: FormikProps<any> }) => {
   const theme = useTheme();
@@ -23,6 +25,15 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
       return activated ? theme.palette.success.main : theme.palette.error.main;
     },
     [theme.palette.error.main, theme.palette.success.main]
+  );
+
+  const deleteModal = create(
+    PromiseModal({
+      title: 'Delete Staff',
+      content: 'Do you want to delete this staff?',
+      rejectButtonText: 'Cancel',
+      resolveButtonText: 'Delete',
+    })
   );
 
   return (
@@ -88,10 +99,14 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
                       </IconButton>
                       <IconButton
                         onClick={() => {
-                          formik.setFieldValue(
-                            'staffs',
-                            formik.values.staffs.filter((_, i) => i !== index)
-                          );
+                          deleteModal().then(result => {
+                            if (result) {
+                              formik.setFieldValue(
+                                'staffs',
+                                formik.values.staffs.filter((_, i) => i !== index)
+                              );
+                            }
+                          });
                         }}
                       >
                         <IconTrash size={'1rem'} />{' '}

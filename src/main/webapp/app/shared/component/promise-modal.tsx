@@ -28,42 +28,37 @@ const PromiseModal =
     };
 
     return (
-      <div>
-        <Button variant="outlined" onClick={() => handleClose()}>
-          Open responsive dialog
-        </Button>
-        <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-          {title && <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>}
-          {content && (
-            <DialogContent>
-              <DialogContentText>{content}</DialogContentText>
-            </DialogContent>
+      <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+        {title && <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>}
+        {content && (
+          <DialogContent>
+            <DialogContentText>{content}</DialogContentText>
+          </DialogContent>
+        )}
+        <DialogActions>
+          {rejectButtonText && (
+            <Button
+              onClick={() => {
+                onResolve(false);
+                handleClose();
+              }}
+            >
+              {rejectButtonText}
+            </Button>
           )}
-          <DialogActions>
-            {rejectButtonText && (
-              <Button
-                onClick={() => {
-                  onResolve(false);
-                  handleClose();
-                }}
-              >
-                {rejectButtonText}
-              </Button>
-            )}
-            {resolveButtonText && (
-              <Button
-                onClick={() => {
-                  onResolve(true);
-                  handleClose();
-                }}
-                autoFocus
-              >
-                {resolveButtonText}
-              </Button>
-            )}
-          </DialogActions>
-        </Dialog>
-      </div>
+          {resolveButtonText && (
+            <Button
+              onClick={() => {
+                onResolve(true);
+                handleClose();
+              }}
+              autoFocus
+            >
+              {resolveButtonText}
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
     );
   };
 
