@@ -16,6 +16,7 @@ import ThemeCustomization from 'app/berry/themes';
 
 import { Translate } from 'react-jhipster';
 import { ToastContainer } from 'react-toastify';
+import ModalContainer from 'react-modal-promise';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
@@ -44,6 +45,7 @@ export const App = () => {
       <BrowserRouter basename={baseHref}>
         <ToastContainer position="top-right" />
         <RenderDevRibbon />
+        <ModalContainer />
         <ErrorBoundary>
           <AppRoutes />
         </ErrorBoundary>
