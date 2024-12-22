@@ -9,10 +9,11 @@ import FormikErrorText from 'app/shared/component/formik-error-text';
 
 const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, ref) => {
   React.useImperativeHandle(ref, () => ({
-    open: staff => handleOpen(staff),
+    open: modalOpenWithProps,
     close: () => handleClose(),
   }));
 
+  const [clickedIndex, setClickedIndex] = useState(undefined);
   const [isNew, setIsNew] = useState(true);
   const [open, setOpen] = useState(false);
 
@@ -20,16 +21,21 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     setOpen(false);
   };
 
-  const handleOpen = staff => {
-    if (staff) {
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const modalOpenWithProps = (props: { staff: any; index: number }) => {
+    if (props) {
       setIsNew(false);
-      staffFormik.setValues(staff);
+      setClickedIndex(props.index);
+      staffFormik.setValues(props.staff);
     } else {
       setIsNew(true);
+      setClickedIndex(undefined);
       staffFormik.resetForm();
     }
-
-    setOpen(true);
+    handleOpen();
   };
 
   const staffFormik = useFormik({
@@ -54,7 +60,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
       } else {
         props.formik.setFieldValue(
           'staffs',
-          props.formik.values.staffs.map(staff => (staff.email === values.email ? values : staff))
+          props.formik.values.staffs.map((staff, index) => (index === clickedIndex ? values : staff))
         );
       }
       handleClose();
@@ -75,7 +81,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     >
       <>
         <DialogTitle>
-          <Typography variant="h4">{isNew ? 'Update Staff' : 'New Staff'}</Typography>
+          <Typography variant="h4">{isNew ? 'New Staff' : 'Update Staff'}</Typography>
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ my: 0 }}>

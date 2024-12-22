@@ -10,7 +10,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
 
   const [localStaffs, setLocalStaffs] = React.useState([]);
 
-  const addModalRef = useRef<any>(null);
+  const staffUpdateModal = useRef<any>(null);
 
   React.useEffect(() => {
     setLocalStaffs(formik.values.staffs);
@@ -22,7 +22,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
         <IconButton
           size="small"
           onClick={() => {
-            addModalRef.current.open();
+            staffUpdateModal.current.open();
           }}
         >
           <IconUserPlus size={'1rem'} />
@@ -51,7 +51,10 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
                     <ButtonGroup variant="text" size="small">
                       <IconButton
                         onClick={() => {
-                          addModalRef.current.open(staff);
+                          staffUpdateModal.current.open({
+                            staff,
+                            index,
+                          });
                         }}
                       >
                         <IconPencil size={'1rem'} />{' '}
@@ -72,7 +75,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
               </Grid>
             );
           })}
-          <CompanyStaffUpdateModal ref={addModalRef} formik={formik} />
+          <CompanyStaffUpdateModal ref={staffUpdateModal} formik={formik} />
         </Grid>
       </Grid>
     </Grid>
