@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Alert, Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { IconPencil, IconTrash, IconUserCircle, IconUserPlus } from '@tabler/icons';
 import CompanyStaffUpdateModal from 'app/entities/company/company-update/staff-update-modal';
 
@@ -19,14 +19,26 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <IconButton
-          size="small"
-          onClick={() => {
-            staffUpdateModal.current.open();
-          }}
-        >
-          <IconUserPlus size={'1rem'} />
-        </IconButton>
+        {localStaffs.length === 0 ? (
+          <Alert
+            severity="warning"
+            onClick={() => {
+              staffUpdateModal.current.open();
+            }}
+            sx={{ cursor: 'pointer' }}
+          >
+            No staffs found. Click here to add new staff.
+          </Alert>
+        ) : (
+          <IconButton
+            size="small"
+            onClick={() => {
+              staffUpdateModal.current.open();
+            }}
+          >
+            <IconUserPlus size={'1rem'} />
+          </IconButton>
+        )}
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
