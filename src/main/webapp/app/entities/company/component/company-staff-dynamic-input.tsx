@@ -1,34 +1,41 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 import { IconPencil, IconTrash, IconUserPlus } from '@tabler/icons';
+import CompanyStaffUpdateModal from 'app/entities/company/component/company-staff-update-modal';
 
 const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
   const { formik, staffs } = props;
 
   const [localStaffs, setLocalStaffs] = React.useState(staffs);
 
+  const addModalRef = useRef<any>(null);
+
   React.useEffect(() => {
     // dummy
-    const dummy = [
-      { name: 'staff1', email: 'staff1@test.com', phone: '1234567890', active: true },
-      { name: 'staff2', email: 'staff2@test.com', phone: '1234567890', active: true },
-      { name: 'staff3', email: 'staff3@test.com', phone: '1234567890', active: true },
-      { name: 'staff4', email: 'staff4@test.com', phone: '1234567890', active: true },
-      { name: 'staff5', email: 'staff5@test.com', phone: '1234567890', active: true },
-      { name: 'staff6', email: 'staff6@test.com', phone: '1234567890', active: true },
-      { name: 'staff7', email: 'staff7@test.com', phone: '1234567890', active: true },
-      { name: 'staff8', email: 'staff8@test.com', phone: '1234567890', active: true },
-      { name: 'staff9', email: 'staff9@test.com', phone: '1234567890', active: true },
-    ];
+    // const dummy = [
+    //   { name: 'staff1', email: 'staff1@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff2', email: 'staff2@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff3', email: 'staff3@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff4', email: 'staff4@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff5', email: 'staff5@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff6', email: 'staff6@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff7', email: 'staff7@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff8', email: 'staff8@test.com', phone: '1234567890', active: true },
+    //   { name: 'staff9', email: 'staff9@test.com', phone: '1234567890', active: true },
+    // ];
 
-    setLocalStaffs(dummy);
+    setLocalStaffs(staffs);
   }, [staffs]);
 
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <ButtonGroup variant="outlined" size="small">
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              addModalRef.current.open();
+            }}
+          >
             <IconUserPlus size={'1rem'} />
             &nbsp;
             <Typography variant="caption">staff</Typography>
@@ -50,7 +57,11 @@ const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
                   </Box>
                   <Box display="flex" justifyContent="flex-end">
                     <ButtonGroup variant="text" size="small">
-                      <IconButton>
+                      <IconButton
+                        onClick={() => {
+                          addModalRef.current.open(staff);
+                        }}
+                      >
                         {' '}
                         <IconPencil size={'1rem'} />{' '}
                       </IconButton>
@@ -64,7 +75,7 @@ const CompanyStaffDynamicInput = (props: { formik: any; staffs: any }) => {
               </Grid>
             );
           })}
-          <Grid item xs={12} md={2}></Grid>
+          <CompanyStaffUpdateModal ref={addModalRef} formik={formik} />
         </Grid>
       </Grid>
     </Grid>
