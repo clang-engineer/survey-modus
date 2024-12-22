@@ -5,6 +5,7 @@ import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import FormikErrorText from 'app/shared/component/formik-error-text';
 
 const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, ref) => {
   React.useImperativeHandle(ref, () => ({
@@ -12,6 +13,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     close: () => handleClose(),
   }));
 
+  const [isNew, setIsNew] = useState(true);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -20,8 +22,10 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
 
   const handleOpen = staff => {
     if (staff) {
+      setIsNew(false);
       staffFormik.setValues(staff);
     } else {
+      setIsNew(true);
       staffFormik.resetForm();
     }
 
@@ -40,13 +44,19 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
       phone: yup
         .string()
         .required('Phone is required')
-        .matches(/^[0-9]+$/, 'Phone must be a number')
-        .min(10, 'Phone must be at least 10 digits')
-        .max(10, 'Phone must be at most 10 digits'),
+        .matches(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, 'Invalid phone number')
+        .max(13, 'Phone number must be at most 13 characters'),
       activated: yup.boolean().required('Activated is required'),
     }),
     onSubmit: values => {
-      console.log(values);
+      if (isNew) {
+        props.formik.setFieldValue('staffs', [...props.formik.values.staffs, values]);
+      } else {
+        props.formik.setFieldValue(
+          'staffs',
+          props.formik.values.staffs.map(staff => (staff.email === values.email ? values : staff))
+        );
+      }
     },
   });
 
@@ -64,7 +74,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     >
       <>
         <DialogTitle>
-          <Typography variant="h4">{staffFormik.values.name ? 'Update Staff' : 'New Staff'}</Typography>
+          <Typography variant="h4">{isNew ? 'Update Staff' : 'New Staff'}</Typography>
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ my: 0 }}>
@@ -74,9 +84,10 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 fullWidth
                 label="Name"
                 value={staffFormik.values.name}
-                onChange={staffFormik.handleChange}
+                onChange={(e: any) => staffFormik.setFieldValue('name', e.target.value)}
                 error={staffFormik.touched.name && Boolean(staffFormik.errors.name)}
               />
+              <FormikErrorText formik={staffFormik} fieldName={'name'} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -84,19 +95,22 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 fullWidth
                 label="Email"
                 value={staffFormik.values.email}
-                onChange={staffFormik.handleChange}
+                onChange={(e: any) => staffFormik.setFieldValue('email', e.target.value)}
                 error={staffFormik.touched.email && Boolean(staffFormik.errors.email)}
               />
+              <FormikErrorText formik={staffFormik} fieldName={'email'} />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 id="outlined-basic-staff-phone"
                 fullWidth
                 label="Phone"
+                placeholder="010-1234-5678"
                 value={staffFormik.values.phone}
-                onChange={staffFormik.handleChange}
+                onChange={(e: any) => staffFormik.setFieldValue('phone', e.target.value)}
                 error={staffFormik.touched.phone && Boolean(staffFormik.errors.phone)}
               />
+              <FormikErrorText formik={staffFormik} fieldName={'phone'} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -104,16 +118,23 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 fullWidth
                 label="Activated"
                 value={staffFormik.values.activated}
-                onChange={staffFormik.handleChange}
+                onChange={(e: any) => staffFormik.setFieldValue('activated', e.target.value)}
                 error={staffFormik.touched.activated && Boolean(staffFormik.errors.activated)}
               />
+              <FormikErrorText formik={staffFormik} fieldName={'activated'} />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <ButtonGroup variant="outlined" size="small">
             <AnimateButton>
-              <Button>Create</Button>
+              <Button
+                onClick={() => {
+                  staffFormik.handleSubmit();
+                }}
+              >
+                Create
+              </Button>
             </AnimateButton>
             <Button onClick={handleClose}>Close</Button>
           </ButtonGroup>

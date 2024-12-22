@@ -3,44 +3,30 @@ import { Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/ma
 import { IconPencil, IconTrash, IconUserCircle, IconUserPlus } from '@tabler/icons';
 import CompanyStaffUpdateModal from 'app/entities/company/component/company-staff-update-modal';
 
-const CompanyStaffCardList = (props: { formik: any; staffs: any }) => {
-  const { formik, staffs } = props;
+import { FormikProps } from 'formik';
 
-  const [localStaffs, setLocalStaffs] = React.useState(staffs);
+const CompanyStaffCardList = (props: { formik: FormikProps<any> }) => {
+  const { formik } = props;
+
+  const [localStaffs, setLocalStaffs] = React.useState([]);
 
   const addModalRef = useRef<any>(null);
 
   React.useEffect(() => {
-    // dummy
-    // const dummy = [
-    //   { name: 'staff1', email: 'staff1@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff2', email: 'staff2@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff3', email: 'staff3@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff4', email: 'staff4@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff5', email: 'staff5@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff6', email: 'staff6@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff7', email: 'staff7@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff8', email: 'staff8@test.com', phone: '1234567890', active: true },
-    //   { name: 'staff9', email: 'staff9@test.com', phone: '1234567890', active: true },
-    // ];
-
-    setLocalStaffs(staffs);
-  }, [staffs]);
+    setLocalStaffs(formik.values.staffs);
+  }, [formik.values.staffs]);
 
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <ButtonGroup variant="outlined" size="small">
-          <IconButton
-            onClick={() => {
-              addModalRef.current.open();
-            }}
-          >
-            <IconUserPlus size={'1rem'} />
-            &nbsp;
-            <Typography variant="caption">staff</Typography>
-          </IconButton>
-        </ButtonGroup>
+        <IconButton
+          size="small"
+          onClick={() => {
+            addModalRef.current.open();
+          }}
+        >
+          <IconUserPlus size={'1rem'} />
+        </IconButton>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
@@ -68,11 +54,9 @@ const CompanyStaffCardList = (props: { formik: any; staffs: any }) => {
                           addModalRef.current.open(staff);
                         }}
                       >
-                        {' '}
                         <IconPencil size={'1rem'} />{' '}
                       </IconButton>
                       <IconButton>
-                        {' '}
                         <IconTrash size={'1rem'} />{' '}
                       </IconButton>
                     </ButtonGroup>
