@@ -1,5 +1,6 @@
 package com.clangengineer.exformmaker.domain
 
+import com.clangengineer.exformmaker.domain.embeddable.Staff
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -47,6 +48,14 @@ data class Company(
     var forms: MutableSet<Form> = mutableSetOf()
     fun forms(forms: MutableSet<Form>): Company {
         this.forms = forms
+        return this
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "tbl_staff", joinColumns = [JoinColumn(name = "company_id")])
+    var staffs: MutableSet<Staff> = mutableSetOf()
+    fun staffs(staffs: MutableSet<Staff>): Company {
+        this.staffs = staffs
         return this
     }
 

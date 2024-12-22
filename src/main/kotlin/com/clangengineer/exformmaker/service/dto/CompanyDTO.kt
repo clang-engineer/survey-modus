@@ -20,6 +20,8 @@ data class CompanyDTO(
     var user: UserDTO? = null,
 
     var forms: MutableSet<FormDTO> = mutableSetOf(),
+
+    var staffs: MutableSet<StaffDTO> = mutableSetOf(),
 ) : Serializable {
 
     override fun equals(other: Any?): Boolean {

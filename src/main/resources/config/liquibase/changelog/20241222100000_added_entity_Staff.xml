@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="clang" id="20241222100000-1">
+        <createTable tableName="tbl_staff">
+            <column name="company_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activated" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="tbl_staff" columnNames="company_id,email"/>
+    </changeSet>
+
+    <changeSet author="clang" id="20241222100000-2">
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="tbl_staff"
+                                 constraintName="fk_staff_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tbl_company"/>
+    </changeSet>
+
+    <changeSet author="clang" context="faker" id="20241222100000-1-data">
+        <loadData
+            file="config/liquibase/fake-data/staff.csv"
+            separator=";"
+            tableName="tbl_staff"
+            usePreparedStatements="true">
+            <column name="company_id" type="numeric"/>
+            <column name="email" type="string"/>
+            <column name="name" type="string"/>
+            <column name="phone" type="string"/>
+            <column name="activated" type="boolean"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

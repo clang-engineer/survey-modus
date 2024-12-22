@@ -4,6 +4,7 @@ import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Company
 import com.clangengineer.exformmaker.domain.Form
 import com.clangengineer.exformmaker.domain.User
+import com.clangengineer.exformmaker.domain.embeddable.Staff
 import com.clangengineer.exformmaker.domain.enumeration.level
 import com.clangengineer.exformmaker.repository.CompanyRepository
 import com.clangengineer.exformmaker.service.mapper.CompanyMapper
@@ -69,6 +70,7 @@ class CompanyResourceIT {
         assertThat(testCompany.activated).isEqualTo(DEFAULT_ACTIVATED)
         assertThat(testCompany.user).isEqualTo(company.user)
         assertThat(testCompany.forms).isEqualTo(company.forms)
+        assertThat(testCompany.staffs).isEqualTo(company.staffs)
     }
 
     @Test
@@ -117,6 +119,7 @@ class CompanyResourceIT {
         companyRepository.saveAndFlush(company)
 
         val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
+        val expectedStaffNames = company.staffs?.map { it.name }.toTypedArray()
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
@@ -126,6 +129,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
+            .andExpect(jsonPath("$.[*].staffs[*].name").value(containsInAnyOrder(*expectedStaffNames)))
     }
 
     @Test
@@ -138,6 +142,7 @@ class CompanyResourceIT {
         assertNotNull(id)
 
         val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
+        val expectedStaffNames = company.staffs?.map { it.name }.toTypedArray()
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL_ID, company.id))
             .andExpect(status().isOk)
@@ -147,6 +152,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
+            .andExpect(jsonPath("$.staffs[*].name").value(containsInAnyOrder(*expectedStaffNames)))
     }
 
     @Test
@@ -327,7 +333,6 @@ class CompanyResourceIT {
         val userId = user?.id
 
         defaultCompanyShouldBeFound("userId.equals=$userId")
-
         defaultCompanyShouldNotBeFound("userId.equals=${(userId?.plus(1))}")
     }
 
@@ -341,6 +346,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(hasItem(company.forms.first().id?.toInt())))
+            .andExpect(jsonPath("$.[*].staffs[*].name").value(hasItem(company.staffs.first().name)))
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -626,6 +632,8 @@ class CompanyResourceIT {
 
             company.user = user
             company.forms = forms
+            company.staffs = getNewStaffs()
+
             return company
         }
 
@@ -645,6 +653,8 @@ class CompanyResourceIT {
 
             company.user = user
             company.forms = forms
+            company.staffs = getNewStaffs()
+
             return company
         }
 
@@ -655,6 +665,17 @@ class CompanyResourceIT {
             em.persist(form1)
             em.persist(form2)
             return mutableSetOf(form1, form2)
+        }
+
+        fun getNewStaffs(): MutableSet<Staff> {
+            var set = mutableSetOf<Staff>()
+
+            for (i in 1..3) {
+                val randomNum = random.nextInt(10) + 1
+                set.add(Staff(name = "staff$randomNum", email = "staff$randomNum@test.com", phone = "1234567890", activated = true))
+            }
+
+            return set
         }
     }
 }
