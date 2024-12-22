@@ -51,7 +51,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
   };
 
   const staffFormik = useFormik({
-    initialValues: { name: '', email: '', phone: '', activated: false },
+    initialValues: { name: '', email: '', phone: '', activated: true },
     validationSchema: yup.object({
       name: yup
         .string()
