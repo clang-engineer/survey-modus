@@ -5,8 +5,7 @@ import com.clangengineer.exformmaker.domain.User
 import com.clangengineer.exformmaker.repository.UserRepository
 import com.clangengineer.exformmaker.security.ADMIN
 import com.clangengineer.exformmaker.security.USER
-import org.hamcrest.Matchers.hasItem
-import org.hamcrest.Matchers.hasItems
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -69,8 +68,10 @@ class PublicUserResourceIT {
         )
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].login").value(hasItem<String>(DEFAULT_LOGIN)))
-            .andExpect(jsonPath("$.[*].email").doesNotExist())
+            .andExpect(jsonPath("$.[*].login").value(hasItem<String>(user.login)))
+            .andExpect(jsonPath("$.[*].firstName").value(contains(nullValue())))
+            .andExpect(jsonPath("$.[*].lastName").value(contains(nullValue())))
+            .andExpect(jsonPath("$.[*].email").value(contains(nullValue())))
             .andExpect(jsonPath("$.[*].imageUrl").doesNotExist())
             .andExpect(jsonPath("$.[*].langKey").doesNotExist())
     }
