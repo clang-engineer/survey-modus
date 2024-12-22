@@ -32,14 +32,10 @@ const companyUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
       ),
       staffs: yup.array().of(
         yup.object({
-          email: yup.string().email(translate('entity.validation.email')),
-          name: yup
-            .string()
-            .min(5, translate('entity.validation.minlength', { min: 5 }))
-            .max(100, translate('entity.validation.maxlength', { max: 100 }))
-            .required(translate('entity.validation.required')),
-          phone: yup.string().matches(/^[0-9]{10}$/, translate('entity.validation.pattern', { pattern: '^[0-9]{10}$' })),
-          activated: yup.boolean(),
+          email: yup.string().required('Email is required'),
+          name: yup.string().required('Name is required'),
+          phone: yup.string().required('Phone is required'),
+          activated: yup.boolean().required('Activated is required'),
         })
       ),
     }),

@@ -57,6 +57,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
           props.formik.values.staffs.map(staff => (staff.email === values.email ? values : staff))
         );
       }
+      handleClose();
     },
   });
 
@@ -133,7 +134,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                   staffFormik.handleSubmit();
                 }}
               >
-                Create
+                {isNew ? 'Add' : 'Update'}
               </Button>
             </AnimateButton>
             <Button onClick={handleClose}>Close</Button>

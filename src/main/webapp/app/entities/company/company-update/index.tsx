@@ -27,7 +27,8 @@ import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import CompanyFormMultiselect from 'app/entities/company/company-update/company-form-multiselect';
 import companyUpdateFormik from 'app/entities/company/company-update/company-update.formik';
-import CompanyStaffCardList from 'app/entities/company/company-update/company-staff-card-list';
+import StaffCardList from 'app/entities/company/company-update/staff-card-list';
+import FormikErrorText from 'app/shared/component/formik-error-text';
 
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();
@@ -124,9 +125,9 @@ export const CompanyUpdate = () => {
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
               variant="outlined"
             />
+            <FormikErrorText formik={formik} fieldName={'title'} />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -137,9 +138,9 @@ export const CompanyUpdate = () => {
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description}
               variant="outlined"
             />
+            <FormikErrorText formik={formik} fieldName={'description'} />
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel
@@ -148,6 +149,7 @@ export const CompanyUpdate = () => {
               }
               label={translate('exformmakerApp.company.activated')}
             />
+            <FormikErrorText formik={formik} fieldName={'activated'} />
           </Grid>
           <Grid item xs={12}>
             <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
@@ -170,15 +172,18 @@ export const CompanyUpdate = () => {
                 ))}
               </Select>
             </FormControl>
+            <FormikErrorText formik={formik} fieldName={'user'} />
           </Grid>
           <Grid item xs={12}>
             <CompanyFormMultiselect formik={formik} forms={forms} />
+            <FormikErrorText formik={formik} fieldName={'forms'} />
           </Grid>
           <Grid item xs={12} lg={12}>
             <Divider sx={{ borderStyle: 'dashed' }} />
           </Grid>
           <Grid item xs={12}>
-            <CompanyStaffCardList formik={formik} />
+            <StaffCardList formik={formik} />
+            <FormikErrorText formik={formik} fieldName={'staffs'} />
           </Grid>
           <Grid item xs={12} lg={12}>
             <Divider sx={{ borderStyle: 'dashed' }} />
