@@ -50,6 +50,14 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     handleOpen();
   };
 
+  const checkUnique = (fieldName: string, value: string) => {
+    if (isNew) {
+      return !props.formik.values.staffs.some(staff => staff[fieldName] === value);
+    } else {
+      return !props.formik.values.staffs.some((staff, index) => index !== clickedIndex && staff[fieldName] === value);
+    }
+  };
+
   const staffFormik = useFormik({
     initialValues: { name: '', email: '', phone: '', activated: true },
     validationSchema: yup.object({
@@ -58,12 +66,22 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
         .required('Name is required')
         .min(3, 'Name must be at least 3 characters')
         .max(50, 'Name must be at most 50 characters'),
-      email: yup.string().email('Invalid email').required('Email is required'),
+      email: yup
+        .string()
+        .email('Invalid email')
+        .required('Email is required')
+        .test('unique', 'Email already exists', value => {
+          return checkUnique('email', value);
+        }),
       phone: yup
         .string()
         .required('Phone is required')
-        .matches(/^\d{3}-?\d{3,4}-?\d{4}$/, 'Invalid phone number')
-        .max(13, 'Phone number must be at most 13 characters'),
+        // .matches(/^\d{3}-?\d{3,4}-?\d{4}$/, 'Invalid phone number')
+        .matches(/^\d{3}-\d{3,4}-\d{4}$/, 'Invalid phone number (ex: 010-1234-5678)')
+        .max(13, 'Phone number must be at most 13 characters')
+        .test('unique', 'Phone already exists', value => {
+          return checkUnique('phone', value);
+        }),
       activated: yup.boolean().required('Activated is required'),
     }),
     onSubmit: values => {
