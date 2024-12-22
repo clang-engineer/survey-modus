@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { createEntity, getEntity, reset, updateEntity } from './company.reducer';
+import { createEntity, getEntity, reset, updateEntity } from '../company.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
@@ -25,9 +25,9 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
-import CompanyFormMultiselect from 'app/entities/company/component/company-form-multiselect';
-import companyUpdateFormik from 'app/entities/company/component/company-update.formik';
-import CompanyStaffCardList from 'app/entities/company/component/company-staff-card-list';
+import CompanyFormMultiselect from 'app/entities/company/company-update/company-form-multiselect';
+import companyUpdateFormik from 'app/entities/company/company-update/company-update.formik';
+import CompanyStaffCardList from 'app/entities/company/company-update/company-staff-card-list';
 
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();

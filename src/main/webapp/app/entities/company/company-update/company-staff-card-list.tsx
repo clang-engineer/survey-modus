@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Box, ButtonGroup, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { IconPencil, IconTrash, IconUserCircle, IconUserPlus } from '@tabler/icons';
-import CompanyStaffUpdateModal from 'app/entities/company/component/company-staff-update-modal';
+import CompanyStaffUpdateModal from 'app/entities/company/company-update/company-staff-update-modal';
 
 import { FormikProps } from 'formik';
 
