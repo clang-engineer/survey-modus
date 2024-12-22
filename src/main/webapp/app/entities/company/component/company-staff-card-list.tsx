@@ -56,7 +56,14 @@ const CompanyStaffCardList = (props: { formik: FormikProps<any> }) => {
                       >
                         <IconPencil size={'1rem'} />{' '}
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => {
+                          formik.setFieldValue(
+                            'staffs',
+                            formik.values.staffs.filter((_, i) => i !== index)
+                          );
+                        }}
+                      >
                         <IconTrash size={'1rem'} />{' '}
                       </IconButton>
                     </ButtonGroup>
