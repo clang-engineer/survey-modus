@@ -133,8 +133,24 @@
 2. 회사 만들기 (폼 할당, 직원 추가) >> 필수
 3. 그룹 만들기 (회사 할당, 사용자 추가) >> 필수 아님
 
-# ui 특사항
+# frontend 특이사항
 
 - mui 사용해서 ui 구성
 - react modal promise 사용해서 모달 공통화
 - formik, yup 사용해서 폼 공통화
+- eslint가 pretest script에 설정되어 있어서 npm run test하면 eslint가 실행됨 (npm run test "eslint >> jest" 순으로 실행)
+- npm run jest통해서 jest 만 실행할 수 있음
+
+# backend 특이사항
+
+## sonarqube
+
+- ./gradlew -Pprod clean check jacocoTestReport sonarqube -Dsonar.login=admin -Dsonar.password=admin
+- sonar-scanner
+- sonarqube elastic search 의존으로 인해 sonarqube 실행전 elastic search 실행 필요
+- docker-compose -f src/main/docker/elasticsearch.yml up -d && docker-compose -f src/main/docker/sonarqube.yml up -d
+
+## liquibase
+
+- ./gradlew liquibaseDropAll
+- ./gradlew liquibaseUpdate
