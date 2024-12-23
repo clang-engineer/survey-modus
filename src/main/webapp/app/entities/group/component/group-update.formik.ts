@@ -36,7 +36,7 @@ const groupUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
         })
       ),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       props.saveEntity(values);
     },
   });

@@ -21,11 +21,11 @@ const GroupWizardDetailCompanys = (props: { formik: FormikProps<any>; companys: 
       onChange={(event, newValue) => {
         formik.setFieldValue('companys', newValue);
       }}
-      renderOption={(props, option, { selected }) => {
+      renderOption={(renderProps, option, { selected }) => {
         const isChecked = formik.values.companys.some(c => c.id === option.id);
         return (
           <li
-            {...props}
+            {...renderProps}
             onClick={() => {
               if (isChecked) {
                 formik.setFieldValue(

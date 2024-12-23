@@ -92,9 +92,7 @@ export const GroupUpdate = () => {
     );
   };
 
-  const formik = groupUpdateFormik({
-    saveEntity: saveEntity,
-  });
+  const formik = groupUpdateFormik({ saveEntity });
 
   return (
     <MainCard title={<MainCardTitle />}>
@@ -154,7 +152,9 @@ export const GroupUpdate = () => {
                 id="group-user"
                 name="user"
                 value={formik.values.user?.id}
-                onChange={e => formik.setFieldValue('user', { id: e.target.value })}
+                onChange={e => {
+                  formik.setFieldValue('user', { id: e.target.value });
+                }}
                 label={translate('exformmakerApp.group.user')}
               >
                 <MenuItem value="-" disabled>

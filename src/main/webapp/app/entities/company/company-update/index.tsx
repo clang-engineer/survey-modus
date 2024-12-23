@@ -94,9 +94,7 @@ export const CompanyUpdate = () => {
     );
   };
 
-  const formik = companyUpdateFormik({
-    saveEntity: saveEntity,
-  });
+  const formik = companyUpdateFormik({ saveEntity });
 
   return (
     <MainCard title={<MainCardTitle />}>
@@ -159,7 +157,9 @@ export const CompanyUpdate = () => {
                 id="company-user"
                 name="user"
                 value={formik.values.user?.id}
-                onChange={e => formik.setFieldValue('user', { id: e.target.value })}
+                onChange={e => {
+                  formik.setFieldValue('user', { id: e.target.value });
+                }}
                 label={translate('exformmakerApp.company.user')}
               >
                 <MenuItem value="-" disabled>

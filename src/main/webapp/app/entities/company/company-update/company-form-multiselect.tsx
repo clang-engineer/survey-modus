@@ -17,11 +17,11 @@ const GroupUserMultiselect = (props: { formik: any; forms: any }) => {
       onChange={(event, newValue) => {
         formik.setFieldValue('forms', newValue);
       }}
-      renderOption={(props, option, { selected }) => {
+      renderOption={(renderProps, option, { selected }) => {
         const isChecked = formik.values.forms?.some((c: any) => c.id === option.id);
         return (
           <li
-            {...props}
+            {...renderProps}
             onClick={() => {
               if (isChecked) {
                 formik.setFieldValue(

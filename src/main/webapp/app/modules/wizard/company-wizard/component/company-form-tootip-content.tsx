@@ -14,7 +14,7 @@ const GroupFormsTooltipContent = (props: { forms: IForm[] }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        {forms.length == 0 ? (
+        {forms.length === 0 ? (
           <Box display="flex" alignItems="center" marginBottom={1}>
             <Typography variant="body2" color="text.primary">
               No forms

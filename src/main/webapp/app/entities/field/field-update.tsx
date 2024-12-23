@@ -62,7 +62,7 @@ export const FieldUpdate = () => {
         id: yup.number().required(translate('entity.validation.required')),
       }),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       saveEntity(values);
     },
   });
@@ -178,7 +178,9 @@ export const FieldUpdate = () => {
                 id="field-form"
                 name="form"
                 value={formik.values.form?.id}
-                onChange={e => formik.setFieldValue('form', { id: e.target.value })}
+                onChange={e => {
+                  formik.setFieldValue('form', { id: e.target.value });
+                }}
                 label={translate('exformmakerApp.field.form')}
               >
                 <MenuItem value="-" disabled>

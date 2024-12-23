@@ -14,7 +14,7 @@ const GroupUsersTooltipContent = (props: { users: IUser[] }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        {users.length == 0 ? (
+        {users.length === 0 ? (
           <Box display="flex" alignItems="center" marginBottom={1}>
             <Typography variant="body2" color="text.primary">
               No users

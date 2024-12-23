@@ -37,11 +37,11 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
     setOpen(true);
   };
 
-  const modalOpenWithProps = (props: { staff: any; index: number }) => {
-    if (props) {
+  const modalOpenWithProps = (modalProps: { staff: any; index: number }) => {
+    if (modalProps) {
       setIsNew(false);
-      setClickedIndex(props.index);
-      staffFormik.setValues(props.staff);
+      setClickedIndex(modalProps.index);
+      staffFormik.setValues(modalProps.staff);
     } else {
       setIsNew(true);
       setClickedIndex(undefined);
@@ -84,7 +84,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
         }),
       activated: yup.boolean().required('Activated is required'),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       if (isNew) {
         props.formik.setFieldValue('staffs', [...props.formik.values.staffs, values]);
       } else {
@@ -121,7 +121,9 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 fullWidth
                 label="Name"
                 value={staffFormik.values.name}
-                onChange={(e: any) => staffFormik.setFieldValue('name', e.target.value)}
+                onChange={(e: any) => {
+                  staffFormik.setFieldValue('name', e.target.value);
+                }}
                 error={staffFormik.touched.name && Boolean(staffFormik.errors.name)}
               />
               <FormikErrorText formik={staffFormik} fieldName={'name'} />
@@ -132,7 +134,9 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 fullWidth
                 label="Email"
                 value={staffFormik.values.email}
-                onChange={(e: any) => staffFormik.setFieldValue('email', e.target.value)}
+                onChange={(e: any) => {
+                  staffFormik.setFieldValue('email', e.target.value);
+                }}
                 error={staffFormik.touched.email && Boolean(staffFormik.errors.email)}
               />
               <FormikErrorText formik={staffFormik} fieldName={'email'} />
@@ -144,7 +148,9 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 label="Phone"
                 placeholder="010-1234-5678"
                 value={staffFormik.values.phone}
-                onChange={(e: any) => staffFormik.setFieldValue('phone', e.target.value)}
+                onChange={(e: any) => {
+                  staffFormik.setFieldValue('phone', e.target.value);
+                }}
                 error={staffFormik.touched.phone && Boolean(staffFormik.errors.phone)}
               />
               <FormikErrorText formik={staffFormik} fieldName={'phone'} />
@@ -154,7 +160,9 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
                 control={
                   <Switch
                     checked={staffFormik.values.activated}
-                    onChange={(e: any) => staffFormik.setFieldValue('activated', e.target.checked)}
+                    onChange={(e: any) => {
+                      staffFormik.setFieldValue('activated', e.target.checked);
+                    }}
                     name="activated"
                     color="primary"
                   />

@@ -22,11 +22,11 @@ const GroupCompanyMultiselect = (props: { formik: FormikProps<any>; companies: A
       onChange={(event, newValue) => {
         formik.setFieldValue('companies', newValue);
       }}
-      renderOption={(props, option, { selected }) => {
+      renderOption={(renderProps, option, { selected }) => {
         const isChecked = formik.values.companies.some(c => c.id === option.id);
         return (
           <li
-            {...props}
+            {...renderProps}
             onClick={() => {
               if (isChecked) {
                 formik.setFieldValue(

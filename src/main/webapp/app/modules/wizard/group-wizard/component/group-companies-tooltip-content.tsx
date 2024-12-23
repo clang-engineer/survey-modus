@@ -14,7 +14,7 @@ const GroupCompaniesTooltipContent = (props: { companies: ICompany[] }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        {companies.length == 0 ? (
+        {companies.length === 0 ? (
           <Box display="flex" alignItems="center" marginBottom={1}>
             <Typography variant="body2" color="text.primary">
               No companies

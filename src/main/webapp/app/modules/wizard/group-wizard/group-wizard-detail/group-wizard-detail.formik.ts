@@ -37,7 +37,7 @@ const groupWizardDetailFormik = (props: { groupEntity: IGroup; isNew: boolean; u
         })
       ),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       const entity = {
         ...groupEntity,
         ...values,

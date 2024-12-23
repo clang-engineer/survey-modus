@@ -17,11 +17,11 @@ const GroupWizardDetailUsers = (props: { formik: any; users: any }) => {
       onChange={(event, newValue) => {
         formik.setFieldValue('users', newValue);
       }}
-      renderOption={(props, option, { selected }) => {
+      renderOption={(renderProps, option, { selected }) => {
         const isChecked = formik.values.users.some((c: any) => c.id === option.id);
         return (
           <li
-            {...props}
+            {...renderProps}
             onClick={() => {
               if (isChecked) {
                 formik.setFieldValue(

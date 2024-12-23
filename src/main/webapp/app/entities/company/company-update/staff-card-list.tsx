@@ -64,7 +64,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
         <Grid container spacing={1}>
           {localStaffs.map((staff: any, index: number) => {
             return (
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={3} key={index}>
                 <Box sx={{ border: '1px dotted #ccc', padding: 2, borderRadius: 2 }}>
                   <Box
                     sx={{
