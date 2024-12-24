@@ -1,5 +1,6 @@
 package com.clangengineer.exformmaker.service.dto
 
+import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull
@@ -17,7 +18,9 @@ data class FieldDTO(
 
     var activated: Boolean? = null,
 
-    var form: FormDTO? = null
+    var form: FormDTO? = null,
+
+    var fieldAttribute: FieldAttribute? = null
 ) : Serializable {
 
     override fun equals(other: Any?): Boolean {

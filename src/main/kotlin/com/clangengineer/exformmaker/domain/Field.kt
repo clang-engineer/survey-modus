@@ -1,5 +1,6 @@
 package com.clangengineer.exformmaker.domain
 
+import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "tbl_field")
+@SecondaryTable(name = "tbl_field_attribute", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class Field(
@@ -37,6 +39,11 @@ data class Field(
         this.form = form
         return this
     }
+
+    @Embedded
+    @AttributeOverride(name = "type", column = Column(name = "type", table = "tbl_field_attribute"))
+    @AttributeOverride(name = "defaultValue", column = Column(name = "default_value", table = "tbl_field_attribute"))
+    var fieldAttribute: FieldAttribute? = null
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }
@@ -48,7 +55,7 @@ data class Field(
     }
 
     override fun toString(): String {
-        return "Group{" +
+        return "Field{" +
             "id=" + id +
             ", title='" + title + "'" +
             ", description='" + description + "'" +
