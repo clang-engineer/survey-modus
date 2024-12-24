@@ -8,4 +8,4 @@ data class FieldAttribute(
   @Enumerated(EnumType.STRING)
   var type: type? = null,
   var defaultValue: String? = null,
-  )
+)

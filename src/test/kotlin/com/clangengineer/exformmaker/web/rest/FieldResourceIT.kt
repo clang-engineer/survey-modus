@@ -123,6 +123,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
     }
 
     @Test
@@ -141,6 +142,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.attribute").value(DEFAULT_ATTRIBUTE))
     }
 
     @Test
@@ -334,6 +336,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
 
         restFieldMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -375,6 +378,7 @@ class FieldResourceIT {
         updatedField.title = UPDATED_TITLE
         updatedField.description = UPDATED_DESCRIPTION
         updatedField.activated = UPDATED_ACTIVATED
+        updatedField.attribute = UPDATED_ATTRIBUTE
         val fieldDTO = fieldMapper.toDto(updatedField)
 
         restFieldMockMvc.perform(
@@ -389,6 +393,7 @@ class FieldResourceIT {
         assertThat(testField.title).isEqualTo(UPDATED_TITLE)
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
     }
 
     @Test
@@ -493,6 +498,7 @@ class FieldResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            attribute = UPDATED_ATTRIBUTE
         }
 
         restFieldMockMvc.perform(
@@ -508,6 +514,7 @@ class FieldResourceIT {
         assertThat(testField.title).isEqualTo(UPDATED_TITLE)
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
     }
 
     @Throws(Exception::class)
