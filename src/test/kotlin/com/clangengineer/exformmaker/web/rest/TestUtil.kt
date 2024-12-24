@@ -24,11 +24,11 @@ import kotlin.reflect.full.createInstance
 private val mapper = createObjectMapper()
 
 private fun createObjectMapper() =
-    ObjectMapper().apply {
-        configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
-        setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-        registerModule(JavaTimeModule())
-    }
+  ObjectMapper().apply {
+    configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
+    setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+    registerModule(JavaTimeModule())
+  }
 
 /**
  * Convert an object to JSON byte array.
@@ -54,23 +54,23 @@ fun createByteArray(size: Int, data: String) = ByteArray(size) { java.lang.Byte.
  */
 class ZonedDateTimeMatcher(private val date: ZonedDateTime) : TypeSafeDiagnosingMatcher<String>() {
 
-    override fun matchesSafely(item: String, mismatchDescription: Description): Boolean {
-        try {
-            if (!date.isEqual(ZonedDateTime.parse(item))) {
-                mismatchDescription.appendText("was ").appendValue(item)
-                return false
-            }
-            return true
-        } catch (e: DateTimeParseException) {
-            mismatchDescription.appendText("was ").appendValue(item)
-                .appendText(", which could not be parsed as a ZonedDateTime")
-            return false
-        }
+  override fun matchesSafely(item: String, mismatchDescription: Description): Boolean {
+    try {
+      if (!date.isEqual(ZonedDateTime.parse(item))) {
+        mismatchDescription.appendText("was ").appendValue(item)
+        return false
+      }
+      return true
+    } catch (e: DateTimeParseException) {
+      mismatchDescription.appendText("was ").appendValue(item)
+        .appendText(", which could not be parsed as a ZonedDateTime")
+      return false
     }
+  }
 
-    override fun describeTo(description: Description) {
-        description.appendText("a String representing the same Instant as ").appendValue(date)
-    }
+  override fun describeTo(description: Description) {
+    description.appendText("a String representing the same Instant as ").appendValue(date)
+  }
 }
 
 /**
@@ -83,29 +83,29 @@ fun sameInstant(date: ZonedDateTime) = ZonedDateTimeMatcher(date)
  * A matcher that tests that the examined number represents the same value - it can be Long, Double, etc - as the reference BigDecimal.
  */
 class NumberMatcher(private val value: BigDecimal) : TypeSafeMatcher<Number>() {
-    override fun describeTo(description: Description) {
-        description.appendText("a numeric value is ").appendValue(value)
+  override fun describeTo(description: Description) {
+    description.appendText("a numeric value is ").appendValue(value)
+  }
+
+  override fun matchesSafely(item: Number): Boolean {
+    val bigDecimal = asDecimal(item)
+    return value.compareTo(bigDecimal) == 0
+  }
+
+  fun asDecimal(item: Number?): BigDecimal? {
+    if (item == null) {
+      return null
     }
 
-    override fun matchesSafely(item: Number): Boolean {
-        val bigDecimal = asDecimal(item)
-        return value.compareTo(bigDecimal) == 0
+    return when (item) {
+      is BigDecimal -> item
+      is Long -> item.toBigDecimal()
+      is Int -> item.toLong().toBigDecimal()
+      is Float -> item.toBigDecimal()
+      is Double -> item.toBigDecimal()
+      else -> item.toDouble().toBigDecimal()
     }
-
-    fun asDecimal(item: Number?): BigDecimal? {
-        if (item == null) {
-            return null
-        }
-
-        return when (item) {
-            is BigDecimal -> item
-            is Long -> item.toBigDecimal()
-            is Int -> item.toLong().toBigDecimal()
-            is Float -> item.toBigDecimal()
-            is Double -> item.toBigDecimal()
-            else -> item.toDouble().toBigDecimal()
-        }
-    }
+  }
 }
 
 /**
@@ -119,19 +119,19 @@ fun sameNumber(number: BigDecimal): NumberMatcher = NumberMatcher(number)
  * Verifies the equals/hashcode contract on the domain object.
  */
 fun <T : Any> equalsVerifier(clazz: KClass<T>) {
-    val domainObject1 = clazz.createInstance()
-    assertThat(domainObject1.toString()).isNotNull()
-    assertThat(domainObject1).isEqualTo(domainObject1)
-    assertThat(domainObject1).hasSameHashCodeAs(domainObject1)
-    // Test with an instance of another class
-    val testOtherObject = Any()
-    assertThat(domainObject1).isNotEqualTo(testOtherObject)
-    assertThat(domainObject1).isNotEqualTo(null)
-    // Test with an instance of the same class
-    val domainObject2 = clazz.createInstance()
-    assertThat(domainObject1).isNotEqualTo(domainObject2)
-    // HashCodes are equals because the objects are not persisted yet
-    assertThat(domainObject1).hasSameHashCodeAs(domainObject2)
+  val domainObject1 = clazz.createInstance()
+  assertThat(domainObject1.toString()).isNotNull()
+  assertThat(domainObject1).isEqualTo(domainObject1)
+  assertThat(domainObject1).hasSameHashCodeAs(domainObject1)
+  // Test with an instance of another class
+  val testOtherObject = Any()
+  assertThat(domainObject1).isNotEqualTo(testOtherObject)
+  assertThat(domainObject1).isNotEqualTo(null)
+  // Test with an instance of the same class
+  val domainObject2 = clazz.createInstance()
+  assertThat(domainObject1).isNotEqualTo(domainObject2)
+  // HashCodes are equals because the objects are not persisted yet
+  assertThat(domainObject1).hasSameHashCodeAs(domainObject2)
 }
 
 /**
@@ -139,11 +139,11 @@ fun <T : Any> equalsVerifier(clazz: KClass<T>) {
  * @return the created [FormattingConversionService].
  */
 fun createFormattingConversionService(): FormattingConversionService {
-    val dfcs = DefaultFormattingConversionService()
-    val registrar = DateTimeFormatterRegistrar()
-    registrar.setUseIsoFormat(true)
-    registrar.registerFormatters(dfcs)
-    return dfcs
+  val dfcs = DefaultFormattingConversionService()
+  val registrar = DateTimeFormatterRegistrar()
+  registrar.setUseIsoFormat(true)
+  registrar.registerFormatters(dfcs)
+  return dfcs
 }
 
 /**
@@ -153,11 +153,11 @@ fun createFormattingConversionService(): FormattingConversionService {
  * @param <T> the type of objects to be searched.
  */
 fun <T : Any> findAll(em: EntityManager, clazz: KClass<T>): List<T> {
-    val cb = em.criteriaBuilder
-    val cq = cb.createQuery(clazz.java)
-    val rootEntry = cq.from(clazz.java)
-    val all = cq.select(rootEntry)
-    return em.createQuery(all).resultList
+  val cb = em.criteriaBuilder
+  val cq = cb.createQuery(clazz.java)
+  val rootEntry = cq.from(clazz.java)
+  val all = cq.select(rootEntry)
+  return em.createQuery(all).resultList
 }
 
 const val TEST_USER_LOGIN = "test"

@@ -4,8 +4,8 @@ field_id;type;default_value
 3;SELECT_BOX;Cove Adaptive Credit
 4;CHECK_BOX;violet Games Stream
 5;DATE;optical deliver
-6;group 6;Albania
-7;group 7;Plastic Front-line robust
-8;group 8;Terrace
-9;group 9;interactive
-10;group 10;Nebraska
+6;TEXT;Albania
+7;RADIO;Plastic Front-line robust
+8;TEXT;Terrace
+9;RADIO;interactive
+10;SELECT_BOX;Nebraska

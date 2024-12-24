@@ -6,6 +6,6 @@ import org.springframework.core.task.SyncTaskExecutor
 
 @Configuration
 class AsyncSyncConfiguration {
-    @Bean(name = ["taskExecutor"])
-    fun taskExecutor() = SyncTaskExecutor()
+  @Bean(name = ["taskExecutor"])
+  fun taskExecutor() = SyncTaskExecutor()
 }

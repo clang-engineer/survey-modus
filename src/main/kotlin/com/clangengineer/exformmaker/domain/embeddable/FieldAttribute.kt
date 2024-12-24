@@ -5,7 +5,7 @@ import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
 data class FieldAttribute(
-  @Enumerated(EnumType.STRING)
-  var type: type? = null,
-  var defaultValue: String? = null,
+    @Enumerated(EnumType.STRING)
+    var type: type? = null,
+    var defaultValue: String? = null,
 )

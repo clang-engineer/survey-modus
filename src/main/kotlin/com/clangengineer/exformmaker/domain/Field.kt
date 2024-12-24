@@ -14,56 +14,56 @@ import javax.validation.constraints.Size
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class Field(
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-  @SequenceGenerator(name = "sequenceGenerator")
-  @Column(name = "id")
-  var id: Long? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id")
+    var id: Long? = null,
 
-  @get: NotNull
-  @get: Size(min = 5, max = 100)
-  @Column(name = "title", length = 100, nullable = false)
-  var title: String? = null,
+    @get: NotNull
+    @get: Size(min = 5, max = 100)
+    @Column(name = "title", length = 100, nullable = false)
+    var title: String? = null,
 
-  @Column(name = "description")
-  var description: String? = null,
+    @Column(name = "description")
+    var description: String? = null,
 
-  @Column(name = "activated")
-  var activated: Boolean? = null,
+    @Column(name = "activated")
+    var activated: Boolean? = null,
 
-  @Embedded
-  @AttributeOverride(name = "type", column = Column(name = "type", table = "tbl_field_attribute"))
-  @AttributeOverride(name = "defaultValue", column = Column(name = "default_value", table = "tbl_field_attribute"))
-  var attribute: FieldAttribute? = null
+    @Embedded
+    @AttributeOverride(name = "type", column = Column(name = "type", table = "tbl_field_attribute"))
+    @AttributeOverride(name = "defaultValue", column = Column(name = "default_value", table = "tbl_field_attribute"))
+    var attribute: FieldAttribute? = null
 ) : Serializable {
-  @ManyToOne(optional = false)
-  @NotNull
-  var form: Form? = null
-  fun form(form: Form?): Field {
-    this.form = form
-    return this
-  }
+    @ManyToOne(optional = false)
+    @NotNull
+    var form: Form? = null
+    fun form(form: Form?): Field {
+        this.form = form
+        return this
+    }
 
-  override fun hashCode(): Int {
-    return javaClass.hashCode()
-  }
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
 
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other !is Field) return false
-    return id != null && other.id != null && id == other.id
-  }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Field) return false
+        return id != null && other.id != null && id == other.id
+    }
 
-  override fun toString(): String {
-    return "Field{" +
-      "id=" + id +
-      ", title='" + title + "'" +
-      ", description='" + description + "'" +
-      ", activated='" + activated + "'" +
-      "}"
-  }
+    override fun toString(): String {
+        return "Field{" +
+            "id=" + id +
+            ", title='" + title + "'" +
+            ", description='" + description + "'" +
+            ", activated='" + activated + "'" +
+            "}"
+    }
 
-  companion object {
-    private const val serialVersionUID = 1L
-  }
+    companion object {
+        private const val serialVersionUID = 1L
+    }
 }

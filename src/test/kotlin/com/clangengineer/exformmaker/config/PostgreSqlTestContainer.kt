@@ -8,28 +8,28 @@ import java.util.*
 
 class PostgreSqlTestContainer : SqlTestContainer {
 
-    private val log = LoggerFactory.getLogger(javaClass)
+  private val log = LoggerFactory.getLogger(javaClass)
 
-    private var postgreSQLContainer: PostgreSQLContainer<*>? = null
+  private var postgreSQLContainer: PostgreSQLContainer<*>? = null
 
-    override fun destroy() {
-        if (null != postgreSQLContainer && postgreSQLContainer?.isRunning == true) {
-            postgreSQLContainer?.stop()
-        }
+  override fun destroy() {
+    if (null != postgreSQLContainer && postgreSQLContainer?.isRunning == true) {
+      postgreSQLContainer?.stop()
     }
+  }
 
-    override fun afterPropertiesSet() {
-        if (null == postgreSQLContainer) {
-            postgreSQLContainer = PostgreSQLContainer("postgres:14.5")
-                .withDatabaseName("exformmaker")
-                .withTmpFs(Collections.singletonMap("/testtmpfs", "rw"))
-                .withLogConsumer(Slf4jLogConsumer(log))
-                .withReuse(true)
-        }
-        if (postgreSQLContainer?.isRunning != true) {
-            postgreSQLContainer?.start()
-        }
+  override fun afterPropertiesSet() {
+    if (null == postgreSQLContainer) {
+      postgreSQLContainer = PostgreSQLContainer("postgres:14.5")
+        .withDatabaseName("exformmaker")
+        .withTmpFs(Collections.singletonMap("/testtmpfs", "rw"))
+        .withLogConsumer(Slf4jLogConsumer(log))
+        .withReuse(true)
     }
+    if (postgreSQLContainer?.isRunning != true) {
+      postgreSQLContainer?.start()
+    }
+  }
 
-    override fun getTestContainer(): JdbcDatabaseContainer<*> = postgreSQLContainer as JdbcDatabaseContainer<*>
+  override fun getTestContainer(): JdbcDatabaseContainer<*> = postgreSQLContainer as JdbcDatabaseContainer<*>
 }

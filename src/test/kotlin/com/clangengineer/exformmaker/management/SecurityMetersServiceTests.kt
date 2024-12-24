@@ -10,98 +10,98 @@ private const val INVALID_TOKENS_METER_EXPECTED_NAME = "security.authentication.
 
 class SecurityMetersServiceTests {
 
-    private lateinit var meterRegistry: MeterRegistry
+  private lateinit var meterRegistry: MeterRegistry
 
-    private lateinit var securityMetersService: SecurityMetersService
+  private lateinit var securityMetersService: SecurityMetersService
 
-    @BeforeEach
-    fun setup() {
-        meterRegistry = SimpleMeterRegistry()
+  @BeforeEach
+  fun setup() {
+    meterRegistry = SimpleMeterRegistry()
 
-        securityMetersService = SecurityMetersService(meterRegistry)
-    }
+    securityMetersService = SecurityMetersService(meterRegistry)
+  }
 
-    @Test
-    fun testInvalidTokensCountersByCauseAreCreated() {
-        meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME).counter()
+  @Test
+  fun testInvalidTokensCountersByCauseAreCreated() {
+    meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME).counter()
 
-        meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-            .tag("cause", "expired")
-            .counter()
+    meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+      .tag("cause", "expired")
+      .counter()
 
-        meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-            .tag("cause", "unsupported")
-            .counter()
+    meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+      .tag("cause", "unsupported")
+      .counter()
 
-        meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-            .tag("cause", "invalid-signature")
-            .counter()
+    meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+      .tag("cause", "invalid-signature")
+      .counter()
 
-        meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-            .tag("cause", "malformed")
-            .counter()
+    meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+      .tag("cause", "malformed")
+      .counter()
 
-        val counters = meterRegistry.find(INVALID_TOKENS_METER_EXPECTED_NAME).counters()
+    val counters = meterRegistry.find(INVALID_TOKENS_METER_EXPECTED_NAME).counters()
 
-        assertThat(counters).hasSize(4)
-    }
+    assertThat(counters).hasSize(4)
+  }
 
-    @Test
-    fun testCountMethodsShouldBeBoundToCorrectCounters() {
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "expired")
-                .counter().count()
-        ).isZero()
+  @Test
+  fun testCountMethodsShouldBeBoundToCorrectCounters() {
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "expired")
+        .counter().count()
+    ).isZero()
 
-        securityMetersService.trackTokenExpired()
+    securityMetersService.trackTokenExpired()
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "expired")
-                .counter().count()
-        ).isEqualTo(1.0)
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "expired")
+        .counter().count()
+    ).isEqualTo(1.0)
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "unsupported")
-                .counter().count()
-        ).isZero()
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "unsupported")
+        .counter().count()
+    ).isZero()
 
-        securityMetersService.trackTokenUnsupported()
+    securityMetersService.trackTokenUnsupported()
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "unsupported")
-                .counter().count()
-        ).isEqualTo(1.0)
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "unsupported")
+        .counter().count()
+    ).isEqualTo(1.0)
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "invalid-signature")
-                .counter().count()
-        ).isZero()
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "invalid-signature")
+        .counter().count()
+    ).isZero()
 
-        securityMetersService.trackTokenInvalidSignature()
+    securityMetersService.trackTokenInvalidSignature()
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "invalid-signature")
-                .counter().count()
-        ).isEqualTo(1.0)
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "invalid-signature")
+        .counter().count()
+    ).isEqualTo(1.0)
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "malformed")
-                .counter().count()
-        ).isZero()
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "malformed")
+        .counter().count()
+    ).isZero()
 
-        securityMetersService.trackTokenMalformed()
+    securityMetersService.trackTokenMalformed()
 
-        assertThat(
-            meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
-                .tag("cause", "malformed")
-                .counter().count()
-        ).isEqualTo(1.0)
-    }
+    assertThat(
+      meterRegistry.get(INVALID_TOKENS_METER_EXPECTED_NAME)
+        .tag("cause", "malformed")
+        .counter().count()
+    ).isEqualTo(1.0)
+  }
 }

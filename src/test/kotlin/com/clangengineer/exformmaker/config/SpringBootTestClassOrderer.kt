@@ -7,16 +7,16 @@ import org.junit.jupiter.api.ClassOrdererContext
 
 class SpringBootTestClassOrderer : ClassOrderer {
 
-    override fun orderClasses(context: ClassOrdererContext) {
-        context.classDescriptors.sortWith(Comparator.comparingInt(SpringBootTestClassOrderer::getOrder))
-    }
+  override fun orderClasses(context: ClassOrdererContext) {
+    context.classDescriptors.sortWith(Comparator.comparingInt(SpringBootTestClassOrderer::getOrder))
+  }
 
-    companion object {
-        private fun getOrder(classDescriptor: ClassDescriptor): Int {
-            if (classDescriptor.findAnnotation(IntegrationTest::class.java).isPresent) {
-                return 2
-            }
-            return 1
-        }
+  companion object {
+    private fun getOrder(classDescriptor: ClassDescriptor): Int {
+      if (classDescriptor.findAnnotation(IntegrationTest::class.java).isPresent) {
+        return 2
+      }
+      return 1
     }
+  }
 }

@@ -5,5 +5,5 @@ import org.springframework.beans.factory.InitializingBean
 import org.testcontainers.containers.JdbcDatabaseContainer
 
 interface SqlTestContainer : InitializingBean, DisposableBean {
-    fun getTestContainer(): JdbcDatabaseContainer<*>
+  fun getTestContainer(): JdbcDatabaseContainer<*>
 }
