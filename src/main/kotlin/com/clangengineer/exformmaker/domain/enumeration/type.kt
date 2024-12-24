@@ -1,14 +1,13 @@
 package com.clangengineer.exformmaker.domain.enumeration
 
-enum class FieldType {
+enum class type {
   TEXT,
-  TEXTAREA,
   RADIO,
   SELECT_BOX,
   CHECK_BOX,
   DATE,
-  DATETIME,
   TIME,
+  DATETIME,
   BOOLEAN,
   INTEGER,
   FLOAT,

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="clang" id="20241224000000-1">
+        <createTable tableName="tbl_field_attribute">
+            <column name="field_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="default_value" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="clang" id="20241224000000-2">
+        <addForeignKeyConstraint baseColumnNames="field_id"
+                                 baseTableName="tbl_field_attribute"
+                                 constraintName="fk_field_attribute_field_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tbl_field"/>
+    </changeSet>
+
+    <changeSet author="clang" context="faker" id="20241224000000-1-data">
+        <loadData
+            file="config/liquibase/fake-data/field_attribute.csv"
+            separator=";"
+            tableName="tbl_field_attribute"
+            usePreparedStatements="true">
+            <column name="field_id" type="numeric"/>
+            <column name="type" type="string"/>
+            <column name="default_value" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
