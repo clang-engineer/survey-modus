@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './field.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
-import { Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IconArrowBack, IconPencil } from '@tabler/icons';
 
@@ -67,6 +67,23 @@ export const FieldDetail = () => {
               <Translate contentKey="exformmakerApp.field.form">Form</Translate>
             </Typography>
             <Typography> {fieldEntity.form ? fieldEntity.form.title : ''} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.field.attribute">Field Attribute</Translate>
+            </Typography>
+            <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>
+              {fieldEntity?.attribute &&
+                Object.entries(fieldEntity?.attribute).map(([key, value]) => (
+                  <Typography key={key} variant="body2">
+                    <>
+                      <b>{key}</b>: {value}
+                    </>
+                  </Typography>
+                ))}
+            </Box>
           </Stack>
         </Grid>
         <Grid item xs={12}>

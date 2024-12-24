@@ -22,7 +22,8 @@
       "description": "Description",
       "activated": "Activated",
       "type": "Type",
-      "form": "Form"
+      "form": "Form",
+      "attribute": "Attribute"
     }
   }
 }
