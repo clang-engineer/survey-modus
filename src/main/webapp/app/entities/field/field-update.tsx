@@ -26,6 +26,8 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
+import SubCard from 'app/berry/ui-component/cards/SubCard';
+import { type } from 'app/shared/model/field.model';
 
 export const FieldUpdate = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +50,10 @@ export const FieldUpdate = () => {
       description: '',
       activated: false,
       form: { id: 0 },
+      attribute: {
+        type: '',
+        defaultValue: '',
+      },
     },
     validationSchema: yup.object({
       id: yup.string(),
@@ -61,6 +67,7 @@ export const FieldUpdate = () => {
       form: yup.object({
         id: yup.number().required(translate('entity.validation.required')),
       }),
+      attribute: yup.object({}),
     }),
     onSubmit(values) {
       saveEntity(values);
@@ -193,6 +200,53 @@ export const FieldUpdate = () => {
                 ))}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <SubCard title={translate('exformmakerApp.field.attribute.title')}>
+              <Grid container spacing={gridSpacing}>
+                <Grid item xs={12}>
+                  <FormControl
+                    component="fieldset"
+                    fullWidth
+                    error={formik.touched.attribute && Boolean(formik.errors.attribute)}
+                    variant="outlined"
+                  >
+                    <InputLabel id="field-attribute-type-label"> {translate('exformmakerApp.field.attribute.type')}</InputLabel>
+                    <Select
+                      fullWidth
+                      id="field-attribute-type"
+                      name="attribute.type"
+                      label={translate('exformmakerApp.field.attribute.type')}
+                      value={formik.values.attribute?.type}
+                      onChange={formik.handleChange}
+                      error={formik.touched.attribute?.type && Boolean(formik.errors.attribute?.type)}
+                      variant="outlined"
+                    >
+                      {Object.keys(type).map(key => {
+                        return (
+                          <MenuItem key={key} value={key}>
+                            {type[key]}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="field-attribute-defaultValue"
+                    name="attribute.defaultValue"
+                    label={translate('exformmakerApp.field.attribute.defaultValue')}
+                    value={formik.values.attribute?.defaultValue}
+                    onChange={formik.handleChange}
+                    error={formik.touched.attribute?.defaultValue && Boolean(formik.errors.attribute?.defaultValue)}
+                    helperText={formik.touched.attribute?.defaultValue && formik.errors.attribute?.defaultValue}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+            </SubCard>
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">

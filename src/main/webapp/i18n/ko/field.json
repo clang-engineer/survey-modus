@@ -23,7 +23,11 @@
       "activated": "Activated",
       "type": "Type",
       "form": "Form",
-      "attribute": "Attribute"
+      "attribute": {
+        "title": "Attribute",
+        "type": "Type",
+        "defaultValue": "Default Value"
+      }
     }
   }
 }

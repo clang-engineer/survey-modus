@@ -72,7 +72,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.field.attribute">Field Attribute</Translate>
+              <Translate contentKey="exformmakerApp.field.attribute.title">Field Attribute</Translate>
             </Typography>
             <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>
               {fieldEntity?.attribute &&
