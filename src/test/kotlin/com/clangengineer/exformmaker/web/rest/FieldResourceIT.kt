@@ -3,7 +3,8 @@ package com.clangengineer.exformmaker.web.rest
 import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Field
 import com.clangengineer.exformmaker.domain.Form
-import com.clangengineer.exformmaker.domain.enumeration.level
+import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
+import com.clangengineer.exformmaker.domain.enumeration.type
 import com.clangengineer.exformmaker.repository.FieldRepository
 import com.clangengineer.exformmaker.service.mapper.FieldMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -66,6 +67,8 @@ class FieldResourceIT {
         assertThat(testField.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testField.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(DEFAULT_ACTIVATED)
+
+        assertThat(testField.attribute).isEqualTo(DEFAULT_ATTRIBUTE)
     }
 
     @Test
@@ -591,8 +594,8 @@ class FieldResourceIT {
         private const val DEFAULT_ACTIVATED: Boolean = false
         private const val UPDATED_ACTIVATED: Boolean = true
 
-        private val DEFAULT_TYPE: level = level.EASY
-        private val UPDATED_TYPE: level = level.NORMAL
+        private val DEFAULT_ATTRIBUTE: FieldAttribute = FieldAttribute(type.TEXT, "AAAAAAAAAA")
+        private val UPDATED_ATTRIBUTE: FieldAttribute = FieldAttribute(type.INTEGER, "BBBBBBBBBB")
 
         private val ENTITY_API_URL: String = "/api/fields"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
@@ -606,6 +609,7 @@ class FieldResourceIT {
                 title = DEFAULT_TITLE,
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
+                attribute = DEFAULT_ATTRIBUTE
             )
 
             val form = FormResourceIT.createEntity(em)
@@ -621,6 +625,7 @@ class FieldResourceIT {
                 title = UPDATED_TITLE,
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
+                attribute = UPDATED_ATTRIBUTE
             )
 
             val form = FormResourceIT.createEntity(em)
