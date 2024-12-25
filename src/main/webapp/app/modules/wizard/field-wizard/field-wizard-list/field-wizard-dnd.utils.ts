@@ -22,7 +22,7 @@ const getItemStyle = (isDragging, draggableStyle) => {
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? theme.palette.secondary.light : theme.palette.grey[100],
+    background: isDragging ? theme.palette.secondary.light : theme.palette.grey[50],
 
     border: '1px dashed #000',
     borderRadius: '5px',

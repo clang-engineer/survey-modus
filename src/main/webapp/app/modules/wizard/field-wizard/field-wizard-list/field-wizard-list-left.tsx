@@ -1,15 +1,17 @@
 import React from 'react';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
-import { Grid } from '@mui/material';
-import { gridSpacing } from 'app/berry/store/constant';
+import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 import { IField } from 'app/shared/model/field.model';
 
+import { IconEdit, IconTrash } from '@tabler/icons';
+
 interface IFieldWizardListLeftProps {
   items: IField[];
+  handleDelete: (id: number) => void;
 }
 
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
@@ -17,12 +19,11 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
 
   return (
     <MainCard title={'left'}>
-      {/*<Grid container spacing={gridSpacing}>*/}
-      <Droppable droppableId="droppable">
+      <Droppable droppableId="left">
         {(provided, snapshot) => (
           <Grid container {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
             {items.map((item, index) => (
-              <Draggable key={item.id} draggableId={`draggable-${item.id}`} index={index}>
+              <Draggable key={item.id} draggableId={`draggable-left-${item.id}`} index={index}>
                 {(provided, snapshot) => (
                   <Grid
                     item
@@ -32,7 +33,21 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                     {...provided.dragHandleProps}
                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                   >
-                    {item.title}
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Typography variant="h5">{item.title}</Typography>
+                      <ButtonGroup size="small">
+                        <IconButton>
+                          <IconEdit size={'1rem'} />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => {
+                            props.handleDelete(item.id);
+                          }}
+                        >
+                          <IconTrash size={'1rem'} />
+                        </IconButton>
+                      </ButtonGroup>
+                    </Box>
                   </Grid>
                 )}
               </Draggable>
@@ -41,7 +56,6 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
           </Grid>
         )}
       </Droppable>
-      {/*</Grid>*/}
     </MainCard>
   );
 };
