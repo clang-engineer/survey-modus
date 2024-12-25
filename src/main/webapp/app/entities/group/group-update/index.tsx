@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { createEntity, getEntity, reset, updateEntity } from './group.reducer';
+import { createEntity, getEntity, reset, updateEntity } from '../group.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
@@ -24,9 +24,10 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
-import GroupUserMultiselect from 'app/entities/group/component/group-user-multiselect';
-import GroupCompanyMultiselect from 'app/entities/group/component/group-company-multiselect';
-import groupUpdateFormik from 'app/entities/group/component/group-update.formik';
+import GroupUserMultiselect from 'app/entities/group/group-update/component/group-user-multiselect';
+import GroupCompanyMultiselect from 'app/entities/group/group-update/component/group-company-multiselect';
+import groupUpdateFormik from 'app/entities/group/group-update/component/group-update.formik';
+import GroupOwnerSelect from 'app/entities/group/group-update/component/group-owner-select';
 
 export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
@@ -145,28 +146,7 @@ export const GroupUpdate = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
-              <InputLabel id="group-user-label"> {translate('exformmakerApp.group.user')}</InputLabel>
-              <Select
-                labelId="group-user-label"
-                id="group-user"
-                name="user"
-                value={formik.values.user?.id}
-                onChange={e => {
-                  formik.setFieldValue('user', { id: e.target.value });
-                }}
-                label={translate('exformmakerApp.group.user')}
-              >
-                <MenuItem value="-" disabled>
-                  <em>None</em>
-                </MenuItem>
-                {users.map(user => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.login}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <GroupOwnerSelect formik={formik} users={users} />
           </Grid>
           <Grid item xs={12}>
             <GroupUserMultiselect formik={formik} users={users} />
