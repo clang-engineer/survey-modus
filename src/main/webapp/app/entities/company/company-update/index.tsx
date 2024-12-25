@@ -1,46 +1,33 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { createEntity, getEntity, reset, updateEntity } from '../company.reducer';
+import { createEntity, getEntities, getEntity, reset, updateEntity } from '../company.reducer';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
 import { getEntities as getForms } from 'app/entities/form/form.reducer';
 
-import {
-  Button,
-  ButtonGroup,
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, ButtonGroup, Checkbox, Divider, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import CompanyFormMultiselect from 'app/entities/company/company-update/company-form-multiselect';
 import companyUpdateFormik from 'app/entities/company/company-update/company-update.formik';
 import StaffCardList from 'app/entities/company/company-update/staff-card-list';
 import FormikErrorText from 'app/shared/component/formik-error-text';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
-import { AUTHORITIES } from 'app/config/constants';
 import CompanyOwnerSelect from 'app/entities/company/company-update/company-owner-select';
 
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const user = useAppSelector(state => state.authentication.account);
   const users = useAppSelector(state => state.userManagement.users);
   const forms = useAppSelector(state => state.form.entities);
   const companyEntity = useAppSelector(state => state.company.entity);
@@ -48,8 +35,12 @@ export const CompanyUpdate = () => {
   const updating = useAppSelector(state => state.company.updating);
   const updateSuccess = useAppSelector(state => state.company.updateSuccess);
 
+  const fromWizardPath = location.pathname.includes('wizard');
+  const fromAdminPath = !fromWizardPath;
+  const LIST_PATH = fromAdminPath ? '/company' : '/wizard/company';
+
   const handleClose = () => {
-    navigate('/company' + location.search);
+    navigate(LIST_PATH + location.search);
   };
 
   useEffect(() => {
@@ -59,8 +50,12 @@ export const CompanyUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getUsers({}));
-    dispatch(getForms({}));
+    if (fromAdminPath) {
+      dispatch(getUsers({}));
+      dispatch(getForms({}));
+    } else {
+      dispatch(getForms({ sort: 'id,asc', query: `userId.equals=${user.id}` }));
+    }
   }, []);
 
   useEffect(() => {
@@ -72,6 +67,10 @@ export const CompanyUpdate = () => {
   useEffect(() => {
     if (!isNew) {
       formik.setValues(companyEntity);
+    }
+
+    if (fromWizardPath) {
+      formik.setFieldValue('user', user);
     }
   }, [companyEntity]);
 
@@ -152,10 +151,12 @@ export const CompanyUpdate = () => {
             />
             <FormikErrorText formik={formik} fieldName={'activated'} />
           </Grid>
-          <Grid item xs={12}>
-            <CompanyOwnerSelect formik={formik} users={users} />
-            <FormikErrorText formik={formik} fieldName={'user'} />
-          </Grid>
+          {fromAdminPath && (
+            <Grid item xs={12}>
+              <CompanyOwnerSelect formik={formik} users={users} />
+              <FormikErrorText formik={formik} fieldName={'user'} />
+            </Grid>
+          )}
           <Grid item xs={12}>
             <CompanyFormMultiselect formik={formik} forms={forms} />
             <FormikErrorText formik={formik} fieldName={'forms'} />
@@ -172,7 +173,7 @@ export const CompanyUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
-              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/company')} color="primary">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate(LIST_PATH)} color="primary">
                 <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">
