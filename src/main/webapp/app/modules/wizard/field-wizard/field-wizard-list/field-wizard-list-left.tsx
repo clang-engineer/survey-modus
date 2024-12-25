@@ -1,15 +1,15 @@
 import React from 'react';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
-import { IField } from 'app/shared/model/field.model';
 
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
+import { IField } from 'app/shared/model/field.model';
 
 interface IFieldWizardListLeftProps {
-  items: any[];
+  items: IField[];
 }
 
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
@@ -22,7 +22,7 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
           {(provided, snapshot) => (
             <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
               {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable key={item.id} draggableId={`draggable-${item.id}`} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -30,7 +30,7 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                       {...provided.dragHandleProps}
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      {item.content}
+                      {item.title}
                     </div>
                   )}
                 </Draggable>

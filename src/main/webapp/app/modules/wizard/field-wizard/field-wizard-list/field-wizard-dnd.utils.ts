@@ -1,9 +1,3 @@
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`,
-  }));
-
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -34,4 +28,4 @@ const getListStyle = isDraggingOver => ({
   width: 250,
 });
 
-export { getItems, reorder, getItemStyle, getListStyle };
+export { reorder, getItemStyle, getListStyle };

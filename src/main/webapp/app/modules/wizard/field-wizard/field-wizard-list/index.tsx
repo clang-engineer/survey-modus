@@ -9,7 +9,7 @@ import { Grid } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 
 import { DragDropContext } from 'react-beautiful-dnd';
-import { getItems, reorder } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
+import { reorder } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-left';
 
 const FieldWizardList = () => {
@@ -21,7 +21,7 @@ const FieldWizardList = () => {
 
   const fieldList = useAppSelector(state => state.field.entities);
 
-  const [items, setItems] = useState(getItems(10));
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     if (!form) {
@@ -30,6 +30,10 @@ const FieldWizardList = () => {
 
     dispatch(getFieldList({ sort: 'id,desc', query: `formId.equals=${form.id}` }));
   }, []);
+
+  useEffect(() => {
+    setItems(fieldList);
+  }, [fieldList]);
 
   const onDragEnd = result => {
     // dropped outside the list
