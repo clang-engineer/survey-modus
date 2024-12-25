@@ -8,7 +8,7 @@ import { Alert, Box, Button, ButtonGroup, Grid, IconButton, Tooltip, Typography 
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IForm } from 'app/shared/model/form.model';
-import { IconBuildingStore, IconPencil, IconTrash, IconUsers } from '@tabler/icons';
+import { IconBuildingStore, IconPencil, IconTrash, IconFilter, IconBook } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
@@ -104,16 +104,21 @@ const FormWizardList = () => {
                     <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
                       <Box display="flex" alignItems="center">
                         <CustomWidthTooltip
-                          title={<GroupCompaniesTooltipContent companies={form.companies} />}
+                          title={
+                            <>
+                              {form.category.title} <br />
+                              {form.category.description}
+                            </>
+                          }
                           sx={{ fontSize: '30' }}
                           slotProps={slotProps}
                         >
                           <IconButton>
-                            <IconBuildingStore size={'15px'} strokeWidth={1.2} />
+                            <IconBook size={'15px'} strokeWidth={1.2} />
                           </IconButton>
                         </CustomWidthTooltip>
                         <Typography variant="caption" color="text.primary">
-                          {form.companies?.length ?? 0}
+                          {form.category.title}
                         </Typography>
                       </Box>
                     </Grid>
