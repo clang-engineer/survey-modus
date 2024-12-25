@@ -29,6 +29,9 @@ import CompanyFormMultiselect from 'app/entities/company/company-update/company-
 import companyUpdateFormik from 'app/entities/company/company-update/company-update.formik';
 import StaffCardList from 'app/entities/company/company-update/staff-card-list';
 import FormikErrorText from 'app/shared/component/formik-error-text';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
+import CompanyOwnerSelect from 'app/entities/company/company-update/company-owner-select';
 
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();
@@ -150,28 +153,7 @@ export const CompanyUpdate = () => {
             <FormikErrorText formik={formik} fieldName={'activated'} />
           </Grid>
           <Grid item xs={12}>
-            <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
-              <InputLabel id="company-user-label"> {translate('exformmakerApp.company.user')}</InputLabel>
-              <Select
-                labelId="company-user-label"
-                id="company-user"
-                name="user"
-                value={formik.values.user?.id}
-                onChange={e => {
-                  formik.setFieldValue('user', { id: e.target.value });
-                }}
-                label={translate('exformmakerApp.company.user')}
-              >
-                <MenuItem value="-" disabled>
-                  <em>None</em>
-                </MenuItem>
-                {users.map(user => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.login}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <CompanyOwnerSelect formik={formik} users={users} />
             <FormikErrorText formik={formik} fieldName={'user'} />
           </Grid>
           <Grid item xs={12}>
