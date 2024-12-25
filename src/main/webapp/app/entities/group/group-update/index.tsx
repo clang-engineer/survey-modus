@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
@@ -9,19 +9,7 @@ import MainCard from 'app/berry/ui-component/cards/MainCard';
 import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
 import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 
-import {
-  Button,
-  ButtonGroup,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, ButtonGroup, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
 import GroupUserMultiselect from 'app/entities/group/group-update/component/group-user-multiselect';
@@ -33,10 +21,12 @@ export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const user = useAppSelector(state => state.authentication.account);
   const users = useAppSelector(state => state.userManagement.users);
   const companies = useAppSelector(state => state.company.entities);
   const groupEntity = useAppSelector(state => state.group.entity);
@@ -44,8 +34,12 @@ export const GroupUpdate = () => {
   const updating = useAppSelector(state => state.group.updating);
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
 
+  const fromWizardPath = location.pathname.includes('wizard');
+  const fromAdminPath = !fromWizardPath;
+  const LIST_PATH = fromAdminPath ? '/group' : '/wizard/group';
+
   const handleClose = () => {
-    navigate('/group' + location.search);
+    navigate(LIST_PATH + location.search);
   };
 
   useEffect(() => {
@@ -56,7 +50,11 @@ export const GroupUpdate = () => {
     }
 
     dispatch(getUsers({}));
-    dispatch(getCompanies({}));
+    if (fromAdminPath) {
+      dispatch(getCompanies({}));
+    } else {
+      dispatch(getCompanies({ sort: 'id,asc', query: `userId.equals=${user.id}` }));
+    }
   }, []);
 
   useEffect(() => {
@@ -68,6 +66,10 @@ export const GroupUpdate = () => {
   useEffect(() => {
     if (!isNew) {
       formik.setValues(groupEntity);
+    }
+
+    if (fromWizardPath) {
+      formik.setFieldValue('user', user);
     }
   }, [groupEntity]);
 
@@ -145,9 +147,11 @@ export const GroupUpdate = () => {
               label={translate('exformmakerApp.group.activated')}
             />
           </Grid>
-          <Grid item xs={12}>
-            <GroupOwnerSelect formik={formik} users={users} />
-          </Grid>
+          {fromAdminPath && (
+            <Grid item xs={12}>
+              <GroupOwnerSelect formik={formik} users={users} />
+            </Grid>
+          )}
           <Grid item xs={12}>
             <GroupUserMultiselect formik={formik} users={users} />
           </Grid>
@@ -156,7 +160,7 @@ export const GroupUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
-              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/group')} color="primary">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate(LIST_PATH)} color="primary">
                 <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">

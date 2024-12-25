@@ -3,15 +3,15 @@ import { Route } from 'react-router-dom';
 
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import GroupWizardList from 'app/modules/wizard/group-wizard/group-wizard-list';
-import GroupWizardDetail from 'app/modules/wizard/group-wizard/group-wizard-detail';
+import Index from 'app/entities/group/group-update';
 
 const GroupWizardRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<GroupWizardList />} />
 
-    <Route path="new" element={<GroupWizardDetail />} />
+    <Route path="new" element={<Index />} />
     <Route path=":id">
-      <Route path="edit" element={<GroupWizardDetail />} />
+      <Route path="edit" element={<Index />} />
     </Route>
   </ErrorBoundaryRoutes>
 );
