@@ -14,15 +14,41 @@ interface IFieldWizardListLeftProps {
   handleDelete: (id: number) => void;
 }
 
+const EmptyDndBox = () => {
+  return (
+    <Grid item xs={12}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          height: 150,
+          backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          borderRadius: 1,
+          borderStyle: 'dashed',
+          borderColor: 'rgba(0, 0, 0, 0.12)',
+        }}
+      >
+        <Typography variant="h5">Drag and drop fields from the right side</Typography>
+      </Box>
+    </Grid>
+  );
+};
+
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
   const { items } = props;
 
   return (
-    <MainCard title={'left'}>
-      <Droppable droppableId="left">
-        {(provided, snapshot) => (
-          <Grid container {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-            {items.map((item, index) => (
+    <Droppable droppableId="left">
+      {(provided, snapshot) => (
+        <Grid container {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+          {items.length === 0 ? (
+            <Grid item xs={12}>
+              {' '}
+              <EmptyDndBox />{' '}
+            </Grid>
+          ) : (
+            items.map((item, index) => (
               <Draggable key={item.id} draggableId={`draggable-left-${item.id}`} index={index}>
                 {(provided, snapshot) => (
                   <Grid
@@ -51,12 +77,12 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                   </Grid>
                 )}
               </Draggable>
-            ))}
-            {provided.placeholder}
-          </Grid>
-        )}
-      </Droppable>
-    </MainCard>
+            ))
+          )}
+          {provided.placeholder}
+        </Grid>
+      )}
+    </Droppable>
   );
 };
 

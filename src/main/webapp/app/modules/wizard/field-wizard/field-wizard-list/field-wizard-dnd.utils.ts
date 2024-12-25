@@ -38,8 +38,6 @@ const getListStyle = isDraggingOver => {
 
   return {
     background: isDraggingOver ? theme.palette.primary.light : theme.palette.background.paper,
-    padding: grid,
-    // width: 250,
   };
 };
 

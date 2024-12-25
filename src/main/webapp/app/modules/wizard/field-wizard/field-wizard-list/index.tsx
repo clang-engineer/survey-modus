@@ -12,6 +12,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { reorder } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-left';
 import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-right';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -71,7 +72,9 @@ const FieldWizardList = () => {
     <Grid container spacing={gridSpacing}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid item xs={8}>
-          <FieldWizardListLeft items={items} handleDelete={handleDelete} />
+          <MainCard title={`Fields for form ${form.title} (${form.category.title})`}>
+            <FieldWizardListLeft items={items} handleDelete={handleDelete} />
+          </MainCard>
         </Grid>
         <Grid item xs={4}>
           <FieldWizardListRight />
