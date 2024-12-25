@@ -15,78 +15,78 @@ import org.springframework.web.bind.annotation.RestController
  */
 class ClientForwardControllerTest {
 
-  private lateinit var restMockMvc: MockMvc
+    private lateinit var restMockMvc: MockMvc
 
-  @BeforeEach
-  fun setup() {
-    val clientForwardController = ClientForwardController()
-    this.restMockMvc = MockMvcBuilders
-      .standaloneSetup(clientForwardController, TestController())
-      .build()
-  }
+    @BeforeEach
+    fun setup() {
+        val clientForwardController = ClientForwardController()
+        this.restMockMvc = MockMvcBuilders
+            .standaloneSetup(clientForwardController, TestController())
+            .build()
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getBackendEndpoint() {
-    restMockMvc.perform(get("/test"))
-      .andExpect(status().isOk)
-      .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN_VALUE))
-      .andExpect(content().string("test"))
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getBackendEndpoint() {
+        restMockMvc.perform(get("/test"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN_VALUE))
+            .andExpect(content().string("test"))
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getClientEndpoint() {
-    val perform = restMockMvc.perform(get("/non-existant-mapping"))
-    perform
-      .andExpect(status().isOk)
-      .andExpect(forwardedUrl("/"))
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getClientEndpoint() {
+        val perform = restMockMvc.perform(get("/non-existant-mapping"))
+        perform
+            .andExpect(status().isOk)
+            .andExpect(forwardedUrl("/"))
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getNestedClientEndpoint() {
-    restMockMvc.perform(get("/admin/user-management"))
-      .andExpect(status().isOk)
-      .andExpect(forwardedUrl("/"))
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getNestedClientEndpoint() {
+        restMockMvc.perform(get("/admin/user-management"))
+            .andExpect(status().isOk)
+            .andExpect(forwardedUrl("/"))
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getUnmappedDottedEndpoint() {
-    restMockMvc.perform(get("/foo.js")).andExpect(status().isNotFound())
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getUnmappedDottedEndpoint() {
+        restMockMvc.perform(get("/foo.js")).andExpect(status().isNotFound())
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getUnmappedNestedDottedEndpoint() {
-    restMockMvc.perform(get("/foo/bar.js")).andExpect(status().isNotFound())
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getUnmappedNestedDottedEndpoint() {
+        restMockMvc.perform(get("/foo/bar.js")).andExpect(status().isNotFound())
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getWebsocketInfoEndpoint() {
-    restMockMvc.perform(get("/websocket/info"))
-      .andExpect(status().isNotFound())
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getWebsocketInfoEndpoint() {
+        restMockMvc.perform(get("/websocket/info"))
+            .andExpect(status().isNotFound())
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getWebsocketEndpoint() {
-    restMockMvc.perform(get("/websocket/tracker/308/sessionId/websocket"))
-      .andExpect(status().isNotFound())
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getWebsocketEndpoint() {
+        restMockMvc.perform(get("/websocket/tracker/308/sessionId/websocket"))
+            .andExpect(status().isNotFound())
+    }
 
-  @Test
-  @Throws(Exception::class)
-  fun getWebsocketFallbackEndpoint() {
-    restMockMvc.perform(get("/websocket/tracker/308/sessionId/xhr_streaming"))
-      .andExpect(status().isNotFound())
-  }
+    @Test
+    @Throws(Exception::class)
+    fun getWebsocketFallbackEndpoint() {
+        restMockMvc.perform(get("/websocket/tracker/308/sessionId/xhr_streaming"))
+            .andExpect(status().isNotFound())
+    }
 
-  @RestController
-  inner class TestController {
-    @RequestMapping(value = ["/test"])
-    fun test() = "test"
-  }
+    @RestController
+    inner class TestController {
+        @RequestMapping(value = ["/test"])
+        fun test() = "test"
+    }
 }

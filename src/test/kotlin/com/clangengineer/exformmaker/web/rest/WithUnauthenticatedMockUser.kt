@@ -9,9 +9,9 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 @Retention(AnnotationRetention.RUNTIME)
 @WithSecurityContext(factory = WithUnauthenticatedMockUser.Factory::class)
 annotation class WithUnauthenticatedMockUser {
-  class Factory : WithSecurityContextFactory<WithUnauthenticatedMockUser?> {
-    override fun createSecurityContext(annotation: WithUnauthenticatedMockUser?): SecurityContext {
-      return SecurityContextHolder.createEmptyContext()
+    class Factory : WithSecurityContextFactory<WithUnauthenticatedMockUser?> {
+        override fun createSecurityContext(annotation: WithUnauthenticatedMockUser?): SecurityContext {
+            return SecurityContextHolder.createEmptyContext()
+        }
     }
-  }
 }
