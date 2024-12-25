@@ -11,22 +11,19 @@ import { useTheme } from '@mui/material/styles';
 const FieldWizardListRight = () => {
   const theme = useTheme();
 
-  const [items, setItems] = useState(
-    Object.values(type).map((item, index) => {
-      return {
-        id: index,
-        title: item,
-        type: item,
-      };
-    })
-  );
+  const items = Object.values(type).map((item, index) => {
+    return {
+      id: index,
+      title: item,
+    };
+  });
 
   return (
     <Box
       padding={1}
       sx={{
         borderRadius: 1,
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.warning.light,
       }}
     >
       <Droppable droppableId="right" isDropDisabled={true}>
