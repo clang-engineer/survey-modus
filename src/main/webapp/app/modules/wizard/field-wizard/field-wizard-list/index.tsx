@@ -5,14 +5,16 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IForm } from 'app/shared/model/form.model';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 
-import { Grid } from '@mui/material';
+import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 
 import { DragDropContext } from 'react-beautiful-dnd';
 import { reorder } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-left';
 import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-right';
-import MainCard from 'app/berry/ui-component/cards/MainCard';
+import SubCard from 'app/berry/ui-component/cards/SubCard';
+
+import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -68,16 +70,54 @@ const FieldWizardList = () => {
     setItems(items.filter(item => item.id !== id));
   };
 
+  const LeftTitle = () => {
+    return (
+      <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+        <Typography>
+          Fields for form {form.title} ({form.category.title})
+        </Typography>
+        <ButtonGroup size="small">
+          <IconButton
+            color={'primary'}
+            onClick={() => {
+              console.log('save');
+            }}
+          >
+            <IconEye size={'1rem'} />
+          </IconButton>
+          <IconButton
+            color={'primary'}
+            onClick={() => {
+              console.log('save');
+            }}
+          >
+            <IconDeviceFloppy size={'1rem'} />
+          </IconButton>
+          <IconButton
+            color={'secondary'}
+            onClick={() => {
+              setItems(fieldList);
+            }}
+          >
+            <IconArrowBackUp size={'1rem'} />
+          </IconButton>
+        </ButtonGroup>
+      </Box>
+    );
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid item xs={8}>
-          <MainCard title={`Fields for form ${form.title} (${form.category.title})`}>
+          <SubCard title={<LeftTitle />}>
             <FieldWizardListLeft items={items} handleDelete={handleDelete} />
-          </MainCard>
+          </SubCard>
         </Grid>
         <Grid item xs={4}>
-          <FieldWizardListRight />
+          <SubCard title={`Available fields`}>
+            <FieldWizardListRight />
+          </SubCard>
         </Grid>
       </DragDropContext>
     </Grid>
