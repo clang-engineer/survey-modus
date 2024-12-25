@@ -8,7 +8,7 @@ import { Alert, Box, Button, ButtonGroup, Grid, IconButton, Tooltip, Typography 
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IForm } from 'app/shared/model/form.model';
-import { IconBuildingStore, IconPencil, IconTrash, IconFilter, IconBook } from '@tabler/icons';
+import { IconBuildingStore, IconPencil, IconTrash, IconClipboardList, IconBook } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
@@ -58,8 +58,17 @@ const FormWizardList = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">{form.title}</Typography>
         <ButtonGroup variant="text" size="small">
+          <Button
+            onClick={() =>
+              navigate(`/wizard/field`, {
+                state: { form: form },
+              })
+            }
+          >
+            <IconClipboardList size={'1rem'} strokeWidth={1.5} color={theme.palette.secondary.main} />
+          </Button>
           <Button onClick={() => navigate(`/wizard/form/${form.id}/edit`)}>
-            <IconPencil size={'1rem'} strokeWidth={1.5} />
+            <IconPencil size={'1rem'} strokeWidth={1.5} color={theme.palette.primary.main} />
           </Button>
           <Button onClick={() => navigate(`/wizard/form/${form.id}/delete`)}>
             <IconTrash size={'1rem'} strokeWidth={1.5} color={theme.palette.error.light} />
