@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -7,8 +7,10 @@ import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 
 import { Grid } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
+
+import { DragDropContext } from 'react-beautiful-dnd';
+import { getItems, reorder } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-left';
-import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-right';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ const FieldWizardList = () => {
 
   const fieldList = useAppSelector(state => state.field.entities);
 
+  const [items, setItems] = useState(getItems(10));
+
   useEffect(() => {
     if (!form) {
       navigate('/wizard/form');
@@ -27,14 +31,24 @@ const FieldWizardList = () => {
     dispatch(getFieldList({ sort: 'id,desc', query: `formId.equals=${form.id}` }));
   }, []);
 
+  const onDragEnd = result => {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    const reordered = reorder(items, result.source.index, result.destination.index);
+
+    setItems(reordered as any);
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
-      <Grid item xs={6}>
-        <FieldWizardListLeft fieldList={fieldList} />
-      </Grid>
-      <Grid item xs={6}>
-        <FieldWizardListRight />
-      </Grid>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Grid item xs={6}>
+          <FieldWizardListLeft items={items} />
+        </Grid>
+      </DragDropContext>
     </Grid>
   );
 };

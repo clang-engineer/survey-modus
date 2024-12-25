@@ -5,31 +5,40 @@ import { IField } from 'app/shared/model/field.model';
 import { Box, Grid } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
+
 interface IFieldWizardListLeftProps {
-  fieldList: IField[];
+  items: any[];
 }
 
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
-  const { fieldList } = props;
+  const { items } = props;
 
   return (
     <MainCard title={'left'}>
       <Grid container spacing={gridSpacing}>
-        {fieldList.map((field, index) => (
-          <Grid key={index} item xs={12}>
-            <Box
-              sx={{
-                padding: '20px',
-                border: '1px solid #E4E9F0',
-                borderRadius: '10px',
-                backgroundColor: '#fff',
-                boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.08)',
-              }}
-            >
-              {field.title}
-            </Box>
-          </Grid>
-        ))}
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+              {items.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                    >
+                      {item.content}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </Grid>
     </MainCard>
   );
