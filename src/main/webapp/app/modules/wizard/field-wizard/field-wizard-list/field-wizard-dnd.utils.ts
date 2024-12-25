@@ -10,7 +10,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 12;
+const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => {
   const theme = Palette(config.navType, config.presetColor);

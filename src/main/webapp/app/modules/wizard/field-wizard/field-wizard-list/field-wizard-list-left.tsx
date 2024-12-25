@@ -38,6 +38,26 @@ const EmptyDndBox = () => {
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
   const { items } = props;
 
+  const ItemTitle = (item: IField) => {
+    return (
+      <Box
+        sx={{
+          '& .MuiTypography-root': {
+            color: item.title ? 'black' : 'red',
+          },
+        }}
+      >
+        <Typography variant="h5">
+          {item.title ? item.title : 'Untitled'}
+          &nbsp;(type: {item.attribute.type})
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          {item.description ? item.description : 'No description'},
+        </Typography>
+      </Box>
+    );
+  };
+
   return (
     <Droppable droppableId="left">
       {(provided, snapshot) => (
@@ -60,7 +80,7 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                   >
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Typography variant="h5">{item.title}</Typography>
+                      <ItemTitle {...item} />
                       <ButtonGroup size="small">
                         <IconButton>
                           <IconEdit size={'1rem'} />
