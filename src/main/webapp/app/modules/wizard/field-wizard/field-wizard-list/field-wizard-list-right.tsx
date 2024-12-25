@@ -2,11 +2,13 @@ import React from 'react';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, IconButton } from '@mui/material';
 import { type } from 'app/shared/model/field.model';
 
 import { useTheme } from '@mui/material/styles';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
+
+import { IconDirectionHorizontal } from '@tabler/icons';
 
 const FieldWizardListRight = () => {
   const theme = useTheme();
@@ -63,6 +65,14 @@ const FieldWizardListRight = () => {
                           color: theme.palette.grey[800],
                         }}
                       >
+                        <IconButton
+                          size="small"
+                          style={{
+                            color: theme.palette.grey[800],
+                          }}
+                        >
+                          <IconDirectionHorizontal />
+                        </IconButton>
                         {item.title}
                       </Typography>
                     </SubCard>
