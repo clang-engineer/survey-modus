@@ -15,11 +15,13 @@ import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-l
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
+import { useTheme } from '@mui/material/styles';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const { form } = location.state as { form: IForm };
 
@@ -86,7 +88,7 @@ const FieldWizardList = () => {
             <IconEye size={'1rem'} />
           </IconButton>
           <IconButton
-            color={'primary'}
+            color={'secondary'}
             onClick={() => {
               console.log('save');
             }}
@@ -94,7 +96,9 @@ const FieldWizardList = () => {
             <IconDeviceFloppy size={'1rem'} />
           </IconButton>
           <IconButton
-            color={'secondary'}
+            style={{
+              color: theme.palette.grey[800],
+            }}
             onClick={() => {
               setItems(fieldList);
             }}
