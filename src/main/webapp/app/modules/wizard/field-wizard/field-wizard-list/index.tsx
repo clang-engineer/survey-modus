@@ -47,7 +47,7 @@ const FieldWizardList = () => {
     if (source.droppableId == 'right' && destination.droppableId == 'left') {
       const type = event.draggableId;
       const item = {
-        id: null,
+        id: 'new' + Math.random(),
         title: null,
         description: null,
         activated: true,
