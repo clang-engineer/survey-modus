@@ -17,29 +17,31 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
 
   return (
     <MainCard title={'left'}>
-      <Grid container spacing={gridSpacing}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-              {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={`draggable-${item.id}`} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                    >
-                      {item.title}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </Grid>
+      {/*<Grid container spacing={gridSpacing}>*/}
+      <Droppable droppableId="droppable">
+        {(provided, snapshot) => (
+          <Grid container {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+            {items.map((item, index) => (
+              <Draggable key={item.id} draggableId={`draggable-${item.id}`} index={index}>
+                {(provided, snapshot) => (
+                  <Grid
+                    item
+                    xs={12}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                  >
+                    {item.title}
+                  </Grid>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </Grid>
+        )}
+      </Droppable>
+      {/*</Grid>*/}
     </MainCard>
   );
 };
