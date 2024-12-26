@@ -1,19 +1,5 @@
 import React from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  Dialog,
-  Divider,
-  FormControl,
-  Grid,
-  IconButton,
-  Slide,
-  TextField,
-  Toolbar,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Box, Button, Dialog, Divider, FormControl, Grid, IconButton, Slide, TextField, Toolbar, Typography } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -40,8 +26,6 @@ const FieldWizardPreviewModal =
   (props: IFieldWizardPreviewModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
     const { form, fields } = props;
-
-    const theme = useTheme();
 
     const handleClose = () => {
       onReject();

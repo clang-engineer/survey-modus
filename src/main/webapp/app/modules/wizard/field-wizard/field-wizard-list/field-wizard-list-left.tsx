@@ -1,5 +1,4 @@
 import React from 'react';
-import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 
@@ -8,6 +7,11 @@ import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/fiel
 import { IField } from 'app/shared/model/field.model';
 
 import { IconEdit, IconTrash } from '@tabler/icons';
+
+import { create } from 'react-modal-promise';
+
+import PromiseModal from 'app/shared/component/promise-modal';
+import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';
 
 interface IFieldWizardListLeftProps {
   items: IField[];
@@ -34,6 +38,15 @@ const EmptyDndBox = () => {
     </Grid>
   );
 };
+
+const deleteModal = create(
+  PromiseModal({
+    title: 'Delete Field',
+    content: 'Do you want to delete this field?',
+    rejectButtonText: 'Cancel',
+    resolveButtonText: 'Delete',
+  })
+);
 
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
   const { items } = props;
@@ -82,12 +95,20 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <ItemTitle {...item} />
                       <ButtonGroup size="small">
-                        <IconButton>
+                        <IconButton
+                          onClick={() => {
+                            create(FieldWizardUpdateModal({ field: item }))().then(result => {
+                              if (result) props.handleDelete(item.id);
+                            });
+                          }}
+                        >
                           <IconEdit size={'1rem'} />
                         </IconButton>
                         <IconButton
                           onClick={() => {
-                            props.handleDelete(item.id);
+                            deleteModal().then(result => {
+                              if (result) props.handleDelete(item.id);
+                            });
                           }}
                         >
                           <IconTrash size={'1rem'} />

@@ -17,6 +17,9 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 
+import { create } from 'react-modal-promise';
+import FieldWizardPreviewModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-preview.modal';
+
 const FieldWizardList = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,17 +85,19 @@ const FieldWizardList = () => {
           <IconButton
             color={'primary'}
             onClick={() => {
-              console.log('save');
+              create(
+                FieldWizardPreviewModal({
+                  form: form,
+                  fields: items,
+                })
+              )().then(() => {
+                console.log('modal closed');
+              });
             }}
           >
             <IconEye size={'1rem'} />
           </IconButton>
-          <IconButton
-            color={'secondary'}
-            onClick={() => {
-              console.log('save');
-            }}
-          >
+          <IconButton color={'secondary'}>
             <IconDeviceFloppy size={'1rem'} />
           </IconButton>
           <IconButton
