@@ -25,11 +25,11 @@ const getItemStyle = (isDragging, draggableStyle) => {
     // background: isDragging ? theme.palette.secondary.light : theme.palette.grey[50],
     background: theme.palette.background.paper,
 
-    // border: '1px dashed #000',
-    // borderRadius: '5px',
-    // shadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderRadius: '5px',
+    borderColor: theme.palette.grey[300],
 
-    // styles we need to apply on draggables
     ...draggableStyle,
   };
 };
