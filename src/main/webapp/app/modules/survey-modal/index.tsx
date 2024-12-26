@@ -15,6 +15,7 @@ import NoContentBox from 'app/shared/component/no-content-box';
 import type from 'app/shared/model/enumerations/type.model';
 import SurveyModalSelectField from 'app/modules/survey-modal/component/survey-modal-select-field';
 import SurveyModalRadioField from 'app/modules/survey-modal/component/survey-modal-radio-field';
+import SurveyModalCheckboxField from 'app/modules/survey-modal/component/survey-modal-checkbox-field';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -40,6 +41,8 @@ const FormFieldByType = (formik: FormikProps<Record<string, any>>, field: IField
       return <SurveyModalSelectField key={field.id} field={field} formik={formik} />;
     case type.RADIO:
       return <SurveyModalRadioField key={field.id} field={field} formik={formik} />;
+    case type.CHECK_BOX:
+      return <SurveyModalCheckboxField key={field.id} field={field} formik={formik} />;
     default:
       return (
         <Grid item xs={12} key={field.id}>
