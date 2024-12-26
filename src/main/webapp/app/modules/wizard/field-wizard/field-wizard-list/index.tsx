@@ -18,7 +18,7 @@ import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 
 import { create } from 'react-modal-promise';
-import SurveyModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/survey-modal';
+import SurveyModal from 'app/modules/survey-modal';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
