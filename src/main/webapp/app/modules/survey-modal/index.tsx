@@ -108,13 +108,15 @@ const SurveyModal =
         </AppBar>
         <Grid container spacing={gridSpacing} padding={3}>
           {fields.length > 0 ? (
-            fields.map((field, index) => {
-              return (
-                <Grid item xs={12} key={index}>
-                  {FormFieldByType(formik, field)}
-                </Grid>
-              );
-            })
+            fields
+              .sort((a, b) => a.display.orderNo - b.display.orderNo)
+              .map((field, index) => {
+                return (
+                  <Grid item xs={12} key={index}>
+                    {FormFieldByType(formik, field)}
+                  </Grid>
+                );
+              })
           ) : (
             <Grid item xs={12}>
               <NoContentBox title="No Field Available" height="calc(100vh - 72px - 48px)" />
