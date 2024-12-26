@@ -4,7 +4,7 @@ import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Field
 import com.clangengineer.exformmaker.domain.Form
 import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
-import com.clangengineer.exformmaker.domain.embeddable.FieldUI
+import com.clangengineer.exformmaker.domain.embeddable.FieldDisplay
 import com.clangengineer.exformmaker.domain.enumeration.type
 import com.clangengineer.exformmaker.repository.FieldRepository
 import com.clangengineer.exformmaker.service.mapper.FieldMapper
@@ -70,7 +70,7 @@ class FieldResourceIT {
         assertThat(testField.activated).isEqualTo(DEFAULT_ACTIVATED)
 
         assertThat(testField.attribute).isEqualTo(DEFAULT_ATTRIBUTE)
-        assertThat(testField.ui).isEqualTo(DEFAULT_UI)
+        assertThat(testField.display).isEqualTo(DEFAULT_DISPLAY)
     }
 
     @Test
@@ -126,9 +126,9 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
-            .andExpect(jsonPath("$.[*].ui.label").value(hasItem(DEFAULT_UI.label)))
-            .andExpect(jsonPath("$.[*].ui.orderNo").value(hasItem(DEFAULT_UI.orderNo)))
-            .andExpect(jsonPath("$.[*].ui.helperText").value(hasItem(DEFAULT_UI.helperText)))
+            .andExpect(jsonPath("$.[*].display.label").value(hasItem(DEFAULT_DISPLAY.label)))
+            .andExpect(jsonPath("$.[*].display.orderNo").value(hasItem(DEFAULT_DISPLAY.orderNo)))
+            .andExpect(jsonPath("$.[*].display.helperText").value(hasItem(DEFAULT_DISPLAY.helperText)))
     }
 
     @Test
@@ -148,7 +148,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.attribute").value(DEFAULT_ATTRIBUTE))
-            .andExpect(jsonPath("$.ui").value(DEFAULT_UI))
+            .andExpect(jsonPath("$.display").value(DEFAULT_DISPLAY))
     }
 
     @Test
@@ -344,9 +344,9 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
             .andExpect(jsonPath("$.[*].attribute.defaultValue").value(hasItem(DEFAULT_ATTRIBUTE.defaultValue)))
-            .andExpect(jsonPath("$.[*].ui.label").value(hasItem(DEFAULT_UI.label)))
-            .andExpect(jsonPath("$.[*].ui.orderNo").value(hasItem(DEFAULT_UI.orderNo)))
-            .andExpect(jsonPath("$.[*].ui.helperText").value(hasItem(DEFAULT_UI.helperText)))
+            .andExpect(jsonPath("$.[*].display.label").value(hasItem(DEFAULT_DISPLAY.label)))
+            .andExpect(jsonPath("$.[*].display.orderNo").value(hasItem(DEFAULT_DISPLAY.orderNo)))
+            .andExpect(jsonPath("$.[*].display.helperText").value(hasItem(DEFAULT_DISPLAY.helperText)))
 
         restFieldMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -389,7 +389,7 @@ class FieldResourceIT {
         updatedField.description = UPDATED_DESCRIPTION
         updatedField.activated = UPDATED_ACTIVATED
         updatedField.attribute = UPDATED_ATTRIBUTE
-        updatedField.ui = UPDATED_UI
+        updatedField.display = UPDATED_DISPLAY
         val fieldDTO = fieldMapper.toDto(updatedField)
 
         restFieldMockMvc.perform(
@@ -405,7 +405,7 @@ class FieldResourceIT {
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
-        assertThat(testField.ui).isEqualTo(UPDATED_UI)
+        assertThat(testField.display).isEqualTo(UPDATED_DISPLAY)
     }
 
     @Test
@@ -511,7 +511,7 @@ class FieldResourceIT {
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
             attribute = UPDATED_ATTRIBUTE
-            ui = UPDATED_UI
+            display = UPDATED_DISPLAY
         }
 
         restFieldMockMvc.perform(
@@ -528,7 +528,7 @@ class FieldResourceIT {
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
-        assertThat(testField.ui).isEqualTo(UPDATED_UI)
+        assertThat(testField.display).isEqualTo(UPDATED_DISPLAY)
     }
 
     @Throws(Exception::class)
@@ -620,8 +620,8 @@ class FieldResourceIT {
         private val DEFAULT_ATTRIBUTE: FieldAttribute = FieldAttribute(type.TEXT, "AAAAAAAAAA")
         private val UPDATED_ATTRIBUTE: FieldAttribute = FieldAttribute(type.INTEGER, "BBBBBBBBBB")
 
-        private val DEFAULT_UI: FieldUI = FieldUI("AAAAAAAAAA", 1, "AAAAAAAA")
-        private val UPDATED_UI: FieldUI = FieldUI("BBBBBBBBBB", 2, "BBBBBBBB")
+        private val DEFAULT_DISPLAY: FieldDisplay = FieldDisplay("AAAAAAAAAA", 1, "AAAAAAAA")
+        private val UPDATED_DISPLAY: FieldDisplay = FieldDisplay("BBBBBBBBBB", 2, "BBBBBBBB")
 
         private val ENTITY_API_URL: String = "/api/fields"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
@@ -637,7 +637,7 @@ class FieldResourceIT {
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
                 attribute = DEFAULT_ATTRIBUTE,
-                ui = DEFAULT_UI
+                display = DEFAULT_DISPLAY
             )
 
             val form = FormResourceIT.createEntity(em)
@@ -654,7 +654,7 @@ class FieldResourceIT {
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
                 attribute = UPDATED_ATTRIBUTE,
-                ui = UPDATED_UI
+                display = UPDATED_DISPLAY
             )
 
             val form = FormResourceIT.createEntity(em)

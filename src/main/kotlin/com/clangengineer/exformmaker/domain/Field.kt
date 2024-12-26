@@ -1,7 +1,7 @@
 package com.clangengineer.exformmaker.domain
 
 import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
-import com.clangengineer.exformmaker.domain.embeddable.FieldUI
+import com.clangengineer.exformmaker.domain.embeddable.FieldDisplay
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size
 @Entity
 @Table(name = "tbl_field")
 @SecondaryTable(name = "tbl_field_attribute", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
-@SecondaryTable(name = "tbl_field_ui", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
+@SecondaryTable(name = "tbl_field_display", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class Field(
@@ -39,10 +39,10 @@ data class Field(
     var attribute: FieldAttribute? = null,
 
     @Embedded
-    @AttributeOverride(name = "label", column = Column(name = "label", table = "tbl_field_ui"))
-    @AttributeOverride(name = "orderNo", column = Column(name = "order_no", table = "tbl_field_ui"))
-    @AttributeOverride(name = "helperText", column = Column(name = "helper_text", table = "tbl_field_ui"))
-    var ui: FieldUI? = null
+    @AttributeOverride(name = "label", column = Column(name = "label", table = "tbl_field_display"))
+    @AttributeOverride(name = "orderNo", column = Column(name = "order_no", table = "tbl_field_display"))
+    @AttributeOverride(name = "helperText", column = Column(name = "helper_text", table = "tbl_field_display"))
+    var display: FieldDisplay? = null
 ) : Serializable {
     @ManyToOne(optional = false)
     @NotNull
