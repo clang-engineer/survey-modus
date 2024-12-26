@@ -11,6 +11,10 @@ import {
   Switch,
   TextField,
   Typography,
+  Select,
+  MenuItem,
+  InputLabel,
+  Box,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -21,6 +25,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
+import type from 'app/shared/model/enumerations/type.model';
 
 interface IFieldWizardUpdateModalProps {
   field: IField;
@@ -123,17 +128,22 @@ const FieldWizardUpdateModal =
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <FormControl fullWidth>
-                      <TextField
-                        fullWidth
+                      <InputLabel id="attribute.type">Type</InputLabel>
+                      <Select
+                        labelId="attribute.type"
                         id="attribute.type"
                         name="attribute.type"
-                        label="Type"
                         value={formik.values.attribute?.type}
                         onChange={formik.handleChange}
                         error={formik.touched.attribute?.type && Boolean(formik.errors.attribute?.type)}
-                        helperText={formik.touched.attribute?.type && formik.errors.attribute?.type}
                         variant="standard"
-                      />
+                      >
+                        {Object.keys(type).map(key => (
+                          <MenuItem key={key} value={key}>
+                            {type[key]}
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>

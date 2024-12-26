@@ -23,6 +23,10 @@ export interface IField {
 
 export const defaultValue: Readonly<IField> = {
   activated: false,
+  attribute: {
+    type: type.TEXT,
+    defaultValue: '',
+  },
   display: {
     orderNo: 0,
   },
