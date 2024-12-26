@@ -34,6 +34,8 @@ const FieldLookupUpdate = (props: IFieldLookupUpdateProps) => {
     );
   };
 
+  const isLookupsEmpty = !formik.values.lookups || formik.values.lookups.length === 0;
+
   return (
     <Grid container spacing={1}>
       {formik.values.lookups?.map((lookup, index) => (
@@ -67,7 +69,7 @@ const FieldLookupUpdate = (props: IFieldLookupUpdateProps) => {
         </Grid>
       ))}
       <Grid container item xs={12}>
-        {formik.values.lookups?.length === 0 && (
+        {isLookupsEmpty && (
           <NoContentBox
             title={
               <Button onClick={addLookup} variant="text" color="primary" startIcon={<IconCodePlus size={'1rem'} />}>
