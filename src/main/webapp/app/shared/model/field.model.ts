@@ -6,6 +6,10 @@ interface IFieldAttribute {
   defaultValue: string;
 }
 
+interface IFieldDisplay {
+  orderNo: number;
+}
+
 export interface IField {
   id?: number;
   title?: string;
@@ -13,6 +17,7 @@ export interface IField {
   activated?: boolean | null;
   form?: IForm;
   attribute?: IFieldAttribute;
+  display?: IFieldDisplay;
 }
 
 export const defaultValue: Readonly<IField> = {

@@ -87,6 +87,23 @@ export const FieldDetail = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="exformmakerApp.field.display.title">Field Display</Translate>
+            </Typography>
+            <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>
+              {fieldEntity?.display &&
+                Object.entries(fieldEntity?.display).map(([key, value]) => (
+                  <Typography key={key} variant="body2">
+                    <>
+                      <b>{key}</b>: {value}
+                    </>
+                  </Typography>
+                ))}
+            </Box>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
           <ButtonGroup variant="contained" size="small">
             <Button onClick={() => navigate('/field')} data-cy="entityDetailsBackButton">
               <IconArrowBack size={'1rem'} />

@@ -29,6 +29,7 @@ import { gridSpacing } from 'app/berry/store/constant';
 import { IField } from 'app/shared/model/field.model';
 import FieldAttributeUpdate from 'app/entities/field/component/field-attribute-update';
 import type from 'app/shared/model/enumerations/type.model';
+import FieldDisplayUpdate from 'app/entities/field/component/field-display-update';
 
 export const FieldUpdate = () => {
   const dispatch = useAppDispatch();
@@ -55,6 +56,9 @@ export const FieldUpdate = () => {
         type: type.TEXT,
         defaultValue: '',
       },
+      display: {
+        orderNo: 0,
+      },
     },
     validationSchema: yup.object({
       id: yup.string(),
@@ -69,6 +73,7 @@ export const FieldUpdate = () => {
         id: yup.number().required(translate('entity.validation.required')),
       }),
       attribute: yup.object({}),
+      display: yup.object({}),
     }),
     onSubmit(values) {
       saveEntity(values);
@@ -204,6 +209,9 @@ export const FieldUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <FieldAttributeUpdate formik={formik} />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldDisplayUpdate formik={formik} />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">

@@ -27,6 +27,10 @@
         "title": "Attribute",
         "type": "Type",
         "defaultValue": "Default Value"
+      },
+      "display": {
+        "title": "Display",
+        "orderNo": "Order No"
       }
     }
   }
