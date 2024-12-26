@@ -5,11 +5,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
-import { IField } from 'app/shared/model/field.model';
+import { IField, type } from 'app/shared/model/field.model';
 import { gridSpacing } from 'app/berry/store/constant';
-import { useFormik } from 'formik';
+import { FormikProps, useFormik } from 'formik';
 import * as yup from 'yup';
 import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
+import SurveyModalDateField from 'app/modules/survey-modal/component/survey-modal-date-field';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -24,6 +25,22 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const FormFieldByType = (formik: FormikProps<Record<string, any>>, field: IField) => {
+  switch (field.attribute.type) {
+    case type.TEXT:
+      return <SurveyModalTextField key={field.id} field={field} formik={formik} />;
+    case type.DATE:
+      return <SurveyModalDateField key={field.id} field={field} formik={formik} />;
+    default:
+      return (
+        <Grid item xs={12} key={field.id}>
+          <Typography variant="h5">{field.title}</Typography> &nbsp;&nbsp;
+          <Typography variant="caption">{field.description}</Typography>
+        </Grid>
+      );
+  }
+};
 
 const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
@@ -67,9 +84,7 @@ const SurveyModal =
           </Toolbar>
         </AppBar>
         <Grid container spacing={gridSpacing} padding={3}>
-          {fields.map((field, index) => (
-            <SurveyModalTextField key={field.id} field={field} formik={formik} />
-          ))}
+          {fields.map((field, index) => FormFieldByType(formik, field))}
         </Grid>
       </Dialog>
     );
