@@ -7,6 +7,7 @@ import { FormikProps } from 'formik';
 
 import { IconCodeMinus, IconCodePlus } from '@tabler/icons';
 import NoContentBox from 'app/shared/component/no-content-box';
+import FormikErrorText from 'app/shared/component/formik-error-text';
 
 interface IFieldLookupUpdateProps {
   formik: FormikProps<IField>;
@@ -81,6 +82,7 @@ const FieldLookupUpdate = (props: IFieldLookupUpdateProps) => {
           />
         )}
       </Grid>
+      <FormikErrorText formik={formik} fieldName={'lookups'} />
     </Grid>
   );
 };

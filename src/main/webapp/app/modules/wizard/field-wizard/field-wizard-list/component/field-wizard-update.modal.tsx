@@ -25,7 +25,6 @@ import * as yup from 'yup';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 import type, { isLookupType } from 'app/shared/model/enumerations/type.model';
-import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
 
 interface IFieldWizardUpdateModalProps {
   field: IField;
@@ -67,7 +66,16 @@ const FieldWizardUpdateModal =
         display: yup.object({
           orderNo: yup.number().required('Order No is required'),
         }),
-        lookups: yup.array().of(yup.string()),
+        lookups: yup
+          .array()
+          .of(yup.string())
+          .test('is-required-based-on-type', 'Lookup Values are required', function (value) {
+            const { type } = this.parent.attribute || {};
+            if (isLookupType(type)) {
+              return value && value.length >= 1; // 최소 1개 필요
+            }
+            return true; // 조건이 맞지 않으면 검증 통과
+          }),
       }),
       onSubmit: values => {
         props.setItems(
