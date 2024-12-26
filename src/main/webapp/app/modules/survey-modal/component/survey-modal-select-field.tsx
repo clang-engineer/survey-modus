@@ -1,14 +1,14 @@
 import React from 'react';
-import { FormControl, Grid, TextField, Typography } from '@mui/material';
+import { FormControl, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
-interface ISurveyModalTextFieldProps {
+interface ISurveyModalSelectBoxProps {
   field: IField;
   formik: FormikProps<Record<string, any>>;
 }
 
-const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
+const SurveyModalSelectField = (props: ISurveyModalSelectBoxProps) => {
   const { field, formik } = props;
 
   return (
@@ -20,14 +20,24 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <TextField
-              id={`field-${field.id}`}
-              label={field.title}
+            <Select
               value={formik.values[field.id]}
-              onChange={e => formik.setFieldValue(`${field.id}`, e.target.value)}
-              error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
+              onChange={e => {
+                formik.setFieldValue(`${field.id}`, e.target.value);
+              }}
+              label={field.title}
               variant="standard"
-            />
+              fullWidth
+            >
+              <MenuItem value="-" disabled>
+                <em>None</em>
+              </MenuItem>
+              {field.lookups.map(option => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
         </Grid>
       </Grid>
@@ -35,4 +45,4 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   );
 };
 
-export default SurveyModalTextField;
+export default SurveyModalSelectField;
