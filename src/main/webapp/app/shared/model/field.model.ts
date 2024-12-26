@@ -18,6 +18,7 @@ export interface IField {
   form?: IForm;
   attribute?: IFieldAttribute;
   display?: IFieldDisplay;
+  lookups?: string[];
 }
 
 export const defaultValue: Readonly<IField> = {
@@ -25,4 +26,5 @@ export const defaultValue: Readonly<IField> = {
   display: {
     orderNo: 0,
   },
+  lookups: [],
 };

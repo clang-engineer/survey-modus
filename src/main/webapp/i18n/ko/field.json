@@ -31,7 +31,8 @@
       "display": {
         "title": "Display",
         "orderNo": "Order No"
-      }
+      },
+      "lookups": "Lookups"
     }
   }
 }

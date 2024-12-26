@@ -30,6 +30,7 @@ import { IField } from 'app/shared/model/field.model';
 import FieldAttributeUpdate from 'app/entities/field/component/field-attribute-update';
 import type from 'app/shared/model/enumerations/type.model';
 import FieldDisplayUpdate from 'app/entities/field/component/field-display-update';
+import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 
 export const FieldUpdate = () => {
   const dispatch = useAppDispatch();
@@ -212,6 +213,9 @@ export const FieldUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <FieldDisplayUpdate formik={formik} />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldLookupUpdate formik={formik} />
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
