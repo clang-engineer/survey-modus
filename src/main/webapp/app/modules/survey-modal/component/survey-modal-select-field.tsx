@@ -2,6 +2,7 @@ import React from 'react';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
+import NoContentBox from 'app/shared/component/no-content-box';
 
 interface ISurveyModalSelectBoxProps {
   field: IField;
@@ -10,6 +11,10 @@ interface ISurveyModalSelectBoxProps {
 
 const SurveyModalSelectField = (props: ISurveyModalSelectBoxProps) => {
   const { field, formik } = props;
+
+  if (!field.lookups) {
+    return <NoContentBox />;
+  }
 
   return (
     <FormControl fullWidth>

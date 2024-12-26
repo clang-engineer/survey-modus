@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
+import NoContentBox from 'app/shared/component/no-content-box';
 
 interface ISurveyModalRadioFieldProps {
   field: IField;
@@ -12,6 +13,10 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const SurveyModalRadioField = (props: ISurveyModalRadioFieldProps) => {
   const { field, formik } = props;
+
+  if (!field.lookups) {
+    return <NoContentBox />;
+  }
 
   return (
     <Box display="flex">

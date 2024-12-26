@@ -19,6 +19,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         onChange={e => formik.setFieldValue(`${field.id}`, e.target.value)}
         error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
         variant="standard"
+        placeholder={'Enter your answer here'}
       />
     </FormControl>
   );

@@ -12,7 +12,7 @@ interface INoContentBoxProps {
 const NoContentBox = (props: INoContentBoxProps) => {
   const theme = useTheme();
 
-  const { title, height } = props;
+  const { title, height = 100 } = props;
 
   return (
     <Box
