@@ -14,7 +14,7 @@ import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-li
 import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-right';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
-import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
+import { IconArrowBackUp, IconDeviceFloppy, IconEye, IconScript, IconSettings, IconChecklist } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 
 import { create } from 'react-modal-promise';
@@ -79,9 +79,14 @@ const FieldWizardList = () => {
   const LeftTitle = () => {
     return (
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-        <Typography>
-          Fields for form {form.title} ({form.category.title})
-        </Typography>
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
+          <IconButton>
+            <IconChecklist size={'1rem'} />
+          </IconButton>
+          <Typography>
+            Fields for form {form.title} ({form.category.title})
+          </Typography>
+        </Box>
         <ButtonGroup size="small">
           <IconButton
             color={'primary'}
@@ -116,6 +121,17 @@ const FieldWizardList = () => {
     );
   };
 
+  const RightTitle = () => {
+    return (
+      <Box display="flex" justifyContent="flex-start" alignItems="center" width="100%">
+        <IconButton>
+          <IconSettings size={'1rem'} />
+        </IconButton>
+        <Typography>Available fields</Typography>
+      </Box>
+    );
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -125,7 +141,7 @@ const FieldWizardList = () => {
           </SubCard>
         </Grid>
         <Grid item xs={4}>
-          <SubCard title={`Available fields`}>
+          <SubCard title={<RightTitle />}>
             <FieldWizardListRight />
           </SubCard>
         </Grid>
