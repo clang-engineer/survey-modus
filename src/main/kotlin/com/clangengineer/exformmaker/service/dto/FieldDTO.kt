@@ -23,7 +23,9 @@ data class FieldDTO(
 
     var attribute: FieldAttribute? = null,
 
-    var display: FieldDisplay? = null
+    var display: FieldDisplay? = null,
+
+    var lookups: MutableList<String> = mutableListOf()
 ) : Serializable {
 
     override fun equals(other: Any?): Boolean {

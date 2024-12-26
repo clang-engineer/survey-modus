@@ -11,8 +11,14 @@ import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "tbl_field")
-@SecondaryTable(name = "tbl_field_attribute", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
-@SecondaryTable(name = "tbl_field_display", pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")])
+@SecondaryTable(
+    name = "tbl_field_attribute",
+    pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")]
+)
+@SecondaryTable(
+    name = "tbl_field_display",
+    pkJoinColumns = [PrimaryKeyJoinColumn(name = "field_id", referencedColumnName = "id")]
+)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class Field(
@@ -35,12 +41,25 @@ data class Field(
 
     @Embedded
     @AttributeOverride(name = "type", column = Column(name = "type", table = "tbl_field_attribute"))
-    @AttributeOverride(name = "defaultValue", column = Column(name = "default_value", table = "tbl_field_attribute"))
+    @AttributeOverride(
+        name = "defaultValue",
+        column = Column(name = "default_value", table = "tbl_field_attribute")
+    )
     var attribute: FieldAttribute? = null,
 
     @Embedded
-    @AttributeOverride(name = "orderNo", column = Column(name = "order_no", table = "tbl_field_display"))
-    var display: FieldDisplay? = null
+    @AttributeOverride(
+        name = "orderNo",
+        column = Column(name = "order_no", table = "tbl_field_display")
+    )
+    var display: FieldDisplay? = null,
+
+    @ElementCollection
+    @CollectionTable(name = "tbl_field_lookup", joinColumns = [JoinColumn(name = "field_id")])
+    @Column(name = "title", nullable = false)
+    @OrderColumn(name = "order_no")
+    var lookups: List<String> = mutableListOf()
+
 ) : Serializable {
     @ManyToOne(optional = false)
     @NotNull

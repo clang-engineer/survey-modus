@@ -9,6 +9,7 @@ import com.clangengineer.exformmaker.domain.enumeration.type
 import com.clangengineer.exformmaker.repository.FieldRepository
 import com.clangengineer.exformmaker.service.mapper.FieldMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -71,6 +72,7 @@ class FieldResourceIT {
 
         assertThat(testField.attribute).isEqualTo(DEFAULT_ATTRIBUTE)
         assertThat(testField.display).isEqualTo(DEFAULT_DISPLAY)
+        assertThat(testField.lookups).isEqualTo(DEFAULT_LOOKUPS)
     }
 
     @Test
@@ -147,6 +149,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.attribute").value(DEFAULT_ATTRIBUTE))
             .andExpect(jsonPath("$.display").value(DEFAULT_DISPLAY))
+            .andExpect(jsonPath("$.lookups").value(DEFAULT_LOOKUPS))
     }
 
     @Test
@@ -343,6 +346,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
             .andExpect(jsonPath("$.[*].attribute.defaultValue").value(hasItem(DEFAULT_ATTRIBUTE.defaultValue)))
             .andExpect(jsonPath("$.[*].display.orderNo").value(hasItem(DEFAULT_DISPLAY.orderNo)))
+            .andExpect(jsonPath("$.[*].lookups").value(Matchers.containsInAnyOrder(DEFAULT_LOOKUPS)))
 
         restFieldMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -386,6 +390,7 @@ class FieldResourceIT {
         updatedField.activated = UPDATED_ACTIVATED
         updatedField.attribute = UPDATED_ATTRIBUTE
         updatedField.display = UPDATED_DISPLAY
+        updatedField.lookups = UPDATED_LOOKUPS
         val fieldDTO = fieldMapper.toDto(updatedField)
 
         restFieldMockMvc.perform(
@@ -402,6 +407,7 @@ class FieldResourceIT {
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
         assertThat(testField.display).isEqualTo(UPDATED_DISPLAY)
+        assertThat(testField.lookups).isEqualTo(UPDATED_LOOKUPS)
     }
 
     @Test
@@ -508,6 +514,7 @@ class FieldResourceIT {
             activated = UPDATED_ACTIVATED
             attribute = UPDATED_ATTRIBUTE
             display = UPDATED_DISPLAY
+            lookups = UPDATED_LOOKUPS
         }
 
         restFieldMockMvc.perform(
@@ -525,6 +532,7 @@ class FieldResourceIT {
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
         assertThat(testField.display).isEqualTo(UPDATED_DISPLAY)
+        assertThat(testField.lookups).isEqualTo(UPDATED_LOOKUPS)
     }
 
     @Throws(Exception::class)
@@ -619,6 +627,9 @@ class FieldResourceIT {
         private val DEFAULT_DISPLAY: FieldDisplay = FieldDisplay(1)
         private val UPDATED_DISPLAY: FieldDisplay = FieldDisplay(2)
 
+        private val DEFAULT_LOOKUPS: MutableList<String> = mutableListOf("lookup 1", "lookup 2", "lookup 3")
+        private val UPDATED_LOOKUPS: MutableList<String> = mutableListOf("lookup 4", "lookup 5", "lookup 6")
+
         private val ENTITY_API_URL: String = "/api/fields"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
 
@@ -633,7 +644,8 @@ class FieldResourceIT {
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
                 attribute = DEFAULT_ATTRIBUTE,
-                display = DEFAULT_DISPLAY
+                display = DEFAULT_DISPLAY,
+                lookups = DEFAULT_LOOKUPS
             )
 
             val form = FormResourceIT.createEntity(em)
@@ -650,7 +662,8 @@ class FieldResourceIT {
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
                 attribute = UPDATED_ATTRIBUTE,
-                display = UPDATED_DISPLAY
+                display = UPDATED_DISPLAY,
+                lookups = UPDATED_LOOKUPS
             )
 
             val form = FormResourceIT.createEntity(em)
