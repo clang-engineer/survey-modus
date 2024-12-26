@@ -9,12 +9,13 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import MainCard from 'app/berry/ui-component/cards/MainCard';
 
-import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
+import { IconArrowBackUp, IconArrowsDown, IconDeviceFloppy } from '@tabler/icons';
 
 import {
   Button,
   ButtonGroup,
   Checkbox,
+  Divider,
   FormControl,
   FormControlLabel,
   Grid,
@@ -32,8 +33,11 @@ import type from 'app/shared/model/enumerations/type.model';
 import FieldDisplayUpdate from 'app/entities/field/component/field-display-update';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 
+import { useTheme } from '@mui/material/styles';
+
 export const FieldUpdate = () => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const navigate = useNavigate();
 
@@ -213,6 +217,11 @@ export const FieldUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <FieldDisplayUpdate formik={formik} />
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
+            <Divider variant="middle">
+              <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
+            </Divider>
           </Grid>
           <Grid item xs={12}>
             <FieldLookupUpdate formik={formik} />
