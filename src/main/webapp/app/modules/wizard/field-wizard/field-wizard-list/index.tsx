@@ -62,6 +62,7 @@ const FieldWizardList = () => {
         attribute: {
           type: type,
         },
+        isNew: true,
       };
 
       setItems([...items.slice(0, event.destination.index), item, ...items.slice(event.destination.index, items.length)]);

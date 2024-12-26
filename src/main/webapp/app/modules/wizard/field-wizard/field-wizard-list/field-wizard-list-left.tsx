@@ -13,8 +13,14 @@ import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';
 
+import { useTheme } from '@mui/material/styles';
+
+interface IFieldItem extends IField {
+  isNew: boolean;
+}
+
 interface IFieldWizardListLeftProps {
-  items: IField[];
+  items: IFieldItem[];
   handleDelete: (id: number) => void;
 }
 
@@ -49,14 +55,16 @@ const deleteModal = create(
 );
 
 const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
+  const theme = useTheme();
+
   const { items } = props;
 
-  const ItemTitle = (item: IField) => {
+  const ItemTitle = (item: IFieldItem) => {
     return (
       <Box
         sx={{
           '& .MuiTypography-root': {
-            color: item.title ? 'black' : 'red',
+            color: item.isNew ? theme.palette.error.main : 'inherit',
           },
         }}
       >
