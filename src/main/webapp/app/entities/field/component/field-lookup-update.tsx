@@ -4,13 +4,13 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IField } from 'app/shared/model/field.model';
 
-import { Box, ButtonGroup, Grid, IconButton, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, Grid, TextField } from '@mui/material';
 
 import { FormikProps } from 'formik';
 
 import { translate } from 'react-jhipster';
 
-import { IconMinus, IconPlus } from '@tabler/icons';
+import { IconCodeMinus, IconCodePlus } from '@tabler/icons';
 
 interface IFieldLookupUpdateProps {
   formik: FormikProps<IField>;
@@ -30,9 +30,16 @@ const FieldLookupUpdate = (props: IFieldLookupUpdateProps) => {
     formik.setFieldValue('lookups', [...localLookups, '']);
   };
 
+  const removeLookup = (index: number) => {
+    setLocalLookups(localLookups.filter((_, i) => i !== index));
+    formik.setFieldValue(
+      'lookups',
+      localLookups.filter((_, i) => i !== index)
+    );
+  };
+
   return (
     <SubCard title={translate('exformmakerApp.field.lookups')}>
-      {JSON.stringify(formik.values.lookups)}
       <Grid container spacing={gridSpacing}>
         {formik.values.lookups?.map((lookup, index) => (
           <Grid item xs={3} key={index}>
@@ -50,20 +57,16 @@ const FieldLookupUpdate = (props: IFieldLookupUpdateProps) => {
               />
               {index === formik.values.lookups.length - 1 && (
                 <ButtonGroup orientation="vertical" variant="text" sx={{ '& .MuiButtonBase-root': { padding: 0 } }}>
-                  <IconButton onClick={addLookup}>
-                    <IconPlus size={'1rem'} />
-                  </IconButton>
-                  <IconButton
+                  <Button onClick={addLookup}>
+                    <IconCodePlus size={'1rem'} />
+                  </Button>
+                  <Button
                     onClick={() => {
-                      setLocalLookups(localLookups.filter((_, i) => i !== index));
-                      formik.setFieldValue(
-                        'lookups',
-                        localLookups.filter((_, i) => i !== index)
-                      );
+                      removeLookup(index);
                     }}
                   >
-                    <IconMinus size={'1rem'} />
-                  </IconButton>
+                    <IconCodeMinus size={'1rem'} />
+                  </Button>
                 </ButtonGroup>
               )}
             </Box>
