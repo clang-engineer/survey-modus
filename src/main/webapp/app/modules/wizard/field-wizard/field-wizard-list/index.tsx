@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -155,12 +155,12 @@ const FieldWizardList = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <SubCard title={<LeftTitle />}>
             <FieldWizardListLeft />
           </SubCard>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <SubCard title={<RightTitle />}>
             <FieldWizardListRight />
           </SubCard>
