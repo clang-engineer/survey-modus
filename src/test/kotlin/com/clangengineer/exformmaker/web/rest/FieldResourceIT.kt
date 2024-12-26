@@ -4,6 +4,7 @@ import com.clangengineer.exformmaker.IntegrationTest
 import com.clangengineer.exformmaker.domain.Field
 import com.clangengineer.exformmaker.domain.Form
 import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
+import com.clangengineer.exformmaker.domain.embeddable.FieldUI
 import com.clangengineer.exformmaker.domain.enumeration.type
 import com.clangengineer.exformmaker.repository.FieldRepository
 import com.clangengineer.exformmaker.service.mapper.FieldMapper
@@ -69,6 +70,7 @@ class FieldResourceIT {
         assertThat(testField.activated).isEqualTo(DEFAULT_ACTIVATED)
 
         assertThat(testField.attribute).isEqualTo(DEFAULT_ATTRIBUTE)
+        assertThat(testField.ui).isEqualTo(DEFAULT_UI)
     }
 
     @Test
@@ -124,6 +126,9 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
+            .andExpect(jsonPath("$.[*].ui.label").value(hasItem(DEFAULT_UI.label)))
+            .andExpect(jsonPath("$.[*].ui.orderNo").value(hasItem(DEFAULT_UI.orderNo)))
+            .andExpect(jsonPath("$.[*].ui.helperText").value(hasItem(DEFAULT_UI.helperText)))
     }
 
     @Test
@@ -143,6 +148,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.attribute").value(DEFAULT_ATTRIBUTE))
+            .andExpect(jsonPath("$.ui").value(DEFAULT_UI))
     }
 
     @Test
@@ -337,6 +343,10 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
+            .andExpect(jsonPath("$.[*].attribute.defaultValue").value(hasItem(DEFAULT_ATTRIBUTE.defaultValue)))
+            .andExpect(jsonPath("$.[*].ui.label").value(hasItem(DEFAULT_UI.label)))
+            .andExpect(jsonPath("$.[*].ui.orderNo").value(hasItem(DEFAULT_UI.orderNo)))
+            .andExpect(jsonPath("$.[*].ui.helperText").value(hasItem(DEFAULT_UI.helperText)))
 
         restFieldMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -379,6 +389,7 @@ class FieldResourceIT {
         updatedField.description = UPDATED_DESCRIPTION
         updatedField.activated = UPDATED_ACTIVATED
         updatedField.attribute = UPDATED_ATTRIBUTE
+        updatedField.ui = UPDATED_UI
         val fieldDTO = fieldMapper.toDto(updatedField)
 
         restFieldMockMvc.perform(
@@ -394,6 +405,7 @@ class FieldResourceIT {
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
+        assertThat(testField.ui).isEqualTo(UPDATED_UI)
     }
 
     @Test
@@ -499,6 +511,7 @@ class FieldResourceIT {
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
             attribute = UPDATED_ATTRIBUTE
+            ui = UPDATED_UI
         }
 
         restFieldMockMvc.perform(
@@ -515,6 +528,7 @@ class FieldResourceIT {
         assertThat(testField.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testField.activated).isEqualTo(UPDATED_ACTIVATED)
         assertThat(testField.attribute).isEqualTo(UPDATED_ATTRIBUTE)
+        assertThat(testField.ui).isEqualTo(UPDATED_UI)
     }
 
     @Throws(Exception::class)
@@ -592,8 +606,10 @@ class FieldResourceIT {
 
     companion object {
 
-        private const val DEFAULT_TITLE = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        private const val UPDATED_TITLE = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        private const val DEFAULT_TITLE =
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        private const val UPDATED_TITLE =
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 
         private const val DEFAULT_DESCRIPTION = "AAAAAAAAAA"
         private const val UPDATED_DESCRIPTION = "BBBBBBBBBB"
@@ -604,11 +620,15 @@ class FieldResourceIT {
         private val DEFAULT_ATTRIBUTE: FieldAttribute = FieldAttribute(type.TEXT, "AAAAAAAAAA")
         private val UPDATED_ATTRIBUTE: FieldAttribute = FieldAttribute(type.INTEGER, "BBBBBBBBBB")
 
+        private val DEFAULT_UI: FieldUI = FieldUI("AAAAAAAAAA", 1, "AAAAAAAA")
+        private val UPDATED_UI: FieldUI = FieldUI("BBBBBBBBBB", 2, "BBBBBBBB")
+
         private val ENTITY_API_URL: String = "/api/fields"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
 
         private val random: Random = Random()
-        private val count: AtomicLong = AtomicLong(random.nextInt().toLong() + (2 * Integer.MAX_VALUE))
+        private val count: AtomicLong =
+            AtomicLong(random.nextInt().toLong() + (2 * Integer.MAX_VALUE))
 
         @JvmStatic
         fun createEntity(em: EntityManager): Field {
@@ -616,7 +636,8 @@ class FieldResourceIT {
                 title = DEFAULT_TITLE,
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
-                attribute = DEFAULT_ATTRIBUTE
+                attribute = DEFAULT_ATTRIBUTE,
+                ui = DEFAULT_UI
             )
 
             val form = FormResourceIT.createEntity(em)
@@ -632,7 +653,8 @@ class FieldResourceIT {
                 title = UPDATED_TITLE,
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
-                attribute = UPDATED_ATTRIBUTE
+                attribute = UPDATED_ATTRIBUTE,
+                ui = UPDATED_UI
             )
 
             val form = FormResourceIT.createEntity(em)
