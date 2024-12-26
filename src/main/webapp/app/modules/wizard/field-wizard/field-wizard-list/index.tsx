@@ -14,11 +14,12 @@ import FieldWizardListLeft from 'app/modules/wizard/field-wizard/field-wizard-li
 import FieldWizardListRight from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-list-right';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
-import { IconArrowBackUp, IconDeviceFloppy, IconEye, IconScript, IconSettings, IconChecklist } from '@tabler/icons';
+import { IconArrowBackUp, IconChecklist, IconDeviceFloppy, IconEye, IconSettings } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 
 import { create } from 'react-modal-promise';
 import SurveyModal from 'app/modules/survey-modal';
+import { IField } from 'app/shared/model/field.model';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const FieldWizardList = () => {
 
   const fieldList = useAppSelector(state => state.field.entities);
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<IField[]>([]);
 
   useEffect(() => {
     if (!form) {
@@ -41,7 +42,13 @@ const FieldWizardList = () => {
   }, []);
 
   useEffect(() => {
-    setItems(fieldList);
+    setItems(
+      fieldList
+        .filter(a => a)
+        .sort((a, b) => {
+          return a.display?.orderNo - b.display?.orderNo;
+        })
+    );
   }, [fieldList]);
 
   const onDragEnd = event => {
@@ -54,22 +61,38 @@ const FieldWizardList = () => {
     if (source.droppableId == 'right' && destination.droppableId == 'left') {
       const type = event.draggableId;
       const item = {
-        id: 'new' + Math.random(),
+        id: Number(new Date()),
         title: null,
         description: null,
         activated: true,
         form: form,
         attribute: {
           type: type,
+          defaultValue: null,
         },
         isNew: true,
       };
 
-      setItems([...items.slice(0, event.destination.index), item, ...items.slice(event.destination.index, items.length)]);
+      const merged: IField[] = [...items.slice(0, event.destination.index), item, ...items.slice(event.destination.index, items.length)];
+
+      setItems(indexedFieldList(merged));
     } else if (source.droppableId == 'left' && destination.droppableId == 'left') {
-      const reordered = reorder(items, event.source.index, event.destination.index);
-      setItems(reordered as any);
+      const reordered: IField[] = reorder(items, event.source.index, event.destination.index);
+
+      setItems(indexedFieldList(reordered));
     }
+  };
+
+  const indexedFieldList = (items: IField[]) => {
+    return [...items].map((item, index) => {
+      return {
+        ...item,
+        display: {
+          ...item.display,
+          orderNo: index,
+        },
+      };
+    });
   };
 
   const handleDelete = id => {

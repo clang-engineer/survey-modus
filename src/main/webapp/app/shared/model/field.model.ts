@@ -22,4 +22,7 @@ export interface IField {
 
 export const defaultValue: Readonly<IField> = {
   activated: false,
+  display: {
+    orderNo: 0,
+  },
 };

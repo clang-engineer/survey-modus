@@ -4,7 +4,6 @@ import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
-import { IField } from 'app/shared/model/field.model';
 
 import { IconEdit, IconTrash } from '@tabler/icons';
 
@@ -15,13 +14,11 @@ import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard
 
 import { useTheme } from '@mui/material/styles';
 import NoContentBox from 'app/shared/component/no-content-box';
-
-interface IFieldItem extends IField {
-  isNew: boolean;
-}
+// import IFieldItem from "app/modules/wizard/field-wizard/field-wizard-list/field-item.model";
+import { IField } from 'app/shared/model/field.model';
 
 interface IFieldWizardListLeftProps {
-  items: IFieldItem[];
+  items: IField[];
   handleDelete: (id: number) => void;
 }
 
@@ -47,12 +44,12 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
 
   const { items } = props;
 
-  const ItemTitle = (item: IFieldItem) => {
+  const ItemTitle = (item: IField) => {
     return (
       <Box
         sx={{
           '& .MuiTypography-root': {
-            color: item.isNew ? theme.palette.error.main : 'inherit',
+            color: item['isNew'] ? theme.palette.error.main : 'inherit',
           },
         }}
       >
