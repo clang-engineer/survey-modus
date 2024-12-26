@@ -18,7 +18,7 @@ import { IconArrowBackUp, IconDeviceFloppy, IconEye } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 
 import { create } from 'react-modal-promise';
-import FieldWizardPreviewModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-preview.modal';
+import SurveyModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/survey-modal';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ const FieldWizardList = () => {
             color={'primary'}
             onClick={() => {
               create(
-                FieldWizardPreviewModal({
+                SurveyModal({
                   form: form,
                   fields: items,
                 })

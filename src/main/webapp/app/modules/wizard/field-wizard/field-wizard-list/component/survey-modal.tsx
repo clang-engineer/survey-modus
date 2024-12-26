@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const FieldWizardPreviewModal =
+const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
     const { form, fields } = props;
@@ -73,4 +73,4 @@ const FieldWizardPreviewModal =
     );
   };
 
-export default FieldWizardPreviewModal;
+export default SurveyModal;
