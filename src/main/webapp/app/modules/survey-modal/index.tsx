@@ -1,5 +1,24 @@
 import React from 'react';
-import { AppBar, Box, Button, Dialog, Divider, FormControl, Grid, IconButton, Slide, TextField, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Dialog,
+  Divider,
+  FormControl,
+  Grid,
+  IconButton,
+  Slide,
+  TextField,
+  Toolbar,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+  Radio,
+  RadioGroup,
+  FormLabel,
+  FormHelperText,
+} from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -7,6 +26,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
 import { IField } from 'app/shared/model/field.model';
 import { gridSpacing } from 'app/berry/store/constant';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -31,6 +52,22 @@ const SurveyModal =
       onReject();
     };
 
+    const formik = useFormik<Record<string, any>>({
+      initialValues: fields.reduce((acc, field) => {
+        acc[field.id] = '';
+        return acc;
+      }, {}),
+      validationSchema: fields.reduce((acc, field) => {
+        // if (field.required) {
+        acc[field.id] = yup.string().required('Required');
+        // }
+        return acc;
+      }, {}),
+      onSubmit: values => {
+        console.log(values);
+      },
+    });
+
     return (
       <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: 'relative' }}>
@@ -40,6 +77,7 @@ const SurveyModal =
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {form.title}
+              {JSON.stringify(formik.values)}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
@@ -58,14 +96,12 @@ const SurveyModal =
                   <TextField
                     id={`field-${field.id}`}
                     label={field.title}
-                    // value={formData[field.id]}
-                    onChange={e => {}}
-                    variant="standard"
-                    fullWidth
+                    value={formik.values[field.id]}
+                    onChange={e => formik.setFieldValue(`${field.id}`, e.target.value)}
+                    error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
                   />
                 </FormControl>
               </Box>
-              {index < fields.length - 1 && <Divider />}
             </Grid>
           ))}
         </Grid>
