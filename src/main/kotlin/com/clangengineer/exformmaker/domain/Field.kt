@@ -39,9 +39,7 @@ data class Field(
     var attribute: FieldAttribute? = null,
 
     @Embedded
-    @AttributeOverride(name = "label", column = Column(name = "label", table = "tbl_field_display"))
     @AttributeOverride(name = "orderNo", column = Column(name = "order_no", table = "tbl_field_display"))
-    @AttributeOverride(name = "helperText", column = Column(name = "helper_text", table = "tbl_field_display"))
     var display: FieldDisplay? = null
 ) : Serializable {
     @ManyToOne(optional = false)

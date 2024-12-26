@@ -9,13 +9,7 @@
             <column name="field_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="label" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <column name="order_no" type="integer">
-                <constraints nullable="false" />
-            </column>
-            <column name="helper_text" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -36,9 +30,7 @@
             tableName="tbl_field_display"
             usePreparedStatements="true">
             <column name="field_id" type="numeric"/>
-            <column name="label" type="string"/>
             <column name="order_no" type="numeric"/>
-            <column name="helper_text" type="string"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

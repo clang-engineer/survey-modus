@@ -126,9 +126,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
-            .andExpect(jsonPath("$.[*].display.label").value(hasItem(DEFAULT_DISPLAY.label)))
             .andExpect(jsonPath("$.[*].display.orderNo").value(hasItem(DEFAULT_DISPLAY.orderNo)))
-            .andExpect(jsonPath("$.[*].display.helperText").value(hasItem(DEFAULT_DISPLAY.helperText)))
     }
 
     @Test
@@ -344,9 +342,7 @@ class FieldResourceIT {
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].attribute.type").value(hasItem(DEFAULT_ATTRIBUTE.type?.name)))
             .andExpect(jsonPath("$.[*].attribute.defaultValue").value(hasItem(DEFAULT_ATTRIBUTE.defaultValue)))
-            .andExpect(jsonPath("$.[*].display.label").value(hasItem(DEFAULT_DISPLAY.label)))
             .andExpect(jsonPath("$.[*].display.orderNo").value(hasItem(DEFAULT_DISPLAY.orderNo)))
-            .andExpect(jsonPath("$.[*].display.helperText").value(hasItem(DEFAULT_DISPLAY.helperText)))
 
         restFieldMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -620,8 +616,8 @@ class FieldResourceIT {
         private val DEFAULT_ATTRIBUTE: FieldAttribute = FieldAttribute(type.TEXT, "AAAAAAAAAA")
         private val UPDATED_ATTRIBUTE: FieldAttribute = FieldAttribute(type.INTEGER, "BBBBBBBBBB")
 
-        private val DEFAULT_DISPLAY: FieldDisplay = FieldDisplay("AAAAAAAAAA", 1, "AAAAAAAA")
-        private val UPDATED_DISPLAY: FieldDisplay = FieldDisplay("BBBBBBBBBB", 2, "BBBBBBBB")
+        private val DEFAULT_DISPLAY: FieldDisplay = FieldDisplay(1)
+        private val UPDATED_DISPLAY: FieldDisplay = FieldDisplay(2)
 
         private val ENTITY_API_URL: String = "/api/fields"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
