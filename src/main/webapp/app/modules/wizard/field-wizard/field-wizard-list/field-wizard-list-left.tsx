@@ -14,6 +14,7 @@ import PromiseModal from 'app/shared/component/promise-modal';
 import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';
 
 import { useTheme } from '@mui/material/styles';
+import NoContentBox from 'app/shared/component/no-content-box';
 
 interface IFieldItem extends IField {
   isNew: boolean;
@@ -27,20 +28,7 @@ interface IFieldWizardListLeftProps {
 const EmptyDndBox = () => {
   return (
     <Grid item xs={12}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          height: 150,
-          backgroundColor: 'rgba(0, 0, 0, 0.04)',
-          borderRadius: 1,
-          borderStyle: 'dashed',
-          borderColor: 'rgba(0, 0, 0, 0.12)',
-        }}
-      >
-        <Typography variant="h5">Drag and drop fields from the right side</Typography>
-      </Box>
+      <NoContentBox title="Drag and drop fields from the right side" height={150} />
     </Grid>
   );
 };

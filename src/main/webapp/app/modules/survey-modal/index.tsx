@@ -11,6 +11,7 @@ import { FormikProps, useFormik } from 'formik';
 import * as yup from 'yup';
 import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
 import SurveyModalDateField from 'app/modules/survey-modal/component/survey-modal-date-field';
+import NoContentBox from 'app/shared/component/no-content-box';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -68,7 +69,19 @@ const SurveyModal =
     });
 
     return (
-      <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={isOpen}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+        sx={{
+          '& .MuiPaper-root': { padding: 0 },
+          // '& .MuiDialogContent-root': { padding: 0 },
+          // '& .MuiDialogActions-root': {
+          //   justifyContent: 'space-between',
+          // },
+        }}
+      >
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
@@ -84,7 +97,13 @@ const SurveyModal =
           </Toolbar>
         </AppBar>
         <Grid container spacing={gridSpacing} padding={3}>
-          {fields.map((field, index) => FormFieldByType(formik, field))}
+          {fields.length > 0 ? (
+            fields.map((field, index) => FormFieldByType(formik, field))
+          ) : (
+            <Grid item xs={12}>
+              <NoContentBox title="No Field Available" height="calc(100vh - 72px - 48px)" />
+            </Grid>
+          )}
         </Grid>
       </Dialog>
     );
