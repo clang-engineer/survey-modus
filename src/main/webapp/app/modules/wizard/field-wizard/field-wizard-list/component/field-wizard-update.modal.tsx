@@ -78,6 +78,8 @@ const FieldWizardUpdateModal =
             return a;
           })
         );
+
+        handleClose();
       },
     });
 
