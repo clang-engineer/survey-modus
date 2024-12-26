@@ -1,24 +1,5 @@
 import React from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  Dialog,
-  Divider,
-  FormControl,
-  Grid,
-  IconButton,
-  Slide,
-  TextField,
-  Toolbar,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-  Radio,
-  RadioGroup,
-  FormLabel,
-  FormHelperText,
-} from '@mui/material';
+import { AppBar, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -28,6 +9,7 @@ import { IField } from 'app/shared/model/field.model';
 import { gridSpacing } from 'app/berry/store/constant';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -86,23 +68,7 @@ const SurveyModal =
         </AppBar>
         <Grid container spacing={gridSpacing} padding={3}>
           {fields.map((field, index) => (
-            <Grid item xs={12} key={field.id}>
-              <Box display="flex">
-                <Typography variant="h5">{field.title}</Typography> &nbsp;&nbsp;
-                <Typography variant="caption">{field.description}</Typography>
-              </Box>
-              <Box>
-                <FormControl fullWidth>
-                  <TextField
-                    id={`field-${field.id}`}
-                    label={field.title}
-                    value={formik.values[field.id]}
-                    onChange={e => formik.setFieldValue(`${field.id}`, e.target.value)}
-                    error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
-                  />
-                </FormControl>
-              </Box>
-            </Grid>
+            <SurveyModalTextField key={field.id} field={field} formik={formik} />
           ))}
         </Grid>
       </Dialog>
