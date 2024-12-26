@@ -22,11 +22,12 @@ const getItemStyle = (isDragging, draggableStyle) => {
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? theme.palette.secondary.light : theme.palette.grey[50],
+    // background: isDragging ? theme.palette.secondary.light : theme.palette.grey[50],
+    background: theme.palette.background.paper,
 
-    border: '1px dashed #000',
-    borderRadius: '5px',
-    shadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    // border: '1px dashed #000',
+    // borderRadius: '5px',
+    // shadow: '0 0 10px rgba(0, 0, 0, 0.5)',
 
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -38,7 +39,14 @@ const getListStyle = isDraggingOver => {
 
   return {
     padding: grid,
-    background: isDraggingOver ? theme.palette.primary.light : theme.palette.background.paper,
+    background: theme.palette.background.paper,
+    borderWidth: '1px',
+    borderStyle: 'dotted',
+    borderRadius: '5px',
+    shadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    backgroundColor: isDraggingOver ? theme.palette.primary.light : theme.palette.grey[50],
+
+    // background: isDraggingOver ? theme.palette.primary.light : theme.palette.grey[100],
   };
 };
 

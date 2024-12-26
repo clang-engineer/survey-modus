@@ -103,7 +103,7 @@ const FieldWizardListLeft = () => {
                             });
                           }}
                         >
-                          <IconEdit size={'1rem'} />
+                          <IconPencil size={'1rem'} />
                         </IconButton>
                         <IconButton
                           onClick={() => {

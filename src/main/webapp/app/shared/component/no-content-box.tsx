@@ -22,7 +22,7 @@ const NoContentBox = (props: INoContentBoxProps) => {
       sx={{
         width: '100%',
         height: height ? height : '100%',
-        backgroundColor: theme.palette.grey[50],
+        backgroundColor: theme.palette.background.paper,
         borderRadius: 1,
         borderStyle: 'dotted',
         borderColor: theme.palette.grey[300],
