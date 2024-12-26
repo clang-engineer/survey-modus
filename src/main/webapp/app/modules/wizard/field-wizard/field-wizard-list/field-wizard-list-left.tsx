@@ -5,7 +5,7 @@ import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 
-import { IconEdit, IconTrash } from '@tabler/icons';
+import { IconEdit, IconTrash, IconPencil } from '@tabler/icons';
 
 import { create } from 'react-modal-promise';
 
@@ -44,7 +44,8 @@ const FieldWizardListLeft = () => {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const ItemTitle = (item: IField) => {
+  const ItemTitle = (props: { item: IField; index: number }) => {
+    const { item, index } = props;
     return (
       <Box
         sx={{
@@ -54,6 +55,7 @@ const FieldWizardListLeft = () => {
         }}
       >
         <Typography variant="h5">
+          {index + 1}.&nbsp;
           {item.title ? item.title : 'Untitled'}
           &nbsp;(type: {item.attribute.type})
         </Typography>
@@ -86,7 +88,7 @@ const FieldWizardListLeft = () => {
                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                   >
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <ItemTitle {...item} />
+                      <ItemTitle item={item} index={index} />
                       <ButtonGroup size="small">
                         <IconButton
                           onClick={() => {
@@ -110,7 +112,7 @@ const FieldWizardListLeft = () => {
                             });
                           }}
                         >
-                          <IconTrash size={'1rem'} />
+                          <IconTrash size={'0.9rem'} />
                         </IconButton>
                       </ButtonGroup>
                     </Box>

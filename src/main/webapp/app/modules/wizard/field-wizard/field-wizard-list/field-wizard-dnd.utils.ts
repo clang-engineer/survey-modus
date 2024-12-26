@@ -37,6 +37,7 @@ const getListStyle = isDraggingOver => {
   const theme = Palette(config.navType, config.presetColor);
 
   return {
+    padding: grid,
     background: isDraggingOver ? theme.palette.primary.light : theme.palette.background.paper,
   };
 };

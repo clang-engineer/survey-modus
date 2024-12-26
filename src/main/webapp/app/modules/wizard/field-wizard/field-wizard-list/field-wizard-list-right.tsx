@@ -34,7 +34,7 @@ const FieldWizardListRight = () => {
             {items.map((item, index) => (
               <Grid
                 item
-                xs={6}
+                xs={4}
                 key={item.id}
                 sx={{
                   '& .MuiCardContent-root ': {
