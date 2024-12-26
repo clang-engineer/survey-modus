@@ -11,4 +11,9 @@ enum type {
   FLOAT = 'FLOAT',
 }
 
+const isLookupType = (data: type): boolean => {
+  return [type.RADIO, type.SELECT_BOX, type.CHECK_BOX].includes(data);
+};
+
+export { isLookupType };
 export default type;

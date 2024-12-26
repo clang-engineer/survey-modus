@@ -8,24 +8,23 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   Switch,
   TextField,
   Typography,
-  Select,
-  MenuItem,
-  InputLabel,
-  Box,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { defaultValue, IField } from 'app/shared/model/field.model';
-import { IconDeviceFloppy, IconArrowsDown } from '@tabler/icons';
+import { IconArrowsDown, IconDeviceFloppy } from '@tabler/icons';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
-import type from 'app/shared/model/enumerations/type.model';
+import type, { isLookupType } from 'app/shared/model/enumerations/type.model';
 
 interface IFieldWizardUpdateModalProps {
   field: IField;
@@ -161,14 +160,18 @@ const FieldWizardUpdateModal =
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
-                    <Divider variant="middle">
-                      <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
-                    </Divider>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FieldLookupUpdate formik={formik} />
-                  </Grid>
+                  {isLookupType(formik.values.attribute?.type) && (
+                    <>
+                      <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
+                        <Divider variant="middle">
+                          <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
+                        </Divider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FieldLookupUpdate formik={formik} />
+                      </Grid>
+                    </>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
