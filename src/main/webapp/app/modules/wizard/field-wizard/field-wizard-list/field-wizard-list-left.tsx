@@ -16,11 +16,7 @@ import { useTheme } from '@mui/material/styles';
 import NoContentBox from 'app/shared/component/no-content-box';
 // import IFieldItem from "app/modules/wizard/field-wizard/field-wizard-list/field-item.model";
 import { IField } from 'app/shared/model/field.model';
-
-interface IFieldWizardListLeftProps {
-  items: IField[];
-  handleDelete: (id: number) => void;
-}
+import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
 
 const EmptyDndBox = () => {
   return (
@@ -39,10 +35,14 @@ const deleteModal = create(
   })
 );
 
-const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
+const FieldWizardListLeft = () => {
   const theme = useTheme();
 
-  const { items } = props;
+  const { items, setItems } = useFieldWizardConfig();
+
+  const handleDelete = id => {
+    setItems(items.filter(item => item.id !== id));
+  };
 
   const ItemTitle = (item: IField) => {
     return (
@@ -90,8 +90,14 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                       <ButtonGroup size="small">
                         <IconButton
                           onClick={() => {
-                            create(FieldWizardUpdateModal({ field: item }))().then(result => {
-                              if (result) props.handleDelete(item.id);
+                            create(
+                              FieldWizardUpdateModal({
+                                field: item,
+                                items,
+                                setItems,
+                              })
+                            )().then(result => {
+                              if (result) handleDelete(item.id);
                             });
                           }}
                         >
@@ -100,7 +106,7 @@ const FieldWizardListLeft = (props: IFieldWizardListLeftProps) => {
                         <IconButton
                           onClick={() => {
                             deleteModal().then(result => {
-                              if (result) props.handleDelete(item.id);
+                              if (result) handleDelete(item.id);
                             });
                           }}
                         >

@@ -20,6 +20,7 @@ import { useTheme } from '@mui/material/styles';
 import { create } from 'react-modal-promise';
 import SurveyModal from 'app/modules/survey-modal';
 import { IField } from 'app/shared/model/field.model';
+import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const FieldWizardList = () => {
 
   const fieldList = useAppSelector(state => state.field.entities);
 
-  const [items, setItems] = useState<IField[]>([]);
+  const { items, setItems } = useFieldWizardConfig();
 
   useEffect(() => {
     if (!form) {
@@ -95,10 +96,6 @@ const FieldWizardList = () => {
     });
   };
 
-  const handleDelete = id => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
   const LeftTitle = () => {
     return (
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
@@ -160,7 +157,7 @@ const FieldWizardList = () => {
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid item xs={8}>
           <SubCard title={<LeftTitle />}>
-            <FieldWizardListLeft items={items} handleDelete={handleDelete} />
+            <FieldWizardListLeft />
           </SubCard>
         </Grid>
         <Grid item xs={4}>

@@ -25,15 +25,18 @@ import * as yup from 'yup';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 import type, { isLookupType } from 'app/shared/model/enumerations/type.model';
+import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
 
 interface IFieldWizardUpdateModalProps {
   field: IField;
+  items: IField[];
+  setItems: (items: IField[]) => void;
 }
 
 const FieldWizardUpdateModal =
   (props: IFieldWizardUpdateModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
-    const { field } = props;
+    const { field, items } = props;
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -67,7 +70,14 @@ const FieldWizardUpdateModal =
         lookups: yup.array().of(yup.string()),
       }),
       onSubmit: values => {
-        console.log(values);
+        props.setItems(
+          items.map(a => {
+            if (a.id === values.id) {
+              return values;
+            }
+            return a;
+          })
+        );
       },
     });
 
@@ -181,6 +191,7 @@ const FieldWizardUpdateModal =
           <AnimateButton>
             <Button
               onClick={() => {
+                formik.handleSubmit();
                 // onResolve(true);
                 // handleClose();
               }}
