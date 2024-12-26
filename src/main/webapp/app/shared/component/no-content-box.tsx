@@ -24,8 +24,9 @@ const NoContentBox = (props: INoContentBoxProps) => {
         height: height ? height : '100%',
         backgroundColor: theme.palette.grey[50],
         borderRadius: 1,
-        borderStyle: 'dashed',
+        borderStyle: 'dotted',
         borderColor: theme.palette.grey[300],
+        borderWidth: 2,
       }}
     >
       <Typography variant="h5">{title ? title : 'No Content Available'}</Typography>
