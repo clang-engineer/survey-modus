@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 interface INoContentBoxProps {
-  title?: string;
+  title?: string | JSX.Element;
   height?: string | number;
 }
 
@@ -20,6 +20,7 @@ const NoContentBox = (props: INoContentBoxProps) => {
       justifyContent="center"
       alignItems="center"
       sx={{
+        width: '100%',
         height: height ? height : '100%',
         backgroundColor: theme.palette.grey[50],
         borderRadius: 1,

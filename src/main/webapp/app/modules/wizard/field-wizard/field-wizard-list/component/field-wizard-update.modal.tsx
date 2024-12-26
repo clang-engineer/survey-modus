@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Divider,
   FormControl,
   FormControlLabel,
   Grid,
@@ -14,11 +15,12 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { defaultValue, IField } from 'app/shared/model/field.model';
-import { IconDeviceFloppy } from '@tabler/icons';
+import { IconDeviceFloppy, IconArrowsDown } from '@tabler/icons';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 
 interface IFieldWizardUpdateModalProps {
   field: IField;
@@ -55,6 +57,10 @@ const FieldWizardUpdateModal =
           type: yup.string().required('Type is required'),
           defaultValue: yup.string().required('Default Value is required'),
         }),
+        display: yup.object({
+          orderNo: yup.number().required('Order No is required'),
+        }),
+        lookups: yup.array().of(yup.string()),
       }),
       onSubmit: values => {
         console.log(values);
@@ -144,6 +150,14 @@ const FieldWizardUpdateModal =
                         variant="standard"
                       />
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
+                    <Divider variant="middle">
+                      <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
+                    </Divider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FieldLookupUpdate formik={formik} />
                   </Grid>
                 </Grid>
               </Grid>
