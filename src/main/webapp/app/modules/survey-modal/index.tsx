@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -16,6 +16,7 @@ import type from 'app/shared/model/enumerations/type.model';
 import SurveyModalSelectField from 'app/modules/survey-modal/component/survey-modal-select-field';
 import SurveyModalRadioField from 'app/modules/survey-modal/component/survey-modal-radio-field';
 import SurveyModalCheckboxField from 'app/modules/survey-modal/component/survey-modal-checkbox-field';
+import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -113,7 +114,17 @@ const SurveyModal =
               .map((field, index) => {
                 return (
                   <Grid item xs={12} key={index}>
-                    {FormFieldByType(formik, field)}
+                    <SubCard
+                      title={
+                        <Box display="flex">
+                          <Typography variant="h5">#{index + 1}</Typography> &nbsp;&nbsp;
+                          <Typography variant="h5">{field.title}</Typography> &nbsp;&nbsp;
+                          <Typography variant="caption">{field.description}</Typography>
+                        </Box>
+                      }
+                    >
+                      {FormFieldByType(formik, field)}
+                    </SubCard>
                   </Grid>
                 );
               })
