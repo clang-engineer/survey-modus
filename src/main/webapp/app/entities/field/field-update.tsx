@@ -26,8 +26,9 @@ import {
 } from '@mui/material';
 import Loader from 'app/berry/ui-component/Loader';
 import { gridSpacing } from 'app/berry/store/constant';
-import { IField, type } from 'app/shared/model/field.model';
+import { IField } from 'app/shared/model/field.model';
 import FieldAttributeUpdate from 'app/entities/field/component/field-attribute-update';
+import type from 'app/shared/model/enumerations/type.model';
 
 export const FieldUpdate = () => {
   const dispatch = useAppDispatch();

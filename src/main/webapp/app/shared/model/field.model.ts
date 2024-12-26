@@ -1,17 +1,5 @@
 import { IForm } from 'app/shared/model/form.model';
-
-enum type {
-  TEXT = 'TEXT',
-  RADIO = 'RADIO',
-  SELECT_BOX = 'SELECT_BOX',
-  CHECK_BOX = 'CHECK_BOX',
-  DATE = 'DATE',
-  TIME = 'TIME',
-  DATETIME = 'DATETIME',
-  BOOLEAN = 'BOOLEAN',
-  INTEGER = 'INTEGER',
-  FLOAT = 'FLOAT',
-}
+import type from 'app/shared/model/enumerations/type.model';
 
 interface IFieldAttribute {
   type: type;
@@ -30,5 +18,3 @@ export interface IField {
 export const defaultValue: Readonly<IField> = {
   activated: false,
 };
-
-export { type };

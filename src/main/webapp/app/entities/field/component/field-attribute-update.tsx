@@ -2,13 +2,14 @@ import React from 'react';
 
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
-import { IField, type } from 'app/shared/model/field.model';
+import { IField } from 'app/shared/model/field.model';
 
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
 import { FormikProps } from 'formik';
 
 import { translate } from 'react-jhipster';
+import type from 'app/shared/model/enumerations/type.model';
 
 interface IFieldAttributeUpdateProps {
   formik: FormikProps<IField>;

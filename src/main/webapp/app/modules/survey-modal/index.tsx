@@ -5,13 +5,14 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
-import { IField, type } from 'app/shared/model/field.model';
+import { IField } from 'app/shared/model/field.model';
 import { gridSpacing } from 'app/berry/store/constant';
 import { FormikProps, useFormik } from 'formik';
 import * as yup from 'yup';
 import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
 import SurveyModalDateField from 'app/modules/survey-modal/component/survey-modal-date-field';
 import NoContentBox from 'app/shared/component/no-content-box';
+import type from 'app/shared/model/enumerations/type.model';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
