@@ -69,6 +69,12 @@ data class Field(
         return this
     }
 
+    // todo: lookup에 null이 포함되어 오는데, 다른 해결 방법 찾아보기
+    @PostLoad
+    fun postLoad() {
+        lookups = lookups.filterNotNull()
+    }
+
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }
