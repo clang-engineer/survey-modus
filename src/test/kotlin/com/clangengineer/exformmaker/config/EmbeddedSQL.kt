@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention

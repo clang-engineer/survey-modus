@@ -44,8 +44,8 @@ export const GroupDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="groupDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.group.delete.question">
-        <Translate contentKey="exformmakerApp.group.delete.question" interpolate={{ id: groupEntity.id }}>
+      <ModalBody id="surveymodusApp.group.delete.question">
+        <Translate contentKey="surveymodusApp.group.delete.question" interpolate={{ id: groupEntity.id }}>
           Are you sure you want to delete this Group?
         </Translate>
       </ModalBody>

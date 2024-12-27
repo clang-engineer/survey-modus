@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.config.DEFAULT_LANGUAGE
-import com.clangengineer.exformmaker.domain.User
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.config.DEFAULT_LANGUAGE
+import com.clangengineer.surveymodus.domain.User
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach

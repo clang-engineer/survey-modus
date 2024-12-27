@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.pattern.CompositeConverter

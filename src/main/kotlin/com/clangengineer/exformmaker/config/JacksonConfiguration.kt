@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module

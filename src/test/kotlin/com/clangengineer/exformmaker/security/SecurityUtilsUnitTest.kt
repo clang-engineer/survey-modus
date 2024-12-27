@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach

@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.security.jwt
+package com.clangengineer.surveymodus.security.jwt
 
-import com.clangengineer.exformmaker.management.SecurityMetersService
+import com.clangengineer.surveymodus.management.SecurityMetersService
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys

@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.domain.embeddable
+package com.clangengineer.surveymodus.domain.embeddable
 
-import com.clangengineer.exformmaker.domain.enumeration.type
+import com.clangengineer.surveymodus.domain.enumeration.type
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 

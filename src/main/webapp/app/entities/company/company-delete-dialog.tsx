@@ -44,8 +44,8 @@ export const CompanyDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="companyDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.company.delete.question">
-        <Translate contentKey="exformmakerApp.company.delete.question" interpolate={{ id: companyEntity.id }}>
+      <ModalBody id="surveymodusApp.company.delete.question">
+        <Translate contentKey="surveymodusApp.company.delete.question" interpolate={{ id: companyEntity.id }}>
           Are you sure you want to delete this Company?
         </Translate>
       </ModalBody>

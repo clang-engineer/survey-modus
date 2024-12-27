@@ -87,7 +87,7 @@ export const Group = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="exformmakerApp.group.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveymodusApp.group.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -98,7 +98,7 @@ export const Group = () => {
             onClick={() => navigate('/group/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="exformmakerApp.group.home.createLabel">Create new Group</Translate>
+            <Translate contentKey="surveymodusApp.group.home.createLabel">Create new Group</Translate>
           </Button>
         </Box>
       </Box>
@@ -113,30 +113,30 @@ export const Group = () => {
           <TableHead>
             <TableRow>
               <TableCell className="hand" onClick={sort('id')}>
-                <Translate contentKey="exformmakerApp.group.id">ID</Translate>
+                <Translate contentKey="surveymodusApp.group.id">ID</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('title')}>
-                <Translate contentKey="exformmakerApp.group.title">Title</Translate>
+                <Translate contentKey="surveymodusApp.group.title">Title</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('description')}>
-                <Translate contentKey="exformmakerApp.group.description">Description</Translate>
+                <Translate contentKey="surveymodusApp.group.description">Description</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('activated')}>
-                <Translate contentKey="exformmakerApp.group.activated">Activated</Translate>
+                <Translate contentKey="surveymodusApp.group.activated">Activated</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('user.login')}>
-                <Translate contentKey="exformmakerApp.group.user">User</Translate>
+                <Translate contentKey="surveymodusApp.group.user">User</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand">
-                <Translate contentKey="exformmakerApp.group.users">Users</Translate>
+                <Translate contentKey="surveymodusApp.group.users">Users</Translate>
               </TableCell>
               <TableCell className="hand">
-                <Translate contentKey="exformmakerApp.group.companies">Companies</Translate>
+                <Translate contentKey="surveymodusApp.group.companies">Companies</Translate>
               </TableCell>
               <TableCell />
             </TableRow>
@@ -218,7 +218,7 @@ export const Group = () => {
       ) : (
         !loading && (
           <div className="alert alert-warning">
-            <Translate contentKey="exformmakerApp.group.home.notFound">No Groups found</Translate>
+            <Translate contentKey="surveymodusApp.group.home.notFound">No Groups found</Translate>
           </div>
         )
       )}

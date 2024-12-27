@@ -9,7 +9,7 @@ jib {
         }
     }
     to {
-        image = "exformmaker:latest"
+        image = "surveymodus:latest"
     }
     container {
         entrypoint = ["bash", "-c", "/entrypoint.sh"]

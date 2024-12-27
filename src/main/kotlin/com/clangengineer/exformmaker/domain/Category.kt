@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy

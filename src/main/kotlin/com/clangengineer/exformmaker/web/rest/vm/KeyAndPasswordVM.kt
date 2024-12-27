@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest.vm
+package com.clangengineer.surveymodus.web.rest.vm
 
 /**
  * View Model object for storing the user's key and password.

@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.repository.timezone
+package com.clangengineer.surveymodus.repository.timezone
 
 import java.io.Serializable
 import java.time.*

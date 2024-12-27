@@ -1,12 +1,12 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.Company
-import com.clangengineer.exformmaker.domain.Group
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.domain.enumeration.level
-import com.clangengineer.exformmaker.repository.GroupRepository
-import com.clangengineer.exformmaker.service.mapper.GroupMapper
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.Company
+import com.clangengineer.surveymodus.domain.Group
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.domain.enumeration.level
+import com.clangengineer.surveymodus.repository.GroupRepository
+import com.clangengineer.surveymodus.service.mapper.GroupMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasItem

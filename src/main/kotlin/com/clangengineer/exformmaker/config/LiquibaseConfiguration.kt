@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.ObjectProvider

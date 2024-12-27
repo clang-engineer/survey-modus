@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.repository.CompanyRepository
-import com.clangengineer.exformmaker.service.CompanyQueryService
-import com.clangengineer.exformmaker.service.CompanyService
-import com.clangengineer.exformmaker.service.criteria.CompanyCriteria
-import com.clangengineer.exformmaker.service.dto.CompanyDTO
-import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
+import com.clangengineer.surveymodus.repository.CompanyRepository
+import com.clangengineer.surveymodus.service.CompanyQueryService
+import com.clangengineer.surveymodus.service.CompanyService
+import com.clangengineer.surveymodus.service.criteria.CompanyCriteria
+import com.clangengineer.surveymodus.service.dto.CompanyDTO
+import com.clangengineer.surveymodus.web.rest.errors.BadRequestAlertException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable

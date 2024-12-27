@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service.criteria
+package com.clangengineer.surveymodus.service.criteria
 
 import org.springdoc.api.annotations.ParameterObject
 import tech.jhipster.service.Criteria
@@ -6,8 +6,8 @@ import tech.jhipster.service.filter.*
 import java.io.Serializable
 
 /**
- * Criteria class for the [com.clangengineer.exformmaker.domain.UserPoint] entity. This class is used in
- * [com.clangengineer.exformmaker.web.rest.UserPointResource] to receive all the possible filtering options from the
+ * Criteria class for the [com.clangengineer.surveymodus.domain.UserPoint] entity. This class is used in
+ * [com.clangengineer.surveymodus.web.rest.UserPointResource] to receive all the possible filtering options from the
  * Http GET request parameters.
  * For example the following could be a valid request:
  * ```/user-points?id.greaterThan=5&attr1.contains=something&attr2.specified=false```

@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.data.annotation.CreatedBy

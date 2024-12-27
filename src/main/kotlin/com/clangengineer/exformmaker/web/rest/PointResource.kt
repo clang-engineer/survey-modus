@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.repository.PointRepository
-import com.clangengineer.exformmaker.service.PointQueryService
-import com.clangengineer.exformmaker.service.PointService
-import com.clangengineer.exformmaker.service.criteria.PointCriteria
-import com.clangengineer.exformmaker.service.dto.PointDTO
-import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
+import com.clangengineer.surveymodus.repository.PointRepository
+import com.clangengineer.surveymodus.service.PointQueryService
+import com.clangengineer.surveymodus.service.PointService
+import com.clangengineer.surveymodus.service.criteria.PointCriteria
+import com.clangengineer.surveymodus.service.dto.PointDTO
+import com.clangengineer.surveymodus.web.rest.errors.BadRequestAlertException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull
 private const val ENTITY_NAME = "point"
 
 /**
- * REST controller for managing [com.clangengineer.exformmaker.domain.Point].
+ * REST controller for managing [com.clangengineer.surveymodus.domain.Point].
  */
 @RestController
 @RequestMapping("/api")

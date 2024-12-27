@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
-import com.clangengineer.exformmaker.web.rest.equalsVerifier
+import com.clangengineer.surveymodus.web.rest.equalsVerifier
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

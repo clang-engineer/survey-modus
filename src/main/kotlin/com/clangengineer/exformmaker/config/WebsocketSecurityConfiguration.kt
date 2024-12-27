@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
-import com.clangengineer.exformmaker.security.ADMIN
+import com.clangengineer.surveymodus.security.ADMIN
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.simp.SimpMessageType
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry

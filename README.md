@@ -1,4 +1,4 @@
-# Expert Form Maker (exformmaker) 개요
+# Expert Form Maker (surveymodus) 개요
 
 - 전문가가 고객사별로 수집이 필요한 정보 수집 폼을 만들고, 고객사별로 수집된 정보를 관리할 수 있는 시스템
 

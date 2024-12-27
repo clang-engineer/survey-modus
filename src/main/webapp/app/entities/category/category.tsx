@@ -80,16 +80,16 @@ export const Category = () => {
   return (
     <div>
       <h2 id="category-heading" data-cy="CategoryHeading">
-        <Translate contentKey="exformmakerApp.category.home.title">Categorys</Translate>
+        <Translate contentKey="surveymodusApp.category.home.title">Categorys</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="exformmakerApp.category.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveymodusApp.category.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/category/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="exformmakerApp.category.home.createLabel">Create new Category</Translate>
+            <Translate contentKey="surveymodusApp.category.home.createLabel">Create new Category</Translate>
           </Link>
         </div>
       </h2>
@@ -99,18 +99,18 @@ export const Category = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="exformmakerApp.category.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveymodusApp.category.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="exformmakerApp.category.title">Title</Translate>
+                  <Translate contentKey="surveymodusApp.category.title">Title</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="exformmakerApp.category.description">Description</Translate>
+                  <Translate contentKey="surveymodusApp.category.description">Description</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('activated')}>
-                  <Translate contentKey="exformmakerApp.category.activated">Activated</Translate>
+                  <Translate contentKey="surveymodusApp.category.activated">Activated</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -168,7 +168,7 @@ export const Category = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="exformmakerApp.category.home.notFound">No Categorys found</Translate>
+              <Translate contentKey="surveymodusApp.category.home.notFound">No Categorys found</Translate>
             </div>
           )
         )}

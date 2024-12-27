@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.service.dto
+package com.clangengineer.surveymodus.service.dto
 
 import java.io.Serializable
 import java.util.Objects
 import javax.validation.constraints.*
 
 /**
- * A DTO for the [com.clangengineer.exformmaker.domain.UserPoint] entity.
+ * A DTO for the [com.clangengineer.surveymodus.domain.UserPoint] entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class UserPointDTO(

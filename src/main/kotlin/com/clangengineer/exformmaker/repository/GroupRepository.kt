@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.repository
+package com.clangengineer.surveymodus.repository
 
-import com.clangengineer.exformmaker.domain.Group
+import com.clangengineer.surveymodus.domain.Group
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository

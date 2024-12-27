@@ -1,10 +1,10 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.Category
-import com.clangengineer.exformmaker.domain.enumeration.level
-import com.clangengineer.exformmaker.repository.CategoryRepository
-import com.clangengineer.exformmaker.service.mapper.CategoryMapper
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.Category
+import com.clangengineer.surveymodus.domain.enumeration.level
+import com.clangengineer.surveymodus.repository.CategoryRepository
+import com.clangengineer.surveymodus.service.mapper.CategoryMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach

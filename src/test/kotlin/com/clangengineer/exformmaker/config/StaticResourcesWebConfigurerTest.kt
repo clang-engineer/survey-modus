@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
-import com.clangengineer.exformmaker.config.StaticResourcesWebConfiguration.Companion.RESOURCE_LOCATIONS
-import com.clangengineer.exformmaker.config.StaticResourcesWebConfiguration.Companion.RESOURCE_PATHS
+import com.clangengineer.surveymodus.config.StaticResourcesWebConfiguration.Companion.RESOURCE_LOCATIONS
+import com.clangengineer.surveymodus.config.StaticResourcesWebConfiguration.Companion.RESOURCE_PATHS
 import com.nhaarman.mockitokotlin2.anyOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

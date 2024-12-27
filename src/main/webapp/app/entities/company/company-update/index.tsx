@@ -89,8 +89,8 @@ export const CompanyUpdate = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="exformmakerApp.company.home.createOrEditLabel" data-cy="CompanyCreateUpdateHeading" gutterBottom>
-        <Translate contentKey="exformmakerApp.company.home.createOrEditLabel">Create or edit a Company </Translate> &nbsp;
+      <Typography variant="h4" id="surveymodusApp.company.home.createOrEditLabel" data-cy="CompanyCreateUpdateHeading" gutterBottom>
+        <Translate contentKey="surveymodusApp.company.home.createOrEditLabel">Create or edit a Company </Translate> &nbsp;
         {!isNew && `(ID: ${companyEntity.id})`}
       </Typography>
     );
@@ -121,7 +121,7 @@ export const CompanyUpdate = () => {
               fullWidth
               id="company-title"
               name="title"
-              label={translate('exformmakerApp.company.title')}
+              label={translate('surveymodusApp.company.title')}
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -134,7 +134,7 @@ export const CompanyUpdate = () => {
               fullWidth
               id="company-description"
               name="description"
-              label={translate('exformmakerApp.company.description')}
+              label={translate('surveymodusApp.company.description')}
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
@@ -147,7 +147,7 @@ export const CompanyUpdate = () => {
               control={
                 <Checkbox id="company-activated" name="activated" checked={formik.values.activated} onChange={formik.handleChange} />
               }
-              label={translate('exformmakerApp.company.activated')}
+              label={translate('surveymodusApp.company.activated')}
             />
             <FormikErrorText formik={formik} fieldName={'activated'} />
           </Grid>

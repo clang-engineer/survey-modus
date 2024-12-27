@@ -1,13 +1,13 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.domain.Category_
-import com.clangengineer.exformmaker.domain.Form
-import com.clangengineer.exformmaker.domain.Form_
-import com.clangengineer.exformmaker.domain.User_
-import com.clangengineer.exformmaker.repository.FormRepository
-import com.clangengineer.exformmaker.service.criteria.FormCriteria
-import com.clangengineer.exformmaker.service.dto.FormDTO
-import com.clangengineer.exformmaker.service.mapper.FormMapper
+import com.clangengineer.surveymodus.domain.Category_
+import com.clangengineer.surveymodus.domain.Form
+import com.clangengineer.surveymodus.domain.Form_
+import com.clangengineer.surveymodus.domain.User_
+import com.clangengineer.surveymodus.repository.FormRepository
+import com.clangengineer.surveymodus.service.criteria.FormCriteria
+import com.clangengineer.surveymodus.service.dto.FormDTO
+import com.clangengineer.surveymodus.service.mapper.FormMapper
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

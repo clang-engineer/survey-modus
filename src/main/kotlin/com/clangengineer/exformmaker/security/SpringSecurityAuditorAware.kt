@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
-import com.clangengineer.exformmaker.config.SYSTEM_ACCOUNT
+import com.clangengineer.surveymodus.config.SYSTEM_ACCOUNT
 import org.springframework.data.domain.AuditorAware
 import org.springframework.stereotype.Component
 import java.util.*

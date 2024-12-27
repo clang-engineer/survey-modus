@@ -1,7 +1,7 @@
 sourceSets {
     test {
         java {
-            exclude 'com/clangengineer/exformmaker/config/PostgreSqlTestContainer.java'
+            exclude 'com/clangengineer/surveymodus/config/PostgreSqlTestContainer.java'
         }
     }
 }

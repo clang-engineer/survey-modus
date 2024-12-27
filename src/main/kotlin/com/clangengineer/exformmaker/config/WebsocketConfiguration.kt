@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
-import com.clangengineer.exformmaker.security.ANONYMOUS
+import com.clangengineer.surveymodus.security.ANONYMOUS
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.ServerHttpRequest

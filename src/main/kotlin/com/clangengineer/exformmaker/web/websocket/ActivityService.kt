@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.web.websocket
+package com.clangengineer.surveymodus.web.websocket
 
-import com.clangengineer.exformmaker.config.WebsocketConfiguration.Companion.IP_ADDRESS
-import com.clangengineer.exformmaker.web.websocket.dto.ActivityDTO
+import com.clangengineer.surveymodus.config.WebsocketConfiguration.Companion.IP_ADDRESS
+import com.clangengineer.surveymodus.web.websocket.dto.ActivityDTO
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationListener
 import org.springframework.messaging.handler.annotation.MessageMapping

@@ -2,7 +2,7 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "authenticationType": "jwt",
-    "baseName": "exformmaker",
+    "baseName": "surveymodus",
     "blueprints": [
       {
         "name": "generator-jhipster-kotlin",
@@ -41,7 +41,7 @@
         "version": "1.16.0"
       }
     ],
-    "packageName": "com.clangengineer.exformmaker",
+    "packageName": "com.clangengineer.surveymodus",
     "pages": [],
     "prodDatabaseType": "postgresql",
     "reactive": false,

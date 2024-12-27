@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.repository
+package com.clangengineer.surveymodus.repository
 
-import com.clangengineer.exformmaker.domain.Authority
+import com.clangengineer.surveymodus.domain.Authority
 import org.springframework.data.jpa.repository.JpaRepository
 
 /**

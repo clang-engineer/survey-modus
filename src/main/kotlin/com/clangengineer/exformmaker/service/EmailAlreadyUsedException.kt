@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
 class EmailAlreadyUsedException : RuntimeException("Email is already in use!") {
     companion object {

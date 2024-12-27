@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest.errors
+package com.clangengineer.surveymodus.web.rest.errors
 
 import org.springframework.dao.ConcurrencyFailureException
 import org.springframework.http.HttpStatus

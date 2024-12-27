@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import org.slf4j.LoggerFactory
 import org.testcontainers.containers.JdbcDatabaseContainer
@@ -21,7 +21,7 @@ class PostgreSqlTestContainer : SqlTestContainer {
     override fun afterPropertiesSet() {
         if (null == postgreSQLContainer) {
             postgreSQLContainer = PostgreSQLContainer("postgres:14.5")
-                .withDatabaseName("exformmaker")
+                .withDatabaseName("surveymodus")
                 .withTmpFs(Collections.singletonMap("/testtmpfs", "rw"))
                 .withLogConsumer(Slf4jLogConsumer(log))
                 .withReuse(true)

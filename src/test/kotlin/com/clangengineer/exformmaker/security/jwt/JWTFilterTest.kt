@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.security.jwt
+package com.clangengineer.surveymodus.security.jwt
 
-import com.clangengineer.exformmaker.management.SecurityMetersService
-import com.clangengineer.exformmaker.security.USER
+import com.clangengineer.surveymodus.management.SecurityMetersService
+import com.clangengineer.surveymodus.security.USER
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry

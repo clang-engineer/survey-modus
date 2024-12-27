@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

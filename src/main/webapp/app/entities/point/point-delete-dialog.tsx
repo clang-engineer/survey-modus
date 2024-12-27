@@ -44,8 +44,8 @@ export const PointDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="pointDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.point.delete.question">
-        <Translate contentKey="exformmakerApp.point.delete.question" interpolate={{ id: pointEntity.id }}>
+      <ModalBody id="surveymodusApp.point.delete.question">
+        <Translate contentKey="surveymodusApp.point.delete.question" interpolate={{ id: pointEntity.id }}>
           Are you sure you want to delete this Point?
         </Translate>
       </ModalBody>

@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.repository.CompanyRepository
-import com.clangengineer.exformmaker.service.dto.CompanyDTO
-import com.clangengineer.exformmaker.service.mapper.CompanyMapper
+import com.clangengineer.surveymodus.repository.CompanyRepository
+import com.clangengineer.surveymodus.service.dto.CompanyDTO
+import com.clangengineer.surveymodus.service.mapper.CompanyMapper
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

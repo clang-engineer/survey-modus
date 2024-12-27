@@ -4,7 +4,7 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger level="INFO" name="com.clangengineer.exformmaker"/>
+    <logger level="INFO" name="com.clangengineer.surveymodus"/>
 
     <logger level="WARN" name="tech.jhipster"/>
 

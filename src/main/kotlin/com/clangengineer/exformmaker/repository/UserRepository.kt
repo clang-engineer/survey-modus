@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.repository
+package com.clangengineer.surveymodus.repository
 
-import com.clangengineer.exformmaker.domain.User
+import com.clangengineer.surveymodus.domain.User
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

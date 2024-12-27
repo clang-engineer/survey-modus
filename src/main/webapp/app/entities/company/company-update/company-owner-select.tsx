@@ -17,7 +17,7 @@ const CompanyOwnerSelect = (props: ICompanyOwnerSelectProps) => {
 
   return (
     <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
-      <InputLabel id="company-user-label"> {translate('exformmakerApp.company.user')}</InputLabel>
+      <InputLabel id="company-user-label"> {translate('surveymodusApp.company.user')}</InputLabel>
       <Select
         labelId="company-user-label"
         id="company-user"
@@ -26,7 +26,7 @@ const CompanyOwnerSelect = (props: ICompanyOwnerSelectProps) => {
         onChange={e => {
           formik.setFieldValue('user', { id: e.target.value });
         }}
-        label={translate('exformmakerApp.company.user')}
+        label={translate('surveymodusApp.company.user')}
       >
         <MenuItem value="-" disabled>
           <em>None</em>

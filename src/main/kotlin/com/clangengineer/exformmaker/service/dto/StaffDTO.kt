@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service.dto
+package com.clangengineer.surveymodus.service.dto
 
 data class StaffDTO(
     var activated: Boolean? = null,

@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker
+package com.clangengineer.surveymodus
 
-import com.clangengineer.exformmaker.config.ApplicationProperties
-import com.clangengineer.exformmaker.config.CRLFLogConverter
+import com.clangengineer.surveymodus.config.ApplicationProperties
+import com.clangengineer.surveymodus.config.CRLFLogConverter
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties
@@ -16,12 +16,12 @@ import javax.annotation.PostConstruct
 
 @SpringBootApplication
 @EnableConfigurationProperties(LiquibaseProperties::class, ApplicationProperties::class)
-class ExformmakerApp(private val env: Environment) {
+class surveymodusApp(private val env: Environment) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
     /**
-     * Initializes exformmaker.
+     * Initializes surveymodus.
      *
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      *
@@ -56,13 +56,13 @@ class ExformmakerApp(private val env: Environment) {
          */
         @JvmStatic
         fun main(args: Array<String>) {
-            val env = runApplication<ExformmakerApp>(*args) { DefaultProfileUtil.addDefaultProfile(this) }.environment
+            val env = runApplication<surveymodusApp>(*args) { DefaultProfileUtil.addDefaultProfile(this) }.environment
             logApplicationStartup(env)
         }
 
         @JvmStatic
         private fun logApplicationStartup(env: Environment) {
-            val log = LoggerFactory.getLogger(ExformmakerApp::class.java)
+            val log = LoggerFactory.getLogger(surveymodusApp::class.java)
 
             val protocol = if (env.getProperty("server.ssl.key-store") != null) {
                 "https"

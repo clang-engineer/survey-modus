@@ -18,7 +18,7 @@ logging:
     ROOT: DEBUG
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
-    com.clangengineer.exformmaker: DEBUG
+    com.clangengineer.surveymodus: DEBUG
 
 spring:
   devtools:
@@ -32,8 +32,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./build/h2db/db/exformmaker;DB_CLOSE_DELAY=-1;MODE=LEGACY
-    username: exformmaker
+    url: jdbc:h2:file:./build/h2db/db/surveymodus;DB_CLOSE_DELAY=-1;MODE=LEGACY
+    username: surveymodus
     password:
     hikari:
       poolName: Hikari

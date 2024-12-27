@@ -1,13 +1,13 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.config.DEFAULT_LANGUAGE
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.AuthorityRepository
-import com.clangengineer.exformmaker.repository.UserRepository
-import com.clangengineer.exformmaker.security.USER
-import com.clangengineer.exformmaker.security.getCurrentUserLogin
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
-import com.clangengineer.exformmaker.service.dto.UserDTO
+import com.clangengineer.surveymodus.config.DEFAULT_LANGUAGE
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.AuthorityRepository
+import com.clangengineer.surveymodus.repository.UserRepository
+import com.clangengineer.surveymodus.security.USER
+import com.clangengineer.surveymodus.security.getCurrentUserLogin
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.service.dto.UserDTO
 import org.slf4j.LoggerFactory
 import org.springframework.cache.CacheManager
 import org.springframework.data.domain.Page

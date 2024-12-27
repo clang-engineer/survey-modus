@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.security.jwt
+package com.clangengineer.surveymodus.security.jwt
 
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.GenericFilterBean

@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service.mapper
+package com.clangengineer.surveymodus.service.mapper
 
 import org.mapstruct.BeanMapping
 import org.mapstruct.MappingTarget

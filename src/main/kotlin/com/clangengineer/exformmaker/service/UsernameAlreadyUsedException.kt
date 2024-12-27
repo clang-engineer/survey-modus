@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
 class UsernameAlreadyUsedException : RuntimeException("Login name already used!") {
     companion object {

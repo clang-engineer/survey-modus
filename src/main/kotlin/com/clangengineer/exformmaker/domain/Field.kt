@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
-import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
-import com.clangengineer.exformmaker.domain.embeddable.FieldDisplay
+import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
+import com.clangengineer.surveymodus.domain.embeddable.FieldDisplay
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable

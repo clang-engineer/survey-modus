@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.service.dto
+package com.clangengineer.surveymodus.service.dto
 
-import com.clangengineer.exformmaker.config.LOGIN_REGEX
-import com.clangengineer.exformmaker.domain.User
+import com.clangengineer.surveymodus.config.LOGIN_REGEX
+import com.clangengineer.surveymodus.domain.User
 import java.io.Serializable
 import java.time.Instant
 import javax.validation.constraints.Email

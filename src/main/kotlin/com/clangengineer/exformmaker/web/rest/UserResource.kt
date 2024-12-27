@@ -1,15 +1,15 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.config.LOGIN_REGEX
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
-import com.clangengineer.exformmaker.security.ADMIN
-import com.clangengineer.exformmaker.service.MailService
-import com.clangengineer.exformmaker.service.UserService
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
-import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
-import com.clangengineer.exformmaker.web.rest.errors.EmailAlreadyUsedException
-import com.clangengineer.exformmaker.web.rest.errors.LoginAlreadyUsedException
+import com.clangengineer.surveymodus.config.LOGIN_REGEX
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
+import com.clangengineer.surveymodus.security.ADMIN
+import com.clangengineer.surveymodus.service.MailService
+import com.clangengineer.surveymodus.service.UserService
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.web.rest.errors.BadRequestAlertException
+import com.clangengineer.surveymodus.web.rest.errors.EmailAlreadyUsedException
+import com.clangengineer.surveymodus.web.rest.errors.LoginAlreadyUsedException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
@@ -31,7 +31,7 @@ import javax.validation.constraints.Pattern
 /**
  * REST controller for managing users.
  *
- * This class accesses the {@link com.clangengineer.exformmaker.domain.User} entity, and needs to fetch its collection of authorities.
+ * This class accesses the {@link com.clangengineer.surveymodus.domain.User} entity, and needs to fetch its collection of authorities.
  *
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join

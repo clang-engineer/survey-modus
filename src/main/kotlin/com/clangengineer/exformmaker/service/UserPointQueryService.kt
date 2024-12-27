@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.domain.* // for static metamodels
-import com.clangengineer.exformmaker.domain.UserPoint
-import com.clangengineer.exformmaker.repository.UserPointRepository
-import com.clangengineer.exformmaker.service.criteria.UserPointCriteria
-import com.clangengineer.exformmaker.service.dto.UserPointDTO
-import com.clangengineer.exformmaker.service.mapper.UserPointMapper
+import com.clangengineer.surveymodus.domain.* // for static metamodels
+import com.clangengineer.surveymodus.domain.UserPoint
+import com.clangengineer.surveymodus.repository.UserPointRepository
+import com.clangengineer.surveymodus.service.criteria.UserPointCriteria
+import com.clangengineer.surveymodus.service.dto.UserPointDTO
+import com.clangengineer.surveymodus.service.mapper.UserPointMapper
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
-import com.clangengineer.exformmaker.config.LOGIN_REGEX
+import com.clangengineer.surveymodus.config.LOGIN_REGEX
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.Cache

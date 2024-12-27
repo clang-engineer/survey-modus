@@ -79,8 +79,8 @@ export const UserPointUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="exformmakerApp.userPoint.home.createOrEditLabel" data-cy="UserPointCreateUpdateHeading">
-            <Translate contentKey="exformmakerApp.userPoint.home.createOrEditLabel">Create or edit a UserPoint</Translate>
+          <h2 id="surveymodusApp.userPoint.home.createOrEditLabel" data-cy="UserPointCreateUpdateHeading">
+            <Translate contentKey="surveymodusApp.userPoint.home.createOrEditLabel">Create or edit a UserPoint</Translate>
           </h2>
         </Col>
       </Row>
@@ -104,7 +104,7 @@ export const UserPointUpdate = () => {
                 id="user-point-user"
                 name="user"
                 data-cy="user"
-                label={translate('exformmakerApp.userPoint.user')}
+                label={translate('surveymodusApp.userPoint.user')}
                 type="select"
                 required
               >
@@ -124,7 +124,7 @@ export const UserPointUpdate = () => {
                 id="user-point-point"
                 name="point"
                 data-cy="point"
-                label={translate('exformmakerApp.userPoint.point')}
+                label={translate('surveymodusApp.userPoint.point')}
                 type="select"
                 required
               >

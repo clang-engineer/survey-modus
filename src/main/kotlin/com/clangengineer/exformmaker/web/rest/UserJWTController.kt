@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.security.jwt.JWTFilter
-import com.clangengineer.exformmaker.security.jwt.TokenProvider
-import com.clangengineer.exformmaker.web.rest.vm.LoginVM
+import com.clangengineer.surveymodus.security.jwt.JWTFilter
+import com.clangengineer.surveymodus.security.jwt.TokenProvider
+import com.clangengineer.surveymodus.web.rest.vm.LoginVM
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

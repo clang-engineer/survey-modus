@@ -86,8 +86,8 @@ export const FormUpdate = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="exformmakerApp.form.home.createOrEditLabel" data-cy="FormCreateUpdateHeading" gutterBottom>
-        <Translate contentKey="exformmakerApp.form.home.createOrEditLabel">Create or edit a Form </Translate> &nbsp;
+      <Typography variant="h4" id="surveymodusApp.form.home.createOrEditLabel" data-cy="FormCreateUpdateHeading" gutterBottom>
+        <Translate contentKey="surveymodusApp.form.home.createOrEditLabel">Create or edit a Form </Translate> &nbsp;
         {!isNew && `(ID: ${formEntity.id})`}
       </Typography>
     );
@@ -118,7 +118,7 @@ export const FormUpdate = () => {
               fullWidth
               id="form-title"
               name="title"
-              label={translate('exformmakerApp.form.title')}
+              label={translate('surveymodusApp.form.title')}
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -131,7 +131,7 @@ export const FormUpdate = () => {
               fullWidth
               id="form-description"
               name="description"
-              label={translate('exformmakerApp.form.description')}
+              label={translate('surveymodusApp.form.description')}
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
@@ -142,7 +142,7 @@ export const FormUpdate = () => {
           <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox id="form-activated" name="activated" checked={formik.values.activated} onChange={formik.handleChange} />}
-              label={translate('exformmakerApp.form.activated')}
+              label={translate('surveymodusApp.form.activated')}
             />
           </Grid>
           {fromAdminPath && (

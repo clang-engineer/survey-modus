@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

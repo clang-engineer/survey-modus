@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -13,7 +13,7 @@ import tech.jhipster.config.h2.H2ConfigurationHelper
 import java.sql.SQLException
 
 @Configuration
-@EnableJpaRepositories("com.clangengineer.exformmaker.repository")
+@EnableJpaRepositories("com.clangengineer.surveymodus.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 class DatabaseConfiguration(private val env: Environment) {

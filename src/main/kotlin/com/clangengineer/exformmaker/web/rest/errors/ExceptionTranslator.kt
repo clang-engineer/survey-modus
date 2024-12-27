@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest.errors
+package com.clangengineer.surveymodus.web.rest.errors
 
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Value
@@ -96,19 +96,19 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
     }
 
     @ExceptionHandler
-    fun handleEmailAlreadyUsedException(ex: com.clangengineer.exformmaker.service.EmailAlreadyUsedException, request: NativeWebRequest): ResponseEntity<Problem>? {
+    fun handleEmailAlreadyUsedException(ex: com.clangengineer.surveymodus.service.EmailAlreadyUsedException, request: NativeWebRequest): ResponseEntity<Problem>? {
         val problem = EmailAlreadyUsedException()
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName, true, problem.entityName, problem.errorKey, problem.message))
     }
 
     @ExceptionHandler
-    fun handleUsernameAlreadyUsedException(ex: com.clangengineer.exformmaker.service.UsernameAlreadyUsedException, request: NativeWebRequest): ResponseEntity<Problem>? {
+    fun handleUsernameAlreadyUsedException(ex: com.clangengineer.surveymodus.service.UsernameAlreadyUsedException, request: NativeWebRequest): ResponseEntity<Problem>? {
         val problem = LoginAlreadyUsedException()
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName, true, problem.entityName, problem.errorKey, problem.message))
     }
 
     @ExceptionHandler
-    fun handleInvalidPasswordException(ex: com.clangengineer.exformmaker.service.InvalidPasswordException, request: NativeWebRequest): ResponseEntity<Problem>? {
+    fun handleInvalidPasswordException(ex: com.clangengineer.surveymodus.service.InvalidPasswordException, request: NativeWebRequest): ResponseEntity<Problem>? {
         return create(InvalidPasswordException(), request)
     }
 
@@ -155,5 +155,5 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
             .withCause(throwable.cause.takeIf { isCausalChainsEnabled }?.let { toProblem(it) })
     }
 
-    private fun containsPackageName(message: String?) = listOf("org.", "java.", "net.", "javax.", "com.", "io.", "de.", "com.clangengineer.exformmaker").any { it == message }
+    private fun containsPackageName(message: String?) = listOf("org.", "java.", "net.", "javax.", "com.", "io.", "de.", "com.clangengineer.surveymodus").any { it == message }
 }

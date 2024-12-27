@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.domain
+package com.clangengineer.surveymodus.domain
 
-import com.clangengineer.exformmaker.domain.embeddable.Staff
+import com.clangengineer.surveymodus.domain.embeddable.Staff
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable

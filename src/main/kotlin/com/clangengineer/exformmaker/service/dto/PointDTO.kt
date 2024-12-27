@@ -1,13 +1,13 @@
-package com.clangengineer.exformmaker.service.dto
+package com.clangengineer.surveymodus.service.dto
 
-import com.clangengineer.exformmaker.domain.enumeration.level
+import com.clangengineer.surveymodus.domain.enumeration.level
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 /**
- * A DTO for the [com.clangengineer.exformmaker.domain.Point] entity.
+ * A DTO for the [com.clangengineer.surveymodus.domain.Point] entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class PointDTO(

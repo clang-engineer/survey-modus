@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.authority.SimpleGrantedAuthority

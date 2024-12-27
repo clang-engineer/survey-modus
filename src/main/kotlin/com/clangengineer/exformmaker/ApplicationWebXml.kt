@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker
+package com.clangengineer.surveymodus
 
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
@@ -13,6 +13,6 @@ class ApplicationWebXml : SpringBootServletInitializer() {
     override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
         // set a default to use when no profile is configured.
         DefaultProfileUtil.addDefaultProfile(application.application())
-        return application.sources(ExformmakerApp::class.java)
+        return application.sources(surveymodusApp::class.java)
     }
 }

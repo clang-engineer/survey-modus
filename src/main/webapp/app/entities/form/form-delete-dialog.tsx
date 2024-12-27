@@ -44,8 +44,8 @@ export const FormDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="formDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="exformmakerApp.form.delete.question">
-        <Translate contentKey="exformmakerApp.form.delete.question" interpolate={{ id: formEntity.id }}>
+      <ModalBody id="surveymodusApp.form.delete.question">
+        <Translate contentKey="surveymodusApp.form.delete.question" interpolate={{ id: formEntity.id }}>
           Are you sure you want to delete this Form?
         </Translate>
       </ModalBody>

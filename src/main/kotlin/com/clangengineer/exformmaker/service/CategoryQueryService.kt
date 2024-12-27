@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
-import com.clangengineer.exformmaker.domain.Category
-import com.clangengineer.exformmaker.domain.Category_
-import com.clangengineer.exformmaker.repository.CategoryRepository
-import com.clangengineer.exformmaker.service.criteria.CategoryCriteria
-import com.clangengineer.exformmaker.service.dto.CategoryDTO
-import com.clangengineer.exformmaker.service.mapper.CategoryMapper
+import com.clangengineer.surveymodus.domain.Category
+import com.clangengineer.surveymodus.domain.Category_
+import com.clangengineer.surveymodus.repository.CategoryRepository
+import com.clangengineer.surveymodus.service.criteria.CategoryCriteria
+import com.clangengineer.surveymodus.service.dto.CategoryDTO
+import com.clangengineer.surveymodus.service.mapper.CategoryMapper
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

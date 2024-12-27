@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.service.dto
+package com.clangengineer.surveymodus.service.dto
 
-import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
-import com.clangengineer.exformmaker.domain.embeddable.FieldDisplay
+import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
+import com.clangengineer.surveymodus.domain.embeddable.FieldDisplay
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull

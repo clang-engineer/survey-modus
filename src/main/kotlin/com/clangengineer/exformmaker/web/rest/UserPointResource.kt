@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.repository.UserPointRepository
-import com.clangengineer.exformmaker.service.UserPointQueryService
-import com.clangengineer.exformmaker.service.UserPointService
-import com.clangengineer.exformmaker.service.criteria.UserPointCriteria
-import com.clangengineer.exformmaker.service.dto.UserPointDTO
-import com.clangengineer.exformmaker.web.rest.errors.BadRequestAlertException
+import com.clangengineer.surveymodus.repository.UserPointRepository
+import com.clangengineer.surveymodus.service.UserPointQueryService
+import com.clangengineer.surveymodus.service.UserPointService
+import com.clangengineer.surveymodus.service.criteria.UserPointCriteria
+import com.clangengineer.surveymodus.service.dto.UserPointDTO
+import com.clangengineer.surveymodus.web.rest.errors.BadRequestAlertException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull
 
 private const val ENTITY_NAME = "userPoint"
 /**
- * REST controller for managing [com.clangengineer.exformmaker.domain.UserPoint].
+ * REST controller for managing [com.clangengineer.surveymodus.domain.UserPoint].
  */
 @RestController
 @RequestMapping("/api")

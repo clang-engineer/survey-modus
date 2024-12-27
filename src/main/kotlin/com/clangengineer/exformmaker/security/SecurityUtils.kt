@@ -1,6 +1,6 @@
 @file:JvmName("SecurityUtils")
 
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority

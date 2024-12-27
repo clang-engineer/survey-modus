@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.domain.enumeration
+package com.clangengineer.surveymodus.domain.enumeration
 
 /**
  * The level enumeration.

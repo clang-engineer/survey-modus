@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

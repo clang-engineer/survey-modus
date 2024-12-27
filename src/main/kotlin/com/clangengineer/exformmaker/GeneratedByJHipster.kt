@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker
+package com.clangengineer.surveymodus
 
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention

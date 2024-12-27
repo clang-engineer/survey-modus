@@ -1,9 +1,9 @@
-package com.clangengineer.exformmaker.service.mapper
+package com.clangengineer.surveymodus.service.mapper
 
-import com.clangengineer.exformmaker.domain.Point
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.service.dto.PointDTO
-import com.clangengineer.exformmaker.service.dto.UserDTO
+import com.clangengineer.surveymodus.domain.Point
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.service.dto.PointDTO
+import com.clangengineer.surveymodus.service.dto.UserDTO
 import org.mapstruct.*
 
 /**

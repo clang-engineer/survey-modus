@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
-import com.clangengineer.exformmaker.security.ADMIN
-import com.clangengineer.exformmaker.security.jwt.JWTConfigurer
-import com.clangengineer.exformmaker.security.jwt.TokenProvider
+import com.clangengineer.surveymodus.security.ADMIN
+import com.clangengineer.surveymodus.security.jwt.JWTConfigurer
+import com.clangengineer.surveymodus.security.jwt.TokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod

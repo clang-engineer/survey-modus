@@ -23,7 +23,7 @@ export const UserPointDetail = () => {
     <Row>
       <Col md="8">
         <h2 data-cy="userPointDetailsHeading">
-          <Translate contentKey="exformmakerApp.userPoint.detail.title">UserPoint</Translate>
+          <Translate contentKey="surveymodusApp.userPoint.detail.title">UserPoint</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -33,11 +33,11 @@ export const UserPointDetail = () => {
           </dt>
           <dd>{userPointEntity.id}</dd>
           <dt>
-            <Translate contentKey="exformmakerApp.userPoint.user">User</Translate>
+            <Translate contentKey="surveymodusApp.userPoint.user">User</Translate>
           </dt>
           <dd>{userPointEntity.user ? userPointEntity.user.login : ''}</dd>
           <dt>
-            <Translate contentKey="exformmakerApp.userPoint.point">Point</Translate>
+            <Translate contentKey="surveymodusApp.userPoint.point">Point</Translate>
           </dt>
           <dd>{userPointEntity.point ? userPointEntity.point.title : ''}</dd>
         </dl>

@@ -21,7 +21,7 @@ export const PointDetail = () => {
     <Row>
       <Col md="8">
         <h2 data-cy="pointDetailsHeading">
-          <Translate contentKey="exformmakerApp.point.detail.title">Point</Translate>
+          <Translate contentKey="surveymodusApp.point.detail.title">Point</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -32,30 +32,30 @@ export const PointDetail = () => {
           <dd>{pointEntity.id}</dd>
           <dt>
             <span id="title">
-              <Translate contentKey="exformmakerApp.point.title">Title</Translate>
+              <Translate contentKey="surveymodusApp.point.title">Title</Translate>
             </span>
           </dt>
           <dd>{pointEntity.title}</dd>
           <dt>
             <span id="description">
-              <Translate contentKey="exformmakerApp.point.description">Description</Translate>
+              <Translate contentKey="surveymodusApp.point.description">Description</Translate>
             </span>
           </dt>
           <dd>{pointEntity.description}</dd>
           <dt>
             <span id="activated">
-              <Translate contentKey="exformmakerApp.point.activated">Activated</Translate>
+              <Translate contentKey="surveymodusApp.point.activated">Activated</Translate>
             </span>
           </dt>
           <dd>{pointEntity.activated ? 'true' : 'false'}</dd>
           <dt>
             <span id="type">
-              <Translate contentKey="exformmakerApp.point.type">Type</Translate>
+              <Translate contentKey="surveymodusApp.point.type">Type</Translate>
             </span>
           </dt>
           <dd>{pointEntity.type}</dd>
           <dt>
-            <Translate contentKey="exformmakerApp.point.user">User</Translate>
+            <Translate contentKey="surveymodusApp.point.user">User</Translate>
           </dt>
           <dd>{pointEntity.user ? pointEntity.user.login : ''}</dd>
         </dl>

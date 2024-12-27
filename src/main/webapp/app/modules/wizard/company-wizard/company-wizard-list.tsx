@@ -75,7 +75,7 @@ const CompanyWizardList = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="exformmakerApp.company.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveymodusApp.company.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -86,7 +86,7 @@ const CompanyWizardList = () => {
             onClick={() => navigate('/wizard/company/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="exformmakerApp.company.home.createLabel">Create new Company</Translate>
+            <Translate contentKey="surveymodusApp.company.home.createLabel">Create new Company</Translate>
           </Button>
         </Box>
       </Grid>
@@ -124,7 +124,7 @@ const CompanyWizardList = () => {
           : !loading && (
               <Grid item xs={12}>
                 <Alert icon={<CheckIcon fontSize="inherit" />} severity="warning">
-                  <Translate contentKey="exformmakerApp.company.home.notFound">No Companys found</Translate>
+                  <Translate contentKey="surveymodusApp.company.home.notFound">No Companys found</Translate>
                 </Alert>
               </Grid>
             )}

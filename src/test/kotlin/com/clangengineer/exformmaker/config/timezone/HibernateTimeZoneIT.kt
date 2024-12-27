@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.config.timezone
+package com.clangengineer.surveymodus.config.timezone
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.repository.timezone.DateTimeWrapper
-import com.clangengineer.exformmaker.repository.timezone.DateTimeWrapperRepository
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.repository.timezone.DateTimeWrapper
+import com.clangengineer.surveymodus.repository.timezone.DateTimeWrapperRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

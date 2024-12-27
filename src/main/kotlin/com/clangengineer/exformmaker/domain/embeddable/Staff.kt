@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.domain.embeddable
+package com.clangengineer.surveymodus.domain.embeddable
 
 import javax.persistence.Embeddable
 

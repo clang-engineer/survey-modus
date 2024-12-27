@@ -1,8 +1,8 @@
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType

@@ -24,7 +24,7 @@ export const CompanyDetail = () => {
     <MainCard
       title={
         <Typography variant="h4">
-          <Translate contentKey="exformmakerApp.company.detail.title">Company</Translate> [<b>{companyEntity.id}</b>]
+          <Translate contentKey="surveymodusApp.company.detail.title">Company</Translate> [<b>{companyEntity.id}</b>]
         </Typography>
       }
     >
@@ -40,7 +40,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.title">Title</Translate>
+              <Translate contentKey="surveymodusApp.company.title">Title</Translate>
             </Typography>
             <Typography> {companyEntity.title} </Typography>
           </Stack>
@@ -48,7 +48,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.description">Description</Translate>
+              <Translate contentKey="surveymodusApp.company.description">Description</Translate>
             </Typography>
             <Typography> {companyEntity.description} </Typography>
           </Stack>
@@ -56,7 +56,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.activated">Activated</Translate>
+              <Translate contentKey="surveymodusApp.company.activated">Activated</Translate>
             </Typography>
             <Typography> {companyEntity.activated ? 'true' : 'false'} </Typography>
           </Stack>
@@ -64,7 +64,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.user">User</Translate>
+              <Translate contentKey="surveymodusApp.company.user">User</Translate>
             </Typography>
             <Typography> {companyEntity.user ? companyEntity.user.login : ''} </Typography>
           </Stack>
@@ -72,7 +72,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.forms">Form List</Translate>
+              <Translate contentKey="surveymodusApp.company.forms">Form List</Translate>
             </Typography>
             <Typography>
               {companyEntity.forms
@@ -89,7 +89,7 @@ export const CompanyDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.company.staffs">Staff List</Translate>
+              <Translate contentKey="surveymodusApp.company.staffs">Staff List</Translate>
             </Typography>
             <Typography>
               {companyEntity.staffs

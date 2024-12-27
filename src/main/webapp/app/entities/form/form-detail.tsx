@@ -24,7 +24,7 @@ export const FormDetail = () => {
     <MainCard
       title={
         <Typography variant="h4">
-          <Translate contentKey="exformmakerApp.form.detail.title">Form</Translate> [<b>{formEntity.id}</b>]
+          <Translate contentKey="surveymodusApp.form.detail.title">Form</Translate> [<b>{formEntity.id}</b>]
         </Typography>
       }
     >
@@ -40,7 +40,7 @@ export const FormDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.form.title">Title</Translate>
+              <Translate contentKey="surveymodusApp.form.title">Title</Translate>
             </Typography>
             <Typography> {formEntity.title} </Typography>
           </Stack>
@@ -48,7 +48,7 @@ export const FormDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.form.description">Description</Translate>
+              <Translate contentKey="surveymodusApp.form.description">Description</Translate>
             </Typography>
             <Typography> {formEntity.description} </Typography>
           </Stack>
@@ -56,7 +56,7 @@ export const FormDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.form.activated">Activated</Translate>
+              <Translate contentKey="surveymodusApp.form.activated">Activated</Translate>
             </Typography>
             <Typography> {formEntity.activated ? 'true' : 'false'} </Typography>
           </Stack>
@@ -64,7 +64,7 @@ export const FormDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.form.user">User</Translate>
+              <Translate contentKey="surveymodusApp.form.user">User</Translate>
             </Typography>
             <Typography> {formEntity.user ? formEntity.user.login : ''} </Typography>
           </Stack>
@@ -72,7 +72,7 @@ export const FormDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="exformmakerApp.form.category">Category</Translate>
+              <Translate contentKey="surveymodusApp.form.category">Category</Translate>
             </Typography>
             <Typography>{formEntity.category.title}</Typography>
           </Stack>

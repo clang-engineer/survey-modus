@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.repository
+package com.clangengineer.surveymodus.repository
 
-import com.clangengineer.exformmaker.domain.Category
+import com.clangengineer.surveymodus.domain.Category
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository

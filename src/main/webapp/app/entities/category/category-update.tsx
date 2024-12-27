@@ -63,8 +63,8 @@ export const CategoryUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="exformmakerApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="exformmakerApp.category.home.createOrEditLabel">Create or edit a Category</Translate>
+          <h2 id="surveymodusApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+            <Translate contentKey="surveymodusApp.category.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
@@ -85,7 +85,7 @@ export const CategoryUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('exformmakerApp.category.title')}
+                label={translate('surveymodusApp.category.title')}
                 id="category-title"
                 name="title"
                 data-cy="title"
@@ -103,14 +103,14 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('exformmakerApp.category.description')}
+                label={translate('surveymodusApp.category.description')}
                 id="category-description"
                 name="description"
                 data-cy="description"
                 type="text"
               />
               <ValidatedField
-                label={translate('exformmakerApp.category.activated')}
+                label={translate('surveymodusApp.category.activated')}
                 id="category-activated"
                 name="activated"
                 data-cy="activated"

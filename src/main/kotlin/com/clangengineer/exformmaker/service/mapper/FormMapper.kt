@@ -1,11 +1,11 @@
-package com.clangengineer.exformmaker.service.mapper
+package com.clangengineer.surveymodus.service.mapper
 
-import com.clangengineer.exformmaker.domain.Category
-import com.clangengineer.exformmaker.domain.Form
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.service.dto.CategoryDTO
-import com.clangengineer.exformmaker.service.dto.FormDTO
-import com.clangengineer.exformmaker.service.dto.UserDTO
+import com.clangengineer.surveymodus.domain.Category
+import com.clangengineer.surveymodus.domain.Form
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.service.dto.CategoryDTO
+import com.clangengineer.surveymodus.service.dto.FormDTO
+import com.clangengineer.surveymodus.service.dto.UserDTO
 import org.mapstruct.*
 
 @Mapper(componentModel = "spring")

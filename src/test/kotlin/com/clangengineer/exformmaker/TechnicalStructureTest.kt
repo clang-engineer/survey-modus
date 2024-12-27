@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker
+package com.clangengineer.surveymodus
 
 import com.tngtech.archunit.base.DescribedPredicate.alwaysTrue
 import com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf
@@ -7,7 +7,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.library.Architectures.layeredArchitecture
 
-@AnalyzeClasses(packagesOf = [ExformmakerApp::class], importOptions = [DoNotIncludeTests::class])
+@AnalyzeClasses(packagesOf = [surveymodusApp::class], importOptions = [DoNotIncludeTests::class])
 class TechnicalStructureTest {
     @ArchTest
     val respectsTechnicalArchitectureLayers = layeredArchitecture()
@@ -23,11 +23,11 @@ class TechnicalStructureTest {
         .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Service", "Web")
         .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config")
         .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config")
-        .ignoreDependency(belongToAnyOf(ExformmakerApp::class.java), alwaysTrue())
+        .ignoreDependency(belongToAnyOf(surveymodusApp::class.java), alwaysTrue())
         .ignoreDependency(
             alwaysTrue(),
             belongToAnyOf(
-                com.clangengineer.exformmaker.config.ApplicationProperties::class.java
+                com.clangengineer.surveymodus.config.ApplicationProperties::class.java
             )
         )
 }

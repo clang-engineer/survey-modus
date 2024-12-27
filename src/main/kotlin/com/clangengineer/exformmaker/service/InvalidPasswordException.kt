@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service
+package com.clangengineer.surveymodus.service
 
 class InvalidPasswordException : RuntimeException("Incorrect password") {
     companion object {

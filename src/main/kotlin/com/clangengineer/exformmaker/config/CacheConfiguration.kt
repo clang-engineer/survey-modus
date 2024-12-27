@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
@@ -48,11 +48,11 @@ class CacheConfiguration(
     @Bean
     fun cacheManagerCustomizer(): JCacheManagerCustomizer {
         return JCacheManagerCustomizer { cm ->
-            createCache(cm, com.clangengineer.exformmaker.repository.UserRepository.USERS_BY_LOGIN_CACHE)
-            createCache(cm, com.clangengineer.exformmaker.repository.UserRepository.USERS_BY_EMAIL_CACHE)
-            createCache(cm, com.clangengineer.exformmaker.domain.User::class.java.name)
-            createCache(cm, com.clangengineer.exformmaker.domain.Authority::class.java.name)
-            createCache(cm, com.clangengineer.exformmaker.domain.User::class.java.name + ".authorities")
+            createCache(cm, com.clangengineer.surveymodus.repository.UserRepository.USERS_BY_LOGIN_CACHE)
+            createCache(cm, com.clangengineer.surveymodus.repository.UserRepository.USERS_BY_EMAIL_CACHE)
+            createCache(cm, com.clangengineer.surveymodus.domain.User::class.java.name)
+            createCache(cm, com.clangengineer.surveymodus.domain.Authority::class.java.name)
+            createCache(cm, com.clangengineer.surveymodus.domain.User::class.java.name + ".authorities")
             // jhipster-needle-ehcache-add-entry
         }
     }

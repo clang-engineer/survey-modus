@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.service.mapper
+package com.clangengineer.surveymodus.service.mapper
 
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

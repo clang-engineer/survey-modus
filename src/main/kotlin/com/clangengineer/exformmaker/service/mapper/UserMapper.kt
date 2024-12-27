@@ -1,9 +1,9 @@
-package com.clangengineer.exformmaker.service.mapper
+package com.clangengineer.surveymodus.service.mapper
 
-import com.clangengineer.exformmaker.domain.Authority
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
-import com.clangengineer.exformmaker.service.dto.UserDTO
+import com.clangengineer.surveymodus.domain.Authority
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.service.dto.UserDTO
 import org.mapstruct.BeanMapping
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings

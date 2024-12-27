@@ -1,9 +1,9 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
-import com.clangengineer.exformmaker.web.rest.vm.LoginVM
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
+import com.clangengineer.surveymodus.web.rest.vm.LoginVM
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

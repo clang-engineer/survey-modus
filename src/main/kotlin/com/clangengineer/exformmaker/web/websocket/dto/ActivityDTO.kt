@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.websocket.dto
+package com.clangengineer.surveymodus.web.websocket.dto
 
 import java.time.Instant
 

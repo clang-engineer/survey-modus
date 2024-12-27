@@ -1,14 +1,14 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.Authority
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
-import com.clangengineer.exformmaker.security.ADMIN
-import com.clangengineer.exformmaker.security.USER
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
-import com.clangengineer.exformmaker.service.mapper.UserMapper
-import com.clangengineer.exformmaker.web.rest.vm.ManagedUserVM
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.Authority
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
+import com.clangengineer.surveymodus.security.ADMIN
+import com.clangengineer.surveymodus.security.USER
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.service.mapper.UserMapper
+import com.clangengineer.surveymodus.web.rest.vm.ManagedUserVM
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem

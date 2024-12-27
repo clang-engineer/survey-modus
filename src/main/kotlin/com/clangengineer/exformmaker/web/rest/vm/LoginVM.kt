@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest.vm
+package com.clangengineer.surveymodus.web.rest.vm
 
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size

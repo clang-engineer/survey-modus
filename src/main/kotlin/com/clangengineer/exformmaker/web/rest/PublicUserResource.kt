@@ -1,7 +1,7 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.service.UserService
-import com.clangengineer.exformmaker.service.dto.UserDTO
+import com.clangengineer.surveymodus.service.UserService
+import com.clangengineer.surveymodus.service.dto.UserDTO
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

@@ -1,13 +1,13 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.Field
-import com.clangengineer.exformmaker.domain.Form
-import com.clangengineer.exformmaker.domain.embeddable.FieldAttribute
-import com.clangengineer.exformmaker.domain.embeddable.FieldDisplay
-import com.clangengineer.exformmaker.domain.enumeration.type
-import com.clangengineer.exformmaker.repository.FieldRepository
-import com.clangengineer.exformmaker.service.mapper.FieldMapper
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.Field
+import com.clangengineer.surveymodus.domain.Form
+import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
+import com.clangengineer.surveymodus.domain.embeddable.FieldDisplay
+import com.clangengineer.surveymodus.domain.enumeration.type
+import com.clangengineer.surveymodus.repository.FieldRepository
+import com.clangengineer.surveymodus.service.mapper.FieldMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasItem

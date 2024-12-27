@@ -7,7 +7,7 @@
         <resetJUL>true</resetJUL>
     </contextListener>
     <conversionRule conversionWord="crlf"
-        converterClass="com.clangengineer.exformmaker.config.CRLFLogConverter"/>
+        converterClass="com.clangengineer.surveymodus.config.CRLFLogConverter"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <logger level="WARN" name="javax.activation"/>

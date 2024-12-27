@@ -76,8 +76,8 @@ export const PointUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="exformmakerApp.point.home.createOrEditLabel" data-cy="PointCreateUpdateHeading">
-            <Translate contentKey="exformmakerApp.point.home.createOrEditLabel">Create or edit a Point</Translate>
+          <h2 id="surveymodusApp.point.home.createOrEditLabel" data-cy="PointCreateUpdateHeading">
+            <Translate contentKey="surveymodusApp.point.home.createOrEditLabel">Create or edit a Point</Translate>
           </h2>
         </Col>
       </Row>
@@ -98,7 +98,7 @@ export const PointUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('exformmakerApp.point.title')}
+                label={translate('surveymodusApp.point.title')}
                 id="point-title"
                 name="title"
                 data-cy="title"
@@ -116,24 +116,24 @@ export const PointUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('exformmakerApp.point.description')}
+                label={translate('surveymodusApp.point.description')}
                 id="point-description"
                 name="description"
                 data-cy="description"
                 type="text"
               />
               <ValidatedField
-                label={translate('exformmakerApp.point.activated')}
+                label={translate('surveymodusApp.point.activated')}
                 id="point-activated"
                 name="activated"
                 data-cy="activated"
                 check
                 type="checkbox"
               />
-              <ValidatedField label={translate('exformmakerApp.point.type')} id="point-type" name="type" data-cy="type" type="select">
+              <ValidatedField label={translate('surveymodusApp.point.type')} id="point-type" name="type" data-cy="type" type="select">
                 {levelValues.map(l => (
                   <option value={l} key={l}>
-                    {translate('exformmakerApp.level.' + l)}
+                    {translate('surveymodusApp.level.' + l)}
                   </option>
                 ))}
               </ValidatedField>
@@ -141,7 +141,7 @@ export const PointUpdate = () => {
                 id="point-user"
                 name="user"
                 data-cy="user"
-                label={translate('exformmakerApp.point.user')}
+                label={translate('surveymodusApp.point.user')}
                 type="select"
                 required
               >

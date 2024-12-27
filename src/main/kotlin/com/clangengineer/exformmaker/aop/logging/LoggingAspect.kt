@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.aop.logging
+package com.clangengineer.surveymodus.aop.logging
 
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
@@ -35,9 +35,9 @@ open class LoggingAspect(private val env: Environment) {
      * Pointcut that matches all Spring beans in the application's main packages.
      */
     @Pointcut(
-        "within(com.clangengineer.exformmaker.repository..*)" +
-            " || within(com.clangengineer.exformmaker.service..*)" +
-            " || within(com.clangengineer.exformmaker.web.rest..*)"
+        "within(com.clangengineer.surveymodus.repository..*)" +
+            " || within(com.clangengineer.surveymodus.service..*)" +
+            " || within(com.clangengineer.surveymodus.web.rest..*)"
     )
     fun applicationPackagePointcut() =
         Unit // Method is empty as this is just a Pointcut, the implementations are in the advices.

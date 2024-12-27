@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.web.rest.vm
+package com.clangengineer.surveymodus.web.rest.vm
 
-import com.clangengineer.exformmaker.service.dto.AdminUserDTO
+import com.clangengineer.surveymodus.service.dto.AdminUserDTO
 import javax.validation.constraints.Size
 
 /**

@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -17,7 +17,7 @@ const FormOwnerSelect = (props: IFormOwnerSelectProps) => {
 
   return (
     <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
-      <InputLabel id="form-user-label"> {translate('exformmakerApp.form.user')}</InputLabel>
+      <InputLabel id="form-user-label"> {translate('surveymodusApp.form.user')}</InputLabel>
       <Select
         labelId="form-user-label"
         id="form-user"
@@ -26,7 +26,7 @@ const FormOwnerSelect = (props: IFormOwnerSelectProps) => {
         onChange={e => {
           formik.setFieldValue('user', { id: e.target.value });
         }}
-        label={translate('exformmakerApp.form.user')}
+        label={translate('surveymodusApp.form.user')}
       >
         <MenuItem value="-" disabled>
           <em>None</em>

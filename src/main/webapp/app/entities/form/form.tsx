@@ -87,7 +87,7 @@ export const Form = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="exformmakerApp.form.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveymodusApp.form.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -98,7 +98,7 @@ export const Form = () => {
             onClick={() => navigate('/form/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="exformmakerApp.form.home.createLabel">Create new Form</Translate>
+            <Translate contentKey="surveymodusApp.form.home.createLabel">Create new Form</Translate>
           </Button>
         </Box>
       </Box>
@@ -113,27 +113,27 @@ export const Form = () => {
           <TableHead>
             <TableRow>
               <TableCell className="hand" onClick={sort('id')}>
-                <Translate contentKey="exformmakerApp.form.id">ID</Translate>
+                <Translate contentKey="surveymodusApp.form.id">ID</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('title')}>
-                <Translate contentKey="exformmakerApp.form.title">Title</Translate>
+                <Translate contentKey="surveymodusApp.form.title">Title</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('description')}>
-                <Translate contentKey="exformmakerApp.form.description">Description</Translate>
+                <Translate contentKey="surveymodusApp.form.description">Description</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('activated')}>
-                <Translate contentKey="exformmakerApp.form.activated">Activated</Translate>
+                <Translate contentKey="surveymodusApp.form.activated">Activated</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('user.login')}>
-                <Translate contentKey="exformmakerApp.form.user">User</Translate>
+                <Translate contentKey="surveymodusApp.form.user">User</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand">
-                <Translate contentKey="exformmakerApp.form.category">Category</Translate>
+                <Translate contentKey="surveymodusApp.form.category">Category</Translate>
               </TableCell>
               <TableCell />
             </TableRow>
@@ -200,7 +200,7 @@ export const Form = () => {
       ) : (
         !loading && (
           <div className="alert alert-warning">
-            <Translate contentKey="exformmakerApp.form.home.notFound">No Forms found</Translate>
+            <Translate contentKey="surveymodusApp.form.home.notFound">No Forms found</Translate>
           </div>
         )
       )}

@@ -1,6 +1,6 @@
-package com.clangengineer.exformmaker.config
+package com.clangengineer.surveymodus.config
 
-import com.clangengineer.exformmaker.IntegrationTest
+import com.clangengineer.surveymodus.IntegrationTest
 import org.junit.jupiter.api.ClassDescriptor
 import org.junit.jupiter.api.ClassOrderer
 import org.junit.jupiter.api.ClassOrdererContext

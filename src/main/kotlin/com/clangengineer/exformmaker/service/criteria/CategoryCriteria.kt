@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.service.criteria
+package com.clangengineer.surveymodus.service.criteria
 
 import org.springdoc.api.annotations.ParameterObject
 import tech.jhipster.service.Criteria

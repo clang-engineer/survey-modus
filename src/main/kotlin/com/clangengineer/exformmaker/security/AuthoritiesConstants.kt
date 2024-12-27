@@ -1,4 +1,4 @@
-package com.clangengineer.exformmaker.security
+package com.clangengineer.surveymodus.security
 
 const val ADMIN: String = "ROLE_ADMIN"
 const val USER: String = "ROLE_USER"

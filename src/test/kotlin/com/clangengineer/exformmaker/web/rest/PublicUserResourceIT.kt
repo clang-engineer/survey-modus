@@ -1,10 +1,10 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.exformmaker.IntegrationTest
-import com.clangengineer.exformmaker.domain.User
-import com.clangengineer.exformmaker.repository.UserRepository
-import com.clangengineer.exformmaker.security.ADMIN
-import com.clangengineer.exformmaker.security.USER
+import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.User
+import com.clangengineer.surveymodus.repository.UserRepository
+import com.clangengineer.surveymodus.security.ADMIN
+import com.clangengineer.surveymodus.security.USER
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
