@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IForm } from 'app/shared/model/form.model';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 
-import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
+import { Box, ButtonGroup, Grid, IconButton, Switch, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -116,6 +116,23 @@ const FieldWizardList = () => {
           <Typography>
             Fields for form {form.title} ({form.category.title})
           </Typography>
+          <IconButton color={'primary'}>
+            <Switch
+              size="small"
+              checked={items.filter(a => a.activated).length !== 0}
+              color="secondary"
+              onChange={e => {
+                setItems(
+                  items.map(a => {
+                    return {
+                      ...a,
+                      activated: e.target.checked,
+                    };
+                  })
+                );
+              }}
+            />
+          </IconButton>
         </Box>
         <ButtonGroup size="small">
           <IconButton
