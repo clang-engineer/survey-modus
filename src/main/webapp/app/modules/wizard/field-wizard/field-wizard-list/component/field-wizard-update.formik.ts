@@ -30,9 +30,6 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
         .array()
         .of(yup.string().required('Lookup Value is required'))
         .test('is-required-based-on-type', 'Lookup Values are required', function (value) {
-          if (!value) {
-            return false;
-          }
           const { type } = this.parent.attribute || {};
           if (isLookupType(type)) {
             return value.length >= 1; // 최소 1개 필요
@@ -40,9 +37,6 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
           return true; // 조건이 맞지 않으면 검증 통과
         })
         .test('is-unique-based-on-type', 'Lookup Values must be unique', function (value) {
-          if (!value) {
-            return false;
-          }
           const { type } = this.parent.attribute || {};
           if (isLookupType(type)) {
             return new Set(value).size === value.length; // 중복 값이 없어야 함
@@ -50,7 +44,7 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
           return true; // 조건이 맞지 않으면 검증 통과
         }),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       const result = items.map(a => {
         if (a.id === values.id) {
           return values;
