@@ -124,7 +124,7 @@ const FieldWizardList = () => {
               create(
                 SurveyModal({
                   form: form,
-                  fields: items,
+                  fields: items.filter(a => a.activated),
                 })
               )().then(() => {
                 console.log('modal closed');
