@@ -107,13 +107,13 @@ const SurveyModal =
             </Button>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={gridSpacing} padding={3}>
+        <Grid container spacing={2} marginTop={1}>
           {fields.length > 0 ? (
             fields
               .sort((a, b) => a.display.orderNo - b.display.orderNo)
               .map((field, index) => {
                 return (
-                  <Grid item xs={12} key={index}>
+                  <Grid item xs={12} key={index} marginX={2}>
                     <SubCard
                       title={
                         <Box display="flex">
