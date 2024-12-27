@@ -19,7 +19,7 @@ const FieldAttributeUpdate = (props: IFieldAttributeUpdateProps) => {
   const { formik } = props;
 
   return (
-    <SubCard title={translate('surveymodusApp.field.attribute.title')}>
+    <SubCard title={translate('surveyModusApp.field.attribute.title')}>
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
           <FormControl
@@ -28,12 +28,12 @@ const FieldAttributeUpdate = (props: IFieldAttributeUpdateProps) => {
             error={formik.touched.attribute && Boolean(formik.errors.attribute)}
             variant="outlined"
           >
-            <InputLabel id="field-attribute-type-label"> {translate('surveymodusApp.field.attribute.type')}</InputLabel>
+            <InputLabel id="field-attribute-type-label"> {translate('surveyModusApp.field.attribute.type')}</InputLabel>
             <Select
               fullWidth
               id="field-attribute-type"
               name="attribute.type"
-              label={translate('surveymodusApp.field.attribute.type')}
+              label={translate('surveyModusApp.field.attribute.type')}
               value={formik.values.attribute?.type}
               onChange={formik.handleChange}
               error={formik.touched.attribute?.type && Boolean(formik.errors.attribute?.type)}
@@ -54,7 +54,7 @@ const FieldAttributeUpdate = (props: IFieldAttributeUpdateProps) => {
             fullWidth
             id="field-attribute-defaultValue"
             name="attribute.defaultValue"
-            label={translate('surveymodusApp.field.attribute.defaultValue')}
+            label={translate('surveyModusApp.field.attribute.defaultValue')}
             value={formik.values.attribute?.defaultValue}
             onChange={formik.handleChange}
             error={formik.touched.attribute?.defaultValue && Boolean(formik.errors.attribute?.defaultValue)}

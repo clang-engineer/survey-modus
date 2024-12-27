@@ -7,7 +7,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.library.Architectures.layeredArchitecture
 
-@AnalyzeClasses(packagesOf = [surveymodusApp::class], importOptions = [DoNotIncludeTests::class])
+@AnalyzeClasses(packagesOf = [SurveyModusApp::class], importOptions = [DoNotIncludeTests::class])
 class TechnicalStructureTest {
     @ArchTest
     val respectsTechnicalArchitectureLayers = layeredArchitecture()
@@ -23,7 +23,7 @@ class TechnicalStructureTest {
         .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Service", "Web")
         .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config")
         .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config")
-        .ignoreDependency(belongToAnyOf(surveymodusApp::class.java), alwaysTrue())
+        .ignoreDependency(belongToAnyOf(SurveyModusApp::class.java), alwaysTrue())
         .ignoreDependency(
             alwaysTrue(),
             belongToAnyOf(

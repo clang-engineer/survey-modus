@@ -127,8 +127,8 @@ export const FieldUpdate = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="surveymodusApp.field.home.createOrEditLabel" data-cy="FieldCreateUpdateHeading">
-        <Translate contentKey="surveymodusApp.field.home.createOrEditLabel">Create or edit a Field</Translate>
+      <Typography variant="h4" id="surveyModusApp.field.home.createOrEditLabel" data-cy="FieldCreateUpdateHeading">
+        <Translate contentKey="surveyModusApp.field.home.createOrEditLabel">Create or edit a Field</Translate>
         {!isNew ?? (
           <Typography variant="caption" display="block" gutterBottom>
             `: ${fieldEntity.id}`
@@ -161,7 +161,7 @@ export const FieldUpdate = () => {
               fullWidth
               id="field-title"
               name="title"
-              label={translate('surveymodusApp.field.title')}
+              label={translate('surveyModusApp.field.title')}
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -174,7 +174,7 @@ export const FieldUpdate = () => {
               fullWidth
               id="field-description"
               name="description"
-              label={translate('surveymodusApp.field.description')}
+              label={translate('surveyModusApp.field.description')}
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
@@ -185,12 +185,12 @@ export const FieldUpdate = () => {
           <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox id="field-activated" name="activated" checked={formik.values.activated} onChange={formik.handleChange} />}
-              label={translate('surveymodusApp.field.activated')}
+              label={translate('surveyModusApp.field.activated')}
             />
           </Grid>
           <Grid item xs={12}>
             <FormControl component="fieldset" fullWidth error={formik.touched.form && Boolean(formik.errors.form)} variant="outlined">
-              <InputLabel id="field-form-label"> {translate('surveymodusApp.field.form')}</InputLabel>
+              <InputLabel id="field-form-label"> {translate('surveyModusApp.field.form')}</InputLabel>
               <Select
                 labelId="field-form-label"
                 id="field-form"
@@ -199,7 +199,7 @@ export const FieldUpdate = () => {
                 onChange={e => {
                   formik.setFieldValue('form', { id: e.target.value });
                 }}
-                label={translate('surveymodusApp.field.form')}
+                label={translate('surveyModusApp.field.form')}
               >
                 <MenuItem value="-" disabled>
                   <em>None</em>

@@ -84,16 +84,16 @@ export const UserPoint = () => {
   return (
     <div>
       <h2 id="user-point-heading" data-cy="UserPointHeading">
-        <Translate contentKey="surveymodusApp.userPoint.home.title">User Points</Translate>
+        <Translate contentKey="surveyModusApp.userPoint.home.title">User Points</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="surveymodusApp.userPoint.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.userPoint.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/user-point/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="surveymodusApp.userPoint.home.createLabel">Create new User Point</Translate>
+            <Translate contentKey="surveyModusApp.userPoint.home.createLabel">Create new User Point</Translate>
           </Link>
         </div>
       </h2>
@@ -103,13 +103,13 @@ export const UserPoint = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="surveymodusApp.userPoint.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.userPoint.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="surveymodusApp.userPoint.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.userPoint.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="surveymodusApp.userPoint.point">Point</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.userPoint.point">Point</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -165,7 +165,7 @@ export const UserPoint = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="surveymodusApp.userPoint.home.notFound">No User Points found</Translate>
+              <Translate contentKey="surveyModusApp.userPoint.home.notFound">No User Points found</Translate>
             </div>
           )
         )}

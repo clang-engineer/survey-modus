@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct
 
 @SpringBootApplication
 @EnableConfigurationProperties(LiquibaseProperties::class, ApplicationProperties::class)
-class surveymodusApp(private val env: Environment) {
+class SurveyModusApp(private val env: Environment) {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -56,13 +56,13 @@ class surveymodusApp(private val env: Environment) {
          */
         @JvmStatic
         fun main(args: Array<String>) {
-            val env = runApplication<surveymodusApp>(*args) { DefaultProfileUtil.addDefaultProfile(this) }.environment
+            val env = runApplication<SurveyModusApp>(*args) { DefaultProfileUtil.addDefaultProfile(this) }.environment
             logApplicationStartup(env)
         }
 
         @JvmStatic
         private fun logApplicationStartup(env: Environment) {
-            val log = LoggerFactory.getLogger(surveymodusApp::class.java)
+            val log = LoggerFactory.getLogger(SurveyModusApp::class.java)
 
             val protocol = if (env.getProperty("server.ssl.key-store") != null) {
                 "https"

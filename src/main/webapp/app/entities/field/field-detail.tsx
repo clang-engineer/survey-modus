@@ -24,7 +24,7 @@ export const FieldDetail = () => {
     <MainCard
       title={
         <Typography variant="h4">
-          <Translate contentKey="surveymodusApp.field.detail.title">Field</Translate> [<b>{fieldEntity.id}</b>]
+          <Translate contentKey="surveyModusApp.field.detail.title">Field</Translate> [<b>{fieldEntity.id}</b>]
         </Typography>
       }
     >
@@ -40,7 +40,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.title">Title</Translate>
+              <Translate contentKey="surveyModusApp.field.title">Title</Translate>
             </Typography>
             <Typography> {fieldEntity.title} </Typography>
           </Stack>
@@ -48,7 +48,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.description">Description</Translate>
+              <Translate contentKey="surveyModusApp.field.description">Description</Translate>
             </Typography>
             <Typography> {fieldEntity.description} </Typography>
           </Stack>
@@ -56,7 +56,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.activated">Activated</Translate>
+              <Translate contentKey="surveyModusApp.field.activated">Activated</Translate>
             </Typography>
             <Typography> {fieldEntity.activated ? 'true' : 'false'} </Typography>
           </Stack>
@@ -64,7 +64,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.form">Form</Translate>
+              <Translate contentKey="surveyModusApp.field.form">Form</Translate>
             </Typography>
             <Typography> {fieldEntity.form ? fieldEntity.form.title : ''} </Typography>
           </Stack>
@@ -72,7 +72,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.attribute.title">Field Attribute</Translate>
+              <Translate contentKey="surveyModusApp.field.attribute.title">Field Attribute</Translate>
             </Typography>
             <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>
               {fieldEntity?.attribute &&
@@ -89,7 +89,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.display.title">Field Display</Translate>
+              <Translate contentKey="surveyModusApp.field.display.title">Field Display</Translate>
             </Typography>
             <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>
               {fieldEntity?.display &&
@@ -106,7 +106,7 @@ export const FieldDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.field.lookups">Field Lookups</Translate>
+              <Translate contentKey="surveyModusApp.field.lookups">Field Lookups</Translate>
               {JSON.stringify(fieldEntity?.lookups)}
             </Typography>
             <Box border={1} borderRadius={1} p={1} width="100%" sx={{ borderStyle: 'dashed' }}>

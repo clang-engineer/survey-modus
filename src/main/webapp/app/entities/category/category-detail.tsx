@@ -21,7 +21,7 @@ export const CategoryDetail = () => {
     <Row>
       <Col md="8">
         <h2 data-cy="categoryDetailsHeading">
-          <Translate contentKey="surveymodusApp.category.detail.title">Category</Translate>
+          <Translate contentKey="surveyModusApp.category.detail.title">Category</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -32,19 +32,19 @@ export const CategoryDetail = () => {
           <dd>{categoryEntity.id}</dd>
           <dt>
             <span id="title">
-              <Translate contentKey="surveymodusApp.category.title">Title</Translate>
+              <Translate contentKey="surveyModusApp.category.title">Title</Translate>
             </span>
           </dt>
           <dd>{categoryEntity.title}</dd>
           <dt>
             <span id="description">
-              <Translate contentKey="surveymodusApp.category.description">Description</Translate>
+              <Translate contentKey="surveyModusApp.category.description">Description</Translate>
             </span>
           </dt>
           <dd>{categoryEntity.description}</dd>
           <dt>
             <span id="activated">
-              <Translate contentKey="surveymodusApp.category.activated">Activated</Translate>
+              <Translate contentKey="surveyModusApp.category.activated">Activated</Translate>
             </span>
           </dt>
           <dd>{categoryEntity.activated ? 'true' : 'false'}</dd>

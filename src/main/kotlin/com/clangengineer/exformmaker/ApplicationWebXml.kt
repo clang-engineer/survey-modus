@@ -13,6 +13,6 @@ class ApplicationWebXml : SpringBootServletInitializer() {
     override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
         // set a default to use when no profile is configured.
         DefaultProfileUtil.addDefaultProfile(application.application())
-        return application.sources(surveymodusApp::class.java)
+        return application.sources(SurveyModusApp::class.java)
     }
 }

@@ -44,8 +44,8 @@ export const CategoryDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="categoryDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="surveymodusApp.category.delete.question">
-        <Translate contentKey="surveymodusApp.category.delete.question" interpolate={{ id: categoryEntity.id }}>
+      <ModalBody id="surveyModusApp.category.delete.question">
+        <Translate contentKey="surveyModusApp.category.delete.question" interpolate={{ id: categoryEntity.id }}>
           Are you sure you want to delete this Category?
         </Translate>
       </ModalBody>

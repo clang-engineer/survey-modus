@@ -76,7 +76,7 @@ const GroupWizardList = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveymodusApp.group.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.group.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -87,7 +87,7 @@ const GroupWizardList = () => {
             onClick={() => navigate('/wizard/group/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveymodusApp.group.home.createLabel">Create new Group</Translate>
+            <Translate contentKey="surveyModusApp.group.home.createLabel">Create new Group</Translate>
           </Button>
         </Box>
       </Grid>
@@ -140,7 +140,7 @@ const GroupWizardList = () => {
           : !loading && (
               <Grid item xs={12}>
                 <Alert icon={<CheckIcon fontSize="inherit" />} severity="warning">
-                  <Translate contentKey="surveymodusApp.group.home.notFound">No Groups found</Translate>
+                  <Translate contentKey="surveyModusApp.group.home.notFound">No Groups found</Translate>
                 </Alert>
               </Grid>
             )}

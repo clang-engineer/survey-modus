@@ -86,7 +86,7 @@ export const Field = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveymodusApp.field.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.field.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -97,7 +97,7 @@ export const Field = () => {
             onClick={() => navigate('/field/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveymodusApp.field.home.createLabel">Create new Field</Translate>
+            <Translate contentKey="surveyModusApp.field.home.createLabel">Create new Field</Translate>
           </Button>
         </Box>
       </Box>
@@ -112,23 +112,23 @@ export const Field = () => {
           <TableHead>
             <TableRow>
               <TableCell className="hand" onClick={sort('id')}>
-                <Translate contentKey="surveymodusApp.field.id">ID</Translate>
+                <Translate contentKey="surveyModusApp.field.id">ID</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('title')}>
-                <Translate contentKey="surveymodusApp.field.title">Title</Translate>
+                <Translate contentKey="surveyModusApp.field.title">Title</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('description')}>
-                <Translate contentKey="surveymodusApp.field.description">Description</Translate>
+                <Translate contentKey="surveyModusApp.field.description">Description</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('activated')}>
-                <Translate contentKey="surveymodusApp.field.activated">Activated</Translate>
+                <Translate contentKey="surveyModusApp.field.activated">Activated</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('form')}>
-                <Translate contentKey="surveymodusApp.field.form">Form</Translate>
+                <Translate contentKey="surveyModusApp.field.form">Form</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell />
@@ -191,7 +191,7 @@ export const Field = () => {
       ) : (
         !loading && (
           <div className="alert alert-warning">
-            <Translate contentKey="surveymodusApp.field.home.notFound">No Fields found</Translate>
+            <Translate contentKey="surveyModusApp.field.home.notFound">No Fields found</Translate>
           </div>
         )
       )}

@@ -80,16 +80,16 @@ export const Point = () => {
   return (
     <div>
       <h2 id="point-heading" data-cy="PointHeading">
-        <Translate contentKey="surveymodusApp.point.home.title">Points</Translate>
+        <Translate contentKey="surveyModusApp.point.home.title">Points</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="surveymodusApp.point.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.point.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/point/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="surveymodusApp.point.home.createLabel">Create new Point</Translate>
+            <Translate contentKey="surveyModusApp.point.home.createLabel">Create new Point</Translate>
           </Link>
         </div>
       </h2>
@@ -99,25 +99,25 @@ export const Point = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="surveymodusApp.point.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.point.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="surveymodusApp.point.title">Title</Translate>
+                  <Translate contentKey="surveyModusApp.point.title">Title</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="surveymodusApp.point.description">Description</Translate>
+                  <Translate contentKey="surveyModusApp.point.description">Description</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('activated')}>
-                  <Translate contentKey="surveymodusApp.point.activated">Activated</Translate>
+                  <Translate contentKey="surveyModusApp.point.activated">Activated</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('type')}>
-                  <Translate contentKey="surveymodusApp.point.type">Type</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.point.type">Type</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="surveymodusApp.point.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.point.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -134,7 +134,7 @@ export const Point = () => {
                   <td>{point.description}</td>
                   <td>{point.activated ? 'true' : 'false'}</td>
                   <td>
-                    <Translate contentKey={`surveymodusApp.level.${point.type}`} />
+                    <Translate contentKey={`surveyModusApp.level.${point.type}`} />
                   </td>
                   <td>{point.user ? point.user.login : ''}</td>
                   <td className="text-end">
@@ -178,7 +178,7 @@ export const Point = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="surveymodusApp.point.home.notFound">No Points found</Translate>
+              <Translate contentKey="surveyModusApp.point.home.notFound">No Points found</Translate>
             </div>
           )
         )}

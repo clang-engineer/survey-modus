@@ -76,8 +76,8 @@ export const PointUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="surveymodusApp.point.home.createOrEditLabel" data-cy="PointCreateUpdateHeading">
-            <Translate contentKey="surveymodusApp.point.home.createOrEditLabel">Create or edit a Point</Translate>
+          <h2 id="surveyModusApp.point.home.createOrEditLabel" data-cy="PointCreateUpdateHeading">
+            <Translate contentKey="surveyModusApp.point.home.createOrEditLabel">Create or edit a Point</Translate>
           </h2>
         </Col>
       </Row>
@@ -98,7 +98,7 @@ export const PointUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('surveymodusApp.point.title')}
+                label={translate('surveyModusApp.point.title')}
                 id="point-title"
                 name="title"
                 data-cy="title"
@@ -116,24 +116,24 @@ export const PointUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('surveymodusApp.point.description')}
+                label={translate('surveyModusApp.point.description')}
                 id="point-description"
                 name="description"
                 data-cy="description"
                 type="text"
               />
               <ValidatedField
-                label={translate('surveymodusApp.point.activated')}
+                label={translate('surveyModusApp.point.activated')}
                 id="point-activated"
                 name="activated"
                 data-cy="activated"
                 check
                 type="checkbox"
               />
-              <ValidatedField label={translate('surveymodusApp.point.type')} id="point-type" name="type" data-cy="type" type="select">
+              <ValidatedField label={translate('surveyModusApp.point.type')} id="point-type" name="type" data-cy="type" type="select">
                 {levelValues.map(l => (
                   <option value={l} key={l}>
-                    {translate('surveymodusApp.level.' + l)}
+                    {translate('surveyModusApp.level.' + l)}
                   </option>
                 ))}
               </ValidatedField>
@@ -141,7 +141,7 @@ export const PointUpdate = () => {
                 id="point-user"
                 name="user"
                 data-cy="user"
-                label={translate('surveymodusApp.point.user')}
+                label={translate('surveyModusApp.point.user')}
                 type="select"
                 required
               >

@@ -87,7 +87,7 @@ export const Group = () => {
         <Box display="flex" justifyContent="flex-end" alignItems="center">
           <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveymodusApp.group.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.group.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Button
             variant="contained"
@@ -98,7 +98,7 @@ export const Group = () => {
             onClick={() => navigate('/group/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveymodusApp.group.home.createLabel">Create new Group</Translate>
+            <Translate contentKey="surveyModusApp.group.home.createLabel">Create new Group</Translate>
           </Button>
         </Box>
       </Box>
@@ -113,30 +113,30 @@ export const Group = () => {
           <TableHead>
             <TableRow>
               <TableCell className="hand" onClick={sort('id')}>
-                <Translate contentKey="surveymodusApp.group.id">ID</Translate>
+                <Translate contentKey="surveyModusApp.group.id">ID</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('title')}>
-                <Translate contentKey="surveymodusApp.group.title">Title</Translate>
+                <Translate contentKey="surveyModusApp.group.title">Title</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('description')}>
-                <Translate contentKey="surveymodusApp.group.description">Description</Translate>
+                <Translate contentKey="surveyModusApp.group.description">Description</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('activated')}>
-                <Translate contentKey="surveymodusApp.group.activated">Activated</Translate>
+                <Translate contentKey="surveyModusApp.group.activated">Activated</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand" onClick={sort('user.login')}>
-                <Translate contentKey="surveymodusApp.group.user">User</Translate>
+                <Translate contentKey="surveyModusApp.group.user">User</Translate>
                 &nbsp; <IconArrowsSort size={'1rem'} />
               </TableCell>
               <TableCell className="hand">
-                <Translate contentKey="surveymodusApp.group.users">Users</Translate>
+                <Translate contentKey="surveyModusApp.group.users">Users</Translate>
               </TableCell>
               <TableCell className="hand">
-                <Translate contentKey="surveymodusApp.group.companies">Companies</Translate>
+                <Translate contentKey="surveyModusApp.group.companies">Companies</Translate>
               </TableCell>
               <TableCell />
             </TableRow>
@@ -218,7 +218,7 @@ export const Group = () => {
       ) : (
         !loading && (
           <div className="alert alert-warning">
-            <Translate contentKey="surveymodusApp.group.home.notFound">No Groups found</Translate>
+            <Translate contentKey="surveyModusApp.group.home.notFound">No Groups found</Translate>
           </div>
         )
       )}

@@ -17,7 +17,7 @@ const GroupOwnerSelect = (props: IGroupOwnerSelectProps) => {
 
   return (
     <FormControl component="fieldset" fullWidth error={formik.touched.user && Boolean(formik.errors.user)} variant="outlined">
-      <InputLabel id="group-user-label"> {translate('surveymodusApp.group.user')}</InputLabel>
+      <InputLabel id="group-user-label"> {translate('surveyModusApp.group.user')}</InputLabel>
       <Select
         labelId="group-user-label"
         id="group-user"
@@ -26,7 +26,7 @@ const GroupOwnerSelect = (props: IGroupOwnerSelectProps) => {
         onChange={e => {
           formik.setFieldValue('user', { id: e.target.value });
         }}
-        label={translate('surveymodusApp.group.user')}
+        label={translate('surveyModusApp.group.user')}
       >
         <MenuItem value="-" disabled>
           <em>None</em>

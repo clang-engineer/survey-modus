@@ -56,7 +56,7 @@ server:
 # ===================================================================
 jhipster:
   clientApp:
-    name: 'surveymodusApp'
+    name: 'surveyModusApp'
   mail:
     from: surveymodus@localhost.com
     base-url: http://127.0.0.1:8080

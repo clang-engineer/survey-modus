@@ -80,16 +80,16 @@ export const Category = () => {
   return (
     <div>
       <h2 id="category-heading" data-cy="CategoryHeading">
-        <Translate contentKey="surveymodusApp.category.home.title">Categorys</Translate>
+        <Translate contentKey="surveyModusApp.category.home.title">Categorys</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="surveymodusApp.category.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="surveyModusApp.category.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/category/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
-            <Translate contentKey="surveymodusApp.category.home.createLabel">Create new Category</Translate>
+            <Translate contentKey="surveyModusApp.category.home.createLabel">Create new Category</Translate>
           </Link>
         </div>
       </h2>
@@ -99,18 +99,18 @@ export const Category = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="surveymodusApp.category.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="surveyModusApp.category.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="surveymodusApp.category.title">Title</Translate>
+                  <Translate contentKey="surveyModusApp.category.title">Title</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="surveymodusApp.category.description">Description</Translate>
+                  <Translate contentKey="surveyModusApp.category.description">Description</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('activated')}>
-                  <Translate contentKey="surveymodusApp.category.activated">Activated</Translate>
+                  <Translate contentKey="surveyModusApp.category.activated">Activated</Translate>
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -168,7 +168,7 @@ export const Category = () => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="surveymodusApp.category.home.notFound">No Categorys found</Translate>
+              <Translate contentKey="surveyModusApp.category.home.notFound">No Categorys found</Translate>
             </div>
           )
         )}

@@ -44,8 +44,8 @@ export const UserPointDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="userPointDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="surveymodusApp.userPoint.delete.question">
-        <Translate contentKey="surveymodusApp.userPoint.delete.question" interpolate={{ id: userPointEntity.id }}>
+      <ModalBody id="surveyModusApp.userPoint.delete.question">
+        <Translate contentKey="surveyModusApp.userPoint.delete.question" interpolate={{ id: userPointEntity.id }}>
           Are you sure you want to delete this UserPoint?
         </Translate>
       </ModalBody>

@@ -63,8 +63,8 @@ export const CategoryUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="surveymodusApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="surveymodusApp.category.home.createOrEditLabel">Create or edit a Category</Translate>
+          <h2 id="surveyModusApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+            <Translate contentKey="surveyModusApp.category.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
@@ -85,7 +85,7 @@ export const CategoryUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('surveymodusApp.category.title')}
+                label={translate('surveyModusApp.category.title')}
                 id="category-title"
                 name="title"
                 data-cy="title"
@@ -103,14 +103,14 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('surveymodusApp.category.description')}
+                label={translate('surveyModusApp.category.description')}
                 id="category-description"
                 name="description"
                 data-cy="description"
                 type="text"
               />
               <ValidatedField
-                label={translate('surveymodusApp.category.activated')}
+                label={translate('surveyModusApp.category.activated')}
                 id="category-activated"
                 name="activated"
                 data-cy="activated"

@@ -24,7 +24,7 @@ export const GroupDetail = () => {
     <MainCard
       title={
         <Typography variant="h4">
-          <Translate contentKey="surveymodusApp.group.detail.title">Group</Translate> [<b>{groupEntity.id}</b>]
+          <Translate contentKey="surveyModusApp.group.detail.title">Group</Translate> [<b>{groupEntity.id}</b>]
         </Typography>
       }
     >
@@ -40,7 +40,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.title">Title</Translate>
+              <Translate contentKey="surveyModusApp.group.title">Title</Translate>
             </Typography>
             <Typography> {groupEntity.title} </Typography>
           </Stack>
@@ -48,7 +48,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.description">Description</Translate>
+              <Translate contentKey="surveyModusApp.group.description">Description</Translate>
             </Typography>
             <Typography> {groupEntity.description} </Typography>
           </Stack>
@@ -56,7 +56,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.activated">Activated</Translate>
+              <Translate contentKey="surveyModusApp.group.activated">Activated</Translate>
             </Typography>
             <Typography> {groupEntity.activated ? 'true' : 'false'} </Typography>
           </Stack>
@@ -64,7 +64,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.user">User</Translate>
+              <Translate contentKey="surveyModusApp.group.user">User</Translate>
             </Typography>
             <Typography> {groupEntity.user ? groupEntity.user.login : ''} </Typography>
           </Stack>
@@ -72,7 +72,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.users">User List</Translate>
+              <Translate contentKey="surveyModusApp.group.users">User List</Translate>
             </Typography>
             <Typography>
               {groupEntity.users
@@ -89,7 +89,7 @@ export const GroupDetail = () => {
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
             <Typography variant="h4">
-              <Translate contentKey="surveymodusApp.group.companies">Company List</Translate>
+              <Translate contentKey="surveyModusApp.group.companies">Company List</Translate>
             </Typography>
             <Typography>
               {groupEntity.companies

@@ -17,7 +17,7 @@ const FormCategorySelect = (props: IFormCategorySelectProps) => {
 
   return (
     <FormControl component="fieldset" fullWidth error={formik.touched.category && Boolean(formik.errors.category)} variant="outlined">
-      <InputLabel id="form-category-label"> {translate('surveymodusApp.form.category')}</InputLabel>
+      <InputLabel id="form-category-label"> {translate('surveyModusApp.form.category')}</InputLabel>
       <Select
         labelId="form-category-label"
         id="form-category"
@@ -26,7 +26,7 @@ const FormCategorySelect = (props: IFormCategorySelectProps) => {
         onChange={e => {
           formik.setFieldValue('category', { id: e.target.value });
         }}
-        label={translate('surveymodusApp.form.category')}
+        label={translate('surveyModusApp.form.category')}
       >
         <MenuItem value="-" disabled>
           <em>None</em>

@@ -88,8 +88,8 @@ export const GroupUpdate = () => {
 
   const MainCardTitle = () => {
     return (
-      <Typography variant="h4" id="surveymodusApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading" gutterBottom>
-        <Translate contentKey="surveymodusApp.group.home.createOrEditLabel">Create or edit a Group </Translate> &nbsp;
+      <Typography variant="h4" id="surveyModusApp.group.home.createOrEditLabel" data-cy="GroupCreateUpdateHeading" gutterBottom>
+        <Translate contentKey="surveyModusApp.group.home.createOrEditLabel">Create or edit a Group </Translate> &nbsp;
         {!isNew && `(ID: ${groupEntity.id})`}
       </Typography>
     );
@@ -120,7 +120,7 @@ export const GroupUpdate = () => {
               fullWidth
               id="group-title"
               name="title"
-              label={translate('surveymodusApp.group.title')}
+              label={translate('surveyModusApp.group.title')}
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -133,7 +133,7 @@ export const GroupUpdate = () => {
               fullWidth
               id="group-description"
               name="description"
-              label={translate('surveymodusApp.group.description')}
+              label={translate('surveyModusApp.group.description')}
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
@@ -144,7 +144,7 @@ export const GroupUpdate = () => {
           <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox id="group-activated" name="activated" checked={formik.values.activated} onChange={formik.handleChange} />}
-              label={translate('surveymodusApp.group.activated')}
+              label={translate('surveyModusApp.group.activated')}
             />
           </Grid>
           {fromAdminPath && (
