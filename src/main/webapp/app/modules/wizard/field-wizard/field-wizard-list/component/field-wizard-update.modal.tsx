@@ -114,7 +114,7 @@ const FieldWizardUpdateModal =
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  {/*<InputLabel id="attribute.type">Type</InputLabel>*/}
+                  {/* <InputLabel id="attribute.type">Type</InputLabel>*/}
                   <InputLabel variant="standard" htmlFor="attribute.type">
                     Type
                   </InputLabel>

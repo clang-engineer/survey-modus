@@ -22,6 +22,7 @@ const SurveyModalRadioField = (props: ISurveyModalRadioFieldProps) => {
     <Box display="flex">
       {field.lookups?.map((lookup, index) => (
         <FormControlLabel
+          key={index}
           value={lookup}
           control={
             <Checkbox

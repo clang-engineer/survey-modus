@@ -16,7 +16,9 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       <TextField
         id={`field-${field.id}`}
         value={formik.values[field.id]}
-        onChange={e => formik.setFieldValue(`${field.id}`, e.target.value)}
+        onChange={e => {
+          formik.setFieldValue(`${field.id}`, e.target.value);
+        }}
         error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
         variant="standard"
         placeholder={'Enter your answer here'}

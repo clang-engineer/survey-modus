@@ -74,8 +74,8 @@ const SurveyModal =
         // }
         return acc;
       }, {}),
-      onSubmit: values => {
-        console.log(values);
+      onSubmit(values) {
+        // console.log(values);
       },
     });
 

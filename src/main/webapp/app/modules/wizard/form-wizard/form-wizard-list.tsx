@@ -61,7 +61,7 @@ const FormWizardList = () => {
           <Button
             onClick={() =>
               navigate(`/wizard/field`, {
-                state: { form: form },
+                state: { form },
               })
             }
           >

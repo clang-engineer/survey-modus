@@ -43,7 +43,7 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
     <Box
       sx={{
         '& .MuiTypography-root, & svg': {
-          color: color,
+          color,
           textDecoration: item.activated ? 'none' : 'line-through',
         },
       }}
@@ -70,8 +70,8 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
         <List sx={{ padding: 0 }}>
           {Object.keys(item)
             .filter(key => RENDER_ATTRIBUTES.includes(key))
-            .map((key, index) => (
-              <ListItem key={index} sx={{ padding: 0 }}>
+            .map((key, i) => (
+              <ListItem key={i} sx={{ padding: 0 }}>
                 <ListItemIcon
                   title={key}
                   sx={{

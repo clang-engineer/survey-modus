@@ -26,7 +26,7 @@ const FieldWizardListLeftItem = (props: { item: IField; index: number }) => {
   const { items, setItems } = useFieldWizardConfig();
 
   const handleDelete = id => {
-    setItems(items.filter(item => item.id !== id));
+    setItems(items.filter(d => d.id !== id));
   };
 
   return (
@@ -48,10 +48,10 @@ const FieldWizardListLeftItem = (props: { item: IField; index: number }) => {
                   size="small"
                   checked={item.activated}
                   onChange={e => {
-                    const item = { ...items[index] };
-                    item.activated = e.target.checked;
+                    const data = { ...items[index] };
+                    data.activated = e.target.checked;
 
-                    setItems([...items.slice(0, index), item, ...items.slice(index + 1)]);
+                    setItems([...items.slice(0, index), data, ...items.slice(index + 1)]);
                   }}
                   name="activated"
                 />

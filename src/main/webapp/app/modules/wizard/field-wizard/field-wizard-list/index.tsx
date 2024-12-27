@@ -60,16 +60,16 @@ const FieldWizardList = () => {
       return;
     }
 
-    if (source.droppableId == 'right' && destination.droppableId == 'left') {
+    if (source.droppableId === 'right' && destination.droppableId === 'left') {
       const type = event.draggableId;
       const item = {
         id: Number(new Date()),
         title: null,
         description: null,
         activated: true,
-        form: form,
+        form,
         attribute: {
-          type: type,
+          type,
           defaultValue: null,
         },
         isNew: true,
@@ -87,15 +87,15 @@ const FieldWizardList = () => {
           setItems,
         })
       )();
-    } else if (source.droppableId == 'left' && destination.droppableId == 'left') {
+    } else if (source.droppableId === 'left' && destination.droppableId === 'left') {
       const reordered: IField[] = reorder(items, event.source.index, event.destination.index);
 
       setItems(getOrderNumberReAssignedList(reordered));
     }
   };
 
-  const getOrderNumberReAssignedList = (items: IField[]) => {
-    return [...items].map((item, index) => {
+  const getOrderNumberReAssignedList = (data: IField[]) => {
+    return [...data].map((item, index) => {
       return {
         ...item,
         display: {
@@ -140,11 +140,11 @@ const FieldWizardList = () => {
             onClick={() => {
               create(
                 SurveyModal({
-                  form: form,
+                  form,
                   fields: items.filter(a => a.activated),
                 })
               )().then(() => {
-                console.log('modal closed');
+                // console.log('modal closed');
               });
             }}
           >

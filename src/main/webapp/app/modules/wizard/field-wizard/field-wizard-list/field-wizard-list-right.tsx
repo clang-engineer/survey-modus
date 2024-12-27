@@ -29,8 +29,8 @@ const FieldWizardListRight = () => {
       }}
     >
       <Droppable droppableId="right" isDropDisabled={true}>
-        {(provided, snapshot) => (
-          <Grid container {...provided.droppableProps} ref={provided.innerRef} spacing={1}>
+        {(provided1, snapshot1) => (
+          <Grid container {...provided1.droppableProps} ref={provided1.innerRef} spacing={1}>
             {items.map((item, index) => (
               <Grid
                 item
@@ -45,15 +45,15 @@ const FieldWizardListRight = () => {
                 }}
               >
                 <Draggable key={item.id} draggableId={item.title} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided2, snapshot2) => (
                     <SubCard
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
+                      ref={provided2.innerRef}
+                      {...provided2.draggableProps}
+                      {...provided2.dragHandleProps}
                       // style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                       style={{
                         userSelect: 'none',
-                        ...provided.draggableProps.style,
+                        ...provided2.draggableProps.style,
                       }}
                     >
                       <Typography
@@ -62,7 +62,7 @@ const FieldWizardListRight = () => {
                           fontSize: 12,
                           fontWeight: 600,
                           // textDecoration: 'underline',
-                          //italic, oblique, initial, inherit
+                          // italic, oblique, initial, inherit
                           fontStyle: 'oblique',
                           color: theme.palette.grey[800],
                         }}
@@ -82,7 +82,7 @@ const FieldWizardListRight = () => {
                 </Draggable>
               </Grid>
             ))}
-            {provided.placeholder}
+            {provided1.placeholder}
           </Grid>
         )}
       </Droppable>
