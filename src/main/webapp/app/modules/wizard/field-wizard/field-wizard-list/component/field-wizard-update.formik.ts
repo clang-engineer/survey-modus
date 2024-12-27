@@ -35,7 +35,7 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
           }
           const { type } = this.parent.attribute || {};
           if (isLookupType(type)) {
-            return value && value.length >= 1; // 최소 1개 필요
+            return value.length >= 1; // 최소 1개 필요
           }
           return true; // 조건이 맞지 않으면 검증 통과
         })
