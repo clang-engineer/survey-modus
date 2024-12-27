@@ -17,7 +17,7 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { IField } from 'app/shared/model/field.model';
-import { IconArrowsDown, IconDeviceFloppy } from '@tabler/icons';
+import { IconArrowsDown, IconCheck } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 import type, { isLookupType } from 'app/shared/model/enumerations/type.model';
@@ -49,12 +49,17 @@ const FieldWizardUpdateModal =
       onReject();
     };
 
-    const formik = fieldWizardUpdateFormik({ items, setItems: props.setItems, handleClose });
+    const formik = fieldWizardUpdateFormik({
+      items,
+      applyChanges: (data: IField[]) => {
+        props.setItems(data);
+        onResolve();
+      },
+    });
 
     return (
       <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
         <DialogContent>
-          {/*<DialogContentText id="alert-dialog-description" mb={1}/>*/}
           <form onSubmit={formik.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -159,13 +164,11 @@ const FieldWizardUpdateModal =
             <Button
               onClick={() => {
                 formik.handleSubmit();
-                // onResolve(true);
-                // handleClose();
               }}
               autoFocus
+              startIcon={<IconCheck size={'1rem'} />}
             >
-              <IconDeviceFloppy size={'1rem'} /> &nbsp;
-              <Typography variant="button">Save</Typography>
+              <Typography variant="button">Apply</Typography>
             </Button>
           </AnimateButton>
         </DialogActions>

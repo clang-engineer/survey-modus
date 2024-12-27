@@ -3,11 +3,11 @@ import { isLookupType } from 'app/shared/model/enumerations/type.model';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import app from 'app/app';
 
 export interface FieldWizardUpdateFormikProps {
   items: IField[];
-  setItems: (items: IField[]) => void;
-  handleClose: () => void;
+  applyChanges: (items: IField[]) => void;
 }
 
 const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
@@ -51,16 +51,14 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
         }),
     }),
     onSubmit: values => {
-      props.setItems(
-        items.map(a => {
-          if (a.id === values.id) {
-            return values;
-          }
-          return a;
-        })
-      );
+      const result = items.map(a => {
+        if (a.id === values.id) {
+          return values;
+        }
+        return a;
+      });
 
-      props.handleClose();
+      props.applyChanges(result);
     },
   });
 };
