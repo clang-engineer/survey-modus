@@ -2,7 +2,7 @@ import React from 'react';
 import { IField } from 'app/shared/model/field.model';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
-import { Box, Collapse, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Collapse, IconButton, List, ListItem, ListItemText, Typography, ListItemIcon } from '@mui/material';
 
 import { IconCircle } from '@tabler/icons';
 
@@ -53,9 +53,18 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
         </AnimateButton>
       </Typography>
       <Collapse in={visible} timeout="auto" unmountOnExit>
-        <List>
+        <List sx={{ padding: 0 }}>
           {Object.keys(item).map((key, index) => (
-            <ListItem key={index}>
+            <ListItem key={index} sx={{ padding: 0 }}>
+              <ListItemIcon
+                title={key}
+                sx={{
+                  marginLeft: '10px',
+                  minWidth: '20px',
+                }}
+              >
+                <FontAwesomeIcon icon={['fas', 'check']} size="2xs" />
+              </ListItemIcon>
               <ListItemText>
                 {key}: {JSON.stringify(item[key])}
               </ListItemText>

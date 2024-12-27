@@ -1,3 +1,5 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+
 import { faCogs as fasCogs } from '@fortawesome/free-solid-svg-icons/faCogs';
 import { faBan as fasBan } from '@fortawesome/free-solid-svg-icons/faBan';
 import { faAsterisk as fasAsterisk } from '@fortawesome/free-solid-svg-icons/faAsterisk';
@@ -31,11 +33,12 @@ import { faUserPlus as fasUserPlus } from '@fortawesome/free-solid-svg-icons/faU
 import { faUsers as fasUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { faUsersCog as fasUsersCog } from '@fortawesome/free-solid-svg-icons/faUsersCog';
 import { faWrench as fasWrench } from '@fortawesome/free-solid-svg-icons/faWrench';
+import { faCheck as fasCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-
+// Regular icons
 import { faFolderOpen as farFolderOpen } from '@fortawesome/free-regular-svg-icons/faFolderOpen';
 import { faFolder as farFolder } from '@fortawesome/free-regular-svg-icons/faFolder';
+import { faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons/faCheckSquare';
 
 export const loadIcons = () => {
   // Solid icons
@@ -72,9 +75,10 @@ export const loadIcons = () => {
     fasUserPlus,
     fasUsers,
     fasUsersCog,
-    fasWrench
+    fasWrench,
+    fasCheck
   );
 
   // Regular icons
-  library.add(farFolder, farFolderOpen);
+  library.add(farFolder, farFolderOpen, farCheckSquare);
 };
