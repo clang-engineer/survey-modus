@@ -13,6 +13,7 @@ import {
   Switch,
   TextField,
   Typography,
+  InputLabel,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -92,7 +93,7 @@ const FieldWizardUpdateModal =
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} marginY={2}>
+              <Grid item xs={12} marginY={1}>
                 <FormControl fullWidth>
                   <FormControlLabel
                     control={
@@ -111,6 +112,9 @@ const FieldWizardUpdateModal =
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   {/*<InputLabel id="attribute.type">Type</InputLabel>*/}
+                  <InputLabel variant="standard" htmlFor="attribute.type">
+                    Type
+                  </InputLabel>
                   <Select
                     labelId="attribute.type"
                     id="attribute.type"

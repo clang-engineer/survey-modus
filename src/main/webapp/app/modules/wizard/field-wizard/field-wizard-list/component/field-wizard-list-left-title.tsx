@@ -28,7 +28,7 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
   }, [item.activated, item['isNew']]);
 
   const RENDER_ATTRIBUTES = [
-    'id',
+    // 'id',
     'title',
     'description',
     'activated',
