@@ -2,7 +2,7 @@ import React from 'react';
 import { IField } from 'app/shared/model/field.model';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
-import { Box, Collapse, IconButton, List, ListItem, ListItemText, Typography, ListItemIcon } from '@mui/material';
+import { Box, Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 import { IconCircle } from '@tabler/icons';
 
@@ -24,6 +24,18 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
       setColor(theme.palette.primary.main);
     }
   }, [item.activated, item['isNew']]);
+
+  const RENDER_ATTRIBUTES = [
+    'id',
+    'title',
+    'description',
+    'activated',
+    // 'form',
+    'attribute',
+    'display',
+    'lookups',
+    // 'isNew'
+  ];
 
   return (
     <Box
@@ -54,22 +66,24 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
       </Typography>
       <Collapse in={visible} timeout="auto" unmountOnExit>
         <List sx={{ padding: 0 }}>
-          {Object.keys(item).map((key, index) => (
-            <ListItem key={index} sx={{ padding: 0 }}>
-              <ListItemIcon
-                title={key}
-                sx={{
-                  marginLeft: '10px',
-                  minWidth: '20px',
-                }}
-              >
-                <FontAwesomeIcon icon={['fas', 'check']} size="2xs" />
-              </ListItemIcon>
-              <ListItemText>
-                {key}: {JSON.stringify(item[key])}
-              </ListItemText>
-            </ListItem>
-          ))}
+          {Object.keys(item)
+            .filter(key => RENDER_ATTRIBUTES.includes(key))
+            .map((key, index) => (
+              <ListItem key={index} sx={{ padding: 0 }}>
+                <ListItemIcon
+                  title={key}
+                  sx={{
+                    marginLeft: '10px',
+                    minWidth: '20px',
+                  }}
+                >
+                  <FontAwesomeIcon icon={['fas', 'check']} size="2xs" />
+                </ListItemIcon>
+                <ListItemText>
+                  {key}: {JSON.stringify(item[key])}
+                </ListItemText>
+              </ListItem>
+            ))}
         </List>
       </Collapse>
     </Box>
