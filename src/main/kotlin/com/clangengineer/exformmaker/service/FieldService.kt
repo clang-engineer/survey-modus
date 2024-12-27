@@ -72,4 +72,12 @@ class FieldService(
 
         fieldRepository.deleteById(id)
     }
+
+    @Transactional(readOnly = true)
+    fun saveAll(fieldDTOs: List<FieldDTO>): List<FieldDTO> {
+        log.debug("Request to save and update Fields : $fieldDTOs")
+
+        return fieldRepository.saveAll(fieldDTOs.map(fieldMapper::toEntity))
+            .map(fieldMapper::toDto)
+    }
 }
