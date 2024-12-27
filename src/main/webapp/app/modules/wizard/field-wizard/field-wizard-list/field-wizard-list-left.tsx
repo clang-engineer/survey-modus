@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { Box, ButtonGroup, Grid, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 
-import { IconPencil, IconTrash } from '@tabler/icons';
+import { IconCircle, IconPencil, IconTrash } from '@tabler/icons';
 
 import { create } from 'react-modal-promise';
 
@@ -17,6 +19,8 @@ import NoContentBox from 'app/shared/component/no-content-box';
 // import IFieldItem from "app/modules/wizard/field-wizard/field-wizard-list/field-item.model";
 import { IField } from 'app/shared/model/field.model';
 import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
+import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import FieldWizardListLeftTitle from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-list-left-title';
 
 const EmptyDndBox = () => {
   return (
@@ -44,39 +48,6 @@ const FieldWizardListLeft = () => {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const ItemTitle = (props: { item: IField; index: number }) => {
-    const { item, index } = props;
-
-    const [color, setColor] = React.useState('inherit');
-
-    React.useEffect(() => {
-      if (item.activated === false) {
-        setColor(theme.palette.error.main);
-      } else if (item['isNew']) {
-        setColor(theme.palette.primary.main);
-      }
-    }, [item.activated, item['isNew']]);
-
-    return (
-      <Box
-        sx={{
-          '& .MuiTypography-root': {
-            color: color,
-          },
-        }}
-      >
-        <Typography variant="h5">
-          {index + 1}.&nbsp;
-          {item.title ? item.title : 'Untitled'}
-          &nbsp;(type: {item.attribute.type})
-        </Typography>
-        <Typography variant="caption" color="text.secondary">
-          {item.description ? item.description : 'No description'},
-        </Typography>
-      </Box>
-    );
-  };
-
   return (
     <Droppable droppableId="left">
       {(provided, snapshot) => (
@@ -99,7 +70,7 @@ const FieldWizardListLeft = () => {
                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                   >
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <ItemTitle item={item} index={index} />
+                      <FieldWizardListLeftTitle item={item} index={index} />
                       <ButtonGroup size="small">
                         <IconButton
                           onClick={() => {
