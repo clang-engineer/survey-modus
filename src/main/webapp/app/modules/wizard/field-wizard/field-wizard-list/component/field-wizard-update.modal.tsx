@@ -8,18 +8,17 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
   MenuItem,
   Select,
   Switch,
   TextField,
   Typography,
-  InputLabel,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { IField } from 'app/shared/model/field.model';
-import { IconArrowsDown, IconCheck } from '@tabler/icons';
-import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import { IconArrowsDown, IconCheck, IconX } from '@tabler/icons';
 import FieldLookupUpdate from 'app/entities/field/component/field-lookup-update';
 import type, { isLookupType } from 'app/shared/model/enumerations/type.model';
 import fieldWizardUpdateFormik from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.formik';
@@ -168,21 +167,24 @@ const FieldWizardUpdateModal =
           </form>
         </DialogContent>
         <DialogActions>
-          <AnimateButton>
-            <Button
-              onClick={() => {
-                console.group('formik');
-                console.log('formik.values', formik.values);
-                console.log('formik.errors', formik.errors);
-                console.groupEnd();
-                formik.handleSubmit();
-              }}
-              autoFocus
-              startIcon={<IconCheck size={'1rem'} />}
-            >
-              <Typography variant="button">Apply</Typography>
-            </Button>
-          </AnimateButton>
+          <Button
+            size="small"
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+            startIcon={<IconCheck size={'1rem'} />}
+          >
+            <Typography variant="button">Apply</Typography>
+          </Button>
+          <Button
+            size="small"
+            onClick={() => {
+              onReject();
+            }}
+            startIcon={<IconX size={'1rem'} />}
+          >
+            <Typography variant="button">Cancel</Typography>
+          </Button>
         </DialogActions>
       </Dialog>
     );
