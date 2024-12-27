@@ -22,6 +22,8 @@ const FieldWizardListLeftTitle = (props: { item: IField; index: number }) => {
       setColor(theme.palette.error.main);
     } else if (item['isNew']) {
       setColor(theme.palette.primary.main);
+    } else {
+      setColor('inherit');
     }
   }, [item.activated, item['isNew']]);
 

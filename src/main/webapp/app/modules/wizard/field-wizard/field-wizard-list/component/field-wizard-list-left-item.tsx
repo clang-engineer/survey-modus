@@ -3,7 +3,7 @@ import { getItemStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/
 import FieldWizardListLeftTitle from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-list-left-title';
 import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';
 
-import { Box, ButtonGroup, Grid, IconButton } from '@mui/material';
+import { Box, ButtonGroup, Grid, IconButton, Switch, Button } from '@mui/material';
 import { Draggable } from 'react-beautiful-dnd';
 import { create } from 'react-modal-promise';
 import { IconPencil, IconTrash } from '@tabler/icons';
@@ -43,6 +43,19 @@ const FieldWizardListLeftItem = (props: { item: IField; index: number }) => {
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <FieldWizardListLeftTitle item={item} index={index} />
             <ButtonGroup size="small">
+              <IconButton>
+                <Switch
+                  size="small"
+                  checked={item.activated}
+                  onChange={e => {
+                    const item = { ...items[index] };
+                    item.activated = e.target.checked;
+
+                    setItems([...items.slice(0, index), item, ...items.slice(index + 1)]);
+                  }}
+                  name="activated"
+                />
+              </IconButton>
               <IconButton
                 onClick={() => {
                   create(
