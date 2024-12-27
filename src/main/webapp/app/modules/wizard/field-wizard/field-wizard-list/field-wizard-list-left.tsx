@@ -46,11 +46,22 @@ const FieldWizardListLeft = () => {
 
   const ItemTitle = (props: { item: IField; index: number }) => {
     const { item, index } = props;
+
+    const [color, setColor] = React.useState('inherit');
+
+    React.useEffect(() => {
+      if (item.activated === false) {
+        setColor(theme.palette.error.main);
+      } else if (item['isNew']) {
+        setColor(theme.palette.primary.main);
+      }
+    }, [item.activated, item['isNew']]);
+
     return (
       <Box
         sx={{
           '& .MuiTypography-root': {
-            color: item['isNew'] ? theme.palette.error.main : 'inherit',
+            color: color,
           },
         }}
       >

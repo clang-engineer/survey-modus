@@ -8,7 +8,6 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   Switch,
@@ -88,7 +87,7 @@ const FieldWizardUpdateModal =
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} marginY={2}>
                 <FormControl fullWidth>
                   <FormControlLabel
                     control={
@@ -105,56 +104,53 @@ const FieldWizardUpdateModal =
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth>
-                      <InputLabel id="attribute.type">Type</InputLabel>
-                      <Select
-                        labelId="attribute.type"
-                        id="attribute.type"
-                        name="attribute.type"
-                        value={formik.values.attribute?.type}
-                        onChange={formik.handleChange}
-                        error={formik.touched.attribute?.type && Boolean(formik.errors.attribute?.type)}
-                        variant="standard"
-                      >
-                        {Object.keys(type).map(key => (
-                          <MenuItem key={key} value={key}>
-                            {type[key]}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        fullWidth
-                        id="attribute.defaultValue"
-                        name="attribute.defaultValue"
-                        label="Default Value"
-                        value={formik.values.attribute?.defaultValue}
-                        onChange={formik.handleChange}
-                        error={formik.touched.attribute?.defaultValue && Boolean(formik.errors.attribute?.defaultValue)}
-                        helperText={formik.touched.attribute?.defaultValue && formik.errors.attribute?.defaultValue}
-                        variant="standard"
-                      />
-                    </FormControl>
-                  </Grid>
-                  {isLookupType(formik.values.attribute?.type) && (
-                    <>
-                      <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
-                        <Divider variant="middle">
-                          <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
-                        </Divider>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FieldLookupUpdate formik={formik} />
-                      </Grid>
-                    </>
-                  )}
-                </Grid>
+                <FormControl fullWidth>
+                  {/*<InputLabel id="attribute.type">Type</InputLabel>*/}
+                  <Select
+                    labelId="attribute.type"
+                    id="attribute.type"
+                    name="attribute.type"
+                    label="Type"
+                    value={formik.values.attribute?.type}
+                    onChange={formik.handleChange}
+                    error={formik.touched.attribute?.type && Boolean(formik.errors.attribute?.type)}
+                    variant="standard"
+                  >
+                    {Object.keys(type).map(key => (
+                      <MenuItem key={key} value={key}>
+                        {type[key]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    id="attribute.defaultValue"
+                    name="attribute.defaultValue"
+                    label="Default Value"
+                    value={formik.values.attribute?.defaultValue}
+                    onChange={formik.handleChange}
+                    error={formik.touched.attribute?.defaultValue && Boolean(formik.errors.attribute?.defaultValue)}
+                    helperText={formik.touched.attribute?.defaultValue && formik.errors.attribute?.defaultValue}
+                    variant="standard"
+                  />
+                </FormControl>
+              </Grid>
+              {isLookupType(formik.values.attribute?.type) && (
+                <>
+                  <Grid item xs={12} style={{ marginTop: theme.spacing(3) }}>
+                    <Divider variant="middle">
+                      <IconArrowsDown size={'1rem'} /> &nbsp; Lookup Values{' '}
+                    </Divider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FieldLookupUpdate formik={formik} />
+                  </Grid>
+                </>
+              )}
             </Grid>
           </form>
         </DialogContent>
