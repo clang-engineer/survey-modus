@@ -78,7 +78,7 @@ export const deleteEntity = createAsyncThunk(
 export const createAndUpdateEntities = createAsyncThunk(
   'field/create_and_update_entity',
   (entities: IField[], thunkAPI) => {
-    return axios.post<IField[]>(apiUrl, cleanEntity(entities));
+    return axios.put<IField[]>(`${apiUrl}/all`, [...entities.map(entity => cleanEntity(entity))]);
   },
   { serializeError: serializeAxiosError }
 );

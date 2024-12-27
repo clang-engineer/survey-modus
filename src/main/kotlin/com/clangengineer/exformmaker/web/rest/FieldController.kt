@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.jhipster.web.util.HeaderUtil
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
@@ -19,8 +20,8 @@ class FieldController(val fieldService: FieldService) {
     @Value("\${jhipster.clientApp.name}")
     private var applicationName: String? = null
 
-    @PutMapping("/fields/bulk")
-    fun createAndUpdateAllFields(@RequestBody fields: List<FieldDTO>): ResponseEntity<List<FieldDTO>> {
+    @PutMapping("/fields/all")
+    fun createAndUpdateAllFields(@Valid @RequestBody fields: List<FieldDTO>): ResponseEntity<List<FieldDTO>> {
         log.debug("REST request to update Fields : {}", fields)
 
         val result = fieldService.saveAll(fields)

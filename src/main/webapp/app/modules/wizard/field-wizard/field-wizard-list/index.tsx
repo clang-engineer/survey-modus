@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IForm } from 'app/shared/model/form.model';
-import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
+import { createAndUpdateEntities, getEntities as getFieldList } from 'app/entities/field/field.reducer';
 
 import { Box, ButtonGroup, Grid, IconButton, Switch, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
@@ -106,6 +106,13 @@ const FieldWizardList = () => {
     });
   };
 
+  const onSaveButtonClick = () => {
+    const fieldDTOs = items.map(d => {
+      return d['isNew'] ? { ...d, id: null } : d;
+    });
+    dispatch(createAndUpdateEntities(fieldDTOs));
+  };
+
   const LeftTitle = () => {
     return (
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
@@ -143,14 +150,12 @@ const FieldWizardList = () => {
                   form,
                   fields: items.filter(a => a.activated),
                 })
-              )().then(() => {
-                // console.log('modal closed');
-              });
+              )();
             }}
           >
             <IconEye size={'1rem'} />
           </IconButton>
-          <IconButton color={'secondary'}>
+          <IconButton color={'secondary'} onClick={onSaveButtonClick}>
             <IconDeviceFloppy size={'1rem'} />
           </IconButton>
           <IconButton

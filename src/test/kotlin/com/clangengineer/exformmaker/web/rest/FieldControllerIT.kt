@@ -48,7 +48,7 @@ class FieldControllerIT {
         val databaseSizeBeforeBulkInsert = fieldRepository.findAll().size
 
         mockMvc.perform(
-            put("/api/fields/bulk")
+            put("/api/fields/all")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(fieldsDTO))
         ).andExpect(status().isOk)
