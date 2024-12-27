@@ -5,7 +5,7 @@ import { Box, ButtonGroup, Grid, IconButton, Typography } from '@mui/material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { getItemStyle, getListStyle } from 'app/modules/wizard/field-wizard/field-wizard-list/field-wizard-dnd.utils';
 
-import { IconEdit, IconTrash, IconPencil } from '@tabler/icons';
+import { IconPencil, IconTrash } from '@tabler/icons';
 
 import { create } from 'react-modal-promise';
 
@@ -98,9 +98,7 @@ const FieldWizardListLeft = () => {
                                 items,
                                 setItems,
                               })
-                            )().then(result => {
-                              if (result) handleDelete(item.id);
-                            });
+                            )();
                           }}
                         >
                           <IconPencil size={'1rem'} />

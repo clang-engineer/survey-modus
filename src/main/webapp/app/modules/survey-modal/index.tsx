@@ -117,7 +117,7 @@ const SurveyModal =
                     <SubCard
                       title={
                         <Box display="flex">
-                          <Typography variant="h5">#{index + 1}</Typography> &nbsp;&nbsp;
+                          <Typography variant="h5">#{index + 1}.</Typography> &nbsp;&nbsp;
                           <Typography variant="h5">{field.title}</Typography> &nbsp;&nbsp;
                           <Typography variant="caption">{field.description}</Typography>
                         </Box>

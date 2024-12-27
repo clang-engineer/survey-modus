@@ -21,6 +21,7 @@ import { create } from 'react-modal-promise';
 import SurveyModal from 'app/modules/survey-modal';
 import { IField } from 'app/shared/model/field.model';
 import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
+import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';
 
 const FieldWizardList = () => {
   const navigate = useNavigate();
@@ -76,15 +77,24 @@ const FieldWizardList = () => {
 
       const merged: IField[] = [...items.slice(0, event.destination.index), item, ...items.slice(event.destination.index, items.length)];
 
-      setItems(indexedFieldList(merged));
+      const orderNumberReAssigned = getOrderNumberReAssignedList(merged);
+      setItems(orderNumberReAssigned);
+
+      create(
+        FieldWizardUpdateModal({
+          field: orderNumberReAssigned[event.destination.index],
+          items: orderNumberReAssigned,
+          setItems,
+        })
+      )();
     } else if (source.droppableId == 'left' && destination.droppableId == 'left') {
       const reordered: IField[] = reorder(items, event.source.index, event.destination.index);
 
-      setItems(indexedFieldList(reordered));
+      setItems(getOrderNumberReAssignedList(reordered));
     }
   };
 
-  const indexedFieldList = (items: IField[]) => {
+  const getOrderNumberReAssignedList = (items: IField[]) => {
     return [...items].map((item, index) => {
       return {
         ...item,
