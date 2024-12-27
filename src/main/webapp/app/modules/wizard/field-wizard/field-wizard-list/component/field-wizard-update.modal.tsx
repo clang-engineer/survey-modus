@@ -46,13 +46,17 @@ const FieldWizardUpdateModal =
       }
     }, [isOpen]);
 
-    const handleClose = () => {
+    const handleClose = (event, reason) => {
+      // 배경 클릭이나 Esc 키로 닫히는 동작을 막기 위해 reason을 확인
+      if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+        return;
+      }
       onReject();
     };
 
     const formik = fieldWizardUpdateFormik({
       items,
-      applyChanges: (data: IField[]) => {
+      applyChanges(data: IField[]) {
         props.setItems(data);
         onResolve();
       },
@@ -167,6 +171,10 @@ const FieldWizardUpdateModal =
           <AnimateButton>
             <Button
               onClick={() => {
+                console.group('formik');
+                console.log('formik.values', formik.values);
+                console.log('formik.errors', formik.errors);
+                console.groupEnd();
                 formik.handleSubmit();
               }}
               autoFocus
