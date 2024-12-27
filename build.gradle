@@ -86,7 +86,7 @@ eclipse {
 defaultTasks "bootRun"
 
 springBoot {
-    mainClass = "com.clangengineer.surveymodus.surveyModusApp"
+    mainClass = "com.clangengineer.surveymodus.SurveyModusApp"
 }
 
 test {
