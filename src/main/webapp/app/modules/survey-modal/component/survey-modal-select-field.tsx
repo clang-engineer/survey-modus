@@ -12,7 +12,7 @@ interface ISurveyModalSelectBoxProps {
 const SurveyModalSelectField = (props: ISurveyModalSelectBoxProps) => {
   const { field, formik } = props;
 
-  if (!field.lookups) {
+  if (!field.lookups || field.lookups.length === 0) {
     return <NoContentBox />;
   }
 
