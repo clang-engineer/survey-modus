@@ -28,8 +28,11 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
       }),
       lookups: yup
         .array()
-        .of(yup.string())
+        .of(yup.string().required('Lookup Value is required'))
         .test('is-required-based-on-type', 'Lookup Values are required', function (value) {
+          if (!value) {
+            return false;
+          }
           const { type } = this.parent.attribute || {};
           if (isLookupType(type)) {
             return value && value.length >= 1; // 최소 1개 필요
@@ -37,6 +40,9 @@ const fieldWizardUpdateFormik = (props: FieldWizardUpdateFormikProps) => {
           return true; // 조건이 맞지 않으면 검증 통과
         })
         .test('is-unique-based-on-type', 'Lookup Values must be unique', function (value) {
+          if (!value) {
+            return false;
+          }
           const { type } = this.parent.attribute || {};
           if (isLookupType(type)) {
             return new Set(value).size === value.length; // 중복 값이 없어야 함
