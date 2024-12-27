@@ -6,7 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
 import { IField } from 'app/shared/model/field.model';
-import { gridSpacing } from 'app/berry/store/constant';
 import { FormikProps, useFormik } from 'formik';
 import * as yup from 'yup';
 import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
@@ -17,6 +16,8 @@ import SurveyModalSelectField from 'app/modules/survey-modal/component/survey-mo
 import SurveyModalRadioField from 'app/modules/survey-modal/component/survey-modal-radio-field';
 import SurveyModalCheckboxField from 'app/modules/survey-modal/component/survey-modal-checkbox-field';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
+
+import { useTheme } from '@mui/material/styles';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -57,6 +58,8 @@ const FormFieldByType = (formik: FormikProps<Record<string, any>>, field: IField
 const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
+    const theme = useTheme();
+
     const { form, fields } = props;
 
     const handleClose = () => {
@@ -87,10 +90,6 @@ const SurveyModal =
         TransitionComponent={Transition}
         sx={{
           '& .MuiPaper-root': { padding: 0 },
-          // '& .MuiDialogContent-root': { padding: 0 },
-          // '& .MuiDialogActions-root': {
-          //   justifyContent: 'space-between',
-          // },
         }}
       >
         <AppBar sx={{ position: 'relative' }}>
@@ -98,16 +97,16 @@ const SurveyModal =
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h4" color="inherit">
               {form.title}
               {JSON.stringify(formik.values)}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={2} marginTop={1}>
+        <Grid container spacing={2} paddingY={theme.spacing(2)}>
           {fields.length > 0 ? (
             fields
               .sort((a, b) => a.display.orderNo - b.display.orderNo)
