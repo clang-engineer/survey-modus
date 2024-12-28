@@ -7,8 +7,8 @@ import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
 
 import { NavItemType } from 'app/berry/types';
-import VerticalNavGroup from 'app/shared/layout/survey-layout/MenuList/NavGroup/vertical-nav-group';
-import HorizontalNavGroup from 'app/shared/layout/survey-layout/MenuList/NavGroup/horizontal-nav-group';
+import VerticalNavGroup from 'app/shared/layout/basic-layout/MenuList/NavGroup/vertical-nav-group';
+import HorizontalNavGroup from 'app/shared/layout/basic-layout/MenuList/NavGroup/horizontal-nav-group';
 
 type VirtualElement = {
   getBoundingClientRect: () => ClientRect | DOMRect;

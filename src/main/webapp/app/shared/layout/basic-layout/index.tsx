@@ -24,63 +24,68 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 interface MainStyleProps {
   theme: Theme;
   open: boolean;
+  menuVisible: boolean;
 }
 
 // styles
-const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<MainStyleProps>(({ theme, open }: MainStyleProps) => ({
-  ...theme.typography.mainContent,
-  borderBottomLeftRadius: 0,
-  borderBottomRightRadius: 0,
-  ...(!open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.shorter + 200,
+const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<MainStyleProps>(
+  ({ theme, open, menuVisible }: MainStyleProps) => ({
+    ...theme.typography.mainContent,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    ...(!open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.shorter + 200,
+      }),
+      [theme.breakpoints.up('md')]: {
+        marginLeft: '20px',
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginTop: menuVisible ? 135 : 88,
+      },
+      [theme.breakpoints.down('md')]: {
+        marginLeft: '20px',
+        width: `calc(100% - ${drawerWidth}px)`,
+        padding: '16px',
+        marginTop: 88,
+      },
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: '10px',
+        width: `calc(100% - ${drawerWidth}px)`,
+        padding: '16px',
+        marginRight: '10px',
+        marginTop: 88,
+      },
     }),
-    [theme.breakpoints.up('md')]: {
-      marginLeft: '20px',
+    ...(open && {
+      // 'margin 538ms cubic-bezier(0.4, 0, 1, 1) 0ms',
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.shorter + 200,
+      }),
+      marginLeft: menuVisible ? '20px' : 0,
+      marginTop: menuVisible ? 135 : 88,
       width: `calc(100% - ${drawerWidth}px)`,
-      marginTop: 135,
-    },
-    [theme.breakpoints.down('md')]: {
-      marginLeft: '20px',
-      width: `calc(100% - ${drawerWidth}px)`,
-      padding: '16px',
-      marginTop: 88,
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '10px',
-      width: `calc(100% - ${drawerWidth}px)`,
-      padding: '16px',
-      marginRight: '10px',
-      marginTop: 88,
-    },
-  }),
-  ...(open && {
-    // 'margin 538ms cubic-bezier(0.4, 0, 1, 1) 0ms',
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.shorter + 200,
+      [theme.breakpoints.up('md')]: {
+        marginTop: menuVisible ? 135 : 88,
+      },
+      [theme.breakpoints.down('md')]: {
+        marginLeft: '20px',
+        marginTop: 88,
+      },
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: '10px',
+        marginTop: 88,
+      },
     }),
-    marginLeft: '20px',
-    marginTop: 135,
-    width: `calc(100% - ${drawerWidth}px)`,
-    [theme.breakpoints.up('md')]: {
-      marginTop: 135,
-    },
-    [theme.breakpoints.down('md')]: {
-      marginLeft: '20px',
-      marginTop: 88,
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '10px',
-      marginTop: 88,
-    },
-  }),
-}));
-
+  })
+);
 // ==============================|| MAIN LAYOUT ||============================== //
 
-const MainLayout = () => {
+interface IBasicLayout {
+  menuVisible?: boolean;
+}
+const BasicLayout = ({ menuVisible = true }: IBasicLayout) => {
   const theme = useTheme();
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -125,9 +130,9 @@ const MainLayout = () => {
         {header}
       </AppBar>
 
-      {matchDownMd ? <Sidebar /> : <HorizontalBar />}
+      {menuVisible && (matchDownMd ? <Sidebar /> : <HorizontalBar />)}
 
-      <Main theme={theme} open={drawerOpen}>
+      <Main theme={theme} open={drawerOpen} menuVisible={menuVisible}>
         <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
           {/* breadcrumb */}
           <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
@@ -138,4 +143,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default BasicLayout;

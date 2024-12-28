@@ -16,7 +16,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
-import SurveyLayout from 'app/shared/layout/survey-layout';
+import BasicLayout from 'app/shared/layout/basic-layout';
 
 const loading = <div>loading ...</div>;
 
@@ -108,11 +108,10 @@ const AppRoutes = () => {
           />
         </Route>
 
-        {/* staff routes */}
         <Route
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-              <SurveyLayout />
+              <BasicLayout menuVisible={true} />
             </PrivateRoute>
           }
         >
