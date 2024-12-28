@@ -40,8 +40,8 @@ const EntityRoutes = Loadable({
   loading: () => loading,
 });
 
-const SurveyRoutes = Loadable({
-  loader: () => import(/* webpackChunkName: "survey" */ 'app/modules/survey'),
+const GateRoutes = Loadable({
+  loader: () => import(/* webpackChunkName: "gate" */ 'app/modules/gate'),
   loading: () => loading,
 });
 
@@ -116,10 +116,10 @@ const AppRoutes = () => {
           }
         >
           <Route
-            path="survey/*"
+            path="gate/*"
             element={
               <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-                <SurveyRoutes />
+                <GateRoutes />
               </PrivateRoute>
             }
           />
