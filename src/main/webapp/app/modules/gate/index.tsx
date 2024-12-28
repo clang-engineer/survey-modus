@@ -6,21 +6,21 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import CompanyGate from './company-gate';
 import FormGate from 'app/modules/gate/form-gate';
 import DatasourceGate from 'app/modules/gate/datasource-gate';
-// import GateDetail from './survey-detail';
-// import GateUpdate from './survey-update';
-// import GateDeleteDialog from './survey-delete-dialog';
-
+import { GateProvider } from 'app/modules/gate/gate.config';
+import GateLayout from 'app/modules/gate/gate-layout';
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
-    <Route path="company" element={<CompanyGate />} />
-    <Route path="form" element={<FormGate />} />
-    <Route path="datasource" element={<DatasourceGate />} />
-    {/*<Route path="new" element={<GateUpdate />} />*/}
-    {/*<Route path=":id">*/}
-    {/*  <Route index element={<GateDetail />} />*/}
-    {/*  <Route path="edit" element={<GateUpdate />} />*/}
-    {/*  <Route path="delete" element={<GateDeleteDialog />} />*/}
-    {/*</Route>*/}
+    <Route
+      element={
+        <GateProvider>
+          <GateLayout />
+        </GateProvider>
+      }
+    >
+      <Route path="company" element={<CompanyGate />} />
+      <Route path="forms/:formId" element={<FormGate />} />
+      <Route path="datasource" element={<DatasourceGate />} />
+    </Route>
   </ErrorBoundaryRoutes>
 );
 

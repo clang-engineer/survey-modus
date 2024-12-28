@@ -16,7 +16,6 @@ import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
-import GateLayout from 'app/modules/gate/gate-layout';
 
 const loading = <div>loading ...</div>;
 
@@ -107,24 +106,14 @@ const AppRoutes = () => {
             }
           />
         </Route>
-
         <Route
+          path="gate/*"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-              <GateLayout menuVisible={true} />
+              <GateRoutes />
             </PrivateRoute>
           }
-        >
-          <Route
-            path="gate/*"
-            element={
-              <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-                <GateRoutes />
-              </PrivateRoute>
-            }
-          />
-        </Route>
-
+        />
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>
