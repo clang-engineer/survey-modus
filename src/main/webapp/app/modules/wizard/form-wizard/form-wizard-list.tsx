@@ -60,6 +60,7 @@ const FormWizardList = () => {
         <ButtonGroup variant="text" size="small">
           <Button
             onClick={() =>
+              // memo: this is the way to pass data to the next page
               navigate(`/wizard/field`, {
                 state: { form },
               })
