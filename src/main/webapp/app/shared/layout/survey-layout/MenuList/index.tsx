@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import menuItem from 'app/berry/menu-items';
+import menuItem from '../menu-items';
 import NavGroup from './NavGroup';
 import useConfig from 'app/berry/hooks/useConfig';
 import { Menu } from 'app/berry/menu-items/widget';
