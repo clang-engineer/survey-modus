@@ -4,7 +4,7 @@ import { IconSitemap, IconUsers } from '@tabler/icons';
 
 const wizard: NavItemType = {
   id: 'wizard',
-  title: 'Wizard',
+  title: '',
   type: 'group',
   children: [
     {

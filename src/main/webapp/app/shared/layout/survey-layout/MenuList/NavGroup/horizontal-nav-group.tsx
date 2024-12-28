@@ -136,6 +136,28 @@ const HorizontalNavGroup = (props: HorizontalMenuListProps) => {
 
   const popperId = openMini ? `group-pop-${item.id}` : undefined;
 
+  if (currentItem.children && currentItem.children.length === 1) {
+    const singleChild = currentItem.children[0];
+
+    return (
+      <List
+        sx={{
+          '& .MuiListItemButton-root': {
+            borderRadius: `${borderRadius}px`,
+            p: 1,
+            my: 0.5,
+            mr: 1,
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'inherit',
+          },
+        }}
+      >
+        <NavItem key={singleChild.id} item={singleChild} level={1} />
+      </List>
+    );
+  }
+
   return (
     <List>
       <ListItemButton
