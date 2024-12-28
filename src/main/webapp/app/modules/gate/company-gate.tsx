@@ -35,7 +35,9 @@ const CompanyGate = () => {
             },
           }}
         >
-          <SubCard key={index} title={company.title} content={company.description}></SubCard>
+          <SubCard key={index} title={company.title} content={company.description}>
+            test
+          </SubCard>
         </Grid>
       ))}
     </Grid>

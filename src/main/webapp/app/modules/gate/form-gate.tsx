@@ -35,7 +35,9 @@ const FormGate = () => {
             },
           }}
         >
-          <SubCard key={index} title={form.title} content={form.description}></SubCard>
+          <SubCard key={index} title={form.title} content={form.description}>
+            test
+          </SubCard>
         </Grid>
       ))}
     </Grid>
