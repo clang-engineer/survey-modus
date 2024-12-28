@@ -16,7 +16,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
-import BasicLayout from 'app/shared/layout/basic-layout';
+import GateLayout from 'app/modules/gate/gate-layout';
 
 const loading = <div>loading ...</div>;
 
@@ -111,7 +111,7 @@ const AppRoutes = () => {
         <Route
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-              <BasicLayout menuVisible={true} />
+              <GateLayout menuVisible={true} />
             </PrivateRoute>
           }
         >

@@ -14,8 +14,8 @@ import { activeID, activeItem, openDrawer } from 'app/berry/store/slices/menu';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { LinkTarget, NavItemType } from 'app/berry/types';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import VerticalNavItem from 'app/shared/layout/basic-layout/MenuList/NavItem/vertical-nav-item';
-import HorizontalNavItem from 'app/shared/layout/basic-layout/MenuList/NavItem/horizontal-nav-item';
+import VerticalNavItem from 'app/modules/gate/gate-layout/MenuList/NavItem/vertical-nav-item';
+import HorizontalNavItem from 'app/modules/gate/gate-layout/MenuList/NavItem/horizontal-nav-item';
 
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
