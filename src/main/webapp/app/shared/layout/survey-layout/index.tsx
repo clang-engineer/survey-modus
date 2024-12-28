@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 
 // material-ui
-import { styled, useTheme, Theme } from '@mui/material/styles';
+import { styled, Theme, useTheme } from '@mui/material/styles';
 import { AppBar, Box, Container, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
 
 // project imports
@@ -24,11 +24,10 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 interface MainStyleProps {
   theme: Theme;
   open: boolean;
-  layout: string;
 }
 
 // styles
-const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<MainStyleProps>(({ theme, open, layout }: MainStyleProps) => ({
+const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<MainStyleProps>(({ theme, open }: MainStyleProps) => ({
   ...theme.typography.mainContent,
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
@@ -38,9 +37,9 @@ const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<Main
       duration: theme.transitions.duration.shorter + 200,
     }),
     [theme.breakpoints.up('md')]: {
-      marginLeft: layout === LAYOUT_CONST.VERTICAL_LAYOUT ? -(drawerWidth - 72) : '20px',
+      marginLeft: '20px',
       width: `calc(100% - ${drawerWidth}px)`,
-      marginTop: layout === LAYOUT_CONST.HORIZONTAL_LAYOUT ? 135 : 88,
+      marginTop: 135,
     },
     [theme.breakpoints.down('md')]: {
       marginLeft: '20px',
@@ -62,11 +61,11 @@ const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<Main
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.shorter + 200,
     }),
-    marginLeft: layout === LAYOUT_CONST.HORIZONTAL_LAYOUT ? '20px' : 0,
-    marginTop: layout === LAYOUT_CONST.HORIZONTAL_LAYOUT ? 135 : 88,
+    marginLeft: '20px',
+    marginTop: 135,
     width: `calc(100% - ${drawerWidth}px)`,
     [theme.breakpoints.up('md')]: {
-      marginTop: layout === LAYOUT_CONST.HORIZONTAL_LAYOUT ? 135 : 88,
+      marginTop: 135,
     },
     [theme.breakpoints.down('md')]: {
       marginLeft: '20px',
@@ -90,59 +89,45 @@ const MainLayout = () => {
   const { drawerOpen } = useAppSelector(state => state.menu);
   const { drawerType, container } = useConfig();
 
-  const layout = LAYOUT_CONST.HORIZONTAL_LAYOUT;
-
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {
       dispatch(openDrawer(true));
     } else {
       dispatch(openDrawer(false));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawerType]);
 
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {
       dispatch(openDrawer(true));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (matchDownMd) {
       dispatch(openDrawer(true));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchDownMd]);
-
-  const condition = layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd;
 
   const header = useMemo(
     () => (
-      <Toolbar sx={{ p: condition ? '10px' : '16px' }}>
+      <Toolbar sx={{ p: !matchDownMd ? '10px' : '16px' }}>
         <Header />
       </Toolbar>
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, matchDownMd]
+    [matchDownMd]
   );
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {/* header */}
       <AppBar enableColorOnDark position="fixed" color="inherit" elevation={0} sx={{ bgcolor: theme.palette.background.default }}>
         {header}
       </AppBar>
 
-      {/* horizontal menu-list bar */}
-      {layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd && <HorizontalBar />}
+      {matchDownMd ? <Sidebar /> : <HorizontalBar />}
 
-      {/* drawer */}
-      {(layout === LAYOUT_CONST.VERTICAL_LAYOUT || matchDownMd) && <Sidebar />}
-
-      {/* main content */}
-      <Main theme={theme} open={drawerOpen} layout={layout}>
+      <Main theme={theme} open={drawerOpen}>
         <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
           {/* breadcrumb */}
           <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />

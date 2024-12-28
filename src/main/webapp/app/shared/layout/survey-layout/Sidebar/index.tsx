@@ -2,17 +2,15 @@ import React, { memo, useMemo } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Drawer, Stack, useMediaQuery } from '@mui/material';
+import { Box, Drawer, useMediaQuery } from '@mui/material';
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MenuCard from './MenuCard';
 import MenuList from '../MenuList';
 import LogoSection from '../LogoSection';
 import MiniDrawerStyled from './MiniDrawerStyled';
-import Chip from 'app/berry/ui-component/extended/Chip';
 
 import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
@@ -32,7 +30,6 @@ const Sidebar = () => {
   const { drawerOpen } = useAppSelector(state => state.menu);
 
   const { drawerType } = useConfig();
-  const layout = LAYOUT_CONST.HORIZONTAL_LAYOUT;
 
   const logo = useMemo(
     () => (
@@ -46,12 +43,6 @@ const Sidebar = () => {
   const drawerContent = (
     <>
       <MenuList />
-      {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && <MenuCard />}
-      {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && (
-        <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-          <Chip label={VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
-        </Stack>
-      )}
     </>
   );
 

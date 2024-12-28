@@ -20,7 +20,6 @@ import { NavItemType } from 'app/berry/types';
 
 const MenuList = () => {
   const theme = useTheme();
-  const layout = LAYOUT_CONST.HORIZONTAL_LAYOUT;
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -44,7 +43,7 @@ const MenuList = () => {
   };
 
   // last menu-item to show in horizontal menu bar
-  const lastItem = layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd ? HORIZONTAL_MAX_ITEM : null;
+  const lastItem = !matchDownMd ? HORIZONTAL_MAX_ITEM : null;
 
   let lastItemIndex = menuItem.items.length - 1;
   let remItems: NavItemType[] = [];

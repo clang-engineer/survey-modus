@@ -31,8 +31,6 @@ const Header = () => {
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const layout = LAYOUT_CONST.HORIZONTAL_LAYOUT;
-
   return (
     <>
       {/* logo & toggler button */}
@@ -48,7 +46,7 @@ const Header = () => {
         <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
           <LogoSection />
         </Box>
-        {(layout === LAYOUT_CONST.VERTICAL_LAYOUT || (layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && matchDownMd)) && (
+        {matchDownMd && (
           <Avatar
             variant="rounded"
             sx={{
