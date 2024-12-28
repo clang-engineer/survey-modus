@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 interface NavItemProps {
   item: NavItemType;
   level: number;
-  parentId: string;
   itemIcon: JSX.Element;
   listItemProps: {
     component: ForwardRefExoticComponent<RefAttributes<HTMLAnchorElement>> | string;

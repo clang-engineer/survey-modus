@@ -1,6 +1,6 @@
 import { NavItemType } from 'app/berry/types';
-import system from 'app/berry/menu-items/system';
-import wizard from 'app/berry/menu-items/wizard';
+import system from './system';
+import wizard from './wizard';
 
 // ==============================|| MENU ITEMS ||============================== //
 

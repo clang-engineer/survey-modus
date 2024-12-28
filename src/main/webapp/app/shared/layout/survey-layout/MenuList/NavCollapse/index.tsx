@@ -92,10 +92,9 @@ type VirtualElement = {
 interface NavCollapseProps {
   menu: NavItemType;
   level: number;
-  parentId: string;
 }
 
-const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
+const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -170,9 +169,9 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
   const menus = menu.children?.map(item => {
     switch (item.type) {
       case 'collapse':
-        return <NavCollapse key={item.id} menu={item} level={level + 1} parentId={parentId} />;
+        return <NavCollapse key={item.id} menu={item} level={level + 1} />;
       case 'item':
-        return <NavItem key={item.id} item={item} level={level + 1} parentId={parentId} />;
+        return <NavItem key={item.id} item={item} level={level + 1} />;
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">

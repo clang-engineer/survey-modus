@@ -14,20 +14,6 @@ const wizard: NavItemType = {
       type: 'item',
       url: '/wizard/form',
     },
-    {
-      id: 'wizard-company',
-      title: 'company wizard',
-      icon: IconSitemap,
-      type: 'item',
-      url: '/wizard/company',
-    },
-    {
-      id: 'wizard-group',
-      title: 'group wizard',
-      icon: IconUsers,
-      type: 'item',
-      url: '/wizard/group',
-    },
   ],
 };
 

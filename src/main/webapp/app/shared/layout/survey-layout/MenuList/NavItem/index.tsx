@@ -22,10 +22,9 @@ import HorizontalNavItem from 'app/shared/layout/survey-layout/MenuList/NavItem/
 interface NavItemProps {
   item: NavItemType;
   level: number;
-  parentId: string;
 }
 
-const NavItem = ({ item, level, parentId }: NavItemProps) => {
+const NavItem = ({ item, level }: NavItemProps) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -74,7 +73,7 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
   const itemHandler = (id: string) => {
     dispatch(activeItem([id]));
     if (matchesSM) dispatch(openDrawer(false));
-    dispatch(activeID(parentId));
+    dispatch(activeID(id));
   };
 
   // active menu item on page load
@@ -92,23 +91,9 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
   return (
     <>
       {layout === LAYOUT_CONST.VERTICAL_LAYOUT || (layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && matchDownMd) ? (
-        <VerticalNavItem
-          item={item}
-          level={level}
-          parentId={parentId}
-          itemIcon={itemIcon}
-          listItemProps={listItemProps}
-          itemHandler={itemHandler}
-        />
+        <VerticalNavItem item={item} level={level} itemIcon={itemIcon} listItemProps={listItemProps} itemHandler={itemHandler} />
       ) : (
-        <HorizontalNavItem
-          item={item}
-          level={level}
-          parentId={parentId}
-          itemIcon={itemIcon}
-          listItemProps={listItemProps}
-          itemHandler={itemHandler}
-        />
+        <HorizontalNavItem item={item} level={level} itemIcon={itemIcon} listItemProps={listItemProps} itemHandler={itemHandler} />
       )}
     </>
   );
