@@ -1,9 +1,9 @@
-import React, { ForwardRefExoticComponent, RefAttributes, forwardRef, useEffect } from 'react';
+import React, { forwardRef, ForwardRefExoticComponent, RefAttributes, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, ButtonBase, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 
 // project imports
 import LAYOUT_CONST from 'app/berry/constant';
@@ -14,6 +14,8 @@ import { activeID, activeItem, openDrawer } from 'app/berry/store/slices/menu';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { LinkTarget, NavItemType } from 'app/berry/types';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import VerticalNavItem from 'app/shared/layout/survey-layout/MenuList/NavItem/vertical-nav-item';
+import HorizontalNavItem from 'app/shared/layout/survey-layout/MenuList/NavItem/horizontal-nav-item';
 
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
@@ -30,7 +32,6 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
 
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { borderRadius } = useConfig();
   const layout = LAYOUT_CONST.HORIZONTAL_LAYOUT;
 
   const { selectedItem, drawerOpen } = useAppSelector(state => state.menu);
@@ -63,7 +64,9 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
     component: ForwardRefExoticComponent<RefAttributes<HTMLAnchorElement>> | string;
     href?: string;
     target?: LinkTarget;
-  } = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url!} target={itemTarget} />) };
+  } = {
+    component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url!} target={itemTarget} />),
+  };
   if (item?.external) {
     listItemProps = { component: 'a', href: item.url, target: itemTarget };
   }
@@ -86,156 +89,26 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
     // eslint-disable-next-line
   }, [pathname]);
 
-  const textColor = theme.palette.mode === 'dark' ? 'grey.400' : 'text.primary';
-  const iconSelectedColor = theme.palette.mode === 'dark' && drawerOpen ? 'text.primary' : 'secondary.main';
-
   return (
     <>
       {layout === LAYOUT_CONST.VERTICAL_LAYOUT || (layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && matchDownMd) ? (
-        <ListItemButton
-          {...listItemProps}
-          disabled={item.disabled}
-          disableRipple={!drawerOpen}
-          sx={{
-            zIndex: 1201,
-            borderRadius: `${borderRadius}px`,
-            mb: 0.5,
-            pl: drawerOpen ? `${level * 24}px` : 1.25,
-            ...(drawerOpen &&
-              level === 1 &&
-              theme.palette.mode !== 'dark' && {
-                '&:hover': {
-                  background: theme.palette.secondary.light,
-                },
-                '&.Mui-selected': {
-                  background: theme.palette.secondary.light,
-                  color: iconSelectedColor,
-                  '&:hover': {
-                    color: iconSelectedColor,
-                    background: theme.palette.secondary.light,
-                  },
-                },
-              }),
-            ...((!drawerOpen || level !== 1) && {
-              py: level === 1 ? 0 : 1,
-              '&:hover': {
-                bgcolor: 'transparent',
-              },
-              '&.Mui-selected': {
-                '&:hover': {
-                  bgcolor: 'transparent',
-                },
-                bgcolor: 'transparent',
-              },
-            }),
-          }}
-          selected={isSelected}
-          onClick={() => itemHandler(item.id!)}
-        >
-          <ButtonBase aria-label="theme-icon" sx={{ borderRadius: `${borderRadius}px` }} disableRipple={drawerOpen}>
-            <ListItemIcon
-              sx={{
-                minWidth: level === 1 ? 36 : 18,
-                color: isSelected ? iconSelectedColor : textColor,
-                ...(!drawerOpen &&
-                  level === 1 && {
-                    borderRadius: `${borderRadius}px`,
-                    width: 46,
-                    height: 46,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    '&:hover': {
-                      bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 25 : 'secondary.light',
-                    },
-                    ...(isSelected && {
-                      bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 25 : 'secondary.light',
-                      '&:hover': {
-                        bgcolor: theme.palette.mode === 'dark' ? theme.palette.secondary.main + 30 : 'secondary.light',
-                      },
-                    }),
-                  }),
-              }}
-            >
-              {itemIcon}
-            </ListItemIcon>
-          </ButtonBase>
-
-          {(drawerOpen || (!drawerOpen && level !== 1)) && (
-            <ListItemText
-              primary={
-                <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
-                  {item.title}
-                </Typography>
-              }
-              secondary={
-                item.caption && (
-                  <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
-                    {item.caption}
-                  </Typography>
-                )
-              }
-            />
-          )}
-
-          {drawerOpen && item.chip && (
-            <Chip
-              color={item.chip.color}
-              variant={item.chip.variant}
-              size={item.chip.size}
-              label={item.chip.label}
-              avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
-            />
-          )}
-        </ListItemButton>
+        <VerticalNavItem
+          item={item}
+          level={level}
+          parentId={parentId}
+          itemIcon={itemIcon}
+          listItemProps={listItemProps}
+          itemHandler={itemHandler}
+        />
       ) : (
-        <ListItemButton
-          {...listItemProps}
-          disabled={item.disabled}
-          sx={{
-            borderRadius: 0,
-            mb: 0.5,
-            alignItems: 'flex-start',
-            backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
-            py: 1,
-            pl: 2,
-          }}
-          selected={isSelected}
-          onClick={() => itemHandler(item.id!)}
-        >
-          <ListItemIcon
-            sx={{
-              my: 'auto',
-              minWidth: !item?.icon ? 18 : 36,
-            }}
-          >
-            {itemIcon}
-          </ListItemIcon>
-
-          <ListItemText
-            primary={
-              <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
-                {item.title}
-              </Typography>
-            }
-            secondary={
-              item.caption && (
-                <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
-                  {item.caption}
-                </Typography>
-              )
-            }
-          />
-
-          {item.chip && (
-            <Chip
-              color={item.chip.color}
-              variant={item.chip.variant}
-              size={item.chip.size}
-              label={item.chip.label}
-              avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
-            />
-          )}
-        </ListItemButton>
+        <HorizontalNavItem
+          item={item}
+          level={level}
+          parentId={parentId}
+          itemIcon={itemIcon}
+          listItemProps={listItemProps}
+          itemHandler={itemHandler}
+        />
       )}
     </>
   );
