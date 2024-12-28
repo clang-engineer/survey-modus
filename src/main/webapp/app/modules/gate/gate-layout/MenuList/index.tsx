@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles';
 import { Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import menuItem from '../menu-items';
 import NavGroup from './NavGroup';
 import useConfig from 'app/berry/hooks/useConfig';
 import { Menu } from 'app/berry/menu-items/widget';
@@ -15,6 +14,7 @@ import { HORIZONTAL_MAX_ITEM } from 'app/berry/config';
 
 // types
 import { NavItemType } from 'app/berry/types';
+import useGateConfig from 'app/modules/gate/gate.config';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
@@ -23,6 +23,8 @@ const MenuList = () => {
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
+  const { menuItems } = useGateConfig();
+
   useEffect(() => {
     handlerMenuItem();
     // eslint-disable-next-line
@@ -30,7 +32,7 @@ const MenuList = () => {
 
   let getMenu = Menu();
   const handlerMenuItem = () => {
-    const isFound = menuItem.items.some(element => {
+    const isFound = menuItems.items.some(element => {
       if (element.id === 'widget') {
         return true;
       }
@@ -38,27 +40,27 @@ const MenuList = () => {
     });
 
     if (getMenu?.id !== undefined && !isFound) {
-      menuItem.items.splice(1, 0, getMenu);
+      menuItems.items.splice(1, 0, getMenu);
     }
   };
 
   // last menu-item to show in horizontal menu bar
   const lastItem = !matchDownMd ? HORIZONTAL_MAX_ITEM : null;
 
-  let lastItemIndex = menuItem.items.length - 1;
+  let lastItemIndex = menuItems.items.length - 1;
   let remItems: NavItemType[] = [];
   let lastItemId: string;
 
-  if (lastItem && lastItem < menuItem.items.length) {
-    lastItemId = menuItem.items[lastItem - 1].id!;
+  if (lastItem && lastItem < menuItems.items.length) {
+    lastItemId = menuItems.items[lastItem - 1].id!;
     lastItemIndex = lastItem - 1;
-    remItems = menuItem.items.slice(lastItem - 1, menuItem.items.length).map(item => ({
+    remItems = menuItems.items.slice(lastItem - 1, menuItems.items.length).map(item => ({
       title: item.title,
       elements: item.children,
     }));
   }
 
-  const navItems = menuItem.items.slice(0, lastItemIndex + 1).map(item => {
+  const navItems = menuItems.items.slice(0, lastItemIndex + 1).map(item => {
     switch (item.type) {
       case 'group':
         return <NavGroup key={item.id} item={item} lastItem={lastItem!} remItems={remItems} lastItemId={lastItemId} />;

@@ -20,6 +20,7 @@ import { openDrawer } from 'app/berry/store/slices/menu';
 // assets
 import { IconChevronRight } from '@tabler/icons';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import useGateConfig from 'app/modules/gate/gate.config';
 
 interface MainStyleProps {
   theme: Theme;
@@ -80,19 +81,16 @@ const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<Main
     }),
   })
 );
-// ==============================|| MAIN LAYOUT ||============================== //
 
-interface IBasicLayout {
-  menuVisible?: boolean;
-}
-const BasicLayout = ({ menuVisible = true }: IBasicLayout) => {
+const BasicLayout = () => {
   const theme = useTheme();
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
-
   const dispatch = useAppDispatch();
   const { drawerOpen } = useAppSelector(state => state.menu);
   const { drawerType, container } = useConfig();
+
+  const { menuItems } = useGateConfig();
 
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {
@@ -113,6 +111,10 @@ const BasicLayout = ({ menuVisible = true }: IBasicLayout) => {
       dispatch(openDrawer(true));
     }
   }, [matchDownMd]);
+
+  const menuVisible = React.useMemo(() => {
+    return menuItems.items.length > 0;
+  }, [menuItems]);
 
   const header = useMemo(
     () => (
