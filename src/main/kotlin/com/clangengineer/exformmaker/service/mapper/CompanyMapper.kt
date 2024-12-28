@@ -33,7 +33,8 @@ interface CompanyMapper : EntityMapper<CompanyDTO, Company> {
     @Named("formDetail")
     @BeanMapping(ignoreByDefault = true)
     @Mappings(
-        Mapping(target = "id", source = "id"), Mapping(target = "title", source = "title")
+        Mapping(target = "id", source = "id"), Mapping(target = "title", source = "title"),
+        Mapping(target = "description", source = "description"), Mapping(target = "activated", source = "activated")
     )
     fun toDtoFormDetail(form: Form): FormDTO
 

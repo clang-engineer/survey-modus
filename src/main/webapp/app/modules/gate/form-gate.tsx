@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities as getFormList } from 'app/entities/form/form.reducer';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { Grid } from '@mui/material';
 
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IForm } from 'app/shared/model/form.model';
+import { ICompany } from 'app/shared/model/company.model';
+
 const FormGate = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.authentication.account);
-  const formList = useAppSelector(state => state.form.entities);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const state = location.state;
+
+  const company = state ? (['company'] as ICompany) : {};
+  const forms = state ? (['forms'] as IForm[]) : [];
 
   useEffect(() => {
-    if (formList.length === 0) {
-      dispatch(
-        getFormList({
-          query: `userId.equals=${user.id}`,
-        })
-      );
+    if (!company || !forms || forms.length === 0) {
+      navigate('/gate/company');
     }
   }, []);
-
   return (
     <Grid container spacing={2}>
-      {formList.map((form, index) => (
+      {forms.map((form, index) => (
         <Grid
           item
           xs={12}
@@ -35,7 +36,7 @@ const FormGate = () => {
             },
           }}
         >
-          <SubCard key={index} title={form.title} content={form.description}>
+          <SubCard key={index} title={form.title}>
             test
           </SubCard>
         </Grid>
