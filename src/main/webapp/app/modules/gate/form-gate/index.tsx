@@ -14,6 +14,10 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 import DataSource from 'app/modules/gate/form-gate/datasource';
 import { IconDatabase, IconPlaylistAdd } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
+import SurveyModal from 'app/modules/survey-modal';
+
+import { create } from 'react-modal-promise';
 
 const FormGate = () => {
   const dispatch = useAppDispatch();
@@ -22,9 +26,11 @@ const FormGate = () => {
 
   const companyEntity = useAppSelector(state => state.company.entity);
   const formEntity = useAppSelector(state => state.form.entity);
+  const fieldEntities = useAppSelector(state => state.field.entities);
 
   useEffect(() => {
     formId && dispatch(getForm(formId));
+    formId && dispatch(getFieldList({ query: `formId.equals=${formId}` }));
   }, [formId]);
 
   useEffect(() => {
@@ -40,14 +46,17 @@ const FormGate = () => {
     };
   }, [companyEntity]);
 
+  const onClickCreateButton = () => {
+    create(SurveyModal({ form: formEntity, fields: fieldEntities.filter(field => field.activated) }))();
+  };
+
   const CardTitle = () => {
     return (
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Typography variant="h4">
-            {' '}
             <IconDatabase size={'1rem'} /> {formEntity.title}
-          </Typography>{' '}
+          </Typography>
           &nbsp;&nbsp;
           <Typography variant="caption">
             ({companyEntity.title}, {formEntity.description})
@@ -55,9 +64,8 @@ const FormGate = () => {
         </Box>
         <Box>
           <AnimateButton>
-            <IconButton color="primary" size="small">
-              {' '}
-              <IconPlaylistAdd />{' '}
+            <IconButton color="primary" size="small" onClick={onClickCreateButton}>
+              <IconPlaylistAdd />
             </IconButton>
           </AnimateButton>
         </Box>
