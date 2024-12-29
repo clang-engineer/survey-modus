@@ -32,7 +32,7 @@ const MenuList = () => {
 
   let getMenu = Menu();
   const handlerMenuItem = () => {
-    const isFound = menuItems.items.some(element => {
+    const isFound = menuItems.some(element => {
       if (element.id === 'widget') {
         return true;
       }
@@ -40,27 +40,27 @@ const MenuList = () => {
     });
 
     if (getMenu?.id !== undefined && !isFound) {
-      menuItems.items.splice(1, 0, getMenu);
+      menuItems.splice(1, 0, getMenu);
     }
   };
 
   // last menu-item to show in horizontal menu bar
   const lastItem = !matchDownMd ? HORIZONTAL_MAX_ITEM : null;
 
-  let lastItemIndex = menuItems.items.length - 1;
+  let lastItemIndex = menuItems.length - 1;
   let remItems: NavItemType[] = [];
   let lastItemId: string;
 
-  if (lastItem && lastItem < menuItems.items.length) {
-    lastItemId = menuItems.items[lastItem - 1].id!;
+  if (lastItem && lastItem < menuItems.length) {
+    lastItemId = menuItems[lastItem - 1].id!;
     lastItemIndex = lastItem - 1;
-    remItems = menuItems.items.slice(lastItem - 1, menuItems.items.length).map(item => ({
+    remItems = menuItems.slice(lastItem - 1, menuItems.length).map(item => ({
       title: item.title,
       elements: item.children,
     }));
   }
 
-  const navItems = menuItems.items.slice(0, lastItemIndex + 1).map(item => {
+  const navItems = menuItems.slice(0, lastItemIndex + 1).map(item => {
     switch (item.type) {
       case 'group':
         return <NavGroup key={item.id} item={item} lastItem={lastItem!} remItems={remItems} lastItemId={lastItemId} />;

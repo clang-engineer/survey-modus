@@ -113,7 +113,7 @@ const BasicLayout = () => {
   }, [matchDownMd]);
 
   const menuVisible = React.useMemo(() => {
-    return menuItems.items.length > 0;
+    return menuItems && menuItems.length > 0;
   }, [menuItems]);
 
   const header = useMemo(

@@ -1,13 +1,11 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { NavItemType } from 'app/berry/types';
+import { ICompany } from 'app/shared/model/company.model';
 
 export const GateProvider = (props: { children: ReactNode }) => {
-  const [menuItems, setMenuItems] = useState<{ items: NavItemType[] }>({ items: [] });
+  const [menuItems, setMenuItems] = useState<NavItemType[]>([]);
 
-  const value = {
-    menuItems,
-    setMenuItems,
-  };
+  const value = { menuItems, setMenuItems };
 
   return <GateContext.Provider value={value}>{props.children}</GateContext.Provider>;
 };
@@ -15,8 +13,8 @@ export const GateProvider = (props: { children: ReactNode }) => {
 // context for field wizard
 const GateContext = createContext<
   | {
-      menuItems: { items: NavItemType[] };
-      setMenuItems: (value: { items: NavItemType[] }) => void;
+      menuItems: NavItemType[];
+      setMenuItems: (value: NavItemType[]) => void;
     }
   | undefined
 >(undefined);
