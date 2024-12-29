@@ -5,9 +5,9 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
 import CompanyGate from './company-gate';
 import FormGate from 'app/modules/gate/form-gate';
-import DatasourceGate from 'app/modules/gate/datasource-gate';
 import { GateProvider } from 'app/modules/gate/gate.config';
 import GateLayout from 'app/modules/gate/layout';
+
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route
@@ -19,7 +19,6 @@ const GateRoutes = () => (
     >
       <Route path="companies" element={<CompanyGate />} />
       <Route path="companies/:companyId/forms/:formId" element={<FormGate />} />
-      <Route path="datasource" element={<DatasourceGate />} />
     </Route>
   </ErrorBoundaryRoutes>
 );
