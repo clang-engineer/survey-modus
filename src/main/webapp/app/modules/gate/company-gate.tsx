@@ -4,13 +4,12 @@ import { getEntities as getCompanyList } from 'app/entities/company/company.redu
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { Grid } from '@mui/material';
-
 import { useNavigate } from 'react-router-dom';
-
 import { IconCircle } from '@tabler/icons';
-
 import { useTheme } from '@mui/material/styles';
 import { ICompany } from 'app/shared/model/company.model';
+
+import { toast } from 'react-toastify';
 
 const CompanyGate = () => {
   const navigate = useNavigate();
@@ -22,24 +21,25 @@ const CompanyGate = () => {
 
   useEffect(() => {
     if (companies.length === 0) {
-      dispatch(
-        getCompanyList({
-          query: `userId.equals=${user.id}`,
-        })
-      );
+      dispatch(getCompanyList({ query: `userId.equals=${user.id}` }));
     }
   }, []);
 
   useEffect(() => {
     if (companies.length === 1) {
-      navigate(`/gate/form`, {
-        state: {
-          company: companies[0],
-          forms: companies[0].forms,
-        },
-      });
+      navigateCompanyFirstForm(companies[0]);
     }
   }, []);
+
+  const navigateCompanyFirstForm = (company: ICompany) => {
+    if (!isAccessibleCompany(company)) {
+      toast.error('No accessible form found for this company');
+      return;
+    }
+
+    const form = company.forms.filter(form => form.activated)[0];
+    navigate(`/gate/companies/${company.id}/forms/${form.id}`);
+  };
 
   const isAccessibleCompany = (company: ICompany) => {
     return company.activated === true && company.forms.length > 0 && company.forms.some(form => form.activated);
@@ -55,28 +55,17 @@ const CompanyGate = () => {
           md={4}
           lg={3}
           sx={{
-            '& .MuiCard-root': {
-              minHeight: '300px',
-            },
+            '& .MuiCard-root': { minHeight: '300px' },
           }}
           onClick={() => {
-            if (!isAccessibleCompany(company)) {
-              alert('Company is not accessible');
-              return;
-            }
-            navigate(`/gate/form`, {
-              state: {
-                company: company,
-                forms: company.forms,
-              },
-            });
+            navigateCompanyFirstForm(company);
           }}
         >
           <SubCard
             key={index}
             title={
               <>
-                <IconCircle size={'0.5rem'} fill={isAccessibleCompany(company) ? theme.palette.success.main : theme.palette.error.main} />{' '}
+                <IconCircle size={'0.5rem'} fill={isAccessibleCompany(company) ? theme.palette.success.main : theme.palette.error.main} />
                 &nbsp;
                 {company.title}
               </>

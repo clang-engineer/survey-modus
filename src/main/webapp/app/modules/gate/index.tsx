@@ -17,8 +17,8 @@ const GateRoutes = () => (
         </GateProvider>
       }
     >
-      <Route path="company" element={<CompanyGate />} />
-      <Route path="forms/:formId" element={<FormGate />} />
+      <Route path="companies" element={<CompanyGate />} />
+      <Route path="companies/:companyId/forms/:formId" element={<FormGate />} />
       <Route path="datasource" element={<DatasourceGate />} />
     </Route>
   </ErrorBoundaryRoutes>

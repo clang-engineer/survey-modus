@@ -1,46 +1,46 @@
 import React, { useEffect } from 'react';
-import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { Grid } from '@mui/material';
 
-import { useLocation, useNavigate } from 'react-router-dom';
-import { IForm } from 'app/shared/model/form.model';
-import { ICompany } from 'app/shared/model/company.model';
+import { useNavigate, useParams } from 'react-router-dom';
+import useGateConfig from 'app/modules/gate/gate.config';
+import { NavItemType } from 'app/berry/types';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntity as getForm } from 'app/entities/form/form.reducer';
+import { getEntity as getCompany } from 'app/entities/company/company.reducer';
+import { CreateCompanyNavItems } from 'app/modules/gate/nav-item.utils';
+import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 const FormGate = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { setMenuItems } = useGateConfig();
+  const { companyId, formId } = useParams<{ companyId: string; formId: string }>();
 
-  const state = location.state;
-
-  const company = state ? (['company'] as ICompany) : {};
-  const forms = state ? (['forms'] as IForm[]) : [];
+  const companyEntity = useAppSelector(state => state.company.entity);
+  const formEntity = useAppSelector(state => state.form.entity);
 
   useEffect(() => {
-    if (!company || !forms || forms.length === 0) {
-      navigate('/gate/company');
-    }
-  }, []);
+    formId && dispatch(getForm(formId));
+  }, [formId]);
+
+  useEffect(() => {
+    companyId && dispatch(getCompany(companyId));
+  }, [companyId]);
+
+  useEffect(() => {
+    const menuItems: NavItemType[] = CreateCompanyNavItems(companyEntity);
+    setMenuItems(menuItems);
+
+    return () => {
+      setMenuItems([]);
+    };
+  }, [companyEntity]);
+
   return (
     <Grid container spacing={2}>
-      {forms.map((form, index) => (
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          sx={{
-            '& .MuiCard-root': {
-              minHeight: '300px',
-            },
-          }}
-        >
-          <SubCard key={index} title={form.title}>
-            test
-          </SubCard>
-        </Grid>
-      ))}
+      <Grid item xs={12}>
+        <SubCard title={formEntity.title}>{formEntity.description}</SubCard>
+      </Grid>
     </Grid>
   );
 };
