@@ -7,7 +7,7 @@ import CompanyGate from './company-gate';
 import FormGate from 'app/modules/gate/form-gate';
 import DatasourceGate from 'app/modules/gate/datasource-gate';
 import { GateProvider } from 'app/modules/gate/gate.config';
-import GateLayout from 'app/modules/gate/gate-layout';
+import GateLayout from 'app/modules/gate/layout';
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route
