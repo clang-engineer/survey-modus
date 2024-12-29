@@ -52,7 +52,7 @@ export const FieldUpdate = () => {
 
   const formik = useFormik<IField>({
     initialValues: {
-      id: 0,
+      id: null,
       title: '',
       description: '',
       activated: false,
@@ -66,7 +66,7 @@ export const FieldUpdate = () => {
       },
     },
     validationSchema: yup.object({
-      id: yup.string(),
+      id: yup.number().nullable(true),
       title: yup
         .string()
         .min(5, translate('entity.validation.minlength', { min: 5 }))

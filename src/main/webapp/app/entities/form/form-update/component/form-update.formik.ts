@@ -5,7 +5,7 @@ import { translate } from 'react-jhipster';
 const formUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
   return useFormik({
     initialValues: {
-      id: 0,
+      id: null,
       title: '',
       description: '',
       activated: false,
@@ -13,7 +13,7 @@ const formUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
       category: { id: 0 },
     },
     validationSchema: yup.object({
-      id: yup.string(),
+      id: yup.number().nullable(true),
       title: yup
         .string()
         .min(5, translate('entity.validation.minlength', { min: 5 }))
