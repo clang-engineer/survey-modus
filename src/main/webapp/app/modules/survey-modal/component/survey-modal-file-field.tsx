@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Box, FormControl, IconButton, styled, Typography } from '@mui/material';
+import { Box, FormControl, IconButton, styled, Typography, Alert } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
@@ -14,11 +14,21 @@ interface ISurveyModalTextFieldProps {
 }
 
 const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
-  const [files, setFiles] = useState<any[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log('Uploaded files:', acceptedFiles);
+    setError(null); // 이전 에러 초기화
+
+    if (files.length + acceptedFiles.length > 5) {
+      setError(`You can only upload up to ${5} files.`);
+      return;
+    }
+
     setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+
+    const fileNameList = [...files, ...acceptedFiles].map(file => file.name).join(';');
+    props.formik.setFieldValue(`${props.field.id}`, fileNameList);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -39,10 +49,16 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     },
     multiple: true,
     maxSize: 10485760,
+    maxFiles: 5,
   });
 
   return (
     <FormControl fullWidth>
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <Box
         {...getRootProps()}
         sx={{
@@ -84,6 +100,14 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
             </Typography>
           </Box>
         ))}
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body2" color="textSecondary">
+            <strong>Accepted file types:</strong> .png, .jpg, .jpeg, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .zip
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            <strong>Max file size:</strong> 10MB
+          </Typography>
+        </Box>
       </Box>
     </FormControl>
   );
