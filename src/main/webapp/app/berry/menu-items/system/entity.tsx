@@ -15,17 +15,10 @@ const entity: NavItemType[] = [
     icon: icons.IconSitemap,
     children: [
       {
-        id: 'group',
-        title: 'group',
+        id: 'category',
+        title: 'category',
         type: 'item',
-        url: '/entities/group',
-        breadcrumbs: true,
-      },
-      {
-        id: 'company',
-        title: 'company',
-        type: 'item',
-        url: '/entities/company',
+        url: '/entities/category',
         breadcrumbs: true,
       },
       {
@@ -36,17 +29,24 @@ const entity: NavItemType[] = [
         breadcrumbs: true,
       },
       {
-        id: 'category',
-        title: 'category',
-        type: 'item',
-        url: '/entities/category',
-        breadcrumbs: true,
-      },
-      {
         id: 'field',
         title: 'field',
         type: 'item',
         url: '/entities/field',
+        breadcrumbs: true,
+      },
+      {
+        id: 'company',
+        title: 'company',
+        type: 'item',
+        url: '/entities/company',
+        breadcrumbs: true,
+      },
+      {
+        id: 'group',
+        title: 'group',
+        type: 'item',
+        url: '/entities/group',
         breadcrumbs: true,
       },
     ],

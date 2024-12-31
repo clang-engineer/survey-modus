@@ -17,14 +17,14 @@ export default () => {
     <div>
       <ErrorBoundaryRoutes>
         {/* prettier-ignore */}
-        <Route path="point/*" element={<Point/>}/>
-        <Route path="user-point/*" element={<UserPoint />} />
-        <Route path="group/*" element={<Group />} />
-        <Route path="company/*" element={<Company />} />
         <Route path="category/*" element={<Category />} />
         <Route path="form/*" element={<Form />} />
         <Route path="field/*" element={<Field />} />
+        <Route path="company/*" element={<Company />} />
+        <Route path="group/*" element={<Group />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
+        <Route path="point/*" element={<Point />} />
+        <Route path="user-point/*" element={<UserPoint />} />
       </ErrorBoundaryRoutes>
     </div>
   );
