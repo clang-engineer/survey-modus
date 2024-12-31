@@ -4,15 +4,13 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from 'app/entities/form/form.reducer';
-import { Alert, Box, Button, ButtonGroup, Grid, IconButton, Tooltip, Typography } from '@mui/material';
-import SubCard from 'app/berry/ui-component/cards/SubCard';
+import { Alert, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import { IForm } from 'app/shared/model/form.model';
-import { IconBuildingStore, IconPencil, IconTrash, IconClipboardList, IconBook } from '@tabler/icons';
+import { IconClipboardList, IconPencil, IconTrash } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
-import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
-import GroupCompaniesTooltipContent from 'app/modules/wizard/form-wizard/component/form-companies-tooltip-content';
+import FormDraggableGrid from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-draggable-grid';
 
 const slotProps = {
   tooltip: {
@@ -100,49 +98,18 @@ const FormWizardList = () => {
           </Button>
         </Box>
       </Grid>
-      <Grid item xs={12} container spacing={gridSpacing - 1}>
-        {formList && formList.length > 0
-          ? formList.map((form, i) => (
-              <Grid item xs={12} md={6} xl={4} key={i}>
-                <SubCard title={<SubCardTitle form={form} />}>
-                  <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} marginBottom={2}>
-                      <Typography variant="body1" color="text.primary">
-                        {form.description}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                      <Box display="flex" alignItems="center">
-                        <CustomWidthTooltip
-                          title={
-                            <>
-                              {form.category.title} <br />
-                              {form.category.description}
-                            </>
-                          }
-                          sx={{ fontSize: '30' }}
-                          slotProps={slotProps}
-                        >
-                          <IconButton>
-                            <IconBook size={'15px'} strokeWidth={1.2} />
-                          </IconButton>
-                        </CustomWidthTooltip>
-                        <Typography variant="caption" color="text.primary">
-                          {form.category.title}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </SubCard>
-              </Grid>
-            ))
-          : !loading && (
-              <Grid item xs={12}>
-                <Alert icon={<CheckIcon fontSize="inherit" />} severity="warning">
-                  <Translate contentKey="surveyModusApp.form.home.notFound">No Groups found</Translate>
-                </Alert>
-              </Grid>
-            )}
+      <Grid item xs={12}>
+        {formList && formList.length > 0 ? (
+          <FormDraggableGrid />
+        ) : (
+          !loading && (
+            <Grid item xs={12}>
+              <Alert icon={<CheckIcon fontSize="inherit" />} severity="warning">
+                <Translate contentKey="surveyModusApp.form.home.notFound">No Groups found</Translate>
+              </Alert>
+            </Grid>
+          )
+        )}
       </Grid>
     </Grid>
   );
