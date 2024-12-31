@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './category.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
+import { gridSpacing } from 'app/berry/store/constant';
+import { IconArrowBack, IconPencil } from '@tabler/icons';
 
 export const CategoryDetail = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
 
@@ -18,52 +21,60 @@ export const CategoryDetail = () => {
 
   const categoryEntity = useAppSelector(state => state.category.entity);
   return (
-    <Row>
-      <Col md="8">
-        <h2 data-cy="categoryDetailsHeading">
-          <Translate contentKey="surveyModusApp.category.detail.title">Category</Translate>
-        </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="id">
+    <MainCard
+      title={
+        <Typography variant="h4">
+          <Translate contentKey="surveyModusApp.category.detail.title">Category</Translate> [<b>{categoryEntity.id}</b>]
+        </Typography>
+      }
+    >
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="global.field.id">ID</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.id}</dd>
-          <dt>
-            <span id="title">
+            </Typography>
+            <Typography>{categoryEntity.id}</Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.category.title">Title</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.title}</dd>
-          <dt>
-            <span id="description">
+            </Typography>
+            <Typography> {categoryEntity.title} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.category.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.description}</dd>
-          <dt>
-            <span id="activated">
+            </Typography>
+            <Typography> {categoryEntity.description} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.category.activated">Activated</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.activated ? 'true' : 'false'}</dd>
-        </dl>
-        <Button tag={Link} to="/category" replace color="info" data-cy="entityDetailsBackButton">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/entities/category/${categoryEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
-      </Col>
-    </Row>
+            </Typography>
+            <Typography> {categoryEntity.activated ? 'true' : 'false'} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <ButtonGroup variant="contained" size="small">
+            <Button onClick={() => navigate('/entities/category')} data-cy="entityDetailsBackButton">
+              <IconArrowBack size={'1rem'} />
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </Button>
+            <Button onClick={() => navigate(`/entities/category/${categoryEntity.id}/edit`)} color="secondary">
+              <IconPencil size={'1rem'} />
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </Button>
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    </MainCard>
   );
 };
 
