@@ -66,7 +66,7 @@ export const PointDetail = () => {
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/point/${pointEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/entities/point/${pointEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

@@ -94,7 +94,7 @@ export const Field = () => {
             size="small"
             id="jh-create-entity"
             data-cy="entityCreateButton"
-            onClick={() => navigate('/field/new')}
+            onClick={() => navigate('/entities/field/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="surveyModusApp.field.home.createLabel">Create new Field</Translate>
@@ -138,7 +138,7 @@ export const Field = () => {
             {fieldList.map((field, i) => (
               <TableRow key={`entity-${i}`} data-cy="entityTable">
                 <TableCell>
-                  <Link component={BaseLink} to={`/field/${field.id}`}>
+                  <Link component={BaseLink} to={`/entities/field/${field.id}`}>
                     {field.id}
                   </Link>
                 </TableCell>
@@ -148,7 +148,7 @@ export const Field = () => {
                 <TableCell>{field.form ? field.form.title : ''}</TableCell>
                 <TableCell className="text-end">
                   <ButtonGroup size={'small'}>
-                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/field/${field.id}`)}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/entities/field/${field.id}`)}>
                       <IconEye size={'1rem'} />{' '}
                       <Typography variant={'subtitle2'} color={'inherit'}>
                         <Translate contentKey="entity.action.view">View</Translate>
@@ -159,7 +159,7 @@ export const Field = () => {
                       color={'secondary'}
                       onClick={() =>
                         navigate(
-                          `/field/${field.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/field/${field.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >
@@ -173,7 +173,7 @@ export const Field = () => {
                       color={'error'}
                       onClick={() =>
                         navigate(
-                          `/field/${field.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/field/${field.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >

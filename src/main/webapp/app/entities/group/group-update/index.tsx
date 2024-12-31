@@ -36,7 +36,7 @@ export const GroupUpdate = () => {
 
   const fromWizardPath = location.pathname.includes('wizard');
   const fromAdminPath = !fromWizardPath;
-  const LIST_PATH = fromAdminPath ? '/group' : '/wizard/group';
+  const LIST_PATH = fromAdminPath ? '/entities/group' : '/wizard/group';
 
   const handleClose = () => {
     navigate(LIST_PATH + location.search);

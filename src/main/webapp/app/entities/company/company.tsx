@@ -95,7 +95,7 @@ export const Company = () => {
             size="small"
             id="jh-create-entity"
             data-cy="entityCreateButton"
-            onClick={() => navigate('/company/new')}
+            onClick={() => navigate('/entities/company/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="surveyModusApp.company.home.createLabel">Create new Company</Translate>
@@ -145,7 +145,7 @@ export const Company = () => {
             {companyList.map((company, i) => (
               <TableRow key={`entity-${i}`} data-cy="entityTable">
                 <TableCell>
-                  <Link component={BaseLink} to={`/company/${company.id}`}>
+                  <Link component={BaseLink} to={`/entities/company/${company.id}`}>
                     {company.id}
                   </Link>
                 </TableCell>
@@ -156,7 +156,7 @@ export const Company = () => {
                 <TableCell>
                   {company.forms
                     ? company.forms.map((val, j) => (
-                        <Link component={BaseLink} to={`/form/${val.id}`} key={j}>
+                        <Link component={BaseLink} to={`/entities/form/${val.id}`} key={j}>
                           {val.title}
                           {j === company.forms.length - 1 ? '' : ', '}
                         </Link>
@@ -175,7 +175,7 @@ export const Company = () => {
                 </TableCell>
                 <TableCell className="text-end">
                   <ButtonGroup size={'small'}>
-                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/company/${company.id}`)}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/entities/company/${company.id}`)}>
                       <IconEye size={'1rem'} />{' '}
                       <Typography variant={'subtitle2'} color={'inherit'}>
                         <Translate contentKey="entity.action.view">View</Translate>
@@ -186,7 +186,7 @@ export const Company = () => {
                       color={'secondary'}
                       onClick={() =>
                         navigate(
-                          `/company/${company.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/company/${company.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >
@@ -200,7 +200,7 @@ export const Company = () => {
                       color={'error'}
                       onClick={() =>
                         navigate(
-                          `/company/${company.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/company/${company.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >

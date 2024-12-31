@@ -25,7 +25,7 @@ export const GroupDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.group.updateSuccess);
 
   const handleClose = () => {
-    navigate('/group' + location.search);
+    navigate('/entities/group' + location.search);
   };
 
   useEffect(() => {

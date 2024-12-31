@@ -56,7 +56,7 @@ export const CategoryDetail = () => {
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/category/${categoryEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/entities/category/${categoryEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

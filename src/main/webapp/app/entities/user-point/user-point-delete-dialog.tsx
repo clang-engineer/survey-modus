@@ -25,7 +25,7 @@ export const UserPointDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.userPoint.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-point' + location.search);
+    navigate('/entities/user-point' + location.search);
   };
 
   useEffect(() => {

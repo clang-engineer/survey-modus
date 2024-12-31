@@ -95,7 +95,7 @@ export const Group = () => {
             size="small"
             id="jh-create-entity"
             data-cy="entityCreateButton"
-            onClick={() => navigate('/group/new')}
+            onClick={() => navigate('/entities/group/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="surveyModusApp.group.home.createLabel">Create new Group</Translate>
@@ -145,7 +145,7 @@ export const Group = () => {
             {groupList.map((group, i) => (
               <TableRow key={`entity-${i}`} data-cy="entityTable">
                 <TableCell>
-                  <Link component={BaseLink} to={`/group/${group.id}`}>
+                  <Link component={BaseLink} to={`/entities/group/${group.id}`}>
                     {group.id}
                   </Link>
                 </TableCell>
@@ -166,7 +166,7 @@ export const Group = () => {
                 <TableCell>
                   {group.companies
                     ? group.companies.map((val, j) => (
-                        <Link component={BaseLink} to={`/company/${val.id}`} key={j}>
+                        <Link component={BaseLink} to={`/entities/company/${val.id}`} key={j}>
                           {val.title}
                           {j === group.companies.length - 1 ? '' : ', '}
                         </Link>
@@ -175,7 +175,7 @@ export const Group = () => {
                 </TableCell>
                 <TableCell className="text-end">
                   <ButtonGroup size={'small'}>
-                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/group/${group.id}`)}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/entities/group/${group.id}`)}>
                       <IconEye size={'1rem'} />{' '}
                       <Typography variant={'subtitle2'} color={'inherit'}>
                         <Translate contentKey="entity.action.view">View</Translate>
@@ -186,7 +186,7 @@ export const Group = () => {
                       color={'secondary'}
                       onClick={() =>
                         navigate(
-                          `/group/${group.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/group/${group.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >
@@ -200,7 +200,7 @@ export const Group = () => {
                       color={'error'}
                       onClick={() =>
                         navigate(
-                          `/group/${group.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/group/${group.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >

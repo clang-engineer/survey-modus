@@ -118,15 +118,15 @@ export const UserPoint = () => {
               {userPointList.map((userPoint, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/user-point/${userPoint.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`/entities/user-point/${userPoint.id}`} color="link" size="sm">
                       {userPoint.id}
                     </Button>
                   </td>
                   <td>{userPoint.user ? userPoint.user.login : ''}</td>
-                  <td>{userPoint.point ? <Link to={`/point/${userPoint.point.id}`}>{userPoint.point.id}</Link> : ''}</td>
+                  <td>{userPoint.point ? <Link to={`/entities/point/${userPoint.point.id}`}>{userPoint.point.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/user-point/${userPoint.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/entities/user-point/${userPoint.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -134,7 +134,7 @@ export const UserPoint = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-point/${userPoint.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/user-point/${userPoint.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -146,7 +146,7 @@ export const UserPoint = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/user-point/${userPoint.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/user-point/${userPoint.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"

@@ -79,11 +79,11 @@ export const FormDetail = () => {
         </Grid>
         <Grid item xs={12}>
           <ButtonGroup variant="contained" size="small">
-            <Button onClick={() => navigate('/form')} data-cy="entityDetailsBackButton">
+            <Button onClick={() => navigate('/entities/form')} data-cy="entityDetailsBackButton">
               <IconArrowBack size={'1rem'} />
               <Translate contentKey="entity.action.back">Back</Translate>
             </Button>
-            <Button onClick={() => navigate(`/form/${formEntity.id}/edit`)} color="secondary">
+            <Button onClick={() => navigate(`/entities/form/${formEntity.id}/edit`)} color="secondary">
               <IconPencil size={'1rem'} />
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </Button>

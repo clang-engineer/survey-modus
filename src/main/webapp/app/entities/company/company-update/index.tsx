@@ -37,7 +37,7 @@ export const CompanyUpdate = () => {
 
   const fromWizardPath = location.pathname.includes('wizard');
   const fromAdminPath = !fromWizardPath;
-  const LIST_PATH = fromAdminPath ? '/company' : '/wizard/company';
+  const LIST_PATH = fromAdminPath ? '/entities/company' : '/wizard/company';
 
   const handleClose = () => {
     navigate(LIST_PATH + location.search);

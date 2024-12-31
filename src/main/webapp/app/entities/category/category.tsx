@@ -120,7 +120,7 @@ export const Category = () => {
               {categoryList.map((category, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/category/${category.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`/entities/category/${category.id}`} color="link" size="sm">
                       {category.id}
                     </Button>
                   </td>
@@ -129,7 +129,7 @@ export const Category = () => {
                   <td>{category.activated ? 'true' : 'false'}</td>
                   <td className="text-end">
                     <div className="btn-category flex-btn-category-container">
-                      <Button tag={Link} to={`/category/${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/entities/category/${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -137,7 +137,7 @@ export const Category = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/category/${category.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/category/${category.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -149,7 +149,7 @@ export const Category = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/category/${category.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/category/${category.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"

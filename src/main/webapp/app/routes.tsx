@@ -75,6 +75,7 @@ const AppRoutes = () => {
         </Route>
         {/* management routes */}
         <Route
+          path="entities/*"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
               <MainLayout />

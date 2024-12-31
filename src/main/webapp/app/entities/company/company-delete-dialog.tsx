@@ -25,7 +25,7 @@ export const CompanyDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.company.updateSuccess);
 
   const handleClose = () => {
-    navigate('/company' + location.search);
+    navigate('/entities/company' + location.search);
   };
 
   useEffect(() => {

@@ -20,7 +20,7 @@ export const CategoryUpdate = () => {
   const updateSuccess = useAppSelector(state => state.category.updateSuccess);
 
   const handleClose = () => {
-    navigate('/category' + location.search);
+    navigate('/entities/category' + location.search);
   };
 
   useEffect(() => {

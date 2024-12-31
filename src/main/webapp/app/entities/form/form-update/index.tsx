@@ -35,7 +35,7 @@ export const FormUpdate = () => {
 
   const fromWizardPath = location.pathname.includes('wizard');
   const fromAdminPath = !fromWizardPath;
-  const LIST_PATH = fromAdminPath ? '/form' : '/wizard/form';
+  const LIST_PATH = fromAdminPath ? '/entities/form' : '/wizard/form';
 
   const handleClose = () => {
     navigate(LIST_PATH + location.search);

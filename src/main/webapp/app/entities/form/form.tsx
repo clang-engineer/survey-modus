@@ -95,7 +95,7 @@ export const Form = () => {
             size="small"
             id="jh-create-entity"
             data-cy="entityCreateButton"
-            onClick={() => navigate('/form/new')}
+            onClick={() => navigate('/entities/form/new')}
           >
             <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="surveyModusApp.form.home.createLabel">Create new Form</Translate>
@@ -142,7 +142,7 @@ export const Form = () => {
             {formList.map((form, i) => (
               <TableRow key={`entity-${i}`} data-cy="entityTable">
                 <TableCell>
-                  <Link component={BaseLink} to={`/form/${form.id}`}>
+                  <Link component={BaseLink} to={`/entities/form/${form.id}`}>
                     {form.id}
                   </Link>
                 </TableCell>
@@ -151,13 +151,13 @@ export const Form = () => {
                 <TableCell>{form.activated ? 'true' : 'false'}</TableCell>
                 <TableCell>{form.user ? form.user.login : ''}</TableCell>
                 <TableCell>
-                  <Link component={BaseLink} to={`/category/${form.category.id}`}>
+                  <Link component={BaseLink} to={`/entities/category/${form.category.id}`}>
                     {form.category.title}
                   </Link>
                 </TableCell>
                 <TableCell className="text-end">
                   <ButtonGroup size={'small'}>
-                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/form/${form.id}`)}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/entities/form/${form.id}`)}>
                       <IconEye size={'1rem'} />{' '}
                       <Typography variant={'subtitle2'} color={'inherit'}>
                         <Translate contentKey="entity.action.view">View</Translate>
@@ -168,7 +168,7 @@ export const Form = () => {
                       color={'secondary'}
                       onClick={() =>
                         navigate(
-                          `/form/${form.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/form/${form.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >
@@ -182,7 +182,7 @@ export const Form = () => {
                       color={'error'}
                       onClick={() =>
                         navigate(
-                          `/form/${form.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                          `/entities/form/${form.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
                         )
                       }
                     >

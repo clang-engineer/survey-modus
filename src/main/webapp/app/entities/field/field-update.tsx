@@ -86,7 +86,7 @@ export const FieldUpdate = () => {
   });
 
   const handleClose = () => {
-    navigate('/field' + location.search);
+    navigate('/entities/field' + location.search);
   };
 
   useEffect(() => {
@@ -228,7 +228,7 @@ export const FieldUpdate = () => {
           </Grid>
           <Grid item xs={12}>
             <ButtonGroup size="small">
-              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/field')} color="primary">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/entities/field')} color="primary">
                 <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">

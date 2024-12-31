@@ -25,7 +25,7 @@ export const FieldDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.field.updateSuccess);
 
   const handleClose = () => {
-    navigate('/field' + location.search);
+    navigate('/entities/field' + location.search);
   };
 
   useEffect(() => {

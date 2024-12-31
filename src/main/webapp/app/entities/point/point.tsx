@@ -126,7 +126,7 @@ export const Point = () => {
               {pointList.map((point, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/point/${point.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`/entities/point/${point.id}`} color="link" size="sm">
                       {point.id}
                     </Button>
                   </td>
@@ -139,7 +139,7 @@ export const Point = () => {
                   <td>{point.user ? point.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/point/${point.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/entities/point/${point.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -147,7 +147,7 @@ export const Point = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/point/${point.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/point/${point.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -159,7 +159,7 @@ export const Point = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/point/${point.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/entities/point/${point.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"

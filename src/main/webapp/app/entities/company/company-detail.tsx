@@ -105,11 +105,11 @@ export const CompanyDetail = () => {
         </Grid>
         <Grid item xs={12}>
           <ButtonGroup variant="contained" size="small">
-            <Button onClick={() => navigate('/company')} data-cy="entityDetailsBackButton">
+            <Button onClick={() => navigate('/entities/company')} data-cy="entityDetailsBackButton">
               <IconArrowBack size={'1rem'} />
               <Translate contentKey="entity.action.back">Back</Translate>
             </Button>
-            <Button onClick={() => navigate(`/company/${companyEntity.id}/edit`)} color="secondary">
+            <Button onClick={() => navigate(`/entities/company/${companyEntity.id}/edit`)} color="secondary">
               <IconPencil size={'1rem'} />
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </Button>

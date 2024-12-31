@@ -30,7 +30,7 @@ export const PointUpdate = () => {
   const levelValues = Object.keys(level);
 
   const handleClose = () => {
-    navigate('/point' + location.search);
+    navigate('/entities/point' + location.search);
   };
 
   useEffect(() => {

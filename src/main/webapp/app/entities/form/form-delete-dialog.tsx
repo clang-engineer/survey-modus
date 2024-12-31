@@ -25,7 +25,7 @@ export const FormDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.form.updateSuccess);
 
   const handleClose = () => {
-    navigate('/form' + location.search);
+    navigate('/entities/form' + location.search);
   };
 
   useEffect(() => {
