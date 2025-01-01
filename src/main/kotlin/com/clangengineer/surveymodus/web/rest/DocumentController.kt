@@ -58,7 +58,9 @@ class DocumentController {
 
         val result = mongoTemplate.find(query, Map::class.java, collectionId) as List<Map<String, Any>>
 
-        return ResponseEntity.ok(result)
+        val serialized = serializeDocuments(result)
+
+        return ResponseEntity.ok(serialized)
     }
 
     @GetMapping("/collections/{collectionId}/documents/{documentId}")
@@ -70,12 +72,7 @@ class DocumentController {
 
         val result = mongoTemplate.findOne(query, Map::class.java, collectionId) as Map<String, Any>
 
-        val serialized = result.toMutableMap().apply {
-            val objectId = this[DOCUMENT_ID]
-            if (objectId is ObjectId) {
-                this[DOCUMENT_ID] = objectId.toString()
-            }
-        }
+        val serialized = serializeDocument(result)
 
         return ResponseEntity.ok(serialized)
     }
@@ -116,4 +113,17 @@ class DocumentController {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, OBJECT_NAME, documentId))
             .build()
     }
+}
+
+fun serializeDocument(document: Map<String, Any>): Map<String, Any> {
+    return document.toMutableMap().apply {
+        val objectId = this[DOCUMENT_ID]
+        if (objectId is ObjectId) {
+            this[DOCUMENT_ID] = objectId.toHexString() // 문자열로 변환
+        }
+    }
+}
+
+fun serializeDocuments(documents: List<Map<String, Any>>): List<Map<String, Any>> {
+    return documents.map { serializeDocument(it) }
 }
