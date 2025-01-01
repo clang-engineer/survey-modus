@@ -8,6 +8,8 @@ import { ConfigProps } from 'app/berry/types/config';
 export const BASE_PATH = '';
 
 export const DASHBOARD_PATH = '/dashboard/default';
+
+export const STAFF_HOME_PATH = '/gate/companies';
 export const HORIZONTAL_MAX_ITEM = 6;
 
 const config: ConfigProps = {
