@@ -147,6 +147,7 @@ const FieldWizardList = () => {
             onClick={() => {
               create(
                 SurveyModal({
+                  company: {},
                   form,
                   fields: items.filter(a => a.activated),
                 })

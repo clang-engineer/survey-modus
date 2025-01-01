@@ -20,9 +20,11 @@ import { useTheme } from '@mui/material/styles';
 import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
 import { useAppDispatch } from 'app/config/store';
 import { createDocument } from 'app/modules/document/document.reducer';
-import { IDocument } from 'app/shared/model/document.model';
+import { defaultValue, IDocument } from 'app/shared/model/document.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 interface IFieldWizardPreviewModalProps {
+  company: ICompany;
   form: IForm;
   fields: IField[];
 }
@@ -66,17 +68,20 @@ const SurveyModal =
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
-    const { form, fields } = props;
+    const { company, form, fields } = props;
 
     const handleClose = () => {
       onReject();
     };
 
     const formik = useFormik<IDocument>({
-      initialValues: fields.reduce((acc, field) => {
-        acc[field.id] = '';
-        return acc;
-      }, {}),
+      initialValues: fields.reduce(
+        (acc, field) => {
+          acc[field.id] = '';
+          return acc;
+        },
+        { ...defaultValue }
+      ),
       // validationSchema: fields.reduce((acc, field) => {
       //   acc[field.id] = yup.string();
       //   return acc;
@@ -85,7 +90,7 @@ const SurveyModal =
         dispatch(
           createDocument({
             collectionId: form.category.id,
-            document: { ...values, formId: form.id },
+            document: { ...values, companyId: company.id, formId: form.id },
           })
         );
       },

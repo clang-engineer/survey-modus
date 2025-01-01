@@ -24,7 +24,8 @@ export const getDocumentById = createAsyncThunk(
 export const getDocumentsByCompanyIdAndFormId = createAsyncThunk(
   'document/fetch_documents',
   async (props: { collectionId: number; companyId: number; formId: number }) => {
-    const requestUrl = `api/collections/${props.collectionId}/documents?formId=${props.formId}`;
+    const { collectionId, companyId, formId } = props;
+    const requestUrl = `api/collections/${collectionId}/documents?companyId=${companyId}&formId=${formId}`;
     return axios.get<IDocument[]>(requestUrl);
   }
 );
@@ -91,7 +92,7 @@ export const DocumentSlice = createSlice({
       .addCase(deleteDocument.fulfilled, (state, action) => {
         state.updating = false;
         state.updateSuccess = true;
-        state.document = {};
+        state.document = defaultValue;
       })
       .addMatcher(isFulfilled(getDocumentsByCompanyIdAndFormId), (state, action) => {
         const { data, headers } = action.payload;

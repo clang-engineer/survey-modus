@@ -1,8 +1,12 @@
 export interface IDocument {
   _id?: string;
-  companyId?: number;
-  formId?: number;
+  companyId: number;
+  formId: number;
+
   [key: string]: any;
 }
 
-export const defaultValue: Readonly<IDocument> = {};
+export const defaultValue: Readonly<IDocument> = {
+  companyId: 0,
+  formId: 0,
+};

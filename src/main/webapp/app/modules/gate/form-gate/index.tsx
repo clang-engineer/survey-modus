@@ -18,7 +18,7 @@ import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 import SurveyModal from 'app/modules/survey-modal';
 
 import { create } from 'react-modal-promise';
-import { getDocumentsByFormId } from 'app/modules/document/document.reducer';
+import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';
 
 const FormGate = () => {
   const dispatch = useAppDispatch();
@@ -48,14 +48,17 @@ const FormGate = () => {
   }, [companyEntity]);
 
   useEffect(() => {
-    if (formEntity.id) {
-      dispatch(getDocumentsByFormId({ collectionId: formEntity.category.id, formId: formEntity.id }));
+    if (companyEntity.id && formEntity.id) {
+      dispatch(
+        getDocumentsByCompanyIdAndFormId({ collectionId: formEntity.category.id, companyId: companyEntity.id, formId: formEntity.id })
+      );
     }
-  }, [formEntity]);
+  }, [companyEntity, formEntity]);
 
   const onClickCreateButton = () => {
     create(
       SurveyModal({
+        company: companyEntity,
         form: formEntity,
         fields: fieldEntities.filter(field => field.activated),
       })
