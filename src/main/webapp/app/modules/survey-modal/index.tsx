@@ -18,7 +18,7 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { useTheme } from '@mui/material/styles';
 import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
-import { useAppDispatch } from 'app/config/store';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
 import { defaultValue, IDocument } from 'app/shared/model/document.model';
 import { ICompany } from 'app/shared/model/company.model';
@@ -69,10 +69,13 @@ const SurveyModal =
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
+    const loading = useAppSelector(state => state.documentReducer.loading);
+    const updating = useAppSelector(state => state.documentReducer.updating);
+
     const { company, form, fields, document } = props;
 
     const handleClose = () => {
-      onReject();
+      onResolve();
     };
 
     const formik = useFormik<IDocument>({
@@ -108,15 +111,7 @@ const SurveyModal =
     }, [document]);
 
     return (
-      <Dialog
-        fullScreen
-        open={isOpen}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-        sx={{
-          '& .MuiPaper-root': { padding: 0 },
-        }}
-      >
+      <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition} sx={{ '& .MuiPaper-root': { padding: 0 } }}>
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
             <IconButton
@@ -138,6 +133,7 @@ const SurveyModal =
               onClick={() => {
                 formik.handleSubmit();
               }}
+              disabled={loading || updating}
             >
               save
             </Button>
