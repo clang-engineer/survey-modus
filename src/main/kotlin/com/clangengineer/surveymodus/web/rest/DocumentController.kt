@@ -1,5 +1,6 @@
 package com.clangengineer.surveymodus.web.rest
 
+import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_ID
 import org.bson.types.ObjectId
@@ -42,11 +43,18 @@ class DocumentController {
     }
 
     @GetMapping("/collections/{collectionId}/documents")
-    fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam formId: Long): ResponseEntity<List<Map<String, Any>>> {
+    fun findAllDocumentsInCollectionByFormId(
+        @PathVariable collectionId: String,
+        @RequestParam companyId: Long,
+        @RequestParam formId: Long
+    ): ResponseEntity<List<Map<String, Any>>> {
         log.debug("REST request to get all Documents in collection : $collectionId for form : $formId")
 
+        val ct1 = Criteria.where(DOCUMENT_COMPANY_ID).`is`(companyId)
+        val ct2 = Criteria.where(DOCUMENT_FORM_ID).`is`(formId)
+
         val query = Query()
-        query.addCriteria(Criteria.where(DOCUMENT_FORM_ID).`is`(formId))
+        query.addCriteria(Criteria().andOperator(ct1, ct2))
 
         val result = mongoTemplate.find(query, Map::class.java, collectionId) as List<Map<String, Any>>
 

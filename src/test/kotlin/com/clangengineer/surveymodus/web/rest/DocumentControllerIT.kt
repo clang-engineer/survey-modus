@@ -1,6 +1,7 @@
 package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_ID
 import com.clangengineer.surveymodus.domain.Field
@@ -97,14 +98,17 @@ class DocumentControllerIT {
     @Transactional
     @Throws(Exception::class)
     fun testFindAllDocumentsInCollectionsByFormId() {
+        val companyId = 9999999999
         for (i in 1..5) {
             val row = mutableMapOf<String, Any>()
             fieldList.forEach { row[it.id.toString()] = Math.random() }
-            row[DOCUMENT_FORM_ID] = form.id.toString()
+            row[DOCUMENT_FORM_ID] = form.id!!
+            row[DOCUMENT_COMPANY_ID] = companyId
             mongoTemplate.save(row, form.category!!.id.toString())
         }
 
-        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents?formId=${form.id}"))
+        val API_URI = "/api/collections/${form.category!!.id}/documents?companyId=$companyId&formId=${form.id}"
+        datasourceMockMvc.perform(get(API_URI))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray)
