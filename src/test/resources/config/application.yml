@@ -44,6 +44,13 @@ spring:
         size: 20
   thymeleaf:
     mode: HTML
+  data:
+    mongodb:
+      uri: mongodb://testuser:testpassword@localhost:27017/testdb?authSource=admin
+      username: testuser
+      password: testpassword
+      authentication-database: admin
+      database: testdb
 
 server:
   port: 10344

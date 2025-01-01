@@ -253,6 +253,7 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
     implementation "org.mongodb:mongodb-driver-sync"
+    testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo"
 }
 
 if (project.hasProperty("gae")) {

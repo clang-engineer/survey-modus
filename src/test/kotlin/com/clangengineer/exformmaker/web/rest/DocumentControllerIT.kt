@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -28,6 +29,7 @@ import javax.persistence.EntityManager
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
+@TestPropertySource(properties = ["spring.mongodb.embedded.version=4.0.3"])
 class DocumentControllerIT {
 
     @Autowired
