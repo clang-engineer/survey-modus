@@ -8,27 +8,11 @@ import Loader from 'app/berry/ui-component/Loader';
 const DataSource = () => {
   const loading = useAppSelector(state => state.field.loading);
   const fieldEntities = useAppSelector(state => state.field.entities);
-  const [datasource, setDatasource] = React.useState<any[]>([]);
-
-  useEffect(() => {
-    if (fieldEntities.length > 0) {
-      createDummyData(fieldEntities);
-    }
-  }, [fieldEntities]);
-
-  const createDummyData = (fieldList: IField[]) => {
-    for (let i = 0; i < 100; i++) {
-      const row = {};
-      fieldList.forEach(field => {
-        row[field.id] = Math.random();
-      });
-      datasource.push(row);
-    }
-  };
+  const documents = useAppSelector(state => state.documentReducer.documents);
 
   return (
     <>
-      {fieldEntities.length === 0 || datasource.length === 0 ? (
+      {fieldEntities.length === 0 || documents.length === 0 ? (
         <NoContentBox />
       ) : (
         <TableContainer>
@@ -43,7 +27,7 @@ const DataSource = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {datasource.map((row, index) => (
+              {documents.map((row, index) => (
                 <TableRow key={index}>
                   {fieldEntities.map(field => (
                     <TableCell key={field.id} align="center">

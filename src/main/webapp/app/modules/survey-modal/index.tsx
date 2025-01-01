@@ -88,8 +88,6 @@ const SurveyModal =
             document: { ...values, formId: form.id },
           })
         );
-
-        onResolve();
       },
     });
 
