@@ -2,10 +2,10 @@ package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
+import com.clangengineer.surveymodus.config.DOCUMENT_ID
 import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
-import com.clangengineer.surveymodus.service.dto.DocumentDTO
 import com.clangengineer.surveymodus.service.dto.FieldDTO
 import com.clangengineer.surveymodus.service.dto.FormDTO
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
@@ -75,14 +75,13 @@ class DocumentControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testCreateFormRow() {
-        val row = mutableMapOf<String, Any>()
-        fieldList.forEach { row[it.id.toString()] = Math.random() }
-
-        val document = DocumentDTO(form, row)
+    fun testCreateDocumentInCollection() {
+        val document = mutableMapOf<String, Any>()
+        fieldList.forEach { document[it.id.toString()] = Math.random() }
+        document[DOCUMENT_FORM_ID] = form.id.toString()
 
         datasourceMockMvc.perform(
-            post("/api/documents")
+            post("/api/collections/${form.category!!.id}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(document))
         )
@@ -92,14 +91,14 @@ class DocumentControllerIT {
         assertThat(result).hasSize(1)
         assertThat(result[0][DOCUMENT_FORM_ID]).isEqualTo(form.id.toString())
         for (field in fieldList) {
-            assertThat(result[0][field.id.toString()]).isEqualTo(row[field.id.toString()])
+            assertThat(result[0][field.id.toString()]).isEqualTo(document[field.id.toString()])
         }
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testFindAllDocumentsByFormId() {
+    fun testFindAllDocumentsInCollectionsByFormId() {
         for (i in 1..5) {
             val row = mutableMapOf<String, Any>()
             fieldList.forEach { row[it.id.toString()] = Math.random() }
@@ -107,10 +106,27 @@ class DocumentControllerIT {
             mongoTemplate.save(row, form.category!!.id.toString())
         }
 
-        datasourceMockMvc.perform(get("/api/documents/forms/${form.id}"))
+        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}?formId=${form.id}"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray)
             .andExpect(jsonPath("$").value(Matchers.hasSize<Any>(5)))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun testFindOneDocumentByDocumentId() {
+        val row = mutableMapOf<String, Any>()
+        fieldList.forEach { row[it.id.toString()] = Math.random() }
+        row[DOCUMENT_FORM_ID] = form.id.toString()
+        val result = mongoTemplate.save(row, form.category!!.id.toString())
+        val idObject = result[DOCUMENT_ID] as Map<String, Any>
+
+        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result["_id"]}"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$._id").value(idObject["_id"].toString()))
+            .andExpect(jsonPath("$.form_id").value(form.id.toString()))
     }
 }
