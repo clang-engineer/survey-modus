@@ -28,4 +28,3 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
       ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongodb:27017
 # mongo express default account is admin/pass
-

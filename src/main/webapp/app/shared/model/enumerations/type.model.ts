@@ -9,6 +9,7 @@ enum type {
   BOOLEAN = 'BOOLEAN',
   INTEGER = 'INTEGER',
   FLOAT = 'FLOAT',
+  FILE = 'FILE',
 }
 
 const isLookupType = (data: type): boolean => {

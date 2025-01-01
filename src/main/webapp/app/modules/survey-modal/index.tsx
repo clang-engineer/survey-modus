@@ -18,6 +18,7 @@ import SurveyModalCheckboxField from 'app/modules/survey-modal/component/survey-
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { useTheme } from '@mui/material/styles';
+import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -45,6 +46,8 @@ const FormFieldByType = (formik: FormikProps<Record<string, any>>, field: IField
       return <SurveyModalRadioField key={field.id} field={field} formik={formik} />;
     case type.CHECK_BOX:
       return <SurveyModalCheckboxField key={field.id} field={field} formik={formik} />;
+    case type.FILE:
+      return <SurveyModalFileField key={field.id} field={field} formik={formik} />;
     default:
       return (
         <Grid item xs={12} key={field.id}>

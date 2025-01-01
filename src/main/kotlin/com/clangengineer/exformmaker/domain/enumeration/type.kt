@@ -11,4 +11,5 @@ enum class type {
     BOOLEAN,
     INTEGER,
     FLOAT,
+    FILE,
 }
