@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createAsyncThunk, isFulfilled, isPending } from '@reduxjs/toolkit';
 import { defaultValue } from 'app/shared/model/document.model';
 
 const initialState = {
@@ -14,6 +13,12 @@ const initialState = {
 export const DocumentSlice = createSlice({
   name: 'document',
   initialState,
-  reducers: {},
+  reducers: {
+    reset() {
+      return initialState;
+    },
+  },
 });
+
+export const { reset } = DocumentSlice.actions;
 export default DocumentSlice.reducer;

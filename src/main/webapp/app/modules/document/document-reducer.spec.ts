@@ -1,4 +1,4 @@
-import reducer from './document.reducer';
+import reducer, { reset } from './document.reducer';
 
 describe('Document reducer tests', () => {
   function isEmpty(element): boolean {
@@ -38,6 +38,14 @@ describe('Document reducer tests', () => {
   describe('Common', () => {
     it('should return the initial state', () => {
       testInitialState(reducer(undefined, { type: 'any' }));
+    });
+  });
+
+  describe('Requests', () => {
+    it('should reset state to initial state', () => {
+      expect(reducer({ ...initialState, loading: true }, reset())).toEqual({
+        ...initialState,
+      });
     });
   });
 });
