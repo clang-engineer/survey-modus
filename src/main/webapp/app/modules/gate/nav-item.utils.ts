@@ -29,16 +29,6 @@ const CreateCompanyNavItems = (company: ICompany) => {
       );
     });
 
-  menuItems.push(
-    NavItemWrapper({
-      id: 'companies',
-      title: 'Home',
-      icon: IconHome,
-      type: 'item',
-      url: `/gate/companies`,
-    })
-  );
-
   return menuItems;
 };
 
