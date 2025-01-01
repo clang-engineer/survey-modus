@@ -71,6 +71,7 @@ const SurveyModal =
 
     const loading = useAppSelector(state => state.documentReducer.loading);
     const updating = useAppSelector(state => state.documentReducer.updating);
+    const updateSuccess = useAppSelector(state => state.documentReducer.updateSuccess);
 
     const { company, form, fields, document } = props;
 
@@ -109,6 +110,12 @@ const SurveyModal =
         formik.setValues(document);
       }
     }, [document]);
+
+    useEffect(() => {
+      if (!document || !document.id) {
+        isOpen && updateSuccess && handleClose();
+      }
+    }, [updateSuccess, isOpen]);
 
     return (
       <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition} sx={{ '& .MuiPaper-root': { padding: 0 } }}>
