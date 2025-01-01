@@ -4,8 +4,6 @@ import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
-import com.clangengineer.surveymodus.repository.FieldRepository
-import com.clangengineer.surveymodus.repository.FormRepository
 import com.clangengineer.surveymodus.service.dto.DocumentDTO
 import com.clangengineer.surveymodus.service.dto.FieldDTO
 import com.clangengineer.surveymodus.service.dto.FormDTO
@@ -37,12 +35,6 @@ class DocumentControllerIT {
 
     @Autowired
     private lateinit var em: EntityManager
-
-    @Autowired
-    private lateinit var fieldRepository: FieldRepository
-
-    @Autowired
-    private lateinit var formRepository: FormRepository
 
     @Autowired
     private lateinit var formMapper: FormMapper
@@ -94,5 +86,8 @@ class DocumentControllerIT {
         ).andExpect(status().isCreated())
 
         val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
+        for (field in fieldList) {
+            assertThat(result[0][field.id.toString()]).isEqualTo(row[field.id.toString()])
+        }
     }
 }

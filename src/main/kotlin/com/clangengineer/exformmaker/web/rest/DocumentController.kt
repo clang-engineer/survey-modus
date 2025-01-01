@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
@@ -19,11 +16,15 @@ class DocumentController {
     private lateinit var mongoTemplate: MongoTemplate
 
     @PostMapping("/documents")
-    fun createRow(@RequestBody document: DocumentDTO): ResponseEntity<String> {
+    fun createRow(@RequestBody document: DocumentDTO): ResponseEntity<Map<String, Any>> {
         log.debug("REST request to save Datasource")
 
-        mongoTemplate.save(document.row, document.form?.category!!.id.toString())
+        if (document.form == null || document.form?.category == null) {
+            throw IllegalArgumentException("Form is required")
+        }
 
-        return ResponseEntity.ok("hi")
+        val result = mongoTemplate.save(document.row, document.form?.category!!.id.toString())
+
+        return ResponseEntity.created(null).body(result)
     }
 }
