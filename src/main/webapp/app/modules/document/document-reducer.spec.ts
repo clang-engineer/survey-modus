@@ -1,4 +1,4 @@
-import reducer, { getDocumentById, reset } from './document.reducer';
+import reducer, { getDocumentById, getDocumentsByFormId, reset } from './document.reducer';
 import { defaultValue } from 'app/shared/model/document.model';
 
 describe('Document reducer tests', () => {
@@ -44,7 +44,7 @@ describe('Document reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getDocumentById.pending.type], {}, state => {
+      testMultipleTypes([getDocumentsByFormId.pending.type, getDocumentById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -63,7 +63,7 @@ describe('Document reducer tests', () => {
   describe('Failures', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
-        [getDocumentById.rejected.type],
+        [getDocumentsByFormId.rejected.type, getDocumentById.rejected.type],
         'some error',
         state => {
           expect(state).toMatchObject({
@@ -78,6 +78,22 @@ describe('Document reducer tests', () => {
   });
 
   describe('Successes', () => {
+    it('should fetch all documents', () => {
+      const payload = {
+        data: [
+          {
+            id: '1',
+            name: 'document',
+          },
+        ],
+      };
+      const state = reducer(undefined, { type: getDocumentsByFormId.fulfilled.type, payload });
+      expect(state).toMatchObject({
+        loading: false,
+        documents: payload.data,
+      });
+    });
+
     it('should fetch a single document', () => {
       const payload = {
         data: {
