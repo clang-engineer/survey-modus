@@ -7,6 +7,7 @@ import { IconEdit, IconTrash } from '@tabler/icons';
 import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
+import { DOCUMENT_ID } from 'app/shared/model/document.model';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();
@@ -49,13 +50,13 @@ const DataSource = () => {
             <TableBody>
               {documents.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell>{index}</TableCell>
+                  <TableCell width="100">{row[DOCUMENT_ID]}</TableCell>
                   {fieldEntities.map(field => (
                     <TableCell key={field.id} align="center">
                       {row[field.id]}
                     </TableCell>
                   ))}
-                  <TableCell width="100px">
+                  <TableCell width="100">
                     <ButtonGroup size="small" variant="text">
                       <Button>
                         {' '}

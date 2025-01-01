@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { defaultValue, IDocument } from 'app/shared/model/document.model';
+import { defaultValue, DOCUMENT_COMPANY_ID, DOCUMENT_FORM_ID, DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
 import axios from 'axios';
 import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 
@@ -36,7 +36,11 @@ export const createDocument = createAsyncThunk(
     const { collectionId, document } = props;
     const result = await axios.post<IDocument>(`api/collections/${collectionId}/documents`, document);
     thunkAPI.dispatch(
-      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+      getDocumentsByCompanyIdAndFormId({
+        collectionId: collectionId,
+        companyId: document[DOCUMENT_COMPANY_ID],
+        formId: document[DOCUMENT_FORM_ID],
+      })
     );
     return result;
   },
@@ -51,7 +55,11 @@ export const updateDocument = createAsyncThunk(
     const result = await axios.put<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
 
     thunkAPI.dispatch(
-      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+      getDocumentsByCompanyIdAndFormId({
+        collectionId: collectionId,
+        companyId: document[DOCUMENT_COMPANY_ID],
+        formId: document[DOCUMENT_FORM_ID],
+      })
     );
     return result;
   },
@@ -63,11 +71,15 @@ export const deleteDocument = createAsyncThunk(
   async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
     const { collectionId, document } = props;
 
-    const requestUrl = `api/collections/${props.collectionId}/documents/${props.document['_id']}`;
+    const requestUrl = `api/collections/${props.collectionId}/documents/${props.document[DOCUMENT_ID]}`;
     const result = await axios.delete(requestUrl);
 
     thunkAPI.dispatch(
-      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+      getDocumentsByCompanyIdAndFormId({
+        collectionId: collectionId,
+        companyId: document[DOCUMENT_COMPANY_ID],
+        formId: document[DOCUMENT_FORM_ID],
+      })
     );
 
     return result;

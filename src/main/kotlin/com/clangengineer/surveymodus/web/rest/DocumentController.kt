@@ -45,7 +45,10 @@ class DocumentController {
     }
 
     @GetMapping("/collections/{collectionId}/documents")
-    fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam companyId: Long, @RequestParam formId: Long
+    fun findAllDocumentsInCollectionByFormId(
+        @PathVariable collectionId: String,
+        @RequestParam companyId: Long,
+        @RequestParam formId: Long
     ): ResponseEntity<List<Map<String, Any>>> {
         log.debug("REST request to get all Documents in collection : $collectionId for form : $formId")
 
@@ -77,7 +80,10 @@ class DocumentController {
     }
 
     @PutMapping("/collections/{collectionId}/documents/{documentId}")
-    fun updateDocument(@PathVariable collectionId: String, @PathVariable documentId: String, @RequestBody document: Map<String, Any>
+    fun updateDocument(
+        @PathVariable collectionId: String,
+        @PathVariable documentId: String,
+        @RequestBody document: Map<String, Any>
     ): ResponseEntity<Map<String, Any>> {
         log.debug("REST request to update Document : $documentId in collection : $collectionId")
 
