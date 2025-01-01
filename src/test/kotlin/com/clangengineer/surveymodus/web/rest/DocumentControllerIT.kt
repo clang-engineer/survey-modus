@@ -79,7 +79,7 @@ class DocumentControllerIT {
         document[DOCUMENT_FORM_ID] = form.id.toString()
 
         datasourceMockMvc.perform(
-            post("/api/collections/${form.category!!.id}")
+            post("/api/collections/${form.category!!.id}/documents")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(document))
         )
@@ -104,7 +104,7 @@ class DocumentControllerIT {
             mongoTemplate.save(row, form.category!!.id.toString())
         }
 
-        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}?formId=${form.id}"))
+        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}?formId=${form.id}/documents"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray)
@@ -120,7 +120,7 @@ class DocumentControllerIT {
         row[DOCUMENT_FORM_ID] = form.id.toString()
         val result = mongoTemplate.save(row, form.category!!.id.toString())
 
-        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result["_id"]}"))
+        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$._id").value(result[DOCUMENT_ID].toString()))
