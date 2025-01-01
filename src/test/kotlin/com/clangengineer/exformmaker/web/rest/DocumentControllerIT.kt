@@ -1,6 +1,7 @@
 package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
 import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
@@ -79,15 +80,31 @@ class DocumentControllerIT {
 
         val document = DocumentDTO(form, row)
 
-        datasourceMockMvc.perform(
-            post("/api/documents")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(convertObjectToJsonBytes(document))
-        ).andExpect(status().isCreated())
+        datasourceMockMvc.perform(post("/api/documents")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(convertObjectToJsonBytes(document)))
+            .andExpect(status().isCreated())
 
         val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
+        assertThat(result).hasSize(1)
+        assertThat(result[0][DOCUMENT_FORM_ID]).isEqualTo(form.id.toString())
         for (field in fieldList) {
             assertThat(result[0][field.id.toString()]).isEqualTo(row[field.id.toString()])
         }
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun testFindAllFormRows() {
+        for (i in 1..5) {
+            val row = mutableMapOf<String, Any>()
+            fieldList.forEach { row[it.id.toString()] = Math.random() }
+            mongoTemplate.save(row, form.category!!.id.toString())
+        }
+
+        datasourceMockMvc.perform(
+            get("/api/documents/${form.category!!.id}")
+        ).andExpect(status().isOk())
     }
 }

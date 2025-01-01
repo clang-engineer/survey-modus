@@ -23,8 +23,17 @@ class DocumentController {
             throw IllegalArgumentException("Form is required")
         }
 
-        val result = mongoTemplate.save(document.row, document.form?.category!!.id.toString())
+        val result = mongoTemplate.save(document.toDocumentMap(), document.form?.category!!.id.toString())
 
         return ResponseEntity.created(null).body(result)
+    }
+
+    @GetMapping("/documents/{formId}")
+    fun findAllDocumentsInCategory(@PathVariable categoryId: String): ResponseEntity<List<Map<String, Any>>> {
+        log.debug("REST request to get all Documents in category $categoryId")
+
+        val result = mongoTemplate.findAll(Map::class.java, categoryId) as List<Map<String, Any>>
+
+        return ResponseEntity.ok(result)
     }
 }
