@@ -38,6 +38,9 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27017/surveymodus
   h2:
     console:
       # disable spring boot built-in h2-console since we start it manually with correct configuration
