@@ -38,7 +38,7 @@ const DataSource = () => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
+                <TableCell align="center">#</TableCell>
                 {fieldEntities.map(field => (
                   <TableCell key={field.id} align="center">
                     {field.title}
@@ -50,7 +50,9 @@ const DataSource = () => {
             <TableBody>
               {documents.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell width="100">{row[DOCUMENT_ID]}</TableCell>
+                  <TableCell width="100" align="center">
+                    {row[DOCUMENT_ID]}
+                  </TableCell>
                   {fieldEntities.map(field => (
                     <TableCell key={field.id} align="center">
                       {row[field.id]}
