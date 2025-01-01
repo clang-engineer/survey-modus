@@ -18,6 +18,12 @@ const DataSource = () => {
   const formEntity = useAppSelector(state => state.form.entity);
   const companyEntity = useAppSelector(state => state.company.entity);
 
+  const [localFields, setLocalFields] = React.useState([]);
+
+  React.useEffect(() => {
+    setLocalFields(fieldEntities.filter(field => field.activated));
+  }, [fieldEntities]);
+
   const onDeleteButtonClick = row => {
     create(
       PromiseModal({
@@ -52,7 +58,7 @@ const DataSource = () => {
             <TableHead>
               <TableRow>
                 <TableCell align="center">#</TableCell>
-                {fieldEntities.map(field => (
+                {localFields.map(field => (
                   <TableCell key={field.id} align="center">
                     {field.title}
                   </TableCell>
@@ -66,7 +72,7 @@ const DataSource = () => {
                   <TableCell width="100" align="center">
                     {row[DOCUMENT_ID]}
                   </TableCell>
-                  {fieldEntities.map(field => (
+                  {localFields.map(field => (
                     <TableCell key={field.id} align="center">
                       {row[field.id]}
                     </TableCell>
