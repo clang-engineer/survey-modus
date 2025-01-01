@@ -150,4 +150,20 @@ class DocumentControllerIT {
             assertThat(updatedResult!![field.id.toString()]).isEqualTo(updatedRow[field.id.toString()])
         }
     }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun testRemoveDocumentByDocumentId() {
+        val row = mutableMapOf<String, Any>()
+        fieldList.forEach { row[it.id.toString()] = Math.random() }
+        row[DOCUMENT_FORM_ID] = form.id.toString()
+        val result = mongoTemplate.save(row, form.category!!.id.toString())
+
+        datasourceMockMvc.perform(delete("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}"))
+            .andExpect(status().isNoContent())
+
+        val deletedResult = mongoTemplate.findById(result[DOCUMENT_ID], Map::class.java, form.category!!.id.toString())
+        assertThat(deletedResult).isNull()
+    }
 }

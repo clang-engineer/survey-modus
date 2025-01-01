@@ -80,4 +80,16 @@ class DocumentController {
 
         return ResponseEntity.ok(result)
     }
+
+    @DeleteMapping("/collections/{collectionId}/documents/{documentId}")
+    fun deleteDocument(@PathVariable collectionId: String, @PathVariable documentId: String): ResponseEntity<Void> {
+        log.debug("REST request to delete Document : $documentId in collection : $collectionId")
+
+        val query = Query()
+        query.addCriteria(Criteria.where(DOCUMENT_ID).`is`(ObjectId(documentId)))
+
+        mongoTemplate.remove(query, Map::class.java, collectionId)
+
+        return ResponseEntity.noContent().build()
+    }
 }
