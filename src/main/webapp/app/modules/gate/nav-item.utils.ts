@@ -15,17 +15,19 @@ const CreateCompanyNavItems = (company: ICompany) => {
   const menuItems: NavItemType[] = [];
 
   const formList: IForm[] = company.forms;
-  formList?.forEach(form => {
-    menuItems.push(
-      NavItemWrapper({
-        id: `${form.id}`,
-        title: form.title,
-        icon: IconClipboardText,
-        type: 'item',
-        url: `/gate/companies/${company.id}/forms/${form.id}`,
-      })
-    );
-  });
+  formList
+    .filter(f => f.activated)
+    .forEach(form => {
+      menuItems.push(
+        NavItemWrapper({
+          id: `${form.id}`,
+          title: form.title,
+          icon: IconClipboardText,
+          type: 'item',
+          url: `/gate/companies/${company.id}/forms/${form.id}`,
+        })
+      );
+    });
 
   menuItems.push(
     NavItemWrapper({
