@@ -1,4 +1,4 @@
-import reducer, { createDocument, getDocumentById, getDocumentsByFormId, reset, updateDocument } from './document.reducer';
+import reducer, { createDocument, deleteDocument, getDocumentById, getDocumentsByFormId, reset, updateDocument } from './document.reducer';
 import { defaultValue } from 'app/shared/model/document.model';
 
 describe('Document reducer tests', () => {
@@ -60,7 +60,7 @@ describe('Document reducer tests', () => {
     });
 
     it('should set state to updating', () => {
-      testMultipleTypes([createDocument.pending.type, updateDocument.pending.type], {}, state => {
+      testMultipleTypes([createDocument.pending.type, updateDocument.pending.type, deleteDocument.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -73,7 +73,13 @@ describe('Document reducer tests', () => {
   describe('Failures', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
-        [getDocumentsByFormId.rejected.type, getDocumentById.rejected.type, createDocument.rejected.type, updateDocument.rejected.type],
+        [
+          getDocumentsByFormId.rejected.type,
+          getDocumentById.rejected.type,
+          createDocument.rejected.type,
+          updateDocument.rejected.type,
+          deleteDocument.rejected.type,
+        ],
         'some error',
         state => {
           expect(state).toMatchObject({
@@ -145,6 +151,14 @@ describe('Document reducer tests', () => {
         updating: false,
         updateSuccess: true,
         document: payload.data,
+      });
+    });
+
+    it('should delete a document', () => {
+      const state = reducer(undefined, { type: deleteDocument.fulfilled.type });
+      expect(state).toMatchObject({
+        updating: false,
+        updateSuccess: true,
       });
     });
   });

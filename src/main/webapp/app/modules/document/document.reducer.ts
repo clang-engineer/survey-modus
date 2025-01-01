@@ -47,6 +47,15 @@ export const updateDocument = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const deleteDocument = createAsyncThunk(
+  'document/delete_document',
+  async (props: { collectionId: string; documentId: string }) => {
+    const requestUrl = `api/collections/${props.collectionId}/documents/${props.documentId}`;
+    return axios.delete(requestUrl);
+  },
+  { serializeError: serializeAxiosError }
+);
+
 export const DocumentSlice = createSlice({
   name: 'document',
   initialState,
@@ -60,6 +69,11 @@ export const DocumentSlice = createSlice({
       .addCase(getDocumentById.fulfilled, (state, action) => {
         state.loading = false;
         state.document = action.payload.data;
+      })
+      .addCase(deleteDocument.fulfilled, (state, action) => {
+        state.updating = false;
+        state.updateSuccess = true;
+        state.document = {};
       })
       .addMatcher(isFulfilled(getDocumentsByFormId), (state, action) => {
         const { data, headers } = action.payload;
@@ -80,12 +94,12 @@ export const DocumentSlice = createSlice({
         state.updateSuccess = false;
         state.loading = true;
       })
-      .addMatcher(isPending(createDocument, updateDocument), state => {
+      .addMatcher(isPending(createDocument, updateDocument, deleteDocument), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.updating = true;
       })
-      .addMatcher(isRejected(getDocumentsByFormId, getDocumentById, createDocument, updateDocument), (state, action) => {
+      .addMatcher(isRejected(getDocumentsByFormId, getDocumentById, createDocument, updateDocument, deleteDocument), (state, action) => {
         state.loading = false;
         state.updating = false;
         state.updateSuccess = false;
