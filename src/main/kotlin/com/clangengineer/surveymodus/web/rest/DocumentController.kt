@@ -20,7 +20,7 @@ class DocumentController {
     @Autowired
     private lateinit var mongoTemplate: MongoTemplate
 
-    @PostMapping("/collections/{collectionId}")
+    @PostMapping("/collections/{collectionId}/documents")
     fun createDocument(@PathVariable collectionId: String, @RequestBody document: Map<String, Any>): ResponseEntity<Map<String, Any>> {
         log.debug("REST request to save Datasource")
 
@@ -29,7 +29,7 @@ class DocumentController {
         return ResponseEntity.created(null).body(result)
     }
 
-    @GetMapping("/collections/{collectionId}")
+    @GetMapping("/collections/{collectionId}/documents")
     fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam formId: String): ResponseEntity<List<Map<String, Any>>> {
         log.debug("REST request to get all Documents in collection : $collectionId for form : $formId")
 
