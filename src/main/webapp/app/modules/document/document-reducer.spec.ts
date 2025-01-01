@@ -1,4 +1,4 @@
-import reducer, { getDocumentById, getDocumentsByFormId, reset } from './document.reducer';
+import reducer, { createDocument, getDocumentById, getDocumentsByFormId, reset } from './document.reducer';
 import { defaultValue } from 'app/shared/model/document.model';
 
 describe('Document reducer tests', () => {
@@ -43,6 +43,12 @@ describe('Document reducer tests', () => {
   });
 
   describe('Requests', () => {
+    it('should reset state to initial state', () => {
+      expect(reducer({ ...initialState, loading: true }, reset())).toEqual({
+        ...initialState,
+      });
+    });
+
     it('should set state to loading', () => {
       testMultipleTypes([getDocumentsByFormId.pending.type, getDocumentById.pending.type], {}, state => {
         expect(state).toMatchObject({
@@ -53,9 +59,13 @@ describe('Document reducer tests', () => {
       });
     });
 
-    it('should reset state to initial state', () => {
-      expect(reducer({ ...initialState, loading: true }, reset())).toEqual({
-        ...initialState,
+    it('should set state to updating', () => {
+      testMultipleTypes([createDocument.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          updating: true,
+        });
       });
     });
   });
@@ -63,7 +73,7 @@ describe('Document reducer tests', () => {
   describe('Failures', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
-        [getDocumentsByFormId.rejected.type, getDocumentById.rejected.type],
+        [getDocumentsByFormId.rejected.type, getDocumentById.rejected.type, createDocument.rejected.type],
         'some error',
         state => {
           expect(state).toMatchObject({
@@ -104,6 +114,21 @@ describe('Document reducer tests', () => {
       const state = reducer(undefined, { type: getDocumentById.fulfilled.type, payload });
       expect(state).toMatchObject({
         loading: false,
+        document: payload.data,
+      });
+    });
+
+    it('should create a document', () => {
+      const payload = {
+        data: {
+          id: '1',
+          name: 'document',
+        },
+      };
+      const state = reducer(undefined, { type: createDocument.fulfilled.type, payload });
+      expect(state).toMatchObject({
+        updating: false,
+        updateSuccess: true,
         document: payload.data,
       });
     });

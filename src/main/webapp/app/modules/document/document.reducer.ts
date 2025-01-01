@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isPending, isRejected, isFulfilled } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 import { defaultValue, IDocument } from 'app/shared/model/document.model';
 import axios from 'axios';
 import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -29,6 +29,15 @@ export const getDocumentsByFormId = createAsyncThunk(
   }
 );
 
+export const createDocument = createAsyncThunk(
+  'document/create_document',
+  async (props: { collectionId: string; document: IDocument }) => {
+    const result = await axios.post<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
 export const DocumentSlice = createSlice({
   name: 'document',
   initialState,
@@ -51,12 +60,23 @@ export const DocumentSlice = createSlice({
           documents: data,
         };
       })
+      .addMatcher(isFulfilled(createDocument), (state, action) => {
+        state.updating = false;
+        state.loading = false;
+        state.updateSuccess = true;
+        state.document = action.payload.data;
+      })
       .addMatcher(isPending(getDocumentsByFormId, getDocumentById), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;
       })
-      .addMatcher(isRejected(getDocumentsByFormId, getDocumentById), (state, action) => {
+      .addMatcher(isPending(createDocument), state => {
+        state.errorMessage = null;
+        state.updateSuccess = false;
+        state.updating = true;
+      })
+      .addMatcher(isRejected(getDocumentsByFormId, getDocumentById, createDocument), (state, action) => {
         state.loading = false;
         state.updating = false;
         state.updateSuccess = false;
