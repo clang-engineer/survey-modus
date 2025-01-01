@@ -126,4 +126,28 @@ class DocumentControllerIT {
             .andExpect(jsonPath("$._id").value(result[DOCUMENT_ID].toString()))
             .andExpect(jsonPath("$.form_id").value(form.id.toString()))
     }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun testUpdateDocumentByDocumentId() {
+        val row = mutableMapOf<String, Any>()
+        fieldList.forEach { row[it.id.toString()] = Math.random() }
+        row[DOCUMENT_FORM_ID] = form.id.toString()
+        val result = mongoTemplate.save(row, form.category!!.id.toString())
+
+        val updatedRow = result.toMutableMap()
+        fieldList.forEach { updatedRow[it.id.toString()] = Math.random() }
+
+        datasourceMockMvc.perform(
+            put("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(updatedRow))
+        ).andExpect(status().isOk())
+
+        val updatedResult = mongoTemplate.findById(result[DOCUMENT_ID], Map::class.java, form.category!!.id.toString())
+        for (field in fieldList) {
+            assertThat(updatedResult!![field.id.toString()]).isEqualTo(updatedRow[field.id.toString()])
+        }
+    }
 }
