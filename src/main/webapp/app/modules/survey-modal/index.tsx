@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Box, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,7 +19,7 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { useTheme } from '@mui/material/styles';
 import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
 import { useAppDispatch } from 'app/config/store';
-import { createDocument } from 'app/modules/document/document.reducer';
+import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
 import { defaultValue, IDocument } from 'app/shared/model/document.model';
 import { ICompany } from 'app/shared/model/company.model';
 
@@ -27,6 +27,7 @@ interface IFieldWizardPreviewModalProps {
   company: ICompany;
   form: IForm;
   fields: IField[];
+  document?: IDocument;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -68,7 +69,7 @@ const SurveyModal =
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
-    const { company, form, fields } = props;
+    const { company, form, fields, document } = props;
 
     const handleClose = () => {
       onReject();
@@ -87,14 +88,24 @@ const SurveyModal =
       //   return acc;
       // }, {}),
       onSubmit(values) {
-        dispatch(
-          createDocument({
-            collectionId: form.category.id,
-            document: { ...values, companyId: company.id, formId: form.id },
-          })
-        );
+        if (document && document.id) {
+          dispatch(updateDocument({ collectionId: form.category.id, document: { ...values } }));
+        } else {
+          dispatch(
+            createDocument({
+              collectionId: form.category.id,
+              document: { ...values, companyId: company.id, formId: form.id },
+            })
+          );
+        }
       },
     });
+
+    useEffect(() => {
+      if (document && document.id) {
+        formik.setValues(document);
+      }
+    }, [document]);
 
     return (
       <Dialog

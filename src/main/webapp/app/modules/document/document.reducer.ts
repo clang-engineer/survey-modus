@@ -52,7 +52,7 @@ export const updateDocument = createAsyncThunk(
   async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
     const { collectionId, document } = props;
 
-    const result = await axios.put<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
+    const result = await axios.put<IDocument>(`api/collections/${collectionId}/documents/${document[DOCUMENT_ID]}`, props.document);
 
     thunkAPI.dispatch(
       getDocumentsByCompanyIdAndFormId({

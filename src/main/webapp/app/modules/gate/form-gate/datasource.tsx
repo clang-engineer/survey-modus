@@ -7,7 +7,8 @@ import { IconEdit, IconTrash } from '@tabler/icons';
 import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
-import { DOCUMENT_ID } from 'app/shared/model/document.model';
+import { DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
+import SurveyModal from 'app/modules/survey-modal';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +16,7 @@ const DataSource = () => {
   const fieldEntities = useAppSelector(state => state.field.entities);
   const documents = useAppSelector(state => state.documentReducer.documents);
   const formEntity = useAppSelector(state => state.form.entity);
+  const companyEntity = useAppSelector(state => state.company.entity);
 
   const onDeleteButtonClick = row => {
     create(
@@ -27,6 +29,17 @@ const DataSource = () => {
         dispatch(deleteDocument({ collectionId: formEntity.category.id, document: row }));
       }
     });
+  };
+
+  const onEditButtonClick = (document: IDocument) => {
+    create(
+      SurveyModal({
+        company: companyEntity,
+        form: formEntity,
+        fields: fieldEntities.filter(field => field.activated),
+        document: document,
+      })
+    )();
   };
 
   return (
@@ -60,7 +73,12 @@ const DataSource = () => {
                   ))}
                   <TableCell width="100">
                     <ButtonGroup size="small" variant="text">
-                      <Button>
+                      <Button
+                        onClick={() => {
+                          onEditButtonClick(row);
+                        }}
+                      >
+                        {' '}
                         <IconEdit size={'1rem'} />{' '}
                       </Button>
                       <Button
@@ -68,6 +86,7 @@ const DataSource = () => {
                           onDeleteButtonClick(row);
                         }}
                       >
+                        {' '}
                         <IconTrash size={'1rem'} />{' '}
                       </Button>
                     </ButtonGroup>
