@@ -124,7 +124,7 @@ class DocumentControllerIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$._id").value(result[DOCUMENT_ID].toString()))
-            .andExpect(jsonPath("$.form_id").value(form.id.toString()))
+            .andExpect(jsonPath("$.formId").value(form.id.toString()))
     }
 
     @Test

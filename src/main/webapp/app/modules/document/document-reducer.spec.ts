@@ -219,7 +219,7 @@ describe('Document reducer tests', () => {
         { type: getDocumentsByFormId.pending.type },
         { type: createDocument.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(createDocument({ collectionId: 1, document: { form_id: '1' } }));
+      await store.dispatch(createDocument({ collectionId: 1, document: { formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
@@ -243,7 +243,7 @@ describe('Document reducer tests', () => {
         { type: getDocumentsByFormId.pending.type },
         { type: deleteDocument.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', form_id: '1' } }));
+      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);

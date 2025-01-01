@@ -1,6 +1,6 @@
 export interface IDocument {
   _id?: string;
-  form_id?: string;
+  formId?: number;
   [key: string]: any;
 }
 

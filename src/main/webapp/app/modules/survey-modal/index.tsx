@@ -7,7 +7,6 @@ import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps, useFormik } from 'formik';
-import * as yup from 'yup';
 import SurveyModalTextField from 'app/modules/survey-modal/component/survey-modal-text-field';
 import SurveyModalDateField from 'app/modules/survey-modal/component/survey-modal-date-field';
 import NoContentBox from 'app/shared/component/no-content-box';
@@ -19,6 +18,9 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { useTheme } from '@mui/material/styles';
 import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
+import { useAppDispatch } from 'app/config/store';
+import { createDocument } from 'app/modules/document/document.reducer';
+import { IDocument } from 'app/shared/model/document.model';
 
 interface IFieldWizardPreviewModalProps {
   form: IForm;
@@ -62,6 +64,7 @@ const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
     const theme = useTheme();
+    const dispatch = useAppDispatch();
 
     const { form, fields } = props;
 
@@ -69,19 +72,24 @@ const SurveyModal =
       onReject();
     };
 
-    const formik = useFormik<Record<string, any>>({
+    const formik = useFormik<IDocument>({
       initialValues: fields.reduce((acc, field) => {
         acc[field.id] = '';
         return acc;
       }, {}),
-      validationSchema: fields.reduce((acc, field) => {
-        // if (field.required) {
-        acc[field.id] = yup.string().required('Required');
-        // }
-        return acc;
-      }, {}),
+      // validationSchema: fields.reduce((acc, field) => {
+      //   acc[field.id] = yup.string();
+      //   return acc;
+      // }, {}),
       onSubmit(values) {
-        // console.log(values);
+        dispatch(
+          createDocument({
+            collectionId: form.category.id,
+            document: { ...values, formId: form.id },
+          })
+        );
+
+        onResolve();
       },
     });
 
@@ -97,14 +105,26 @@ const SurveyModal =
       >
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={() => {
+                formik.resetForm();
+                handleClose();
+              }}
+              aria-label="close"
+            >
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h4" color="inherit">
               {form.title}
-              {JSON.stringify(formik.values)}
             </Typography>
-            <Button color="inherit" onClick={handleClose}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
               save
             </Button>
           </Toolbar>
