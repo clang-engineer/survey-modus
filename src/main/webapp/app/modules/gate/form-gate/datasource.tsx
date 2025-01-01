@@ -61,7 +61,6 @@ const DataSource = () => {
                   <TableCell width="100">
                     <ButtonGroup size="small" variant="text">
                       <Button>
-                        {' '}
                         <IconEdit size={'1rem'} />{' '}
                       </Button>
                       <Button
@@ -69,7 +68,6 @@ const DataSource = () => {
                           onDeleteButtonClick(row);
                         }}
                       >
-                        {' '}
                         <IconTrash size={'1rem'} />{' '}
                       </Button>
                     </ButtonGroup>
