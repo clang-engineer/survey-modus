@@ -11,6 +11,7 @@ import com.clangengineer.surveymodus.service.dto.FormDTO
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
 import com.clangengineer.surveymodus.service.mapper.FormMapper
 import org.assertj.core.api.Assertions.*
+import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -80,9 +81,11 @@ class DocumentControllerIT {
 
         val document = DocumentDTO(form, row)
 
-        datasourceMockMvc.perform(post("/api/documents")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(convertObjectToJsonBytes(document)))
+        datasourceMockMvc.perform(
+            post("/api/documents")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(document))
+        )
             .andExpect(status().isCreated())
 
         val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
@@ -96,15 +99,18 @@ class DocumentControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testFindAllFormRows() {
+    fun testFindAllDocumentsByFormId() {
         for (i in 1..5) {
             val row = mutableMapOf<String, Any>()
             fieldList.forEach { row[it.id.toString()] = Math.random() }
+            row[DOCUMENT_FORM_ID] = form.id.toString()
             mongoTemplate.save(row, form.category!!.id.toString())
         }
 
-        datasourceMockMvc.perform(
-            get("/api/documents/${form.category!!.id}")
-        ).andExpect(status().isOk())
+        datasourceMockMvc.perform(get("/api/documents/forms/${form.id}"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray)
+            .andExpect(jsonPath("$").value(Matchers.hasSize<Any>(5)))
     }
 }
