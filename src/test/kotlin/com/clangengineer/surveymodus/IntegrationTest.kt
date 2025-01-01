@@ -4,6 +4,7 @@ import com.clangengineer.surveymodus.config.AsyncSyncConfiguration
 import com.clangengineer.surveymodus.config.EmbeddedSQL
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.context.TestPropertySource
 
 /**
  * Base composite annotation for integration tests.
@@ -13,4 +14,5 @@ import org.springframework.test.annotation.DirtiesContext
 @SpringBootTest(classes = [SurveyModusApp::class, AsyncSyncConfiguration::class])
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@TestPropertySource(properties = ["spring.mongodb.embedded.version=4.0.3"])
 annotation class IntegrationTest
