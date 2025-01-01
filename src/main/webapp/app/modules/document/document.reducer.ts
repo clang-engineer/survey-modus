@@ -21,9 +21,9 @@ export const getDocumentById = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
-export const getDocumentsByFormId = createAsyncThunk(
+export const getDocumentsByCompanyIdAndFormId = createAsyncThunk(
   'document/fetch_documents',
-  async (props: { collectionId: number; formId: number }) => {
+  async (props: { collectionId: number; companyId: number; formId: number }) => {
     const requestUrl = `api/collections/${props.collectionId}/documents?formId=${props.formId}`;
     return axios.get<IDocument[]>(requestUrl);
   }
@@ -32,8 +32,11 @@ export const getDocumentsByFormId = createAsyncThunk(
 export const createDocument = createAsyncThunk(
   'document/create_document',
   async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
-    const result = await axios.post<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
-    thunkAPI.dispatch(getDocumentsByFormId({ collectionId: props.collectionId, formId: props.document['formId'] }));
+    const { collectionId, document } = props;
+    const result = await axios.post<IDocument>(`api/collections/${collectionId}/documents`, document);
+    thunkAPI.dispatch(
+      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+    );
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -42,9 +45,13 @@ export const createDocument = createAsyncThunk(
 export const updateDocument = createAsyncThunk(
   'document/update_document',
   async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
+    const { collectionId, document } = props;
+
     const result = await axios.put<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
 
-    thunkAPI.dispatch(getDocumentsByFormId({ collectionId: props.collectionId, formId: props.document['formId'] }));
+    thunkAPI.dispatch(
+      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+    );
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -53,10 +60,14 @@ export const updateDocument = createAsyncThunk(
 export const deleteDocument = createAsyncThunk(
   'document/delete_document',
   async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
+    const { collectionId, document } = props;
+
     const requestUrl = `api/collections/${props.collectionId}/documents/${props.document['_id']}`;
     const result = await axios.delete(requestUrl);
 
-    thunkAPI.dispatch(getDocumentsByFormId({ collectionId: props.collectionId, formId: props.document['formId'] }));
+    thunkAPI.dispatch(
+      getDocumentsByCompanyIdAndFormId({ collectionId: collectionId, companyId: document['companyId'], formId: document['formId'] })
+    );
 
     return result;
   },
@@ -82,7 +93,7 @@ export const DocumentSlice = createSlice({
         state.updateSuccess = true;
         state.document = {};
       })
-      .addMatcher(isFulfilled(getDocumentsByFormId), (state, action) => {
+      .addMatcher(isFulfilled(getDocumentsByCompanyIdAndFormId), (state, action) => {
         const { data, headers } = action.payload;
         return {
           ...state,
@@ -96,7 +107,7 @@ export const DocumentSlice = createSlice({
         state.updateSuccess = true;
         state.document = action.payload.data;
       })
-      .addMatcher(isPending(getDocumentsByFormId, getDocumentById), state => {
+      .addMatcher(isPending(getDocumentsByCompanyIdAndFormId, getDocumentById), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;
@@ -106,12 +117,15 @@ export const DocumentSlice = createSlice({
         state.updateSuccess = false;
         state.updating = true;
       })
-      .addMatcher(isRejected(getDocumentsByFormId, getDocumentById, createDocument, updateDocument, deleteDocument), (state, action) => {
-        state.loading = false;
-        state.updating = false;
-        state.updateSuccess = false;
-        state.errorMessage = action.error.message;
-      });
+      .addMatcher(
+        isRejected(getDocumentsByCompanyIdAndFormId, getDocumentById, createDocument, updateDocument, deleteDocument),
+        (state, action) => {
+          state.loading = false;
+          state.updating = false;
+          state.updateSuccess = false;
+          state.errorMessage = action.error.message;
+        }
+      );
   },
 });
 

@@ -4,7 +4,14 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, { createDocument, deleteDocument, getDocumentById, getDocumentsByFormId, reset, updateDocument } from './document.reducer';
+import reducer, {
+  createDocument,
+  deleteDocument,
+  getDocumentById,
+  getDocumentsByCompanyIdAndFormId,
+  reset,
+  updateDocument,
+} from './document.reducer';
 import { defaultValue } from 'app/shared/model/document.model';
 
 describe('Document reducer tests', () => {
@@ -56,7 +63,7 @@ describe('Document reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      testMultipleTypes([getDocumentsByFormId.pending.type, getDocumentById.pending.type], {}, state => {
+      testMultipleTypes([getDocumentsByCompanyIdAndFormId.pending.type, getDocumentById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -80,7 +87,7 @@ describe('Document reducer tests', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
         [
-          getDocumentsByFormId.rejected.type,
+          getDocumentsByCompanyIdAndFormId.rejected.type,
           getDocumentById.rejected.type,
           createDocument.rejected.type,
           updateDocument.rejected.type,
@@ -109,7 +116,7 @@ describe('Document reducer tests', () => {
           },
         ],
       };
-      const state = reducer(undefined, { type: getDocumentsByFormId.fulfilled.type, payload });
+      const state = reducer(undefined, { type: getDocumentsByCompanyIdAndFormId.fulfilled.type, payload });
       expect(state).toMatchObject({
         loading: false,
         documents: payload.data,
@@ -186,14 +193,14 @@ describe('Document reducer tests', () => {
     it('dispatches FETCH_DOCUMENT_LIST actions', async () => {
       const expectedActions = [
         {
-          type: getDocumentsByFormId.pending.type,
+          type: getDocumentsByCompanyIdAndFormId.pending.type,
         },
         {
-          type: getDocumentsByFormId.fulfilled.type,
+          type: getDocumentsByCompanyIdAndFormId.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getDocumentsByFormId({ collectionId: 1, formId: 1 }));
+      await store.dispatch(getDocumentsByCompanyIdAndFormId({ collectionId: 1, companyId: 1, formId: 1 }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
@@ -216,10 +223,10 @@ describe('Document reducer tests', () => {
     it('dispatches CREATE_DOCUMENT actions', async () => {
       const expectedActions = [
         { type: createDocument.pending.type },
-        { type: getDocumentsByFormId.pending.type },
+        { type: getDocumentsByCompanyIdAndFormId.pending.type },
         { type: createDocument.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(createDocument({ collectionId: 1, document: { formId: 1 } }));
+      await store.dispatch(createDocument({ collectionId: 1, document: { companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
@@ -228,7 +235,7 @@ describe('Document reducer tests', () => {
     it('dispatches UPDATE_DOCUMENT actions', async () => {
       const expectedActions = [
         { type: updateDocument.pending.type },
-        { type: getDocumentsByFormId.pending.type },
+        { type: getDocumentsByCompanyIdAndFormId.pending.type },
         { type: updateDocument.fulfilled.type, payload: resolvedObject },
       ];
       await store.dispatch(updateDocument({ collectionId: 1, document: { id: '1' } }));
@@ -240,10 +247,10 @@ describe('Document reducer tests', () => {
     it('dispatches DELETE_DOCUMENT actions', async () => {
       const expectedActions = [
         { type: deleteDocument.pending.type },
-        { type: getDocumentsByFormId.pending.type },
+        { type: getDocumentsByCompanyIdAndFormId.pending.type },
         { type: deleteDocument.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', formId: 1 } }));
+      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
