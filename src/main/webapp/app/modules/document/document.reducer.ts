@@ -14,7 +14,7 @@ const initialState = {
 
 export const getDocumentById = createAsyncThunk(
   'document/fetch_document',
-  async (props: { collectionId: string; documentId: string }) => {
+  async (props: { collectionId: number; documentId: string }) => {
     const requestUrl = `api/collections/${props.collectionId}/documents/${props.documentId}`;
     return axios.get<IDocument>(requestUrl);
   },
@@ -23,7 +23,7 @@ export const getDocumentById = createAsyncThunk(
 
 export const getDocumentsByFormId = createAsyncThunk(
   'document/fetch_documents',
-  async (props: { collectionId: string; formId: string }) => {
+  async (props: { collectionId: number; formId: number }) => {
     const requestUrl = `api/collections/${props.collectionId}/documents?formId=${props.formId}`;
     return axios.get<IDocument[]>(requestUrl);
   }
@@ -31,8 +31,14 @@ export const getDocumentsByFormId = createAsyncThunk(
 
 export const createDocument = createAsyncThunk(
   'document/create_document',
-  async (props: { collectionId: string; document: IDocument }) => {
+  async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
     const result = await axios.post<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
+    thunkAPI.dispatch(
+      getDocumentsByFormId({
+        collectionId: props.collectionId,
+        formId: Number(props.document['form_id']),
+      })
+    );
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -40,8 +46,15 @@ export const createDocument = createAsyncThunk(
 
 export const updateDocument = createAsyncThunk(
   'document/update_document',
-  async (props: { collectionId: string; document: IDocument }) => {
+  async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
     const result = await axios.put<IDocument>(`api/collections/${props.collectionId}/documents`, props.document);
+
+    thunkAPI.dispatch(
+      getDocumentsByFormId({
+        collectionId: props.collectionId,
+        formId: Number(props.document['form_id']),
+      })
+    );
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -49,9 +62,18 @@ export const updateDocument = createAsyncThunk(
 
 export const deleteDocument = createAsyncThunk(
   'document/delete_document',
-  async (props: { collectionId: string; documentId: string }) => {
-    const requestUrl = `api/collections/${props.collectionId}/documents/${props.documentId}`;
-    return axios.delete(requestUrl);
+  async (props: { collectionId: number; document: IDocument }, thunkAPI) => {
+    const requestUrl = `api/collections/${props.collectionId}/documents/${props.document['_id']}`;
+    const result = await axios.delete(requestUrl);
+
+    thunkAPI.dispatch(
+      getDocumentsByFormId({
+        collectionId: props.collectionId,
+        formId: Number(props.document['form_id']),
+      })
+    );
+
+    return result;
   },
   { serializeError: serializeAxiosError }
 );

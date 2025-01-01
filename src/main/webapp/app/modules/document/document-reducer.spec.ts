@@ -1,3 +1,9 @@
+import axios from 'axios';
+
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
+
 import reducer, { createDocument, deleteDocument, getDocumentById, getDocumentsByFormId, reset, updateDocument } from './document.reducer';
 import { defaultValue } from 'app/shared/model/document.model';
 
@@ -160,6 +166,87 @@ describe('Document reducer tests', () => {
         updating: false,
         updateSuccess: true,
       });
+    });
+  });
+
+  describe('Actions', () => {
+    let store;
+
+    const resolvedObject = { value: 'whatever' };
+    beforeEach(() => {
+      const mockStore = configureStore([thunk]);
+      store = mockStore({});
+      axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.put = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.patch = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
+    });
+
+    it('dispatches FETCH_DOCUMENT_LIST actions', async () => {
+      const expectedActions = [
+        {
+          type: getDocumentsByFormId.pending.type,
+        },
+        {
+          type: getDocumentsByFormId.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(getDocumentsByFormId({ collectionId: 1, formId: 1 }));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches FETCH_DOCUMENT actions', async () => {
+      const expectedActions = [
+        {
+          type: getDocumentById.pending.type,
+        },
+        {
+          type: getDocumentById.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(getDocumentById({ collectionId: 1, documentId: '1' }));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches CREATE_DOCUMENT actions', async () => {
+      const expectedActions = [
+        { type: createDocument.pending.type },
+        { type: getDocumentsByFormId.pending.type },
+        { type: createDocument.fulfilled.type, payload: resolvedObject },
+      ];
+      await store.dispatch(createDocument({ collectionId: 1, document: { form_id: '1' } }));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
+    it('dispatches UPDATE_DOCUMENT actions', async () => {
+      const expectedActions = [
+        { type: updateDocument.pending.type },
+        { type: getDocumentsByFormId.pending.type },
+        { type: updateDocument.fulfilled.type, payload: resolvedObject },
+      ];
+      await store.dispatch(updateDocument({ collectionId: 1, document: { id: '1' } }));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
+    it('dispatches DELETE_DOCUMENT actions', async () => {
+      const expectedActions = [
+        { type: deleteDocument.pending.type },
+        { type: getDocumentsByFormId.pending.type },
+        { type: deleteDocument.fulfilled.type, payload: resolvedObject },
+      ];
+      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', form_id: '1' } }));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
   });
 });
