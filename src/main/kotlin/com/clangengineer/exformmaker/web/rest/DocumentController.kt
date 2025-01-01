@@ -2,6 +2,7 @@ package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_ID
+import org.bson.types.ObjectId
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -48,6 +49,13 @@ class DocumentController {
 
         val result = mongoTemplate.findOne(Query, Map::class.java, collectionId) as Map<String, Any>
 
-        return ResponseEntity.ok(result)
+        val serialized = result.toMutableMap().apply {
+            val objectId = this[DOCUMENT_ID]
+            if (objectId is ObjectId) {
+                this[DOCUMENT_ID] = objectId.toString()
+            }
+        }
+
+        return ResponseEntity.ok(serialized)
     }
 }

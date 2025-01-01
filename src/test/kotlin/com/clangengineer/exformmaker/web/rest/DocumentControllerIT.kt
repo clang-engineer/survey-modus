@@ -121,12 +121,11 @@ class DocumentControllerIT {
         fieldList.forEach { row[it.id.toString()] = Math.random() }
         row[DOCUMENT_FORM_ID] = form.id.toString()
         val result = mongoTemplate.save(row, form.category!!.id.toString())
-        val idObject = result[DOCUMENT_ID] as Map<String, Any>
 
         datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result["_id"]}"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$._id").value(idObject["_id"].toString()))
+            .andExpect(jsonPath("$._id").value(result[DOCUMENT_ID].toString()))
             .andExpect(jsonPath("$.form_id").value(form.id.toString()))
     }
 }
