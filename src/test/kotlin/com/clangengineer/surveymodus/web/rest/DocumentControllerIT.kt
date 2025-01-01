@@ -3,7 +3,7 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
-import com.clangengineer.surveymodus.config.DOCUMENT_ID
+import com.clangengineer.surveymodus.config.DOCUMENT_OBJECT_ID
 import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
@@ -12,6 +12,7 @@ import com.clangengineer.surveymodus.service.dto.FormDTO
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
 import com.clangengineer.surveymodus.service.mapper.FormMapper
 import org.assertj.core.api.Assertions.*
+import org.bson.types.ObjectId
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -30,7 +31,6 @@ import javax.persistence.EntityManager
 @AutoConfigureMockMvc
 @WithMockUser
 class DocumentControllerIT {
-
     @Autowired
     private lateinit var datasourceMockMvc: MockMvc
 
@@ -123,11 +123,13 @@ class DocumentControllerIT {
         fieldList.forEach { row[it.id.toString()] = Math.random() }
         row[DOCUMENT_FORM_ID] = form.id.toString()
         val result = mongoTemplate.save(row, form.category!!.id.toString())
+        val objectId = result[DOCUMENT_OBJECT_ID] as ObjectId
+        val documentId = objectId.toHexString()
 
-        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}"))
+        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/$documentId"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$._id").value(result[DOCUMENT_ID].toString()))
+            .andExpect(jsonPath("$.id").value(documentId))
             .andExpect(jsonPath("$.formId").value(form.id.toString()))
     }
 
@@ -139,17 +141,19 @@ class DocumentControllerIT {
         fieldList.forEach { row[it.id.toString()] = Math.random() }
         row[DOCUMENT_FORM_ID] = form.id.toString()
         val result = mongoTemplate.save(row, form.category!!.id.toString())
+        val objectId = result[DOCUMENT_OBJECT_ID] as ObjectId
+        val documentId = objectId.toHexString()
 
         val updatedRow = result.toMutableMap()
         fieldList.forEach { updatedRow[it.id.toString()] = Math.random() }
 
         datasourceMockMvc.perform(
-            put("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}")
+            put("/api/collections/${form.category!!.id}/documents/$documentId")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(updatedRow))
         ).andExpect(status().isOk())
 
-        val updatedResult = mongoTemplate.findById(result[DOCUMENT_ID], Map::class.java, form.category!!.id.toString())
+        val updatedResult = mongoTemplate.findById(result[DOCUMENT_OBJECT_ID], Map::class.java, form.category!!.id.toString())
         for (field in fieldList) {
             assertThat(updatedResult!![field.id.toString()]).isEqualTo(updatedRow[field.id.toString()])
         }
@@ -163,11 +167,13 @@ class DocumentControllerIT {
         fieldList.forEach { row[it.id.toString()] = Math.random() }
         row[DOCUMENT_FORM_ID] = form.id.toString()
         val result = mongoTemplate.save(row, form.category!!.id.toString())
+        val objectId = result[DOCUMENT_OBJECT_ID] as ObjectId
+        val documentId = objectId.toHexString()
 
-        datasourceMockMvc.perform(delete("/api/collections/${form.category!!.id}/documents/${result[DOCUMENT_ID]}"))
+        datasourceMockMvc.perform(delete("/api/collections/${form.category!!.id}/documents/$documentId"))
             .andExpect(status().isNoContent())
 
-        val deletedResult = mongoTemplate.findById(result[DOCUMENT_ID], Map::class.java, form.category!!.id.toString())
+        val deletedResult = mongoTemplate.findById(result[DOCUMENT_OBJECT_ID], Map::class.java, form.category!!.id.toString())
         assertThat(deletedResult).isNull()
     }
 }

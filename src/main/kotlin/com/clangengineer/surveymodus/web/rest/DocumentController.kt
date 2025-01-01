@@ -3,6 +3,7 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
 import com.clangengineer.surveymodus.config.DOCUMENT_ID
+import com.clangengineer.surveymodus.config.DOCUMENT_OBJECT_ID
 import org.bson.types.ObjectId
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,17 +37,15 @@ class DocumentController {
         log.debug("REST request to save Datasource")
 
         val result = mongoTemplate.save(document, collectionId) as Map<String, Any>
+        val serialized = serializeDocument(result)
 
-        return ResponseEntity.created(URI("/api/collections/$collectionId/documents/${result[DOCUMENT_ID]}"))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, OBJECT_NAME, result[DOCUMENT_ID].toString()))
+        return ResponseEntity.created(URI("/api/collections/$collectionId/documents/${serialized[DOCUMENT_ID]}"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, OBJECT_NAME, serialized[DOCUMENT_ID].toString()))
             .body(result)
     }
 
     @GetMapping("/collections/{collectionId}/documents")
-    fun findAllDocumentsInCollectionByFormId(
-        @PathVariable collectionId: String,
-        @RequestParam companyId: Long,
-        @RequestParam formId: Long
+    fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam companyId: Long, @RequestParam formId: Long
     ): ResponseEntity<List<Map<String, Any>>> {
         log.debug("REST request to get all Documents in collection : $collectionId for form : $formId")
 
@@ -68,7 +67,7 @@ class DocumentController {
         log.debug("REST request to get Document : $documentId in collection : $collectionId")
 
         val query = Query()
-        query.addCriteria(Criteria.where(DOCUMENT_ID).`is`(ObjectId(documentId)))
+        query.addCriteria(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(documentId)))
 
         val result = mongoTemplate.findOne(query, Map::class.java, collectionId) as Map<String, Any>
 
@@ -78,25 +77,23 @@ class DocumentController {
     }
 
     @PutMapping("/collections/{collectionId}/documents/{documentId}")
-    fun updateDocument(
-        @PathVariable collectionId: String,
-        @PathVariable documentId: String,
-        @RequestBody document: Map<String, Any>
+    fun updateDocument(@PathVariable collectionId: String, @PathVariable documentId: String, @RequestBody document: Map<String, Any>
     ): ResponseEntity<Map<String, Any>> {
         log.debug("REST request to update Document : $documentId in collection : $collectionId")
 
         val query = Query()
-        query.addCriteria(Criteria.where(DOCUMENT_ID).`is`(ObjectId(documentId)))
+        query.addCriteria(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(documentId)))
 
         val update = Update()
-        document.filterKeys { it != DOCUMENT_ID }.forEach { key, value ->
+        document.filterKeys { it != DOCUMENT_OBJECT_ID }.forEach { key, value ->
             update.set(key, value)
         }
 
         val result = mongoTemplate.findAndModify(query, update, Map::class.java, collectionId) as Map<String, Any>
+        val serialized = serializeDocument(result)
 
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, OBJECT_NAME, result[DOCUMENT_ID].toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, OBJECT_NAME, serialized[DOCUMENT_ID].toString()))
             .body(result)
     }
 
@@ -105,7 +102,7 @@ class DocumentController {
         log.debug("REST request to delete Document : $documentId in collection : $collectionId")
 
         val query = Query()
-        query.addCriteria(Criteria.where(DOCUMENT_ID).`is`(ObjectId(documentId)))
+        query.addCriteria(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(documentId)))
 
         mongoTemplate.remove(query, Map::class.java, collectionId)
 
@@ -117,10 +114,8 @@ class DocumentController {
 
 fun serializeDocument(document: Map<String, Any>): Map<String, Any> {
     return document.toMutableMap().apply {
-        val objectId = this[DOCUMENT_ID]
-        if (objectId is ObjectId) {
-            this[DOCUMENT_ID] = objectId.toHexString() // 문자열로 변환
-        }
+        val objectId = this[DOCUMENT_OBJECT_ID] as ObjectId
+        this[DOCUMENT_ID] = objectId.toHexString()
     }
 }
 
