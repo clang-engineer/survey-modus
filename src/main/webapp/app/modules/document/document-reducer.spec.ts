@@ -59,4 +59,21 @@ describe('Document reducer tests', () => {
       });
     });
   });
+
+  describe('Failures', () => {
+    it('should set state to loading and reset error message', () => {
+      testMultipleTypes(
+        [getDocumentById.rejected.type],
+        'some error',
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: 'some error',
+            updateSuccess: false,
+            loading: false,
+          });
+        },
+        { message: 'some error' }
+      );
+    });
+  });
 });

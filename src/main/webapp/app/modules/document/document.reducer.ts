@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isPending } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isPending, isRejected } from '@reduxjs/toolkit';
 import { defaultValue } from 'app/shared/model/document.model';
 import axios from 'axios';
 
@@ -25,11 +25,18 @@ export const DocumentSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addMatcher(isPending(getDocumentById), state => {
-      state.errorMessage = null;
-      state.updateSuccess = false;
-      state.loading = true;
-    });
+    builder
+      .addMatcher(isPending(getDocumentById), state => {
+        state.errorMessage = null;
+        state.updateSuccess = false;
+        state.loading = true;
+      })
+      .addMatcher(isRejected(getDocumentById), (state, action) => {
+        state.loading = false;
+        state.updating = false;
+        state.updateSuccess = false;
+        state.errorMessage = action.error.message;
+      });
   },
 });
 
