@@ -1,10 +1,8 @@
-package com.clangengineer.exformmaker.web.rest
+package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.repository.FieldRepository
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
-import com.clangengineer.surveymodus.web.rest.FieldResourceIT
-import com.clangengineer.surveymodus.web.rest.convertObjectToJsonBytes
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
