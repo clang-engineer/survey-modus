@@ -42,7 +42,7 @@ class DocumentController {
     }
 
     @GetMapping("/collections/{collectionId}/documents")
-    fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam formId: String): ResponseEntity<List<Map<String, Any>>> {
+    fun findAllDocumentsInCollectionByFormId(@PathVariable collectionId: String, @RequestParam formId: Long): ResponseEntity<List<Map<String, Any>>> {
         log.debug("REST request to get all Documents in collection : $collectionId for form : $formId")
 
         val query = Query()
