@@ -5,17 +5,27 @@ import com.clangengineer.surveymodus.config.DOCUMENT_ID
 import org.bson.types.ObjectId
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import tech.jhipster.web.util.HeaderUtil
+import java.net.URI
 
 @RestController
 @RequestMapping("/api")
 class DocumentController {
     private val log = LoggerFactory.getLogger(javaClass)
+
+    @Value("\${jhipster.clientApp.name}")
+    private var applicationName: String? = null
+
+    companion object {
+        const val OBJECT_NAME = "document"
+    }
 
     @Autowired
     private lateinit var mongoTemplate: MongoTemplate
@@ -26,7 +36,9 @@ class DocumentController {
 
         val result = mongoTemplate.save(document, collectionId) as Map<String, Any>
 
-        return ResponseEntity.created(null).body(result)
+        return ResponseEntity.created(URI("/api/collections/$collectionId/documents/${result[DOCUMENT_ID]}"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, OBJECT_NAME, result[DOCUMENT_ID].toString()))
+            .body(result)
     }
 
     @GetMapping("/collections/{collectionId}/documents")
@@ -78,7 +90,9 @@ class DocumentController {
 
         val result = mongoTemplate.findAndModify(query, update, Map::class.java, collectionId) as Map<String, Any>
 
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, OBJECT_NAME, result[DOCUMENT_ID].toString()))
+            .body(result)
     }
 
     @DeleteMapping("/collections/{collectionId}/documents/{documentId}")
@@ -90,6 +104,8 @@ class DocumentController {
 
         mongoTemplate.remove(query, Map::class.java, collectionId)
 
-        return ResponseEntity.noContent().build()
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, OBJECT_NAME, documentId))
+            .build()
     }
 }
