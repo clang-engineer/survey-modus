@@ -1,4 +1,5 @@
-import reducer, { reset } from './document.reducer';
+import reducer, { getDocumentById, reset } from './document.reducer';
+import { defaultValue } from 'app/shared/model/document.model';
 
 describe('Document reducer tests', () => {
   function isEmpty(element): boolean {
@@ -13,7 +14,7 @@ describe('Document reducer tests', () => {
     loading: false,
     errorMessage: null,
     documents: [],
-    document: null,
+    document: defaultValue,
     updating: false,
     updateSuccess: false,
   };
@@ -42,6 +43,16 @@ describe('Document reducer tests', () => {
   });
 
   describe('Requests', () => {
+    it('should set state to loading', () => {
+      testMultipleTypes([getDocumentById.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          loading: true,
+        });
+      });
+    });
+
     it('should reset state to initial state', () => {
       expect(reducer({ ...initialState, loading: true }, reset())).toEqual({
         ...initialState,
