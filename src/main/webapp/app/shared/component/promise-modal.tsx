@@ -18,7 +18,7 @@ interface IPromiseModalProps {
 const PromiseModal =
   (props: IPromiseModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
-    const { title, content, resolveButtonText, rejectButtonText } = props;
+    const { title, content, resolveButtonText = 'yes', rejectButtonText = 'no' } = props;
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));

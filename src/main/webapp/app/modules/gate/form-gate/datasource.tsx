@@ -1,14 +1,32 @@
-import React, { useEffect } from 'react';
-import { useAppSelector } from 'app/config/store';
-import { IField } from 'app/shared/model/field.model';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import NoContentBox from 'app/shared/component/no-content-box';
 import Loader from 'app/berry/ui-component/Loader';
+import { IconEdit, IconTrash } from '@tabler/icons';
+import { create } from 'react-modal-promise';
+import PromiseModal from 'app/shared/component/promise-modal';
+import { deleteDocument } from 'app/modules/document/document.reducer';
 
 const DataSource = () => {
+  const dispatch = useAppDispatch();
   const loading = useAppSelector(state => state.field.loading);
   const fieldEntities = useAppSelector(state => state.field.entities);
   const documents = useAppSelector(state => state.documentReducer.documents);
+  const formEntity = useAppSelector(state => state.form.entity);
+
+  const onDeleteButtonClick = row => {
+    create(
+      PromiseModal({
+        title: 'Delete',
+        content: 'Are you sure you want to delete this data?',
+      })
+    )().then(result => {
+      if (result) {
+        dispatch(deleteDocument({ collectionId: formEntity.category.id, document: row }));
+      }
+    });
+  };
 
   return (
     <>
@@ -19,21 +37,40 @@ const DataSource = () => {
           <Table size="small">
             <TableHead>
               <TableRow>
+                <TableCell>#</TableCell>
                 {fieldEntities.map(field => (
                   <TableCell key={field.id} align="center">
                     {field.title}
                   </TableCell>
                 ))}
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
               {documents.map((row, index) => (
                 <TableRow key={index}>
+                  <TableCell>{index}</TableCell>
                   {fieldEntities.map(field => (
                     <TableCell key={field.id} align="center">
                       {row[field.id]}
                     </TableCell>
                   ))}
+                  <TableCell width="100px">
+                    <ButtonGroup size="small" variant="text">
+                      <Button>
+                        {' '}
+                        <IconEdit size={'1rem'} />{' '}
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          onDeleteButtonClick(row);
+                        }}
+                      >
+                        {' '}
+                        <IconTrash size={'1rem'} />{' '}
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
