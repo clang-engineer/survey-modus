@@ -76,4 +76,20 @@ describe('Document reducer tests', () => {
       );
     });
   });
+
+  describe('Successes', () => {
+    it('should fetch a single document', () => {
+      const payload = {
+        data: {
+          id: '1',
+          name: 'document',
+        },
+      };
+      const state = reducer(undefined, { type: getDocumentById.fulfilled.type, payload });
+      expect(state).toMatchObject({
+        loading: false,
+        document: payload.data,
+      });
+    });
+  });
 });

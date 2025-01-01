@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isPending, isRejected } from '@reduxjs/toolkit';
-import { defaultValue } from 'app/shared/model/document.model';
+import { defaultValue, IDocument } from 'app/shared/model/document.model';
 import axios from 'axios';
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
 
 export const getDocumentById = createAsyncThunk('document/fetch_document', async (props: { collectionId: string; documentId: string }) => {
   const requestUrl = `api/collections/${props.collectionId}/documents/${props.documentId}`;
-  return axios.get(requestUrl);
+  return axios.get<IDocument>(requestUrl);
 });
 
 export const DocumentSlice = createSlice({
@@ -26,6 +26,10 @@ export const DocumentSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getDocumentById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.document = action.payload.data;
+      })
       .addMatcher(isPending(getDocumentById), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
