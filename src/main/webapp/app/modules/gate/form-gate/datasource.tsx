@@ -9,6 +9,9 @@ import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
 import { DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
 import SurveyModal from 'app/modules/survey-modal';
+import { IField } from 'app/shared/model/field.model';
+import type from 'app/shared/model/enumerations/type.model';
+import dayjs from 'dayjs';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +51,17 @@ const DataSource = () => {
     )();
   };
 
+  const getFormattedDocumentValue = (document: IDocument, field: IField) => {
+    const value = document.fields.find(f => String(f.key) == String(field.id))?.value;
+
+    switch (field.attribute.type) {
+      case type.DATE:
+        return dayjs(value).format('YYYY-MM-DD');
+      default:
+        return value;
+    }
+  };
+
   return (
     <>
       {fieldEntities.length === 0 || documents.length === 0 ? (
@@ -74,7 +88,7 @@ const DataSource = () => {
                   </TableCell>
                   {localFields.map(field => (
                     <TableCell key={field.id} align="center">
-                      {document.fields.find(f => f.key == field.id)?.value}
+                      {getFormattedDocumentValue(document, field)}
                     </TableCell>
                   ))}
                   <TableCell width="100">

@@ -81,7 +81,7 @@ const SurveyModal =
 
     const formik = useFormik<{ [key: string]: any }>({
       initialValues: fields.reduce((acc, field) => {
-        acc[field.id] = '';
+        acc[field.id] = null;
         return acc;
       }, {}),
       // validationSchema: fields.reduce((acc, field) => {
