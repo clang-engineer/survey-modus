@@ -13,21 +13,22 @@ interface ISurveyModalDateFieldProps {
 const SurveyModalDateField = (props: ISurveyModalDateFieldProps) => {
   const { field, formik } = props;
 
+  const fieldId = String(field.id);
   return (
-    <FormControl fullWidth id={field.title}>
+    <FormControl fullWidth id={fieldId}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           defaultValue={new Date()}
-          value={formik.values[field.title]}
+          value={new Date(formik.values[fieldId])}
           onChange={(newValue: Date | null) => {
-            formik.setFieldValue(field.title, newValue);
+            formik.setFieldValue(fieldId, newValue);
           }}
           format={'yyyy-MM-dd'}
           slotProps={{
             textField: {
               variant: 'standard',
-              name: field.title,
-              error: formik.touched[field.title] && Boolean(formik.errors[field.title]),
+              name: fieldId,
+              error: formik.touched[fieldId] && Boolean(formik.errors[fieldId]),
             },
           }}
         />
