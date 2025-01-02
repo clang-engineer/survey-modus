@@ -14,7 +14,7 @@ const DataSource = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(state => state.field.loading);
   const fieldEntities = useAppSelector(state => state.field.entities);
-  const documents = useAppSelector(state => state.documentReducer.documents);
+  const documents = useAppSelector<IDocument[]>(state => state.documentReducer.documents);
   const formEntity = useAppSelector(state => state.form.entity);
   const companyEntity = useAppSelector(state => state.company.entity);
 
@@ -67,21 +67,21 @@ const DataSource = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {documents.map((row, index) => (
+              {documents.map((document, index) => (
                 <TableRow key={index}>
                   <TableCell width="100" align="center">
-                    {row[DOCUMENT_ID]}
+                    {document[DOCUMENT_ID]}
                   </TableCell>
                   {localFields.map(field => (
                     <TableCell key={field.id} align="center">
-                      {row[field.id]}
+                      {document.fields.find(f => f.key == field.id)?.value}
                     </TableCell>
                   ))}
                   <TableCell width="100">
                     <ButtonGroup size="small" variant="text">
                       <Button
                         onClick={() => {
-                          onEditButtonClick(row);
+                          onEditButtonClick(document);
                         }}
                       >
                         {' '}
@@ -89,7 +89,7 @@ const DataSource = () => {
                       </Button>
                       <Button
                         onClick={() => {
-                          onDeleteButtonClick(row);
+                          onDeleteButtonClick(document);
                         }}
                       >
                         {' '}

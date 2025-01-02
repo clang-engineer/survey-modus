@@ -20,7 +20,7 @@ import { useTheme } from '@mui/material/styles';
 import SurveyModalFileField from 'app/modules/survey-modal/component/survey-modal-file-field';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
-import { defaultValue, IDocument } from 'app/shared/model/document.model';
+import { IDocument } from 'app/shared/model/document.model';
 import { ICompany } from 'app/shared/model/company.model';
 
 interface IFieldWizardPreviewModalProps {
@@ -76,29 +76,35 @@ const SurveyModal =
     const { company, form, fields, document } = props;
 
     const handleClose = () => {
-      onResolve();
+      onReject();
     };
 
-    const formik = useFormik<IDocument>({
-      initialValues: fields.reduce(
-        (acc, field) => {
-          acc[field.id] = '';
-          return acc;
-        },
-        { ...defaultValue }
-      ),
+    const formik = useFormik<{ [key: string]: any }>({
+      initialValues: fields.reduce((acc, field) => {
+        acc[field.id] = '';
+        return acc;
+      }, {}),
       // validationSchema: fields.reduce((acc, field) => {
       //   acc[field.id] = yup.string();
       //   return acc;
       // }, {}),
       onSubmit(values) {
+        const fields: Array<{ key: string; value: any }> = Object.keys(values).map(key => ({
+          key,
+          value: values[key],
+        }));
         if (document && document.id) {
-          dispatch(updateDocument({ collectionId: form.category.id, document: { ...values } }));
+          dispatch(
+            updateDocument({
+              collectionId: form.category.id,
+              document: { id: document.id, companyId: company.id, formId: form.id, fields },
+            })
+          );
         } else {
           dispatch(
             createDocument({
               collectionId: form.category.id,
-              document: { ...values, companyId: company.id, formId: form.id },
+              document: { companyId: company.id, formId: form.id, fields },
             })
           );
         }
@@ -107,13 +113,17 @@ const SurveyModal =
 
     useEffect(() => {
       if (document && document.id) {
-        formik.setValues(document);
+        const doc = document.fields.reduce((acc, field) => {
+          acc[field.key] = field.value;
+          return acc;
+        }, {});
+        formik.setValues(doc);
       }
     }, [document]);
 
     useEffect(() => {
       if (!document || !document.id) {
-        isOpen && updateSuccess && handleClose();
+        isOpen && updateSuccess && onResolve();
       }
     }, [updateSuccess, isOpen]);
 
@@ -126,7 +136,7 @@ const SurveyModal =
               color="inherit"
               onClick={() => {
                 formik.resetForm();
-                handleClose();
+                onResolve();
               }}
               aria-label="close"
             >
