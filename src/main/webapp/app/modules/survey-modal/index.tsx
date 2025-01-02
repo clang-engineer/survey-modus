@@ -89,10 +89,15 @@ const SurveyModal =
       //   return acc;
       // }, {}),
       onSubmit(values) {
-        const fields: Array<{ key: string; value: any }> = Object.keys(values).map(key => ({
-          key,
-          value: values[key],
-        }));
+        const fields: Array<{
+          key: string;
+          value: any;
+        }> = Object.keys(values)
+          .filter(key => values[key] !== null)
+          .map(key => ({
+            key,
+            value: values[key],
+          }));
         if (document && document.id) {
           dispatch(
             updateDocument({
