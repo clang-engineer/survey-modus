@@ -72,7 +72,9 @@
           "required": "Your password is required.",
           "minlength": "Your password is required to be at least 4 characters.",
           "maxlength": "Your password cannot be longer than 50 characters.",
-          "strength": "Password strength:"
+          "strength": "Password strength:",
+          "different": "Your new password cannot be the same as your current password.",
+          "pattern": "Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters."
         },
         "confirmpassword": {
           "required": "Your confirmation password is required.",

@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { Button, Col, Row } from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Translate, translate } from 'react-jhipster';
 import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getSession } from 'app/shared/reducers/authentication';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { reset, savePassword } from './password.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+
+import { Button, Grid, Typography } from '@mui/material';
+
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { gridSpacing } from 'app/berry/store/constant';
+
+import IconSave from '@mui/icons-material/Save';
+import PasswordInput from 'app/modules/account/password/password-input';
 
 export const PasswordPage = () => {
-  const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,96 +32,85 @@ export const PasswordPage = () => {
     dispatch(savePassword({ currentPassword, newPassword }));
   };
 
-  const updatePassword = event => setPassword(event.target.value);
-
   const account = useAppSelector(state => state.authentication.account);
   const successMessage = useAppSelector(state => state.password.successMessage);
   const errorMessage = useAppSelector(state => state.password.errorMessage);
+  const loading = useAppSelector(state => state.password.loading);
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
     if (successMessage) {
       toast.success(translate(successMessage));
     } else if (errorMessage) {
       toast.error(translate(errorMessage));
     }
     dispatch(reset());
-  }, [successMessage, errorMessage]);
+  }, [successMessage, errorMessage, loading]);
+
+  const pattern =
+    /^(?=(?:.*[a-z])(?:.*[A-Z])|(?:.*[a-z])(?:.*[0-9])|(?:.*[a-z])(?:.*[!@#\$%\^&\*])|(?:.*[A-Z])(?:.*[0-9])|(?:.*[A-Z])(?:.*[!@#\$%\^&\*])|(?:.*[0-9])(?:.*[!@#\$%\^&\*]))(?=.{10,})|(?=(?:.*[a-z])(?:.*[A-Z])(?:.*[0-9])|(?:.*[a-z])(?:.*[A-Z])(?:.*[!@#\$%\^&\*])|(?:.*[a-z])(?:.*[0-9])(?:.*[!@#\$%\^&\*])|(?:.*[A-Z])(?:.*[0-9])(?:.*[!@#\$%\^&\*]))(?=.{8,}).*$/;
+
+  const formik = useFormik({
+    initialValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    validationSchema: yup.object({
+      currentPassword: yup
+        .string()
+        .required()
+        .min(4, translate('global.messages.validate.newpassword.minlength'))
+        .max(50, translate('global.messages.validate.newpassword.maxlength')),
+      newPassword: yup
+        .string()
+        .required()
+        .min(4, translate('global.messages.validate.newpassword.minlength'))
+        .max(50, translate('global.messages.validate.newpassword.maxlength'))
+        .matches(pattern, translate('global.messages.validate.newpassword.pattern'))
+        .notOneOf([yup.ref('currentPassword')], translate('global.messages.validate.newpassword.different')),
+      confirmPassword: yup
+        .string()
+        .required()
+        .oneOf([yup.ref('newPassword')], translate('global.messages.error.dontmatch')),
+    }),
+    onSubmit: values => {
+      handleValidSubmit(values);
+    },
+  });
+
+  const CardTitle = () => (
+    <Typography variant="h4">
+      <Translate contentKey="password.title" interpolate={{ username: account.login }}>
+        Password for {account.login}
+      </Translate>
+    </Typography>
+  );
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="password-title">
-            <Translate contentKey="password.title" interpolate={{ username: account.login }}>
-              Password for {account.login}
-            </Translate>
-          </h2>
-          <ValidatedForm id="password-form" onSubmit={handleValidSubmit}>
-            <ValidatedField
-              name="currentPassword"
-              label={translate('global.form.currentpassword.label')}
-              placeholder={translate('global.form.currentpassword.placeholder')}
-              type="password"
-              validate={{
-                required: {
-                  value: true,
-                  message: translate('global.messages.validate.newpassword.required'),
-                },
-              }}
-              data-cy="currentPassword"
-            />
-            <ValidatedField
-              name="newPassword"
-              label={translate('global.form.newpassword.label')}
-              placeholder={translate('global.form.newpassword.placeholder')}
-              type="password"
-              validate={{
-                required: {
-                  value: true,
-                  message: translate('global.messages.validate.newpassword.required'),
-                },
-                minLength: {
-                  value: 4,
-                  message: translate('global.messages.validate.newpassword.minlength'),
-                },
-                maxLength: {
-                  value: 50,
-                  message: translate('global.messages.validate.newpassword.maxlength'),
-                },
-              }}
-              onChange={updatePassword}
-              data-cy="newPassword"
-            />
-            <PasswordStrengthBar password={password} />
-            <ValidatedField
-              name="confirmPassword"
-              label={translate('global.form.confirmpassword.label')}
-              placeholder={translate('global.form.confirmpassword.placeholder')}
-              type="password"
-              validate={{
-                required: {
-                  value: true,
-                  message: translate('global.messages.validate.confirmpassword.required'),
-                },
-                minLength: {
-                  value: 4,
-                  message: translate('global.messages.validate.confirmpassword.minlength'),
-                },
-                maxLength: {
-                  value: 50,
-                  message: translate('global.messages.validate.confirmpassword.maxlength'),
-                },
-                validate: v => v === password || translate('global.messages.error.dontmatch'),
-              }}
-              data-cy="confirmPassword"
-            />
-            <Button color="success" type="submit" data-cy="submit">
+    <MainCard title={<CardTitle />}>
+      <form id="password-form" onSubmit={formik.handleSubmit}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            <PasswordInput formik={formik} name="currentPassword" translateKey="global.form.currentpassword.label" />
+          </Grid>
+          <Grid item xs={12}>
+            <PasswordInput formik={formik} name="newPassword" translateKey="global.form.newpassword.label" />
+            <PasswordStrengthBar password={formik.values.newPassword} />
+          </Grid>
+          <Grid item xs={12}>
+            <PasswordInput formik={formik} name="confirmPassword" translateKey="global.form.confirmpassword.label" />
+          </Grid>
+          <Grid item xs={12}>
+            <Button size="small" type="submit" variant="contained" color="primary" data-cy="submit" startIcon={<IconSave />}>
               <Translate contentKey="password.form.button">Save</Translate>
             </Button>
-          </ValidatedForm>
-        </Col>
-      </Row>
-    </div>
+          </Grid>
+        </Grid>
+      </form>
+    </MainCard>
   );
 };
 
