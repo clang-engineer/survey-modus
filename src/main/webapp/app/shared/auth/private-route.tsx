@@ -8,9 +8,10 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 interface IOwnProps extends RouteProps {
   hasAnyAuthorities?: string[];
   children: React.ReactNode;
+  loginPath?: string;
 }
 
-export const PrivateRoute = ({ children, hasAnyAuthorities = [], ...rest }: IOwnProps) => {
+export const PrivateRoute = ({ children, hasAnyAuthorities = [], loginPath = '/login', ...rest }: IOwnProps) => {
   const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
   const sessionHasBeenFetched = useAppSelector(state => state.authentication.sessionHasBeenFetched);
   const account = useAppSelector(state => state.authentication.account);
@@ -42,7 +43,7 @@ export const PrivateRoute = ({ children, hasAnyAuthorities = [], ...rest }: IOwn
   return (
     <Navigate
       to={{
-        pathname: '/login',
+        pathname: loginPath,
         search: location.search,
       }}
       replace

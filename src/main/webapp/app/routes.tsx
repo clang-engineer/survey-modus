@@ -107,15 +107,15 @@ const AppRoutes = () => {
             }
           />
         </Route>
+        <Route path="gate/login" element={<Login3 />} />
         <Route
           path="gate/*"
           element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} loginPath="/gate/login">
               <GateRoutes />
             </PrivateRoute>
           }
         />
-        <Route path="gate/login" element={<Login3 />} />
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>
