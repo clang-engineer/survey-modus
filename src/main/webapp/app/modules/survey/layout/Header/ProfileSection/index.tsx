@@ -36,6 +36,8 @@ import UpgradePlanCard from './UpgradePlanCard';
 import useAuth from 'app/berry/hooks/useAuth';
 import User1 from 'app/berry/assets/images/users/user-round.svg';
 
+import { IconBrightness } from '@tabler/icons';
+
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'app/berry/hooks/useConfig';
@@ -47,14 +49,10 @@ import { logoutSession } from 'app/shared/reducers/authentication';
 const ProfileSection = () => {
   const theme = useTheme();
   const { borderRadius } = useConfig();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const account = useAppSelector(state => state.authentication.account);
+  const config = useConfig();
 
-  const [sdm, setSdm] = useState(true);
-  const [value, setValue] = useState('');
-  const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const [open, setOpen] = useState(false);
@@ -171,27 +169,10 @@ const ProfileSection = () => {
                         </Stack>
                         <Typography variant="subtitle2">Project Admin</Typography>
                       </Stack>
-                      <OutlinedInput
-                        sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
-                        id="input-search-profile"
-                        value={value}
-                        onChange={e => setValue(e.target.value)}
-                        placeholder="Search profile options"
-                        startAdornment={
-                          <InputAdornment position="start">
-                            <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
-                          </InputAdornment>
-                        }
-                        aria-describedby="search-helper-text"
-                        inputProps={{
-                          'aria-label': 'weight',
-                        }}
-                      />
                       <Divider />
                     </Box>
                     <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                       <Box sx={{ p: 2, pt: 0 }}>
-                        <UpgradePlanCard />
                         <Divider />
                         <Card
                           sx={{
@@ -204,29 +185,26 @@ const ProfileSection = () => {
                               <Grid item>
                                 <Grid item container alignItems="center" justifyContent="space-between">
                                   <Grid item>
-                                    <Typography variant="subtitle1">Start DND Mode</Typography>
+                                    <Typography variant="subtitle1">
+                                      <IconBrightness
+                                        stroke={1.5}
+                                        size="20"
+                                        color={theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main}
+                                      />
+                                    </Typography>
                                   </Grid>
                                   <Grid item>
                                     <Switch
                                       color="primary"
-                                      checked={sdm}
-                                      onChange={e => setSdm(e.target.checked)}
-                                      name="sdm"
-                                      size="small"
-                                    />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item>
-                                <Grid item container alignItems="center" justifyContent="space-between">
-                                  <Grid item>
-                                    <Typography variant="subtitle1">Allow Notifications</Typography>
-                                  </Grid>
-                                  <Grid item>
-                                    <Switch
-                                      checked={notification}
-                                      onChange={e => setNotification(e.target.checked)}
-                                      name="sdm"
+                                      checked={config.navType === 'light'}
+                                      onChange={e => {
+                                        if (config.navType === 'light') {
+                                          config.onChangeMenuType('dark');
+                                        } else {
+                                          config.onChangeMenuType('light');
+                                        }
+                                      }}
+                                      name="navType"
                                       size="small"
                                     />
                                   </Grid>

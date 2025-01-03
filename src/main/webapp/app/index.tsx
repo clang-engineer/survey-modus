@@ -10,6 +10,7 @@ import { clearAuthentication } from 'app/shared/reducers/authentication';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import AppComponent from 'app/app';
 import { loadIcons } from 'app/config/icon-loader';
+import { ConfigProvider } from 'app/berry/contexts/ConfigContext';
 
 const store = getStore();
 registerLocale(store);
@@ -26,9 +27,9 @@ const render = Component =>
   root.render(
     <ErrorBoundary>
       <Provider store={store}>
-        <div>
+        <ConfigProvider>
           <Component />
-        </div>
+        </ConfigProvider>
       </Provider>
     </ErrorBoundary>
   );
