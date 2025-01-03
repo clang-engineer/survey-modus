@@ -12,7 +12,6 @@ import HorizontalBar from './HorizontalBar';
 import Customization from '../Customization';
 import Breadcrumbs from 'app/berry/ui-component/extended/Breadcrumbs';
 
-import navigation from 'app/berry/menu-items';
 import LAYOUT_CONST from 'app/berry/constant';
 import useConfig from 'app/berry/hooks/useConfig';
 import { drawerWidth } from 'app/berry/store/constant';
@@ -21,6 +20,7 @@ import { openDrawer } from 'app/berry/store/slices/menu';
 // assets
 import { IconChevronRight } from '@tabler/icons';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import CustomNavItems from 'app/berry/menu-items/cutom-nav-items';
 
 interface MainStyleProps {
   theme: Theme;
@@ -88,8 +88,12 @@ const MainLayout = () => {
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const dispatch = useAppDispatch();
+  const authorities = useAppSelector(state => state.authentication.account.authorities);
+
   const { drawerOpen } = useAppSelector(state => state.menu);
   const { drawerType, container, layout } = useConfig();
+
+  const [navigation, setNavigation] = React.useState({});
 
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {
@@ -113,6 +117,10 @@ const MainLayout = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchDownMd]);
+
+  useEffect(() => {
+    setNavigation(CustomNavItems({ authorities }));
+  }, []);
 
   const condition = layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd;
 

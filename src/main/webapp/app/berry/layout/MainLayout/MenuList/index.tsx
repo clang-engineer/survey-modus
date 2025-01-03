@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import menuItem from 'app/berry/menu-items';
+// import menuItem from 'app/berry/menu-items';
 import NavGroup from './NavGroup';
 import useConfig from 'app/berry/hooks/useConfig';
 import { Menu } from 'app/berry/menu-items/widget';
@@ -15,6 +15,8 @@ import { HORIZONTAL_MAX_ITEM } from 'app/berry/config';
 
 // types
 import { NavItemType } from 'app/berry/types';
+import { useAppSelector } from 'app/config/store';
+import CustomNavItems from 'app/berry/menu-items/cutom-nav-items';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
@@ -23,10 +25,14 @@ const MenuList = () => {
   const { layout } = useConfig();
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
+  const authorities = useAppSelector(state => state.authentication.account.authorities);
+
+  const [menuItem, setMenuItem] = React.useState({ items: [] } as { items: NavItemType[] });
 
   useEffect(() => {
     handlerMenuItem();
     // eslint-disable-next-line
+    setMenuItem(CustomNavItems({ authorities }));
   }, []);
 
   let getMenu = Menu();
