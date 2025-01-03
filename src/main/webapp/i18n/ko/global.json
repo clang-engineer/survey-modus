@@ -37,7 +37,8 @@
         "userManagement": "사용자 관리",
         "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
       },
-      "language": "언어"
+      "language": "언어",
+      "survey": "Survey"
     },
     "form": {
       "username.label": "로그인 아이디",

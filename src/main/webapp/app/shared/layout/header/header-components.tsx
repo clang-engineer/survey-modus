@@ -32,12 +32,12 @@ export const Home = () => (
   </NavItem>
 );
 
-export const Gate = () => (
+export const Survey = () => (
   <NavItem>
     <NavLink tag={Link} to="/gate/companies" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home" />
       <span>
-        <Translate contentKey="global.menu.gate">Gate</Translate>
+        <Translate contentKey="global.menu.survey">Survey</Translate>
       </span>
     </NavLink>
   </NavItem>
