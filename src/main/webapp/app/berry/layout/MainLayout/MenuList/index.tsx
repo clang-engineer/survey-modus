@@ -16,7 +16,7 @@ import { HORIZONTAL_MAX_ITEM } from 'app/berry/config';
 // types
 import { NavItemType } from 'app/berry/types';
 import { useAppSelector } from 'app/config/store';
-import CustomNavItems from 'app/berry/menu-items/cutom-nav-items';
+import CustomNavItems from 'app/berry/menu-items/custom-nav-items';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 

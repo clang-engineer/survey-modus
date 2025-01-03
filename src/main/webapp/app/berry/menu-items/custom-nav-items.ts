@@ -16,21 +16,26 @@ export interface ICustomNavItems {
 const CustomNavItems: (props: ICustomNavItems) => { items: NavItemType[] } = props => {
   const { authorities } = props;
 
-  const getItems = () => {
+  const authorizedItems = () => {
     const items: NavItemType[] = [];
-    items.push(wizard);
-    items.push(system);
-    items.push(survey);
+
+    if (hasAnyAuthority(authorities, [AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.STAFF])) {
+      items.push(survey);
+    }
 
     if (hasAnyAuthority(authorities, [AUTHORITIES.ADMIN, AUTHORITIES.USER])) {
-      // items.push(download);
+      items.push(wizard);
+    }
+
+    if (hasAnyAuthority(authorities, [AUTHORITIES.ADMIN])) {
+      items.push(system);
     }
 
     return items;
   };
 
   return {
-    items: getItems(),
+    items: authorizedItems(),
   };
 };
 

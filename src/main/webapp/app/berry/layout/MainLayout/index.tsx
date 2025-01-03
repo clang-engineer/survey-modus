@@ -20,7 +20,7 @@ import { openDrawer } from 'app/berry/store/slices/menu';
 // assets
 import { IconChevronRight } from '@tabler/icons';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import CustomNavItems from 'app/berry/menu-items/cutom-nav-items';
+import CustomNavItems from 'app/berry/menu-items/custom-nav-items';
 
 interface MainStyleProps {
   theme: Theme;
