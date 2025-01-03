@@ -24,7 +24,7 @@ const CreateCompanyNavItems = (company: ICompany) => {
           title: form.title,
           icon: IconClipboardText,
           type: 'item',
-          url: `/gate/companies/${company.id}/forms/${form.id}`,
+          url: `/survey/companies/${company.id}/forms/${form.id}`,
         })
       );
     });

@@ -19,14 +19,14 @@ const menuItems: { items: NavItemType[] } = {
       title: 'forms',
       icon: IconSitemap,
       type: 'item',
-      url: '/gate/form',
+      url: '/survey/form',
     }),
     wrapper({
       id: 'datasource',
       title: 'Datasource',
       icon: IconSitemap,
       type: 'item',
-      url: '/gate/datasource',
+      url: '/survey/datasource',
     }),
   ],
 };

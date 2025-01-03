@@ -4,17 +4,17 @@ import { Route } from 'react-router-dom';
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
 import CompanyGate from './company-gate';
-import FormGate from 'app/modules/gate/form-gate';
-import { GateProvider } from 'app/modules/gate/gate.config';
-import GateLayout from 'app/modules/gate/layout';
+import FormGate from 'app/modules/survey/form-gate';
+import { SurveyProvider } from 'app/modules/survey/survey.config';
+import GateLayout from 'app/modules/survey/layout';
 
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route
       element={
-        <GateProvider>
+        <SurveyProvider>
           <GateLayout />
-        </GateProvider>
+        </SurveyProvider>
       }
     >
       <Route path="companies" element={<CompanyGate />} />

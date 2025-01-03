@@ -20,7 +20,7 @@ import { openDrawer } from 'app/berry/store/slices/menu';
 // assets
 import { IconChevronRight } from '@tabler/icons';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import useGateConfig from 'app/modules/gate/gate.config';
+import useSurveyConfig from 'app/modules/survey/survey.config';
 
 interface MainStyleProps {
   theme: Theme;
@@ -90,7 +90,7 @@ const BasicLayout = () => {
   const { drawerOpen } = useAppSelector(state => state.menu);
   const { drawerType, container } = useConfig();
 
-  const { menuItems } = useGateConfig();
+  const { menuItems } = useSurveyConfig();
 
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {

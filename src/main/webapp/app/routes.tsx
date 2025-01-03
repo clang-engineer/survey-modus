@@ -40,8 +40,8 @@ const EntityRoutes = Loadable({
   loading: () => loading,
 });
 
-const GateRoutes = Loadable({
-  loader: () => import(/* webpackChunkName: "gate" */ 'app/modules/gate'),
+const SurveyRoutes = Loadable({
+  loader: () => import(/* webpackChunkName: "gate" */ 'app/modules/survey'),
   loading: () => loading,
 });
 
@@ -107,12 +107,12 @@ const AppRoutes = () => {
             }
           />
         </Route>
-        <Route path="gate/login" element={<Login3 />} />
+        <Route path="survey/login" element={<Login3 />} />
         <Route
-          path="gate/*"
+          path="survey/*"
           element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} loginPath="/gate/login">
-              <GateRoutes />
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} loginPath="/survey/login">
+              <SurveyRoutes />
             </PrivateRoute>
           }
         />

@@ -3,15 +3,15 @@ import React, { useEffect } from 'react';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-import useGateConfig from 'app/modules/gate/gate.config';
+import useSurveyConfig from 'app/modules/survey/survey.config';
 import { NavItemType } from 'app/berry/types';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntity as getForm } from 'app/entities/form/form.reducer';
 import { getEntity as getCompany } from 'app/entities/company/company.reducer';
-import { CreateCompanyNavItems } from 'app/modules/gate/nav-item.utils';
+import { CreateCompanyNavItems } from 'app/modules/survey/nav-item.utils';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
-import DataSource from 'app/modules/gate/form-gate/datasource';
+import DataSource from 'app/modules/survey/form-gate/datasource';
 import { IconDatabase, IconPlaylistAdd } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
@@ -22,7 +22,7 @@ import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.
 
 const FormGate = () => {
   const dispatch = useAppDispatch();
-  const { setMenuItems } = useGateConfig();
+  const { setMenuItems } = useSurveyConfig();
   const { companyId, formId } = useParams<{ companyId: string; formId: string }>();
 
   const companyEntity = useAppSelector(state => state.company.entity);

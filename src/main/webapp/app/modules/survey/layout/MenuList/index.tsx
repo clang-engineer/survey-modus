@@ -14,7 +14,7 @@ import { HORIZONTAL_MAX_ITEM } from 'app/berry/config';
 
 // types
 import { NavItemType } from 'app/berry/types';
-import useGateConfig from 'app/modules/gate/gate.config';
+import useSurveyConfig from 'app/modules/survey/survey.config';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
@@ -23,7 +23,7 @@ const MenuList = () => {
 
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { menuItems } = useGateConfig();
+  const { menuItems } = useSurveyConfig();
 
   useEffect(() => {
     handlerMenuItem();

@@ -38,7 +38,7 @@ const CompanyGate = () => {
     }
 
     const form = company.forms.filter(form => form.activated)[0];
-    navigate(`/gate/companies/${company.id}/forms/${form.id}`);
+    navigate(`/survey/companies/${company.id}/forms/${form.id}`);
   };
 
   const isAccessibleCompany = (company: ICompany) => {
