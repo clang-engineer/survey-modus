@@ -34,12 +34,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { Translate, translate, ValidatedField } from 'react-jhipster';
+import { useNavigate } from 'react-router-dom';
 
 // ===============================|| JWT LOGIN ||=============================== //
 
 const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // const { login } = useAuth();
   const scriptedRef = useScriptRef();
@@ -64,15 +66,9 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
 
   React.useEffect(() => {
     if (loginSuccess) {
-      formikRef.current?.setStatus({ success: true });
-      formikRef.current?.setSubmitting(false);
+      navigate('/gate/companies');
     }
-    if (loginError) {
-      formikRef.current?.setStatus({ success: false });
-      formikRef.current?.setErrors({ submit: loginError });
-      formikRef.current?.setSubmitting(false);
-    }
-  }, [loginSuccess, loginError, loading]);
+  }, [loginSuccess]);
 
   return (
     <Formik
@@ -176,17 +172,15 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
             </Grid>
           </Grid>
 
-          {errors.submit && (
-            <Box sx={{ mt: 3 }}>
-              {loginError ? (
-                <Alert severity="error">
-                  <Translate contentKey="login.messages.error.authentication">
-                    <strong>Failed to sign in!</strong> Please check your credentials and try again.
-                  </Translate>
-                </Alert>
-              ) : null}
-            </Box>
-          )}
+          <Box sx={{ mt: 3 }}>
+            {loginError ? (
+              <Alert severity="error">
+                <Translate contentKey="login.messages.error.authentication">
+                  <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                </Translate>
+              </Alert>
+            ) : null}
+          </Box>
           <Box sx={{ mt: 2 }}>
             <AnimateButton>
               <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">

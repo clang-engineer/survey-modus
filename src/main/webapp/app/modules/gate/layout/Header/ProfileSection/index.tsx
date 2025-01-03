@@ -39,30 +39,31 @@ import User1 from 'app/berry/assets/images/users/user-round.svg';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'app/berry/hooks/useConfig';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { logoutSession } from 'app/shared/reducers/authentication';
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
   const theme = useTheme();
   const { borderRadius } = useConfig();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const account = useAppSelector(state => state.authentication.account);
 
   const [sdm, setSdm] = useState(true);
   const [value, setValue] = useState('');
   const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const { logout, user } = useAuth();
+
   const [open, setOpen] = useState(false);
   /**
    * anchorRef is used on different components and specifying one type leads to other components throwing an error
    * */
   const anchorRef = useRef<any>(null);
   const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (err) {
-      console.error(err);
-    }
+    navigate('/logout');
   };
   const handleListItemClick = (event: React.MouseEvent<HTMLDivElement>, index: number, route: string = '') => {
     setSelectedIndex(index);
@@ -165,7 +166,7 @@ const ProfileSection = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <Typography variant="h4">Good Morning,</Typography>
                           <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                            {user?.name}
+                            {account.firstName} {account.lastName}
                           </Typography>
                         </Stack>
                         <Typography variant="subtitle2">Project Admin</Typography>

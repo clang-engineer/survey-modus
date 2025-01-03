@@ -16,6 +16,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
+import Login3 from 'app/berry/views/pages/authentication/authentication3/Login3';
 
 const loading = <div>loading ...</div>;
 
@@ -114,6 +115,7 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         />
+        <Route path="gate/login" element={<Login3 />} />
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>
