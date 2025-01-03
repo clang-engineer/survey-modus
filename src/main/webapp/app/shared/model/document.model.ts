@@ -4,7 +4,7 @@ const DOCUMENT_COMPANY_ID = 'companyId';
 const DOCUMENT_FORM_ID = 'formId';
 
 interface IDocument {
-  _id?: Object;
+  _id?: Record<string, any>;
   id?: string;
   companyId: number;
   formId: number;

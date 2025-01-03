@@ -37,7 +37,7 @@ const CompanyGate = () => {
       return;
     }
 
-    const form = company.forms.filter(form => form.activated)[0];
+    const form = company.forms.filter(f => f.activated)[0];
     navigate(`/survey/companies/${company.id}/forms/${form.id}`);
   };
 
@@ -49,6 +49,7 @@ const CompanyGate = () => {
     <Grid container spacing={2}>
       {companies.map((company, index) => (
         <Grid
+          key={index}
           item
           xs={12}
           sm={6}

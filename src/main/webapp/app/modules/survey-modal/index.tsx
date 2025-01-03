@@ -89,7 +89,7 @@ const SurveyModal =
       //   return acc;
       // }, {}),
       onSubmit(values) {
-        const fields: Array<{
+        const mappedFields: Array<{
           key: string;
           value: any;
         }> = Object.keys(values)
@@ -102,14 +102,14 @@ const SurveyModal =
           dispatch(
             updateDocument({
               collectionId: form.category.id,
-              document: { id: document.id, companyId: company.id, formId: form.id, fields },
+              document: { id: document.id, companyId: company.id, formId: form.id, fields: mappedFields },
             })
           );
         } else {
           dispatch(
             createDocument({
               collectionId: form.category.id,
-              document: { companyId: company.id, formId: form.id, fields },
+              document: { companyId: company.id, formId: form.id, fields: mappedFields },
             })
           );
         }

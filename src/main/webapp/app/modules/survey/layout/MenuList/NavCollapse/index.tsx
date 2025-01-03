@@ -94,6 +94,7 @@ interface NavCollapseProps {
   level: number;
 }
 
+/* eslint-disable */
 const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -147,7 +148,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
     if (menu.children) {
       menu.children.forEach((item: NavItemType) => {
         if (item.children?.length) {
-          checkOpenForParent(item.children, menu.id!);
+          checkOpenForParent(item.children, menu.id);
         }
         if (pathname && pathname.includes('product-details')) {
           if (item.url && item.url.includes('product-details')) {
@@ -161,8 +162,6 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
         }
       });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menu.children]);
 
   // menu collapse & item

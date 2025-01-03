@@ -69,7 +69,7 @@ const HorizontalNavGroup = (props: HorizontalMenuListProps) => {
   const checkOpenForParent = (child: NavItemType[], id: string) => {
     child.forEach((ele: NavItemType) => {
       if (ele.children?.length) {
-        checkOpenForParent(ele.children, currentItem.id!);
+        checkOpenForParent(ele.children, currentItem.id);
       }
       if (ele.url === pathname) {
         dispatch(activeID(id));
@@ -81,10 +81,10 @@ const HorizontalNavGroup = (props: HorizontalMenuListProps) => {
     const childrens = data.children ? data.children : [];
     childrens.forEach((itemCheck: NavItemType) => {
       if (itemCheck.children?.length) {
-        checkOpenForParent(itemCheck.children, currentItem.id!);
+        checkOpenForParent(itemCheck.children, currentItem.id);
       }
       if (itemCheck.url === pathname) {
-        dispatch(activeID(currentItem.id!));
+        dispatch(activeID(currentItem.id));
       }
     });
   };
@@ -107,7 +107,7 @@ const HorizontalNavGroup = (props: HorizontalMenuListProps) => {
     setAnchorEl(null);
   };
 
-  const Icon = currentItem?.icon!;
+  const Icon = currentItem?.icon;
   const itemIcon = currentItem?.icon ? <Icon stroke={1.5} size="20px" /> : null;
 
   const moreItems = remItems.map((itemRem: NavItemType, i) => (

@@ -80,7 +80,7 @@ const NavItem = (props: NavItemProps) => {
         }),
       }}
       selected={isSelected}
-      onClick={() => props.itemHandler(item.id!)}
+      onClick={() => props.itemHandler(item.id)}
     >
       <ButtonBase aria-label="theme-icon" sx={{ borderRadius: `${borderRadius}px` }} disableRipple={drawerOpen}>
         <ListItemIcon

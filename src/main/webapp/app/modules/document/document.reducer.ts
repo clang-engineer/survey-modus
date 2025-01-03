@@ -37,7 +37,7 @@ export const createDocument = createAsyncThunk(
     const result = await axios.post<IDocument>(`api/collections/${collectionId}/documents`, document);
     thunkAPI.dispatch(
       getDocumentsByCompanyIdAndFormId({
-        collectionId: collectionId,
+        collectionId,
         companyId: document[DOCUMENT_COMPANY_ID],
         formId: document[DOCUMENT_FORM_ID],
       })
@@ -56,7 +56,7 @@ export const updateDocument = createAsyncThunk(
 
     thunkAPI.dispatch(
       getDocumentsByCompanyIdAndFormId({
-        collectionId: collectionId,
+        collectionId,
         companyId: document[DOCUMENT_COMPANY_ID],
         formId: document[DOCUMENT_FORM_ID],
       })
@@ -76,7 +76,7 @@ export const deleteDocument = createAsyncThunk(
 
     thunkAPI.dispatch(
       getDocumentsByCompanyIdAndFormId({
-        collectionId: collectionId,
+        collectionId,
         companyId: document[DOCUMENT_COMPANY_ID],
         formId: document[DOCUMENT_FORM_ID],
       })

@@ -46,7 +46,7 @@ const NavItem = (props: NavItemProps) => {
         pl: 2,
       }}
       selected={isSelected}
-      onClick={() => props.itemHandler(item.id!)}
+      onClick={() => props.itemHandler(item.id)}
     >
       <ListItemIcon
         sx={{

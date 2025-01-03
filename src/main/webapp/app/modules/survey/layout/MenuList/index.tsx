@@ -30,7 +30,7 @@ const MenuList = () => {
     // eslint-disable-next-line
   }, []);
 
-  let getMenu = Menu();
+  const getMenu = Menu();
   const handlerMenuItem = () => {
     const isFound = menuItems.some(element => {
       if (element.id === 'widget') {
@@ -52,7 +52,7 @@ const MenuList = () => {
   let lastItemId: string;
 
   if (lastItem && lastItem < menuItems.length) {
-    lastItemId = menuItems[lastItem - 1].id!;
+    lastItemId = menuItems[lastItem - 1].id;
     lastItemIndex = lastItem - 1;
     remItems = menuItems.slice(lastItem - 1, menuItems.length).map(item => ({
       title: item.title,
@@ -63,7 +63,7 @@ const MenuList = () => {
   const navItems = menuItems.slice(0, lastItemIndex + 1).map(item => {
     switch (item.type) {
       case 'group':
-        return <NavGroup key={item.id} item={item} lastItem={lastItem!} remItems={remItems} lastItemId={lastItemId} />;
+        return <NavGroup key={item.id} item={item} lastItem={lastItem} remItems={remItems} lastItemId={lastItemId} />;
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">

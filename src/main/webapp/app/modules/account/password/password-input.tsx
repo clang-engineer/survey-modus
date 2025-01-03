@@ -30,7 +30,9 @@ const PasswordInput = (props: IPasswordInputProps) => {
           name={translateKey}
           type={showPassword ? 'text' : 'password'}
           onBlur={props.formik.handleBlur}
-          onChange={e => props.formik.setFieldValue(name, e.target.value)}
+          onChange={e => {
+            props.formik.setFieldValue(name, e.target.value);
+          }}
           inputProps={{}}
           label={translate(translateKey)}
         />

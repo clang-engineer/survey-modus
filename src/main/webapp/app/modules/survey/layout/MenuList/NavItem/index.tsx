@@ -36,7 +36,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
   const { selectedItem, drawerOpen } = useAppSelector(state => state.menu);
   const isSelected = selectedItem.findIndex(id => id === item.id) > -1;
 
-  const Icon = item?.icon!;
+  const Icon = item?.icon;
   const itemIcon = item?.icon ? (
     <Icon
       stroke={1.5}
@@ -64,7 +64,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
     href?: string;
     target?: LinkTarget;
   } = {
-    component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url!} target={itemTarget} />),
+    component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />),
   };
   if (item?.external) {
     listItemProps = { component: 'a', href: item.url, target: itemTarget };

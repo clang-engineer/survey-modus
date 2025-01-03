@@ -46,13 +46,13 @@ const DataSource = () => {
         company: companyEntity,
         form: formEntity,
         fields: fieldEntities.filter(field => field.activated),
-        document: document,
+        document,
       })
     )();
   };
 
   const getFormattedDocumentValue = (document: IDocument, field: IField) => {
-    const value = document.fields.find(f => String(f.key) == String(field.id))?.value;
+    const value = document.fields.find(f => String(f.key) === String(field.id))?.value;
 
     switch (field.attribute.type) {
       case type.DATE:

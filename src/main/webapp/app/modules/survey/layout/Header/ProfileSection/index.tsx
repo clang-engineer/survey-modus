@@ -60,10 +60,10 @@ const ProfileSection = () => {
    * anchorRef is used on different components and specifying one type leads to other components throwing an error
    * */
   const anchorRef = useRef<any>(null);
-  const handleLogout = async () => {
+  const handleLogout = () => {
     navigate('/logout');
   };
-  const handleListItemClick = (event: React.MouseEvent<HTMLDivElement>, index: number, route: string = '') => {
+  const handleListItemClick = (event: React.MouseEvent<HTMLDivElement>, index: number, route = '') => {
     setSelectedIndex(index);
     handleClose(event);
 
@@ -272,7 +272,13 @@ const ProfileSection = () => {
                               }
                             />
                           </ListItemButton>
-                          <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4} onClick={handleLogout}>
+                          <ListItemButton
+                            sx={{ borderRadius: `${borderRadius}px` }}
+                            selected={selectedIndex === 4}
+                            onClick={() => {
+                              handleLogout();
+                            }}
+                          >
                             <ListItemIcon>
                               <IconLogout stroke={1.5} size="20px" />
                             </ListItemIcon>

@@ -77,7 +77,7 @@ export const SettingsPage = () => {
         .email(translate('global.messages.validate.email.invalid'))
         .matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, translate('global.messages.validate.email.invalid')),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       onFormikSubmit(values);
     },
   });

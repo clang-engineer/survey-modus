@@ -49,6 +49,7 @@ export const PasswordPage = () => {
     dispatch(reset());
   }, [successMessage, errorMessage, loading]);
 
+  /* eslint-disable no-useless-escape */
   const pattern =
     /^(?=(?:.*[a-z])(?:.*[A-Z])|(?:.*[a-z])(?:.*[0-9])|(?:.*[a-z])(?:.*[!@#\$%\^&\*])|(?:.*[A-Z])(?:.*[0-9])|(?:.*[A-Z])(?:.*[!@#\$%\^&\*])|(?:.*[0-9])(?:.*[!@#\$%\^&\*]))(?=.{10,})|(?=(?:.*[a-z])(?:.*[A-Z])(?:.*[0-9])|(?:.*[a-z])(?:.*[A-Z])(?:.*[!@#\$%\^&\*])|(?:.*[a-z])(?:.*[0-9])(?:.*[!@#\$%\^&\*])|(?:.*[A-Z])(?:.*[0-9])(?:.*[!@#\$%\^&\*]))(?=.{8,}).*$/;
 
@@ -76,7 +77,7 @@ export const PasswordPage = () => {
         .required()
         .oneOf([yup.ref('newPassword')], translate('global.messages.error.dontmatch')),
     }),
-    onSubmit: values => {
+    onSubmit(values) {
       handleValidSubmit(values);
     },
   });

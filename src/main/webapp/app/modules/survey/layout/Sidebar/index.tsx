@@ -70,7 +70,6 @@ const Sidebar = () => {
         )}
       </>
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [matchUpMd, drawerOpen, drawerType]
   );
 
