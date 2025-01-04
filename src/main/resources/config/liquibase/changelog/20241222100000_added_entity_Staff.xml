@@ -9,20 +9,18 @@
             <column name="company_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(100)">
-                <constraints nullable="false"/>
-            </column>
             <column name="phone" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="activated" type="boolean">
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="email" type="varchar(191)"/>
+            <column name="activated" type="boolean" valueBoolean="false">
                 <constraints nullable="false"/>
             </column>
+            <column name="lang_key" type="varchar(10)"/>
         </createTable>
-        <addPrimaryKey tableName="tbl_staff" columnNames="company_id,email"/>
+        <addPrimaryKey tableName="tbl_staff" columnNames="company_id,phone"/>
     </changeSet>
 
     <changeSet author="clang" id="20241222100000-2">
@@ -40,10 +38,12 @@
             tableName="tbl_staff"
             usePreparedStatements="true">
             <column name="company_id" type="numeric"/>
+            <column name="first_name" type="string"/>
+            <column name="last_name" type="string"/>
             <column name="email" type="string"/>
-            <column name="name" type="string"/>
-            <column name="phone" type="string"/>
             <column name="activated" type="boolean"/>
+            <column name="lang_key" type="string"/>
+            <column name="phone" type="string"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

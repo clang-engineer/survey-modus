@@ -1,6 +1,7 @@
-company_id;name;email;phone;activated
-1;staff1;staff1@test.com;010-1234-5678;true
-2;staff2;staff2@test.com;010-1234-5679;true
-3;staff3;staff3@test.com;010-1234-5679;true
-4;staff4;staff4@test.com;010-1234-5679;true
-5;staff5;staff5@test.com;010-1234-5679;true
+company_id;first_name;last_name;email;activated;lang_key;phone
+1;staff1;staff1;staff1@test.com;true;en;010-1234-5678
+2;staff2;staff2;staff2@test.com;true;en;010-1234-5678
+3;staff3;staff3;staff3@test.com;true;en;010-1234-5678
+4;staff4;staff4;staff4@test.com;true;en;010-1234-5678
+5;staff5;staff5;staff5@test.com;true;en;010-1234-5678
+

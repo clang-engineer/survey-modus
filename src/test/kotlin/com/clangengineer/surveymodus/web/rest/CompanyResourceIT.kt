@@ -119,7 +119,7 @@ class CompanyResourceIT {
         companyRepository.saveAndFlush(company)
 
         val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
-        val expectedStaffNames = company.staffs?.map { it.name }.toTypedArray()
+        val expectedStaffEmails = company.staffs?.map { it.email }.toTypedArray()
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk)
@@ -129,7 +129,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
-            .andExpect(jsonPath("$.[*].staffs[*].name").value(containsInAnyOrder(*expectedStaffNames)))
+            .andExpect(jsonPath("$.[*].staffs[*].email").value(containsInAnyOrder(*expectedStaffEmails)))
     }
 
     @Test
@@ -142,7 +142,7 @@ class CompanyResourceIT {
         assertNotNull(id)
 
         val expectedFormIds = company.forms?.map { it.id?.toInt() }.toTypedArray()
-        val expectedStaffNames = company.staffs?.map { it.name }.toTypedArray()
+        val expectedStaffEmails = company.staffs?.map { it.email }.toTypedArray()
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL_ID, company.id))
             .andExpect(status().isOk)
@@ -152,7 +152,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
-            .andExpect(jsonPath("$.staffs[*].name").value(containsInAnyOrder(*expectedStaffNames)))
+            .andExpect(jsonPath("$.staffs[*].email").value(containsInAnyOrder(*expectedStaffEmails)))
     }
 
     @Test
@@ -346,7 +346,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(hasItem(company.forms.first().id?.toInt())))
-            .andExpect(jsonPath("$.[*].staffs[*].name").value(hasItem(company.staffs.first().name)))
+            .andExpect(jsonPath("$.[*].staffs[*].email").value(hasItem(company.staffs.first().email)))
 
         restCompanyMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -672,7 +672,13 @@ class CompanyResourceIT {
 
             for (i in 1..3) {
                 val randomNum = random.nextInt(10) + 1
-                set.add(Staff(name = "staff$randomNum", email = "staff$randomNum@test.com", phone = "1234567890", activated = true))
+                set.add(
+                    Staff(
+                        firstName = "firstName$randomNum", lastName = "lastName$randomNum",
+                        email = "email$randomNum@test.com", activated = true,
+                        langKey = "en", phone = "010-$randomNum"
+                    )
+                )
             }
 
             return set
