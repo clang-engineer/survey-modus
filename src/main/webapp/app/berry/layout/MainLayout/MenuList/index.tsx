@@ -27,12 +27,10 @@ const MenuList = () => {
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const authorities = useAppSelector(state => state.authentication.account.authorities);
 
-  const [menuItem, setMenuItem] = React.useState({ items: [] } as { items: NavItemType[] });
+  const menuItem = React.useMemo(() => CustomNavItems({ authorities }), [authorities]);
 
   useEffect(() => {
     handlerMenuItem();
-    // eslint-disable-next-line
-    setMenuItem(CustomNavItems({ authorities }));
   }, []);
 
   let getMenu = Menu();
