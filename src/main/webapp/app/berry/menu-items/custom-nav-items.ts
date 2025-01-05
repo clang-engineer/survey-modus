@@ -25,10 +25,6 @@ const CustomNavItems: (props: ICustomNavItems) => { items: NavItemType[] } = pro
   const authorizedItems = () => {
     const items: NavItemType[] = [];
 
-    if (hasAnyAuthority(authorities, [AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.STAFF])) {
-      items.push(survey);
-    }
-
     if (hasAnyAuthority(authorities, [AUTHORITIES.ADMIN, AUTHORITIES.USER])) {
       items.push(wizard);
     }
@@ -43,25 +39,7 @@ const CustomNavItems: (props: ICustomNavItems) => { items: NavItemType[] } = pro
   const surveyFormItems = () => {
     const items: NavItemType[] = [];
 
-    const formGroup = {
-      id: 'form-group',
-      title: 'Forms',
-      type: 'group',
-      children: [],
-    };
-
-    const { company, forms } = surveyInfo;
-    const children: NavItemType[] = forms.map(f => {
-      return {
-        id: `form-${f.id}`,
-        title: f.title,
-        type: 'item',
-        url: `/survey/companies/${company.id}/forms/${f.id}`,
-      };
-    });
-
-    formGroup.children = children;
-    items.push(formGroup);
+    items.push(survey(surveyInfo.company, surveyInfo.forms));
 
     return items;
   };
