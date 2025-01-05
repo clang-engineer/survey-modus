@@ -150,7 +150,6 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={drawerOpen} layout={layout}>
-        {JSON.stringify(surveyInfo)}
         <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
           {/* breadcrumb */}
           <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />

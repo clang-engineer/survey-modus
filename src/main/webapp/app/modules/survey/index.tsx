@@ -5,8 +5,6 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
 import CompanyGate from './company-gate';
 import FormGate from 'app/modules/survey/form-gate';
-import { SurveyProvider } from 'app/modules/survey/survey.config';
-import GateLayout from 'app/modules/survey/layout';
 
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>

@@ -3,12 +3,9 @@ import React, { useEffect } from 'react';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-import useSurveyConfig from 'app/modules/survey/survey.config';
-import { NavItemType } from 'app/berry/types';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntity as getForm } from 'app/entities/form/form.reducer';
 import { getEntity as getCompany } from 'app/entities/company/company.reducer';
-import { CreateCompanyNavItems } from 'app/modules/survey/nav-item.utils';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import DataSource from 'app/modules/survey/form-gate/datasource';
