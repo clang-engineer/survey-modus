@@ -66,7 +66,7 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
 
   React.useEffect(() => {
     if (loginSuccess) {
-      navigate('/survey/companies');
+      navigate('/survey');
     }
   }, [loginSuccess]);
 

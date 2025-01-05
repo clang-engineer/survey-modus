@@ -34,7 +34,7 @@ export const Home = () => (
 
 export const Survey = () => (
   <NavItem>
-    <NavLink tag={Link} to="/survey/companies" className="d-flex align-items-center">
+    <NavLink tag={Link} to="/survey" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home" />
       <span>
         <Translate contentKey="global.menu.survey">Survey</Translate>

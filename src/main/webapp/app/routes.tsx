@@ -17,7 +17,6 @@ import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
 import Login3 from 'app/berry/views/pages/authentication/authentication3/Login3';
-import CompanyGate from 'app/modules/survey/company-gate';
 
 const loading = <div>loading ...</div>;
 
@@ -116,15 +115,15 @@ const AppRoutes = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            path="survey/*"
-            element={
-              <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.STAFF]} loginPath="/survey/login">
-                <SurveyRoutes />
-              </PrivateRoute>
-            }
-          />
         </Route>
+        <Route
+          path="survey/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.STAFF]} loginPath="/survey/login">
+              <SurveyRoutes />
+            </PrivateRoute>
+          }
+        />
         <Route path="survey/login" element={<Login3 />} />
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
