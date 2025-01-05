@@ -12,6 +12,7 @@ import { CustomizationProps } from 'app/berry/types/config';
 const initialState: CustomizationProps = {
   ...defaultConfig,
   surveyInfo: {
+    company: {},
     forms: [],
   },
   onChangeLayout: () => {},
@@ -47,6 +48,7 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     locale: initialState.locale,
     rtlLayout: initialState.rtlLayout,
     surveyInfo: {
+      company: {},
       forms: [],
     },
   });

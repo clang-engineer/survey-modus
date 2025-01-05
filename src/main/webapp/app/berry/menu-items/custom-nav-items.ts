@@ -7,12 +7,14 @@ import wizard from 'app/berry/menu-items/wizard';
 import system from 'app/berry/menu-items/system';
 import survey from 'app/berry/menu-items/survey';
 import { IForm } from 'app/shared/model/form.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 export interface ICustomNavItems {
   authorities: string[];
   surveyInfo: {
+    company: ICompany;
     forms: IForm[];
   };
 }
@@ -48,12 +50,13 @@ const CustomNavItems: (props: ICustomNavItems) => { items: NavItemType[] } = pro
       children: [],
     };
 
-    const children: NavItemType[] = surveyInfo.forms.map(f => {
+    const { company, forms } = surveyInfo;
+    const children: NavItemType[] = forms.map(f => {
       return {
         id: `form-${f.id}`,
         title: f.title,
         type: 'item',
-        url: `/form/${f.id}/companies`,
+        url: `/survey/companies/${company.id}/forms/${f.id}`,
       };
     });
 

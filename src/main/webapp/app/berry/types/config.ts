@@ -1,5 +1,6 @@
 import { PaletteMode } from '@mui/material';
 import { IForm } from 'app/shared/model/form.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 export type ConfigProps = {
   layout: string;
@@ -26,6 +27,7 @@ export type CustomizationProps = {
   rtlLayout: boolean;
   container: boolean;
   surveyInfo: {
+    company: ICompany;
     forms: IForm[];
   };
   onChangeLayout: (layout: string) => void;
@@ -38,5 +40,5 @@ export type CustomizationProps = {
   onChangeFontFamily: (fontFamily: string) => void;
   onChangeBorderRadius: (event: Event, newValue: number | number[]) => void;
   onChangeOutlinedField: (outlinedFilled: boolean) => void;
-  onChangeSurveyInfo: (surveyInfo: { forms: IForm[] }) => void;
+  onChangeSurveyInfo: (surveyInfo: { company: ICompany; forms: IForm[] }) => void;
 };

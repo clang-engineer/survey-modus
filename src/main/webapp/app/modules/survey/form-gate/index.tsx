@@ -20,8 +20,7 @@ import useConfig from 'app/berry/hooks/useConfig';
 
 const FormGate = () => {
   const dispatch = useAppDispatch();
-  // const { setMenuItems } = useSurveyConfig();
-  const { surveyInfo, onChangeSurveyInfo } = useConfig();
+  const { onChangeSurveyInfo } = useConfig();
   const { companyId, formId } = useParams<{ companyId: string; formId: string }>();
 
   const companyEntity = useAppSelector(state => state.company.entity);
@@ -38,10 +37,13 @@ const FormGate = () => {
   }, [companyId]);
 
   useEffect(() => {
-    onChangeSurveyInfo({ forms: companyEntity.forms });
+    onChangeSurveyInfo({
+      company: companyEntity,
+      forms: companyEntity.forms,
+    });
 
     return () => {
-      onChangeSurveyInfo({ forms: [] });
+      onChangeSurveyInfo({ company: {}, forms: [] });
     };
   }, [companyEntity]);
 
