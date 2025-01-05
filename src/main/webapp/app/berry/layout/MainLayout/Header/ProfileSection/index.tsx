@@ -37,7 +37,7 @@ import useAuth from 'app/berry/hooks/useAuth';
 import User1 from 'app/berry/assets/images/users/user-round.svg';
 
 // assets
-import { IconLogout, IconSearch, IconSettings, IconUser, IconKey } from '@tabler/icons';
+import { IconLogout, IconSearch, IconSettings, IconBrightness, IconKey } from '@tabler/icons';
 import useConfig from 'app/berry/hooks/useConfig';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -45,7 +45,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 const ProfileSection = () => {
   const theme = useTheme();
-  const { borderRadius } = useConfig();
+  const config = useConfig();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -213,6 +213,35 @@ const ProfileSection = () => {
                                   </Grid>
                                 </Grid>
                               </Grid>
+                              <Grid item>
+                                <Grid item container alignItems="center" justifyContent="space-between">
+                                  <Grid item>
+                                    <Typography variant="subtitle1">
+                                      <IconBrightness
+                                        stroke={1.5}
+                                        size="20"
+                                        color={theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main}
+                                      />
+                                      &nbsp; Dark Mode
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item>
+                                    <Switch
+                                      color="primary"
+                                      checked={config.navType === 'light'}
+                                      onChange={e => {
+                                        if (config.navType === 'light') {
+                                          config.onChangeMenuType('dark');
+                                        } else {
+                                          config.onChangeMenuType('light');
+                                        }
+                                      }}
+                                      name="navType"
+                                      size="small"
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Grid>
                             </Grid>
                           </CardContent>
                         </Card>
@@ -234,7 +263,7 @@ const ProfileSection = () => {
                           }}
                         >
                           <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
+                            sx={{ borderRadius: `${config.borderRadius}px` }}
                             selected={selectedIndex === 0}
                             onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 0, '/account/settings')}
                           >
@@ -244,7 +273,7 @@ const ProfileSection = () => {
                             <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                           </ListItemButton>
                           <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
+                            sx={{ borderRadius: `${config.borderRadius}px` }}
                             selected={selectedIndex === 1}
                             onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 1, '/account/password')}
                           >
@@ -253,7 +282,11 @@ const ProfileSection = () => {
                             </ListItemIcon>
                             <ListItemText primary={<Typography variant="body2">Change Password</Typography>} />
                           </ListItemButton>
-                          <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4} onClick={handleLogout}>
+                          <ListItemButton
+                            sx={{ borderRadius: `${config.borderRadius}px` }}
+                            selected={selectedIndex === 4}
+                            onClick={handleLogout}
+                          >
                             <ListItemIcon>
                               <IconLogout stroke={1.5} size="20px" />
                             </ListItemIcon>
