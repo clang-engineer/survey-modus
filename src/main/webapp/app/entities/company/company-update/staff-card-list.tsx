@@ -74,7 +74,7 @@ const StaffCardList = (props: { formik: FormikProps<any> }) => {
                   >
                     <Typography variant="h5" gutterBottom>
                       <IconCircle size={'0.5rem'} fill={getStatusColor(staff.activated)} /> &nbsp;&nbsp;
-                      {staff.name}
+                      {staff.firstName} {staff.lastName}
                     </Typography>
                     <Divider
                       sx={{

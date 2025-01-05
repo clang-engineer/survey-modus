@@ -32,8 +32,9 @@ const companyUpdateFormik = (props: { saveEntity: (entity: any) => void }) => {
       ),
       staffs: yup.array().of(
         yup.object({
+          firstName: yup.string().required('First Name is required'),
+          lastName: yup.string().required('Last Name is required'),
           email: yup.string().required('Email is required'),
-          name: yup.string().required('Name is required'),
           phone: yup.string().required('Phone is required'),
           activated: yup.boolean().required('Activated is required'),
         })
