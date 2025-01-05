@@ -27,7 +27,8 @@ const MenuList = () => {
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const authorities = useAppSelector(state => state.authentication.account.authorities);
 
-  const menuItem = React.useMemo(() => CustomNavItems({ authorities }), [authorities]);
+  const { surveyInfo } = useConfig();
+  const menuItem = React.useMemo(() => CustomNavItems({ authorities, surveyInfo }), [authorities, surveyInfo]);
 
   useEffect(() => {
     handlerMenuItem();

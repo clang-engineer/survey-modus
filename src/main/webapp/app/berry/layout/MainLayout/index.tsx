@@ -91,7 +91,7 @@ const MainLayout = () => {
   const authorities = useAppSelector(state => state.authentication.account.authorities);
 
   const { drawerOpen } = useAppSelector(state => state.menu);
-  const { drawerType, container, layout } = useConfig();
+  const { drawerType, container, layout, surveyInfo } = useConfig();
 
   const [navigation, setNavigation] = React.useState({});
 
@@ -119,8 +119,8 @@ const MainLayout = () => {
   }, [matchDownMd]);
 
   useEffect(() => {
-    setNavigation(CustomNavItems({ authorities }));
-  }, []);
+    setNavigation(CustomNavItems({ authorities, surveyInfo }));
+  }, [authorities, surveyInfo]);
 
   const condition = layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd;
 
@@ -150,6 +150,7 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={drawerOpen} layout={layout}>
+        {JSON.stringify(surveyInfo)}
         <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
           {/* breadcrumb */}
           <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />

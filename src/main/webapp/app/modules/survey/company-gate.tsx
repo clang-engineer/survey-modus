@@ -20,10 +20,10 @@ const CompanyGate = () => {
   const companies = useAppSelector(state => state.company.entities);
 
   useEffect(() => {
-    if (companies.length === 0) {
+    if (companies.length === 0 && user.id) {
       dispatch(getCompanyList({ query: `userId.equals=${user.id}` }));
     }
-  }, []);
+  }, [companies, user.id]);
 
   useEffect(() => {
     if (companies.length === 1) {

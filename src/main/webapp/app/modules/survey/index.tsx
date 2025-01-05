@@ -10,16 +10,8 @@ import GateLayout from 'app/modules/survey/layout';
 
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
-    <Route
-      element={
-        <SurveyProvider>
-          <GateLayout />
-        </SurveyProvider>
-      }
-    >
-      <Route path="companies" element={<CompanyGate />} />
-      <Route path="companies/:companyId/forms/:formId" element={<FormGate />} />
-    </Route>
+    <Route path="companies" element={<CompanyGate />} />
+    <Route path="companies/:companyId/forms/:formId" element={<FormGate />} />
   </ErrorBoundaryRoutes>
 );
 
