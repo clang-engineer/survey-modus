@@ -11,6 +11,9 @@ import { CustomizationProps } from 'app/berry/types/config';
 // initial state
 const initialState: CustomizationProps = {
   ...defaultConfig,
+  surveyInfo: {
+    forms: [],
+  },
   onChangeLayout: () => {},
   onChangeDrawer: () => {},
   onChangeMenuType: () => {},
@@ -21,6 +24,7 @@ const initialState: CustomizationProps = {
   onChangeFontFamily: () => {},
   onChangeBorderRadius: () => {},
   onChangeOutlinedField: () => {},
+  onChangeSurveyInfo: () => {},
 };
 
 // ==============================|| CONFIG CONTEXT & PROVIDER ||============================== //
@@ -42,6 +46,9 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     presetColor: initialState.presetColor,
     locale: initialState.locale,
     rtlLayout: initialState.rtlLayout,
+    surveyInfo: {
+      forms: [],
+    },
   });
 
   const onChangeLayout = (layout: string) => {
@@ -114,6 +121,13 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     });
   };
 
+  const onChangeSurveyInfo = (surveyInfo: any) => {
+    setConfig({
+      ...config,
+      surveyInfo,
+    });
+  };
+
   return (
     <ConfigContext.Provider
       value={{
@@ -128,6 +142,7 @@ function ConfigProvider({ children }: ConfigProviderProps) {
         onChangeFontFamily,
         onChangeBorderRadius,
         onChangeOutlinedField,
+        onChangeSurveyInfo,
       }}
     >
       {children}

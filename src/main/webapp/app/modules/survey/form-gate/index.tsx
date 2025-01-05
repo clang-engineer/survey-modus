@@ -19,10 +19,12 @@ import SurveyModal from 'app/modules/survey-modal';
 
 import { create } from 'react-modal-promise';
 import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';
+import useConfig from 'app/berry/hooks/useConfig';
 
 const FormGate = () => {
   const dispatch = useAppDispatch();
-  const { setMenuItems } = useSurveyConfig();
+  // const { setMenuItems } = useSurveyConfig();
+  const { surveyInfo, onChangeSurveyInfo } = useConfig();
   const { companyId, formId } = useParams<{ companyId: string; formId: string }>();
 
   const companyEntity = useAppSelector(state => state.company.entity);
@@ -39,11 +41,10 @@ const FormGate = () => {
   }, [companyId]);
 
   useEffect(() => {
-    const menuItems: NavItemType[] = CreateCompanyNavItems(companyEntity);
-    setMenuItems(menuItems);
+    onChangeSurveyInfo({ forms: companyEntity.forms });
 
     return () => {
-      setMenuItems([]);
+      onChangeSurveyInfo({ forms: [] });
     };
   }, [companyEntity]);
 

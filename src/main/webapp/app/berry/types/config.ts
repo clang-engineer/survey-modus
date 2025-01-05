@@ -1,4 +1,5 @@
 import { PaletteMode } from '@mui/material';
+import { IForm } from 'app/shared/model/form.model';
 
 export type ConfigProps = {
   layout: string;
@@ -24,6 +25,9 @@ export type CustomizationProps = {
   locale: string;
   rtlLayout: boolean;
   container: boolean;
+  surveyInfo: {
+    forms: IForm[];
+  };
   onChangeLayout: (layout: string) => void;
   onChangeDrawer: (drawerType: string) => void;
   onChangeMenuType: (navType: PaletteMode) => void;
@@ -34,4 +38,5 @@ export type CustomizationProps = {
   onChangeFontFamily: (fontFamily: string) => void;
   onChangeBorderRadius: (event: Event, newValue: number | number[]) => void;
   onChangeOutlinedField: (outlinedFilled: boolean) => void;
+  onChangeSurveyInfo: (surveyInfo: { forms: IForm[] }) => void;
 };
