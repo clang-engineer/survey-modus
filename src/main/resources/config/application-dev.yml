@@ -41,6 +41,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/surveymodus
+  redis:
+    host: http://localhost
+    port: 6379
+    database: 0
   h2:
     console:
       # disable spring boot built-in h2-console since we start it manually with correct configuration
