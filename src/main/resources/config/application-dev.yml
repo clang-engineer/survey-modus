@@ -42,7 +42,7 @@ spring:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/surveymodus
   redis:
-    host: http://localhost
+    host: localhost
     port: 6379
     database: 0
   h2:

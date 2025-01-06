@@ -29,23 +29,21 @@ class RedisBaseTwoFactorAuthenticationServiceIT {
     @Test
     fun `issueCode should store code in Redis`() {
         val key = "company:010-1234-5678"
-        val hash = twoFactorAuthenticationService.transformToHash(key)
 
         // issueCode 메서드 실행
         twoFactorAuthenticationService.issueCode(key)
 
         // Redis에 set이 호출되었는지 확인
-        verify(redisTemplate).opsForValue().set(hash, "1234", 5, java.util.concurrent.TimeUnit.MINUTES)
+        verify(redisTemplate).opsForValue().set(key, "1234", 5, java.util.concurrent.TimeUnit.MINUTES)
     }
 
     @Test
     fun `verifyCode should return true if code matches`() {
         val key = "company:010-1234-5678"
         val code = "1234"
-        val hash = twoFactorAuthenticationService.transformToHash(key)
 
         // Redis에서 값을 가져오도록 모킹
-        whenever(redisTemplate.opsForValue().get(hash)).thenReturn("1234")
+        whenever(redisTemplate.opsForValue().get(key)).thenReturn("1234")
 
         // verifyCode 메서드 실행
         val result = twoFactorAuthenticationService.verifyCode(key, code)
@@ -58,10 +56,9 @@ class RedisBaseTwoFactorAuthenticationServiceIT {
     fun `verifyCode should return false if code does not match`() {
         val key = "company:010-1234-5678"
         val code = "4321"
-        val hash = twoFactorAuthenticationService.transformToHash(key)
 
         // Redis에서 값을 가져오도록 모킹
-        whenever(redisTemplate.opsForValue().get(hash)).thenReturn("1234")
+        whenever(redisTemplate.opsForValue().get(key)).thenReturn("1234")
 
         // verifyCode 메서드 실행
         val result = twoFactorAuthenticationService.verifyCode(key, code)

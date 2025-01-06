@@ -13,16 +13,13 @@ class RedisBaseTwoFactorAuthenticationService(
 
     override fun issueCode(key: String) {
         logger.debug("Issue code for key: $key")
-
-        val hash = transformToHash(key)
-        redisTemplate.opsForValue().set(hash, "1234", 5, java.util.concurrent.TimeUnit.MINUTES) // 코드 만료 시간 5분 설정
+        redisTemplate.opsForValue().set(key, "1234", 5, java.util.concurrent.TimeUnit.MINUTES) // 코드 만료 시간 5분 설정
     }
 
     override fun verifyCode(key: String, code: String): Boolean {
         logger.debug("Verify code for key: $key, code: $code")
 
-        val hash = transformToHash(key)
-        val storedCode = redisTemplate.opsForValue().get(hash)
+        val storedCode = redisTemplate.opsForValue().get(key)
         return storedCode == code
     }
 }
