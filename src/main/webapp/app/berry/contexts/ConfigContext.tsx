@@ -7,6 +7,8 @@ import useLocalStorage from 'app/berry/hooks/useLocalStorage';
 // types
 import { PaletteMode } from '@mui/material';
 import { CustomizationProps } from 'app/berry/types/config';
+import { ICompany } from 'app/shared/model/company.model';
+import { IForm } from 'app/shared/model/form.model';
 
 // initial state
 const initialState: CustomizationProps = {
@@ -47,11 +49,9 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     presetColor: initialState.presetColor,
     locale: initialState.locale,
     rtlLayout: initialState.rtlLayout,
-    surveyInfo: {
-      company: {},
-      forms: [],
-    },
   });
+
+  const [surveyInfo, setSurveyInfo] = React.useState(initialState.surveyInfo);
 
   const onChangeLayout = (layout: string) => {
     setConfig({
@@ -123,17 +123,15 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     });
   };
 
-  const onChangeSurveyInfo = (surveyInfo: any) => {
-    setConfig({
-      ...config,
-      surveyInfo,
-    });
+  const onChangeSurveyInfo = (surveyInfo: { company: ICompany; forms: IForm[] }) => {
+    setSurveyInfo(surveyInfo);
   };
 
   return (
     <ConfigContext.Provider
       value={{
         ...config,
+        surveyInfo,
         onChangeLayout,
         onChangeDrawer,
         onChangeMenuType,
