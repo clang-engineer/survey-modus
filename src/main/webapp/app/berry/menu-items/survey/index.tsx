@@ -19,6 +19,7 @@ const survey = (company: ICompany, forms: IForm[]): NavItemType => {
       type: 'item',
       url: `/survey/companies/${company.id}/forms/${f.id}`,
       icon: IconDatabase,
+      breadcrumbs: false,
     };
   });
 
