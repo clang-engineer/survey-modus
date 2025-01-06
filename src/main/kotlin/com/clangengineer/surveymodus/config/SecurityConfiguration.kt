@@ -69,6 +69,7 @@ class SecurityConfiguration(
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(ADMIN)
+            .antMatchers("/api/two-factor-authentication/**").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/**").authenticated()
             .antMatchers("/management/health").permitAll()
