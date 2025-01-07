@@ -13,7 +13,12 @@ class RedisBaseTwoFactorAuthenticationService(
 
     override fun issueCode(key: String) {
         logger.debug("Issue code for key: $key")
-        redisTemplate.opsForValue().set(key, "1234", 5, java.util.concurrent.TimeUnit.MINUTES) // 코드 만료 시간 5분 설정
+        // 6자리 코드 생성
+        val code = (100000..999999).random().toString()
+
+        redisTemplate.opsForValue().set(key, code, 5, java.util.concurrent.TimeUnit.MINUTES) // 코드 만료 시간 5분 설정
+
+        // TODO: Send code to user
     }
 
     override fun verifyCode(key: String, code: String): Boolean {
