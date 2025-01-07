@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 class RedisBaseTwoFactorAuthenticationService(
     private val redisTemplate: org.springframework.data.redis.core.StringRedisTemplate
 ) : TwoFactorAuthenticationService {
-    val logger = org.slf4j.LoggerFactory.getLogger(RedisBaseTwoFactorAuthenticationService::class.java)
+    private final val logger = org.slf4j.LoggerFactory.getLogger(RedisBaseTwoFactorAuthenticationService::class.java)
 
     override fun issueCode(key: String) {
         logger.debug("Issue code for key: $key")
