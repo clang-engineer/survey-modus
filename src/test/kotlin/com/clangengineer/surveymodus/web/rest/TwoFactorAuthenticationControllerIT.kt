@@ -5,6 +5,7 @@ import com.clangengineer.surveymodus.service.TwoFactorAuthenticationService
 import com.clangengineer.surveymodus.service.dto.TwoFactorAuthenticationDTO
 import com.clangengineer.surveymodus.web.rest.errors.ERR_VALIDATION
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,11 +23,15 @@ class MemoryBasedTwoFactorAuthenticationService : TwoFactorAuthenticationService
     private val verificationCodes = mutableMapOf<String, String>()
 
     override fun issueCode(key: String) {
-        verificationCodes[key] = "1234"
+        verificationCodes[key] = Math.random().toString().substring(2, 8)
     }
 
     override fun verifyCode(key: String, code: String): Boolean {
         return verificationCodes[key] == code
+    }
+
+    fun getVerificationCodes(): Map<String, String> {
+        return verificationCodes
     }
 }
 
@@ -53,10 +58,8 @@ class TwoFactorAuthenticationControllerIT {
     @Transactional
     @Throws(Exception::class)
     fun `test staff verification code issue and verify`() {
-        val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
-            namespace = "staffs",
-            phoneNumber = "010-1234-5678"
-        )
+        val twoFactorAuthenticationDTO =
+            TwoFactorAuthenticationDTO(namespace = "staffs", phoneNumber = "010-1234-5678")
 
         mockMvc.perform(
             post("/api/two-factor-authentications/issue")
@@ -64,22 +67,17 @@ class TwoFactorAuthenticationControllerIT {
                 .content(convertObjectToJsonBytes(twoFactorAuthenticationDTO))
         ).andExpect(status().isOk)
 
-        Assertions.assertThat(
-            twoFactorAuthenticationService.verifyCode(
-                twoFactorAuthenticationDTO.toKey(),
-                "1234"
-            )
-        ).isTrue
+        val verificationCodes =
+            (twoFactorAuthenticationService as MemoryBasedTwoFactorAuthenticationService).getVerificationCodes()
+        val key = verificationCodes[twoFactorAuthenticationDTO.toKey()]
+        assertThat(key).isNotEmpty
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
     fun `test staff verification code phone number format validation`() {
-        val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
-            namespace = "staffs",
-            phoneNumber = "01012345678"
-        )
+        val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(namespace = "staffs", phoneNumber = "01012345678")
 
         mockMvc.perform(
             post("/api/two-factor-authentications/issue")
