@@ -4,6 +4,7 @@ import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.service.TwoFactorAuthenticationService
 import com.clangengineer.surveymodus.service.dto.TwoFactorAuthenticationDTO
 import com.clangengineer.surveymodus.web.rest.errors.ERR_VALIDATION
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -53,21 +54,22 @@ class TwoFactorAuthenticationControllerIT {
     @Throws(Exception::class)
     fun `test staff verification code issue and verify`() {
         val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
+            namespace = "staffs",
             phoneNumber = "010-1234-5678"
         )
 
         mockMvc.perform(
-            post("/api/two-factor-authentication/staff")
+            post("/api/two-factor-authentications/issue")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(twoFactorAuthenticationDTO))
         ).andExpect(status().isOk)
 
-        assertTrue(
+        Assertions.assertThat(
             twoFactorAuthenticationService.verifyCode(
                 twoFactorAuthenticationDTO.toKey(),
                 "1234"
             )
-        )
+        ).isTrue
     }
 
     @Test
@@ -75,15 +77,15 @@ class TwoFactorAuthenticationControllerIT {
     @Throws(Exception::class)
     fun `test staff verification code phone number format validation`() {
         val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
+            namespace = "staffs",
             phoneNumber = "01012345678"
         )
 
         mockMvc.perform(
-            post("/api/two-factor-authentication/staff")
+            post("/api/two-factor-authentications/issue")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(twoFactorAuthenticationDTO))
-        )
-            .andExpect(status().isBadRequest)
+        ).andExpect(status().isBadRequest)
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("\$.message").value(ERR_VALIDATION))
             .andExpect(jsonPath("\$.fieldErrors.[0].objectName").value("twoFactorAuthentication"))
