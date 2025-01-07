@@ -1,19 +1,17 @@
-version: '3.8'
+version: '3.9'
 
 services:
   redis:
     image: redis:latest
     container_name: redis
     ports:
-      - ':6379' # 호스트와 컨테이너 간 포트 연결
-    volumes:
-      - redis-data:/data # 데이터를 영속적으로 저장할 볼륨 설정
-    networks:
-      - redis-net
+      - '6379:6379'
 
-volumes:
-  redis-data: # Redis 데이터가 저장될 영속적 볼륨
-
-networks:
-  redis-net: # 네트워크 설정 (여러 컨테이너 간 통신 가능)
-    driver: bridge
+  redis-insight:
+    image: redis/redis-stack:latest
+    container_name: redis-insight
+    ports:
+      - '8001:8001'
+    environment:
+      - HTTP_PORT=8001
+      - REDIS_URI=redis://redis:6379
