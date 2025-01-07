@@ -3,6 +3,7 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.service.TwoFactorAuthenticationService
 import com.clangengineer.surveymodus.service.dto.TwoFactorAuthenticationDTO
+import com.clangengineer.surveymodus.web.rest.errors.ERR_VALIDATION
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -50,8 +51,7 @@ class TwoFactorAuthenticationControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testStaffVerificationCodeIssue() {
-
+    fun `test staff verification code issue and verify`() {
         val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
             phoneNumber = "010-1234-5678"
         )
@@ -62,6 +62,32 @@ class TwoFactorAuthenticationControllerIT {
                 .content(convertObjectToJsonBytes(twoFactorAuthenticationDTO))
         ).andExpect(status().isOk)
 
-        assertTrue(twoFactorAuthenticationService.verifyCode(twoFactorAuthenticationDTO.toKey(), "1234"))
+        assertTrue(
+            twoFactorAuthenticationService.verifyCode(
+                twoFactorAuthenticationDTO.toKey(),
+                "1234"
+            )
+        )
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun `test staff verification code phone number format validation`() {
+        val twoFactorAuthenticationDTO = TwoFactorAuthenticationDTO(
+            phoneNumber = "01012345678"
+        )
+
+        mockMvc.perform(
+            post("/api/two-factor-authentication/staff")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(twoFactorAuthenticationDTO))
+        )
+            .andExpect(status().isBadRequest)
+            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+            .andExpect(jsonPath("\$.message").value(ERR_VALIDATION))
+            .andExpect(jsonPath("\$.fieldErrors.[0].objectName").value("twoFactorAuthentication"))
+            .andExpect(jsonPath("\$.fieldErrors.[0].field").value("phoneNumber"))
+            .andExpect(jsonPath("\$.fieldErrors.[0].message").value("전화번호는 01x-XXX(XX)-XXXX 형식이어야 합니다."))
     }
 }
