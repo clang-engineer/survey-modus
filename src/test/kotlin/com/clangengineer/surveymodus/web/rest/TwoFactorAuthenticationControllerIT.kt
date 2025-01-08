@@ -4,7 +4,6 @@ import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.service.TwoFactorAuthenticationService
 import com.clangengineer.surveymodus.service.dto.TwoFactorAuthenticationDTO
 import com.clangengineer.surveymodus.web.rest.errors.ERR_VALIDATION
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
