@@ -68,7 +68,7 @@ const SurveyRouter = () => {
           <Typography variant="h4">Survey Router</Typography>
         </Grid>
         {companies
-          .filter(c => c)
+          .filter(c => c && c.activated)
           .sort((a, b) => a.orderNo - b.orderNo)
           .map((company, index) => (
             <Grid
