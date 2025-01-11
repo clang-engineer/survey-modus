@@ -13,6 +13,7 @@ import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-upda
 
 interface IWizardListToolbarProps {
   items: any[];
+  title: JSX.Element;
   onSyncListClick: () => void;
   onModalOpenClick: () => void;
   onAddNewClick: () => void;
@@ -36,9 +37,7 @@ const WizardListToolbar = (props: IWizardListToolbarProps) => {
         borderRadius: config.borderRadius,
       }}
     >
-      <Typography variant="h4">
-        <Translate contentKey="surveyModusApp.form.home.title">Forms</Translate>
-      </Typography>
+      {props.title}
       <ButtonGroup variant="text" aria-label="text button group" size="small">
         <AnimateButton>
           <Button

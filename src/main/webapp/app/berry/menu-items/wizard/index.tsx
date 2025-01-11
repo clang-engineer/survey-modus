@@ -21,6 +21,7 @@ const wizard: NavItemType = {
       icon: IconSitemap,
       type: 'item',
       url: '/wizard/company',
+      breadcrumbs: false,
     },
     {
       id: 'wizard-group',

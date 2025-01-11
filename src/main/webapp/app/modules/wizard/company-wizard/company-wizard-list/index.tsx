@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from 'app/entities/company/company.reducer';
-import { Alert, Box, Button, Grid } from '@mui/material';
+import { Alert, Grid, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import CheckIcon from '@mui/icons-material/Check';
 import CompanyGridContainer from 'app/modules/wizard/company-wizard/company-wizard-list/company-grid-container';
+import WizardListToolbar from 'app/modules/wizard/component/wizard-list-title';
+import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
 
 const CompanyWizardList = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,8 @@ const CompanyWizardList = () => {
   const user = useAppSelector(state => state.authentication.account);
   const companyList = useAppSelector(state => state.company.entities);
   const loading = useAppSelector(state => state.company.loading);
+
+  const wizardListUpdateModalRef = React.useRef(null);
 
   useEffect(() => {
     getAllEntities();
@@ -38,23 +41,22 @@ const CompanyWizardList = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} id="company-heading" data-cy="CompanyHeading">
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
-          <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveyModusApp.company.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-            onClick={() => navigate('/wizard/company/new')}
-          >
-            <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveyModusApp.company.home.createLabel">Create new Company</Translate>
-          </Button>
-        </Box>
+        <WizardListToolbar
+          title={
+            <Typography variant="h4">
+              <Translate contentKey="surveyModusApp.company.home.title">Companies</Translate>
+            </Typography>
+          }
+          items={companyList}
+          onSyncListClick={getAllEntities}
+          onModalOpenClick={() => {
+            wizardListUpdateModalRef.current?.open();
+          }}
+          onAddNewClick={() => {
+            navigate('/wizard/company/new');
+          }}
+          loading={loading}
+        />
       </Grid>
       <Grid item xs={12} container spacing={gridSpacing - 1}>
         {companyList && companyList.length > 0 ? (
@@ -67,6 +69,13 @@ const CompanyWizardList = () => {
           </Grid>
         )}
       </Grid>
+      <WizardListUpdateModal
+        ref={wizardListUpdateModalRef}
+        items={companyList}
+        onSave={items => {
+          // dispatch(createAndUpdateEntities(items));
+        }}
+      />
     </Grid>
   );
 };
