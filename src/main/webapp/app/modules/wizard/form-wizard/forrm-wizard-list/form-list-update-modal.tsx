@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ButtonGroup, Dialog, DialogActions, DialogContent, IconButton, Button } from '@mui/material';
+import { Box, Button, ButtonGroup, Dialog, DialogActions, DialogContent, Switch, Typography } from '@mui/material';
 import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
 
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -8,13 +8,20 @@ import { reorder } from 'app/shared/util/dnd-utils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const grid = 8;
+import { useTheme } from '@mui/material/styles';
+import useConfig from 'app/berry/hooks/useConfig';
 
 const FormListUpdateModal = React.forwardRef((props, ref) => {
   React.useImperativeHandle(ref, () => ({
     open: handleOpen,
     close: handleClose,
   }));
+
+  const theme = useTheme();
+
+  const { borderRadius } = useConfig();
+
+  const dndGap = 10;
 
   const [open, setOpen] = React.useState(false);
 
@@ -40,22 +47,26 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
     if (!event.destination) {
       return;
     }
-    const newItems = reorder(items, source.index, destination.index);
+    const newItems = reorder(localItems, source.index, destination.index);
     setLocalItems(newItems);
   };
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-      <DialogContent>
+      <DialogContent
+        style={{
+          padding: 0,
+        }}
+      >
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="form-droppable">
             {(provided, snapshot) => (
-              <div
+              <Box
                 ref={provided.innerRef}
                 style={{
-                  background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                  padding: grid,
-                  width: 250,
+                  background: snapshot.isDraggingOver ? theme.palette.grey[200] : theme.palette.background.default,
+                  padding: dndGap,
+                  width: 500,
                   minHeight: 500,
                 }}
                 {...provided.droppableProps}
@@ -63,27 +74,48 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
                 {localItems.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                     {(provided, snapshot) => (
-                      <div
+                      <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         style={{
                           userSelect: 'none',
-                          padding: grid,
-                          margin: `0 0 ${grid}px 0`,
+                          padding: dndGap,
+                          margin: `0 0 ${dndGap}px 0`,
                           minHeight: '50px',
-                          backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
-                          color: 'white',
+                          backgroundColor: snapshot.isDragging ? theme.palette.grey[300] : theme.palette.grey[100],
+                          border: '1px solid #ccc',
+                          borderRadius: borderRadius,
                           ...provided.draggableProps.style,
                         }}
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        sx={{
+                          '.MuiTypography-root': {
+                            color: item.activated ? theme.palette.text.primary : theme.palette.text.disabled,
+                            textDecoration: item.activated ? 'none' : 'line-through',
+                          },
+                        }}
                       >
-                        {item.title}
-                      </div>
+                        <Typography variant="h6">{item.title}</Typography>
+                        <Switch
+                          size="small"
+                          checked={item.activated}
+                          onChange={e => {
+                            const data = { ...localItems[index] };
+                            data.activated = e.target.checked;
+
+                            setLocalItems([...localItems.slice(0, index), data, ...localItems.slice(index + 1)]);
+                          }}
+                          name="activated"
+                        />
+                      </Box>
                     )}
                   </Draggable>
                 ))}
                 {provided.placeholder}
-              </div>
+              </Box>
             )}
           </Droppable>
         </DragDropContext>
@@ -93,7 +125,6 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
           <Button
             onClick={() => {
               setLocalItems(items);
-              handleClose();
             }}
           >
             <FontAwesomeIcon icon="undo" />
