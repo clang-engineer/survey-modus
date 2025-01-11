@@ -29,7 +29,7 @@ const FormWizardList = () => {
   }, []);
 
   useEffect(() => {
-    setItems(formList);
+    setItems(formList.filter(f => f).sort((a, b) => a.orderNo - b.orderNo));
   }, [formList]);
 
   const getAllEntities = () => {

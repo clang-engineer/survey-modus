@@ -18,6 +18,9 @@
             <column name="activated" type="boolean">
                 <constraints nullable="true"/>
             </column>
+            <column name="order_no" type="int">
+                <constraints nullable="true"/>
+            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -51,6 +54,7 @@
             <column name="title" type="string"/>
             <column name="description" type="string"/>
             <column name="activated" type="boolean"/>
+            <column name="order_no" type="numeric"/>
             <column name="user_id" type="numeric"/>
             <column name="category_id" type="numeric"/>
         </loadData>

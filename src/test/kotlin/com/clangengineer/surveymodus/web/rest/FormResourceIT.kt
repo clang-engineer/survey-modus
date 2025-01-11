@@ -66,6 +66,7 @@ class FormResourceIT {
         assertThat(testForm.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testForm.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testForm.activated).isEqualTo(DEFAULT_ACTIVATED)
+        assertThat(testForm.orderNo).isEqualTo(DEFAULT_ORDER_NO)
     }
 
     @Test
@@ -120,6 +121,7 @@ class FormResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
     }
 
     @Test
@@ -138,6 +140,7 @@ class FormResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
     }
 
     @Test
@@ -331,6 +334,7 @@ class FormResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
 
         restFormMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -372,6 +376,7 @@ class FormResourceIT {
         updatedForm.title = UPDATED_TITLE
         updatedForm.description = UPDATED_DESCRIPTION
         updatedForm.activated = UPDATED_ACTIVATED
+        updatedForm.orderNo = UPDATED_ORDER_NO
         val formDTO = formMapper.toDto(updatedForm)
 
         restFormMockMvc.perform(
@@ -386,6 +391,7 @@ class FormResourceIT {
         assertThat(testForm.title).isEqualTo(UPDATED_TITLE)
         assertThat(testForm.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testForm.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testForm.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Test
@@ -460,6 +466,7 @@ class FormResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            orderNo = UPDATED_ORDER_NO
         }
 
         restFormMockMvc.perform(
@@ -475,6 +482,7 @@ class FormResourceIT {
         assertThat(testForm.title).isEqualTo(UPDATED_TITLE)
         assertThat(testForm.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testForm.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testForm.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Test
@@ -505,6 +513,7 @@ class FormResourceIT {
         assertThat(testForm.title).isEqualTo(UPDATED_TITLE)
         assertThat(testForm.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testForm.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testForm.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Throws(Exception::class)
@@ -591,6 +600,9 @@ class FormResourceIT {
         private const val DEFAULT_ACTIVATED: Boolean = false
         private const val UPDATED_ACTIVATED: Boolean = true
 
+        private const val DEFAULT_ORDER_NO: Int = 1
+        private const val UPDATED_ORDER_NO: Int = 1
+
         private val DEFAULT_TYPE: level = level.EASY
         private val UPDATED_TYPE: level = level.NORMAL
 
@@ -606,6 +618,7 @@ class FormResourceIT {
                 title = DEFAULT_TITLE,
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
+                orderNo = DEFAULT_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)
@@ -627,6 +640,7 @@ class FormResourceIT {
                 title = UPDATED_TITLE,
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
+                orderNo = UPDATED_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)

@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useTheme } from '@mui/material/styles';
 import useConfig from 'app/berry/hooks/useConfig';
+import { useAppDispatch } from 'app/config/store';
+import { createAndUpdateEntities } from 'app/entities/form/form.reducer';
 
 const FormListUpdateModal = React.forwardRef((props, ref) => {
   React.useImperativeHandle(ref, () => ({
@@ -17,6 +19,7 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
     close: handleClose,
   }));
 
+  const dispatch = useAppDispatch();
   const theme = useTheme();
 
   const { borderRadius } = useConfig();
@@ -131,8 +134,14 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
           </Button>
           <Button
             onClick={() => {
-              setItems(localItems);
-              handleClose();
+              const reordered = localItems.map((item, index) => {
+                return {
+                  ...item,
+                  orderNo: index,
+                };
+              });
+
+              dispatch(createAndUpdateEntities(reordered));
             }}
           >
             <FontAwesomeIcon icon="save" />
