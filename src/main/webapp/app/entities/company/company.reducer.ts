@@ -4,6 +4,7 @@ import { createAsyncThunk, isFulfilled, isPending } from '@reduxjs/toolkit';
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { createEntitySlice, EntityState, IQueryParams, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { defaultValue, ICompany } from 'app/shared/model/company.model';
+import { IField } from 'app/shared/model/field.model';
 
 const initialState: EntityState<ICompany> = {
   loading: false,
@@ -75,6 +76,14 @@ export const deleteEntity = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const createAndUpdateEntities = createAsyncThunk(
+  'company/create_and_update_entity',
+  (entities: ICompany[], thunkAPI) => {
+    return axios.put<ICompany[]>(`${apiUrl}/all`, [...entities.map(entity => cleanEntity(entity))]);
+  },
+  { serializeError: serializeAxiosError }
+);
+
 // slice
 
 export const CompanySlice = createEntitySlice({
@@ -107,12 +116,18 @@ export const CompanySlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = action.payload.data;
       })
+      .addMatcher(isFulfilled(createAndUpdateEntities), (state, action) => {
+        state.updating = false;
+        state.loading = false;
+        state.updateSuccess = true;
+        state.entities = action.payload.data;
+      })
       .addMatcher(isPending(getEntities, getEntity), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;
       })
-      .addMatcher(isPending(createEntity, updateEntity, partialUpdateEntity, deleteEntity), state => {
+      .addMatcher(isPending(createEntity, updateEntity, partialUpdateEntity, deleteEntity, createAndUpdateEntities), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.updating = true;

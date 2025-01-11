@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities } from 'app/entities/company/company.reducer';
+import { createAndUpdateEntities, getEntities } from 'app/entities/company/company.reducer';
 import { Alert, Grid, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import CheckIcon from '@mui/icons-material/Check';
@@ -73,7 +73,7 @@ const CompanyWizardList = () => {
         ref={wizardListUpdateModalRef}
         items={companyList}
         onSave={items => {
-          // dispatch(createAndUpdateEntities(items));
+          dispatch(createAndUpdateEntities(items));
         }}
       />
     </Grid>
