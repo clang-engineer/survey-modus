@@ -9,6 +9,7 @@ import { IconFolders } from '@tabler/icons';
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from 'app/config/store';
 import CompanyFormTooltipContent from 'app/modules/wizard/company-wizard/component/company-form-tootip-content';
+import WizardStyledGrid from 'app/modules/wizard/component/wizard-styled-grid';
 
 const slotProps = {
   tooltip: {
@@ -32,7 +33,7 @@ const CompanyGridContainer = () => {
         .filter(f => f)
         .sort((a, b) => a.orderNo - b.orderNo)
         .map((company, i) => (
-          <Grid item xs={12} md={6} xl={4} key={i}>
+          <WizardStyledGrid item xs={12} md={6} xl={4} key={i} activated={company.activated}>
             <SubCard title={<CompanySubcardTitle company={company} />}>
               <Grid container spacing={gridSpacing}>
                 <Grid item xs={12} marginBottom={2}>
@@ -58,7 +59,7 @@ const CompanyGridContainer = () => {
                 </Grid>
               </Grid>
             </SubCard>
-          </Grid>
+          </WizardStyledGrid>
         ))}
     </Grid>
   );

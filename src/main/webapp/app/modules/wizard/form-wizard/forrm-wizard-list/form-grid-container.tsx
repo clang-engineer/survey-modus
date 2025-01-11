@@ -8,6 +8,7 @@ import { IconBook } from '@tabler/icons';
 
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from 'app/config/store';
+import WizardStyledGrid from 'app/modules/wizard/component/wizard-styled-grid';
 
 const slotProps = {
   tooltip: {
@@ -31,19 +32,7 @@ const FormGridContainer = () => {
         .filter(f => f)
         .sort((a, b) => a.orderNo - b.orderNo)
         .map((form, i) => (
-          <Grid
-            item
-            xs={12}
-            md={6}
-            xl={4}
-            key={i}
-            sx={{
-              '& .MuiTypography-root, & svg': {
-                color: form.activated ? theme.palette.text.primary : theme.palette.error.main,
-                textDecoration: form.activated ? 'none' : 'line-through',
-              },
-            }}
-          >
+          <WizardStyledGrid item xs={12} md={6} xl={4} key={i} activated={form.activated}>
             <SubCard title={<FormSubcardTitle form={form} />}>
               <Grid container spacing={gridSpacing}>
                 <Grid item xs={12} marginBottom={2}>
@@ -74,7 +63,7 @@ const FormGridContainer = () => {
                 </Grid>
               </Grid>
             </SubCard>
-          </Grid>
+          </WizardStyledGrid>
         ))}
     </Grid>
   );
