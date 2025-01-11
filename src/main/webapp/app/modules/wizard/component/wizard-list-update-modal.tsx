@@ -13,13 +13,19 @@ import useConfig from 'app/berry/hooks/useConfig';
 import { useAppDispatch } from 'app/config/store';
 import { createAndUpdateEntities } from 'app/entities/form/form.reducer';
 
-const FormListUpdateModal = React.forwardRef((props, ref) => {
+interface IWizardListUpdateModalProps {
+  items: any[];
+  onSave: (items: any[]) => void;
+}
+
+const WizardListUpdateModal = React.forwardRef((props: IWizardListUpdateModalProps, ref) => {
   React.useImperativeHandle(ref, () => ({
     open: handleOpen,
     close: handleClose,
   }));
 
-  const dispatch = useAppDispatch();
+  const { items } = props;
+
   const theme = useTheme();
 
   const { borderRadius } = useConfig();
@@ -29,8 +35,6 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
   const [open, setOpen] = React.useState(false);
 
   const [localItems, setLocalItems] = useState([]);
-
-  const { items, setItems } = useFormWizardConfig();
 
   React.useEffect(() => {
     setLocalItems(items);
@@ -141,7 +145,7 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
                 };
               });
 
-              dispatch(createAndUpdateEntities(reordered));
+              props.onSave(reordered);
             }}
           >
             <FontAwesomeIcon icon="save" />
@@ -152,4 +156,4 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
   );
 });
 
-export default FormListUpdateModal;
+export default WizardListUpdateModal;

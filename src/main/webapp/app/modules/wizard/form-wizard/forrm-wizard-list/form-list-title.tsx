@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
 import useConfig from 'app/berry/hooks/useConfig';
-import { getEntities } from 'app/entities/form/form.reducer';
+import { createAndUpdateEntities, getEntities } from 'app/entities/form/form.reducer';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
-import FormListUpdateModal from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-list-update-modal';
+import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
 
 const FormWizardListToolbar = () => {
   const config = useConfig();
@@ -22,6 +22,7 @@ const FormWizardListToolbar = () => {
 
   const loading = useAppSelector(state => state.form.loading);
   const user = useAppSelector(state => state.authentication.account);
+  const formList = useAppSelector(state => state.form.entities);
 
   const handleSyncList = () => {
     dispatch(
@@ -69,7 +70,13 @@ const FormWizardListToolbar = () => {
           </Button>
         </AnimateButton>
       </ButtonGroup>
-      <FormListUpdateModal ref={formListUpdateModalRef} />
+      <WizardListUpdateModal
+        ref={formListUpdateModalRef}
+        items={formList}
+        onSave={items => {
+          dispatch(createAndUpdateEntities(items));
+        }}
+      />
     </Box>
   );
 };
