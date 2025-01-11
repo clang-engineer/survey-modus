@@ -29,6 +29,7 @@ const wizard: NavItemType = {
       icon: IconUsers,
       type: 'item',
       url: '/wizard/group',
+      breadcrumbs: false,
     },
   ],
 };

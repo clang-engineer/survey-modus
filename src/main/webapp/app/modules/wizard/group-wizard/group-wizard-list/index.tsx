@@ -1,34 +1,25 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities } from 'app/entities/group/group.reducer';
-import { Alert, Box, Button, Grid } from '@mui/material';
+import { createAndUpdateEntities, getEntities } from 'app/entities/group/group.reducer';
+import { Alert, Grid, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
-import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import GroupWizardGridContainer from 'app/modules/wizard/group-wizard/group-wizard-list/group-wizard-grid-container';
+import WizardListToolbar from 'app/modules/wizard/component/wizard-list-title';
+import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
 
-const slotProps = {
-  tooltip: {
-    sx: {
-      color: '#514E6A',
-      backgroundColor: '#ffff',
-      padding: '10px',
-      boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.08)',
-    },
-  },
-};
 const GroupWizardList = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const user = useAppSelector(state => state.authentication.account);
   const groupList = useAppSelector(state => state.group.entities);
   const loading = useAppSelector(state => state.group.loading);
+
+  const wizardListUpdateModalRef = React.useRef(null);
 
   useEffect(() => {
     getAllEntities();
@@ -50,23 +41,22 @@ const GroupWizardList = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} id="group-heading" data-cy="GroupHeading">
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
-          <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveyModusApp.group.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-            onClick={() => navigate('/wizard/group/new')}
-          >
-            <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveyModusApp.group.home.createLabel">Create new Group</Translate>
-          </Button>
-        </Box>
+        <WizardListToolbar
+          title={
+            <Typography variant="h4">
+              <Translate contentKey="surveyModusApp.group.home.title">Groups</Translate>
+            </Typography>
+          }
+          items={groupList}
+          onSyncListClick={getAllEntities}
+          onModalOpenClick={() => {
+            wizardListUpdateModalRef.current?.open();
+          }}
+          onAddNewClick={() => {
+            navigate('/wizard/form/new');
+          }}
+          loading={loading}
+        />
       </Grid>
       <Grid item xs={12} container spacing={gridSpacing - 1}>
         {groupList && groupList.length > 0 ? (
@@ -79,6 +69,13 @@ const GroupWizardList = () => {
           </Grid>
         )}
       </Grid>
+      <WizardListUpdateModal
+        ref={wizardListUpdateModalRef}
+        items={groupList}
+        onSave={items => {
+          dispatch(createAndUpdateEntities(items));
+        }}
+      />
     </Grid>
   );
 };
