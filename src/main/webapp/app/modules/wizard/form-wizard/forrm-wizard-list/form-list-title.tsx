@@ -55,7 +55,7 @@ const FormWizardListToolbar = () => {
             }}
             disabled={loading}
           >
-            <FontAwesomeIcon icon="align-left" />
+            <FontAwesomeIcon icon="cog" />
           </Button>
         </AnimateButton>
         <AnimateButton>

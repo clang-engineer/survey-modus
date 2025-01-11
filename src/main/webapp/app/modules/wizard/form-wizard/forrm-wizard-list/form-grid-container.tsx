@@ -7,6 +7,8 @@ import FormSubcardTitle from 'app/modules/wizard/form-wizard/forrm-wizard-list/f
 import { IconBook } from '@tabler/icons';
 import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
 
+import { useTheme } from '@mui/material/styles';
+
 const slotProps = {
   tooltip: {
     sx: {
@@ -19,12 +21,25 @@ const slotProps = {
 };
 
 const FormGridContainer = () => {
+  const theme = useTheme();
   const { items, setItems } = useFormWizardConfig();
 
   return (
     <Grid item xs={12} container spacing={gridSpacing - 1}>
       {items.map((form, i) => (
-        <Grid item xs={12} md={6} xl={4} key={i}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          xl={4}
+          key={i}
+          sx={{
+            '& .MuiTypography-root, & svg': {
+              color: form.activated ? theme.palette.text.primary : theme.palette.error.main,
+              textDecoration: form.activated ? 'none' : 'line-through',
+            },
+          }}
+        >
           <SubCard title={<FormSubcardTitle form={form} />}>
             <Grid container spacing={gridSpacing}>
               <Grid item xs={12} marginBottom={2}>
