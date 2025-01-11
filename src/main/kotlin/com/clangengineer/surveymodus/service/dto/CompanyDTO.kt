@@ -17,6 +17,8 @@ data class CompanyDTO(
 
     var activated: Boolean? = null,
 
+    var orderNo: Int? = null,
+
     var user: UserDTO? = null,
 
     var forms: MutableSet<FormDTO> = mutableSetOf(),

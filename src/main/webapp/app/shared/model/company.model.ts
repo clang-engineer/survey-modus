@@ -6,6 +6,7 @@ interface IStaff {
   name: string;
   phone: string;
   activated: boolean;
+  orderNo: number;
 }
 
 export interface ICompany {

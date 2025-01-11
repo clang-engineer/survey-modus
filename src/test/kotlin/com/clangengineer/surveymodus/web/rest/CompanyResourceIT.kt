@@ -68,6 +68,8 @@ class CompanyResourceIT {
         assertThat(testCompany.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testCompany.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testCompany.activated).isEqualTo(DEFAULT_ACTIVATED)
+        assertThat(testCompany.orderNo).isEqualTo(DEFAULT_ORDER_NO)
+
         assertThat(testCompany.user).isEqualTo(company.user)
         assertThat(testCompany.forms).isEqualTo(company.forms)
         assertThat(testCompany.staffs).isEqualTo(company.staffs)
@@ -128,6 +130,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
             .andExpect(jsonPath("$.[*].staffs[*].email").value(containsInAnyOrder(*expectedStaffEmails)))
     }
@@ -151,6 +154,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
             .andExpect(jsonPath("$.forms[*].id").value(containsInAnyOrder(*expectedFormIds)))
             .andExpect(jsonPath("$.staffs[*].email").value(containsInAnyOrder(*expectedStaffEmails)))
     }
@@ -345,6 +349,7 @@ class CompanyResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].forms[*].id").value(hasItem(company.forms.first().id?.toInt())))
             .andExpect(jsonPath("$.[*].staffs[*].email").value(hasItem(company.staffs.first().email)))
 
@@ -388,6 +393,7 @@ class CompanyResourceIT {
         updatedCompany.title = UPDATED_TITLE
         updatedCompany.description = UPDATED_DESCRIPTION
         updatedCompany.activated = UPDATED_ACTIVATED
+        updatedCompany.orderNo = UPDATED_ORDER_NO
         val companyDTO = companyMapper.toDto(updatedCompany)
 
         restCompanyMockMvc.perform(
@@ -402,6 +408,7 @@ class CompanyResourceIT {
         assertThat(testCompany.title).isEqualTo(UPDATED_TITLE)
         assertThat(testCompany.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testCompany.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testCompany.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Test
@@ -476,6 +483,7 @@ class CompanyResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            orderNo = UPDATED_ORDER_NO
         }
 
         restCompanyMockMvc.perform(
@@ -491,6 +499,7 @@ class CompanyResourceIT {
         assertThat(testCompany.title).isEqualTo(UPDATED_TITLE)
         assertThat(testCompany.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testCompany.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testCompany.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Test
@@ -506,6 +515,7 @@ class CompanyResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            orderNo = UPDATED_ORDER_NO
         }
 
         restCompanyMockMvc.perform(
@@ -521,6 +531,7 @@ class CompanyResourceIT {
         assertThat(testCompany.title).isEqualTo(UPDATED_TITLE)
         assertThat(testCompany.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testCompany.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testCompany.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Throws(Exception::class)
@@ -607,6 +618,9 @@ class CompanyResourceIT {
         private const val DEFAULT_ACTIVATED: Boolean = false
         private const val UPDATED_ACTIVATED: Boolean = true
 
+        private const val DEFAULT_ORDER_NO = 1
+        private const val UPDATED_ORDER_NO = 2
+
         private val DEFAULT_TYPE: level = level.EASY
         private val UPDATED_TYPE: level = level.NORMAL
 
@@ -622,6 +636,7 @@ class CompanyResourceIT {
                 title = DEFAULT_TITLE,
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
+                orderNo = DEFAULT_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)
@@ -643,6 +658,7 @@ class CompanyResourceIT {
                 title = UPDATED_TITLE,
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
+                orderNo = UPDATED_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)
