@@ -29,6 +29,9 @@ data class Group(
     @Column(name = "activated")
     var activated: Boolean? = null,
 
+    @Column(name = "order_no")
+    var orderNo: Int? = null,
+
 ) : Serializable {
     @ManyToOne(optional = false)
     @NotNull
