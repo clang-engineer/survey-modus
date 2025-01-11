@@ -72,4 +72,11 @@ class CompanyService(
 
         companyRepository.deleteById(id)
     }
+
+    fun saveAll(companyTOs: List<CompanyDTO>): List<CompanyDTO> {
+        log.debug("Request to save and update Companys : $companyTOs")
+
+        return companyRepository.saveAll(companyTOs.map(companyMapper::toEntity))
+            .map(companyMapper::toDto)
+    }
 }
