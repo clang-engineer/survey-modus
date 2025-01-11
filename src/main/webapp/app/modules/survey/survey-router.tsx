@@ -67,34 +67,40 @@ const SurveyRouter = () => {
           &nbsp;
           <Typography variant="h4">Survey Router</Typography>
         </Grid>
-        {companies.map((company, index) => (
-          <Grid
-            key={index}
-            item
-            xs={12}
-            // sm={6}
-            lg={4}
-            sx={{
-              '& .MuiCard-root': { minHeight: '300px' },
-            }}
-            onClick={() => {
-              navigateCompanyFirstForm(company);
-            }}
-          >
-            <SubCard
+        {companies
+          .filter(c => c)
+          .sort((a, b) => a.orderNo - b.orderNo)
+          .map((company, index) => (
+            <Grid
               key={index}
-              title={
-                <>
-                  <IconCircle size={'0.5rem'} fill={isAccessibleCompany(company) ? theme.palette.success.main : theme.palette.error.main} />
-                  &nbsp;
-                  {company.title}
-                </>
-              }
+              item
+              xs={12}
+              // sm={6}
+              lg={4}
+              sx={{
+                '& .MuiCard-root': { minHeight: '300px' },
+              }}
+              onClick={() => {
+                navigateCompanyFirstForm(company);
+              }}
             >
-              <p>{company.description}</p>
-            </SubCard>
-          </Grid>
-        ))}
+              <SubCard
+                key={index}
+                title={
+                  <>
+                    <IconCircle
+                      size={'0.5rem'}
+                      fill={isAccessibleCompany(company) ? theme.palette.success.main : theme.palette.error.main}
+                    />
+                    &nbsp;
+                    {company.title}
+                  </>
+                }
+              >
+                <p>{company.description}</p>
+              </SubCard>
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );

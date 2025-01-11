@@ -12,15 +12,17 @@ const survey = (company: ICompany, forms: IForm[]): NavItemType => {
     children: [],
   };
 
-  const children: NavItemType[] = forms.map(f => {
-    return {
-      id: `form-${f.id}`,
-      title: f.title,
-      type: 'item',
-      url: `/survey/companies/${company.id}/forms/${f.id}`,
-      icon: IconDatabase,
-    };
-  });
+  const children: NavItemType[] = forms
+    .filter(f => f.activated)
+    .map(f => {
+      return {
+        id: `form-${f.id}`,
+        title: f.title,
+        type: 'item',
+        url: `/survey/companies/${company.id}/forms/${f.id}`,
+        icon: IconDatabase,
+      };
+    });
 
   return {
     ...group,
