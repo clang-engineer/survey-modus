@@ -45,8 +45,8 @@ const FormGridContainer = () => {
                     <CustomWidthTooltip
                       title={
                         <>
-                          {form.category.title} <br />
-                          {form.category.description}
+                          {form.category?.title} <br />
+                          {form.category?.description}
                         </>
                       }
                       sx={{ fontSize: '30' }}
@@ -57,7 +57,7 @@ const FormGridContainer = () => {
                       </IconButton>
                     </CustomWidthTooltip>
                     <Typography variant="caption" color="text.primary">
-                      {form.category.title}
+                      {form.category?.title}
                     </Typography>
                   </Box>
                 </Grid>
