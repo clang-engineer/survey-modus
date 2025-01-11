@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { Box, Button, ButtonGroup, Dialog, DialogActions, DialogContent, Switch, Typography } from '@mui/material';
-import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
 
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { reorder } from 'app/shared/util/dnd-utils';
@@ -10,8 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useTheme } from '@mui/material/styles';
 import useConfig from 'app/berry/hooks/useConfig';
-import { useAppDispatch } from 'app/config/store';
-import { createAndUpdateEntities } from 'app/entities/form/form.reducer';
 
 interface IWizardListUpdateModalProps {
   items: any[];
@@ -37,7 +34,7 @@ const WizardListUpdateModal = React.forwardRef((props: IWizardListUpdateModalPro
   const [localItems, setLocalItems] = useState([]);
 
   React.useEffect(() => {
-    setLocalItems(items);
+    setLocalItems(items.filter(f => f).sort((a, b) => a.orderNo - b.orderNo));
   }, [items]);
 
   const handleClose = () => {

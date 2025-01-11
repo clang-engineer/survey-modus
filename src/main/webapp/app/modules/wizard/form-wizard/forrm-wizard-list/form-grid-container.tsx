@@ -5,9 +5,9 @@ import { gridSpacing } from 'app/berry/store/constant';
 import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
 import FormSubcardTitle from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-subcard-title';
 import { IconBook } from '@tabler/icons';
-import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
 
 import { useTheme } from '@mui/material/styles';
+import { useAppSelector } from 'app/config/store';
 
 const slotProps = {
   tooltip: {
@@ -22,56 +22,60 @@ const slotProps = {
 
 const FormGridContainer = () => {
   const theme = useTheme();
-  const { items, setItems } = useFormWizardConfig();
+
+  const formList = useAppSelector(state => state.form.entities);
 
   return (
     <Grid item xs={12} container spacing={gridSpacing - 1}>
-      {items.map((form, i) => (
-        <Grid
-          item
-          xs={12}
-          md={6}
-          xl={4}
-          key={i}
-          sx={{
-            '& .MuiTypography-root, & svg': {
-              color: form.activated ? theme.palette.text.primary : theme.palette.error.main,
-              textDecoration: form.activated ? 'none' : 'line-through',
-            },
-          }}
-        >
-          <SubCard title={<FormSubcardTitle form={form} />}>
-            <Grid container spacing={gridSpacing}>
-              <Grid item xs={12} marginBottom={2}>
-                <Typography variant="body1" color="text.primary">
-                  {form.description}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                <Box display="flex" alignItems="center">
-                  <CustomWidthTooltip
-                    title={
-                      <>
-                        {form.category.title} <br />
-                        {form.category.description}
-                      </>
-                    }
-                    sx={{ fontSize: '30' }}
-                    slotProps={slotProps}
-                  >
-                    <IconButton>
-                      <IconBook size={'15px'} strokeWidth={1.2} />
-                    </IconButton>
-                  </CustomWidthTooltip>
-                  <Typography variant="caption" color="text.primary">
-                    {form.category.title}
+      {formList
+        .filter(f => f)
+        .sort((a, b) => a.orderNo - b.orderNo)
+        .map((form, i) => (
+          <Grid
+            item
+            xs={12}
+            md={6}
+            xl={4}
+            key={i}
+            sx={{
+              '& .MuiTypography-root, & svg': {
+                color: form.activated ? theme.palette.text.primary : theme.palette.error.main,
+                textDecoration: form.activated ? 'none' : 'line-through',
+              },
+            }}
+          >
+            <SubCard title={<FormSubcardTitle form={form} />}>
+              <Grid container spacing={gridSpacing}>
+                <Grid item xs={12} marginBottom={2}>
+                  <Typography variant="body1" color="text.primary">
+                    {form.description}
                   </Typography>
-                </Box>
+                </Grid>
+                <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
+                  <Box display="flex" alignItems="center">
+                    <CustomWidthTooltip
+                      title={
+                        <>
+                          {form.category.title} <br />
+                          {form.category.description}
+                        </>
+                      }
+                      sx={{ fontSize: '30' }}
+                      slotProps={slotProps}
+                    >
+                      <IconButton>
+                        <IconBook size={'15px'} strokeWidth={1.2} />
+                      </IconButton>
+                    </CustomWidthTooltip>
+                    <Typography variant="caption" color="text.primary">
+                      {form.category.title}
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </SubCard>
-        </Grid>
-      ))}
+            </SubCard>
+          </Grid>
+        ))}
     </Grid>
   );
 };
