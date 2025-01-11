@@ -4,7 +4,16 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, { createEntity, deleteEntity, getEntities, getEntity, partialUpdateEntity, reset, updateEntity } from './group.reducer';
+import reducer, {
+  createEntity,
+  deleteEntity,
+  getEntities,
+  getEntity,
+  partialUpdateEntity,
+  reset,
+  updateEntity,
+  createAndUpdateEntities,
+} from './group.reducer';
 import { EntityState } from 'app/shared/reducers/reducer.utils';
 import { defaultValue, IGroup } from 'app/shared/model/group.model';
 
@@ -63,7 +72,13 @@ describe('Entities reducer tests', () => {
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [createEntity.pending.type, updateEntity.pending.type, partialUpdateEntity.pending.type, deleteEntity.pending.type],
+        [
+          createEntity.pending.type,
+          updateEntity.pending.type,
+          partialUpdateEntity.pending.type,
+          deleteEntity.pending.type,
+          createAndUpdateEntities.pending.type,
+        ],
         {},
         state => {
           expect(state).toMatchObject({
@@ -162,6 +177,21 @@ describe('Entities reducer tests', () => {
       expect(toTest).toMatchObject({
         updating: false,
         updateSuccess: true,
+      });
+    });
+
+    it('should create and update entities', () => {
+      const payload = { data: 'fake payload' };
+      expect(
+        reducer(undefined, {
+          type: createAndUpdateEntities.fulfilled.type,
+          payload,
+        })
+      ).toEqual({
+        ...initialState,
+        updating: false,
+        updateSuccess: true,
+        entities: payload.data,
       });
     });
   });
@@ -284,6 +314,21 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
+    it('dispatches CREATE_AND_UPDATE_POINT actions', async () => {
+      const expectedActions = [
+        {
+          type: createAndUpdateEntities.pending.type,
+        },
+        {
+          type: createAndUpdateEntities.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(createAndUpdateEntities([{ id: 456 }, { id: 789 }]));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
     it('dispatches RESET actions', async () => {
