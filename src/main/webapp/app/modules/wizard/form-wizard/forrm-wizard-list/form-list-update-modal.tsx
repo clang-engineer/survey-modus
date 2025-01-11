@@ -60,33 +60,33 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
       >
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="form-droppable">
-            {(provided, snapshot) => (
+            {(provided1, snapshot1) => (
               <Box
-                ref={provided.innerRef}
+                ref={provided1.innerRef}
                 style={{
-                  background: snapshot.isDraggingOver ? theme.palette.grey[200] : theme.palette.background.default,
+                  background: snapshot1.isDraggingOver ? theme.palette.grey[200] : theme.palette.background.default,
                   padding: dndGap,
                   width: 500,
                   minHeight: 500,
                 }}
-                {...provided.droppableProps}
+                {...provided1.droppableProps}
               >
                 {localItems.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
-                    {(provided, snapshot) => (
+                    {(provided2, snapshot2) => (
                       <Box
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        ref={provided2.innerRef}
+                        {...provided2.draggableProps}
+                        {...provided2.dragHandleProps}
                         style={{
                           userSelect: 'none',
                           padding: dndGap,
                           margin: `0 0 ${dndGap}px 0`,
                           minHeight: '50px',
-                          backgroundColor: snapshot.isDragging ? theme.palette.grey[300] : theme.palette.grey[100],
+                          backgroundColor: snapshot2.isDragging ? theme.palette.grey[300] : theme.palette.grey[100],
                           border: '1px solid #ccc',
-                          borderRadius: borderRadius,
-                          ...provided.draggableProps.style,
+                          borderRadius,
+                          ...provided2.draggableProps.style,
                         }}
                         display="flex"
                         justifyContent="space-between"
@@ -114,7 +114,7 @@ const FormListUpdateModal = React.forwardRef((props, ref) => {
                     )}
                   </Draggable>
                 ))}
-                {provided.placeholder}
+                {provided1.placeholder}
               </Box>
             )}
           </Droppable>
