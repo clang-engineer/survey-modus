@@ -72,4 +72,11 @@ class FormService(
 
         formRepository.deleteById(id)
     }
+
+    fun saveAll(formDTOs: List<FormDTO>): List<FormDTO> {
+        log.debug("Request to save and update Fields : $formDTOs")
+
+        return formRepository.saveAll(formDTOs.map(formMapper::toEntity))
+            .map(formMapper::toDto)
+    }
 }
