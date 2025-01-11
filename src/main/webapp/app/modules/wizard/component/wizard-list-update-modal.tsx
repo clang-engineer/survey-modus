@@ -34,8 +34,10 @@ const WizardListUpdateModal = React.forwardRef((props: IWizardListUpdateModalPro
   const [localItems, setLocalItems] = useState([]);
 
   React.useEffect(() => {
-    setLocalItems(items.filter(f => f).sort((a, b) => a.orderNo - b.orderNo));
-  }, [items]);
+    if (open) {
+      setLocalItems(items.filter(f => f).sort((a, b) => a.orderNo - b.orderNo));
+    }
+  }, [items, open]);
 
   const handleClose = () => {
     setOpen(false);
@@ -126,6 +128,20 @@ const WizardListUpdateModal = React.forwardRef((props: IWizardListUpdateModalPro
       </DialogContent>
       <DialogActions>
         <ButtonGroup size="small" variant="text" aria-label="text button group">
+          <Button>
+            <Switch
+              size="small"
+              checked={localItems.every(item => item.activated)}
+              onChange={e => {
+                if (e.target.checked) {
+                  setLocalItems(localItems.map(item => ({ ...item, activated: true })));
+                } else {
+                  setLocalItems(localItems.map(item => ({ ...item, activated: false })));
+                }
+              }}
+              name="all"
+            />
+          </Button>
           <Button
             onClick={() => {
               setLocalItems(items);
