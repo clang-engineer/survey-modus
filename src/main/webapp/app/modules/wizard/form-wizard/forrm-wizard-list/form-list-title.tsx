@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import useConfig from 'app/berry/hooks/useConfig';
 import { getEntities } from 'app/entities/form/form.reducer';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import FormListUpdateModal from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-list-update-modal';
 
 const FormWizardListToolbar = () => {
   const config = useConfig();
@@ -16,6 +17,8 @@ const FormWizardListToolbar = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const formListUpdateModalRef = React.useRef(null);
 
   const loading = useAppSelector(state => state.form.loading);
   const user = useAppSelector(state => state.authentication.account);
@@ -45,7 +48,13 @@ const FormWizardListToolbar = () => {
       </Typography>
       <ButtonGroup variant="text" aria-label="text button group" size="small">
         <AnimateButton>
-          <Button color="primary" onClick={() => {}} disabled={loading}>
+          <Button
+            color="primary"
+            onClick={() => {
+              formListUpdateModalRef.current?.open();
+            }}
+            disabled={loading}
+          >
             <FontAwesomeIcon icon="align-left" />
           </Button>
         </AnimateButton>
@@ -60,6 +69,7 @@ const FormWizardListToolbar = () => {
           </Button>
         </AnimateButton>
       </ButtonGroup>
+      <FormListUpdateModal ref={formListUpdateModalRef} />
     </Box>
   );
 };
