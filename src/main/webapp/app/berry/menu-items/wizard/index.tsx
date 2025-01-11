@@ -13,6 +13,7 @@ const wizard: NavItemType = {
       icon: IconSitemap,
       type: 'item',
       url: '/wizard/form',
+      breadcrumbs: false,
     },
     {
       id: 'wizard-company',

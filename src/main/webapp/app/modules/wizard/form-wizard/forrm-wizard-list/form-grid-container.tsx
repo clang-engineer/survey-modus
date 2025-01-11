@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import React from 'react';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 import { gridSpacing } from 'app/berry/store/constant';
 import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
-import { useAppSelector } from 'app/config/store';
 import FormSubcardTitle from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-subcard-title';
 import { IconBook } from '@tabler/icons';
+import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
 
 const slotProps = {
   tooltip: {
@@ -20,46 +19,44 @@ const slotProps = {
 };
 
 const FormGridContainer = () => {
-  const formList = useAppSelector(state => state.form.entities);
+  const { items, setItems } = useFormWizardConfig();
 
   return (
     <Grid item xs={12} container spacing={gridSpacing - 1}>
-      {formList && formList.length > 0
-        ? formList.map((form, i) => (
-            <Grid item xs={12} md={6} xl={4} key={i}>
-              <SubCard title={<FormSubcardTitle form={form} />}>
-                <Grid container spacing={gridSpacing}>
-                  <Grid item xs={12} marginBottom={2}>
-                    <Typography variant="body1" color="text.primary">
-                      {form.description}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                    <Box display="flex" alignItems="center">
-                      <CustomWidthTooltip
-                        title={
-                          <>
-                            {form.category.title} <br />
-                            {form.category.description}
-                          </>
-                        }
-                        sx={{ fontSize: '30' }}
-                        slotProps={slotProps}
-                      >
-                        <IconButton>
-                          <IconBook size={'15px'} strokeWidth={1.2} />
-                        </IconButton>
-                      </CustomWidthTooltip>
-                      <Typography variant="caption" color="text.primary">
-                        {form.category.title}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </SubCard>
+      {items.map((form, i) => (
+        <Grid item xs={12} md={6} xl={4} key={i}>
+          <SubCard title={<FormSubcardTitle form={form} />}>
+            <Grid container spacing={gridSpacing}>
+              <Grid item xs={12} marginBottom={2}>
+                <Typography variant="body1" color="text.primary">
+                  {form.description}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
+                <Box display="flex" alignItems="center">
+                  <CustomWidthTooltip
+                    title={
+                      <>
+                        {form.category.title} <br />
+                        {form.category.description}
+                      </>
+                    }
+                    sx={{ fontSize: '30' }}
+                    slotProps={slotProps}
+                  >
+                    <IconButton>
+                      <IconBook size={'15px'} strokeWidth={1.2} />
+                    </IconButton>
+                  </CustomWidthTooltip>
+                  <Typography variant="caption" color="text.primary">
+                    {form.category.title}
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-          ))
-        : null}
+          </SubCard>
+        </Grid>
+      ))}
     </Grid>
   );
 };

@@ -4,23 +4,33 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from 'app/entities/form/form.reducer';
-import { Alert, Box, Button, Grid } from '@mui/material';
+import { Alert, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import CheckIcon from '@mui/icons-material/Check';
 import FormGridContainer from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-grid-container';
+import useFormWizardConfig from 'app/modules/wizard/form-wizard/form-wizard.config';
+
+import { IconAlignBoxLeftTop } from '@tabler/icons';
+
+import { useTheme } from '@mui/material/styles';
+import useConfig from 'app/berry/hooks/useConfig';
+import FormWizardListToolbar from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-list-title';
 
 const FormWizardList = () => {
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
+  const { setItems } = useFormWizardConfig();
 
   const user = useAppSelector(state => state.authentication.account);
   const formList = useAppSelector(state => state.form.entities);
-  const loading = useAppSelector(state => state.form.loading);
 
   useEffect(() => {
     getAllEntities();
   }, []);
+
+  useEffect(() => {
+    setItems(formList);
+  }, [formList]);
 
   const getAllEntities = () => {
     dispatch(
@@ -31,30 +41,10 @@ const FormWizardList = () => {
     );
   };
 
-  const handleSyncList = () => {
-    getAllEntities();
-  };
-
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} id="form-heading" data-cy="GroupHeading">
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
-          <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
-            <Translate contentKey="surveyModusApp.form.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-            onClick={() => navigate('/wizard/form/new')}
-          >
-            <FontAwesomeIcon icon="plus" /> &nbsp;
-            <Translate contentKey="surveyModusApp.form.home.createLabel">Create new Group</Translate>
-          </Button>
-        </Box>
+        <FormWizardListToolbar />
       </Grid>
       <Grid item xs={12}>
         {formList && formList.length > 0 ? (
