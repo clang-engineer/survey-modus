@@ -12,8 +12,8 @@ import { IconBuildingStore, IconPencil, IconTrash, IconUsers } from '@tabler/ico
 import { useTheme } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import { CustomWidthTooltip } from 'app/shared/component/custom-toolip';
-import GroupUserTooltipContent from 'app/modules/wizard/group-wizard/component/group-user-tootip-content';
-import GroupCompaniesTooltipContent from 'app/modules/wizard/group-wizard/component/group-companies-tooltip-content';
+import GroupUserTooltipContent from 'app/modules/wizard/group-wizard/group-wizard-list/group-user-tootip-content';
+import GroupCompaniesTooltipContent from 'app/modules/wizard/group-wizard/group-wizard-list/group-companies-tooltip-content';
 
 const slotProps = {
   tooltip: {
