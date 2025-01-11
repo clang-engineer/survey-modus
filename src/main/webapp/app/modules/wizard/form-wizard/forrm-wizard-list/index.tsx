@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react';
 import { Translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities } from 'app/entities/form/form.reducer';
+import { createAndUpdateEntities, getEntities } from 'app/entities/form/form.reducer';
 import { Alert, Grid } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import CheckIcon from '@mui/icons-material/Check';
 import FormGridContainer from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-grid-container';
-import FormWizardListToolbar from 'app/modules/wizard/form-wizard/forrm-wizard-list/form-list-title';
+import WizardListToolbar from 'app/modules/wizard/component/wizard-list-title';
+import { useNavigate } from 'react-router-dom';
+import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
 
 const FormWizardList = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const user = useAppSelector(state => state.authentication.account);
   const formList = useAppSelector(state => state.form.entities);
+  const loading = useAppSelector(state => state.form.loading);
+
+  const wizardListUpdateModalRef = React.useRef(null);
 
   useEffect(() => {
     getAllEntities();
@@ -30,7 +36,17 @@ const FormWizardList = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} id="form-heading" data-cy="GroupHeading">
-        <FormWizardListToolbar />
+        <WizardListToolbar
+          items={formList}
+          onSyncListClick={getAllEntities}
+          onModalOpenClick={() => {
+            wizardListUpdateModalRef.current?.open();
+          }}
+          onAddNewClick={() => {
+            navigate('/wizard/form/new');
+          }}
+          loading={loading}
+        />
       </Grid>
       <Grid item xs={12}>
         {formList && formList.length > 0 ? (
@@ -43,6 +59,13 @@ const FormWizardList = () => {
           </Grid>
         )}
       </Grid>
+      <WizardListUpdateModal
+        ref={wizardListUpdateModalRef}
+        items={formList}
+        onSave={items => {
+          dispatch(createAndUpdateEntities(items));
+        }}
+      />
     </Grid>
   );
 };

@@ -11,27 +11,19 @@ import { createAndUpdateEntities, getEntities } from 'app/entities/form/form.red
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
 
-const FormWizardListToolbar = () => {
+interface IWizardListToolbarProps {
+  items: any[];
+  onSyncListClick: () => void;
+  onModalOpenClick: () => void;
+  onAddNewClick: () => void;
+  loading: boolean;
+}
+
+const WizardListToolbar = (props: IWizardListToolbarProps) => {
   const config = useConfig();
   const theme = useTheme();
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const formListUpdateModalRef = React.useRef(null);
-
-  const loading = useAppSelector(state => state.form.loading);
-  const user = useAppSelector(state => state.authentication.account);
-  const formList = useAppSelector(state => state.form.entities);
-
-  const handleSyncList = () => {
-    dispatch(
-      getEntities({
-        sort: 'id,desc',
-        query: `userId.equals=${user.id}`,
-      })
-    );
-  };
+  const { loading } = props;
 
   return (
     <Box
@@ -52,7 +44,7 @@ const FormWizardListToolbar = () => {
           <Button
             color="primary"
             onClick={() => {
-              formListUpdateModalRef.current?.open();
+              props.onModalOpenClick();
             }}
             disabled={loading}
           >
@@ -60,25 +52,18 @@ const FormWizardListToolbar = () => {
           </Button>
         </AnimateButton>
         <AnimateButton>
-          <Button color="secondary" onClick={handleSyncList} disabled={loading}>
+          <Button color="secondary" onClick={() => props.onSyncListClick()} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />
           </Button>
         </AnimateButton>
         <AnimateButton>
-          <Button color="info" onClick={() => navigate('/wizard/form/new')}>
+          <Button color="info" onClick={() => props.onAddNewClick()}>
             <FontAwesomeIcon icon="plus" />
           </Button>
         </AnimateButton>
       </ButtonGroup>
-      <WizardListUpdateModal
-        ref={formListUpdateModalRef}
-        items={formList}
-        onSave={items => {
-          dispatch(createAndUpdateEntities(items));
-        }}
-      />
     </Box>
   );
 };
 
-export default FormWizardListToolbar;
+export default WizardListToolbar;
