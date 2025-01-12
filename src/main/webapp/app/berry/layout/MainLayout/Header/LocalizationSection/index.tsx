@@ -22,6 +22,10 @@ import Transitions from 'app/berry/ui-component/extended/Transitions';
 // assets
 import TranslateTwoToneIcon from '@mui/icons-material/TranslateTwoTone';
 import useConfig from 'app/berry/hooks/useConfig';
+import { languages, locales } from 'app/config/translation';
+import { setLocale } from 'app/shared/reducers/locale';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { Storage, Translate } from 'react-jhipster';
 
 // ==============================|| LOCALIZATION ||============================== //
 
@@ -29,19 +33,27 @@ const LocalizationSection = () => {
   const { borderRadius, locale, onChangeLocale } = useConfig();
 
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<any>(null);
-  const [language, setLanguage] = useState<string>(locale);
+  const currentLocale = useAppSelector(state => state.locale.currentLocale);
 
-  const handleListItemClick = (
+  // const handleListItemClick = (
+  //   event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
+  //   lng: string
+  // ) => {
+  //   setLanguage(lng);
+  //   onChangeLocale(lng);
+  //   setOpen(false);
+  // };
+  const handleLocaleChange = (
     event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
     lng: string
   ) => {
-    setLanguage(lng);
-    onChangeLocale(lng);
-    setOpen(false);
+    Storage.session.set('locale', lng);
+    dispatch(setLocale(lng));
   };
 
   const handleToggle = () => {
@@ -62,10 +74,6 @@ const LocalizationSection = () => {
     }
     prevOpen.current = open;
   }, [open]);
-
-  useEffect(() => {
-    setLanguage(locale);
-  }, [locale]);
 
   return (
     <>
@@ -100,12 +108,18 @@ const LocalizationSection = () => {
           onClick={handleToggle}
           color="inherit"
         >
-          {language !== 'en' && (
+          {currentLocale === 'en' && <TranslateTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
+          {currentLocale !== 'en' && (
             <Typography variant="h5" sx={{ textTransform: 'uppercase' }} color="inherit">
-              {language}
+              {currentLocale}
             </Typography>
           )}
-          {language === 'en' && <TranslateTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
+          {/*{language !== 'en' && (*/}
+          {/*  <Typography variant="h5" sx={{textTransform: 'uppercase'}} color="inherit">*/}
+          {/*    {language}*/}
+          {/*  </Typography>*/}
+          {/*)}*/}
+          {/*{language === 'en' && <TranslateTwoToneIcon sx={{fontSize: '1.3rem'}}/>}*/}
         </Avatar>
       </Box>
 
@@ -143,54 +157,20 @@ const LocalizationSection = () => {
                       },
                     }}
                   >
-                    <ListItemButton selected={language === 'en'} onClick={event => handleListItemClick(event, 'en')}>
-                      <ListItemText
-                        primary={
-                          <Grid container>
-                            <Typography color="textPrimary">English</Typography>
-                            <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (UK)
-                            </Typography>
-                          </Grid>
-                        }
-                      />
-                    </ListItemButton>
-                    <ListItemButton selected={language === 'fr'} onClick={event => handleListItemClick(event, 'fr')}>
-                      <ListItemText
-                        primary={
-                          <Grid container>
-                            <Typography color="textPrimary">français</Typography>
-                            <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (French)
-                            </Typography>
-                          </Grid>
-                        }
-                      />
-                    </ListItemButton>
-                    <ListItemButton selected={language === 'ro'} onClick={event => handleListItemClick(event, 'ro')}>
-                      <ListItemText
-                        primary={
-                          <Grid container>
-                            <Typography color="textPrimary">Română</Typography>
-                            <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (Romanian)
-                            </Typography>
-                          </Grid>
-                        }
-                      />
-                    </ListItemButton>
-                    <ListItemButton selected={language === 'zh'} onClick={event => handleListItemClick(event, 'zh')}>
-                      <ListItemText
-                        primary={
-                          <Grid container>
-                            <Typography color="textPrimary">中国人</Typography>
-                            <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                              (Chinese)
-                            </Typography>
-                          </Grid>
-                        }
-                      />
-                    </ListItemButton>
+                    {locales.map(locale => (
+                      <ListItemButton key={locale} selected={locale === currentLocale} onClick={event => handleLocaleChange(event, locale)}>
+                        <ListItemText
+                          primary={
+                            <Grid container>
+                              <Typography color="textPrimary">{languages[locale].name}</Typography>
+                              <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
+                                {languages[locale].name}
+                              </Typography>
+                            </Grid>
+                          }
+                        />
+                      </ListItemButton>
+                    ))}
                   </List>
                 )}
               </Paper>
