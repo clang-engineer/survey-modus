@@ -28,7 +28,14 @@ const MenuList = () => {
   const authorities = useAppSelector(state => state.authentication.account.authorities);
 
   const { surveyInfo } = useConfig();
-  const menuItem = React.useMemo(() => CustomNavItems({ authorities, surveyInfo }), [authorities, surveyInfo]);
+  const menuItem = React.useMemo(
+    () =>
+      CustomNavItems({
+        authorities,
+        surveyInfo,
+      }),
+    [authorities, surveyInfo]
+  );
 
   useEffect(() => {
     handlerMenuItem();
@@ -64,20 +71,26 @@ const MenuList = () => {
     }));
   }
 
-  const navItems = menuItem.items.slice(0, lastItemIndex + 1).map(item => {
-    switch (item.type) {
-      case 'group':
-        return <NavGroup key={item.id} item={item} lastItem={lastItem!} remItems={remItems} lastItemId={lastItemId} />;
-      default:
-        return (
-          <Typography key={item.id} variant="h6" color="error" align="center">
-            Menu Items Error
-          </Typography>
-        );
-    }
-  });
+  const NavItems = () => {
+    return (
+      <>
+        {menuItem.items.slice(0, lastItemIndex + 1).map(item => {
+          switch (item.type) {
+            case 'group':
+              return <NavGroup key={item.id} item={item} lastItem={lastItem!} remItems={remItems} lastItemId={lastItemId} />;
+            default:
+              return (
+                <Typography key={item.id} variant="h6" color="error" align="center">
+                  Menu Items Error
+                </Typography>
+              );
+          }
+        })}
+      </>
+    );
+  };
 
-  return <>{navItems}</>;
+  return <NavItems />;
 };
 
 export default memo(MenuList);
