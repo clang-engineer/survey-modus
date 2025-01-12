@@ -9,41 +9,41 @@ const icons = {
 
 const entity: NavItemType[] = [
   {
-    id: 'entities',
+    id: '#entities',
     title: 'entities',
     type: 'collapse',
     icon: icons.IconSitemap,
     children: [
       {
-        id: 'category',
+        id: '#category',
         title: 'category',
         type: 'item',
         url: '/entities/category',
         breadcrumbs: true,
       },
       {
-        id: 'form',
+        id: '#form',
         title: 'form',
         type: 'item',
         url: '/entities/form',
         breadcrumbs: true,
       },
       {
-        id: 'field',
+        id: '#field',
         title: 'field',
         type: 'item',
         url: '/entities/field',
         breadcrumbs: true,
       },
       {
-        id: 'company',
+        id: '#company',
         title: 'company',
         type: 'item',
         url: '/entities/company',
         breadcrumbs: true,
       },
       {
-        id: 'group',
+        id: '#group',
         title: 'group',
         type: 'item',
         url: '/entities/group',

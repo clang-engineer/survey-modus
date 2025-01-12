@@ -6,7 +6,7 @@ import { IForm } from 'app/shared/model/form.model';
 
 const survey = (company: ICompany, forms: IForm[]): NavItemType => {
   const group = {
-    id: 'survey',
+    id: '#survey',
     title: 'Survey',
     type: 'group',
     children: [],
@@ -16,7 +16,7 @@ const survey = (company: ICompany, forms: IForm[]): NavItemType => {
     .filter(f => f.activated)
     .map(f => {
       return {
-        id: `form-${f.id}`,
+        id: `#form-${f.id}`,
         title: f.title,
         type: 'item',
         url: `/survey/companies/${company.id}/forms/${f.id}`,
