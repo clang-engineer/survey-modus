@@ -35,4 +35,5 @@
     <include file="config/liquibase/changelog/20241224000000_added_entity_FieldAttribute.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241226000000_added_entity_FieldDisplay.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241226000001_added_entity_FieldLookup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250115000000_added_entity_File.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
