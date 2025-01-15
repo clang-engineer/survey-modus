@@ -6,7 +6,8 @@ import { FormikProps } from 'formik';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
-import { IconX } from '@tabler/icons';
+import { IconX, IconTrash } from '@tabler/icons';
+import { uploadFilesToServer } from 'app/modules/survey-modal/component/file-uploader-utils';
 
 interface ISurveyModalTextFieldProps {
   field: IField;
@@ -17,19 +18,32 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setError(null); // 이전 에러 초기화
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      setError(null); // 이전 에러 초기화
 
-    if (files.length + acceptedFiles.length > 5) {
-      setError(`You can only upload up to ${5} files.`);
-      return;
-    }
+      if (files.length + acceptedFiles.length > 5) {
+        setError(`You can only upload up to ${5} files.`);
+        return;
+      }
 
-    setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+      try {
+        const response = await uploadFilesToServer(acceptedFiles);
 
-    const fileNameList = [...files, ...acceptedFiles].map(file => file.name).join(';');
-    props.formik.setFieldValue(`${props.field.id}`, fileNameList);
-  }, []);
+        if (response.status == 201) {
+          // 성공적으로 업로드된 파일 관리
+          setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+          const fileNameList = [...files, ...acceptedFiles].map(file => file.name).join(';');
+          props.formik.setFieldValue(`${props.field.id}`, fileNameList);
+        } else {
+          setError('File upload failed. Please try again.');
+        }
+      } catch (error) {
+        setError('File upload failed. Please try again.');
+      }
+    },
+    [files]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -87,13 +101,12 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         {files.map((file: File, index) => (
           <Box display="flex" alignItems="center" key={index}>
             <IconButton
-              color="error"
               size="small"
               onClick={() => {
                 setFiles(prevFiles => prevFiles.filter(prevFile => prevFile !== file));
               }}
             >
-              <IconX size={'1rem'} />
+              <IconTrash size={'12px'} />
             </IconButton>
             <Typography variant="body2">
               {file.name} - {file.size} bytes

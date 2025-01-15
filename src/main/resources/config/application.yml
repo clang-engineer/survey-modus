@@ -212,4 +212,4 @@ jhipster:
 
 application:
   storage:
-    path: .
+    path: doc/survey
