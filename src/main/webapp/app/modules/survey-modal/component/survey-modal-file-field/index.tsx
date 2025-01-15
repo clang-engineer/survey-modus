@@ -7,7 +7,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
 import { IconX, IconTrash } from '@tabler/icons';
-import { uploadFilesToServer } from 'app/modules/survey-modal/component/file-uploader-utils';
+import { uploadFilesToServer } from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
 
 interface ISurveyModalTextFieldProps {
   field: IField;
