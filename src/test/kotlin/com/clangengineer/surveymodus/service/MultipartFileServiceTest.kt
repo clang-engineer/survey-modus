@@ -1,5 +1,6 @@
 package com.clangengineer.surveymodus.service
 
+import com.clangengineer.surveymodus.service.dto.FileDTO
 import org.junit.jupiter.api.Test
 import org.springframework.mock.web.MockMultipartFile
 
@@ -9,6 +10,6 @@ class MultipartFileServiceTest {
         val mockMultipartFile = MockMultipartFile("file", "test.txt", "text/plain", "test data".toByteArray())
 
         val multipartFileService = MultipartFileService()
-        multipartFileService.saveMultipartFile(mockMultipartFile)
+        multipartFileService.saveMultipartFile(FileDTO(), mockMultipartFile)
     }
 }

@@ -27,9 +27,6 @@ data class File(
     @Column(name = "filepath")
     var filepath: String? = null,
 
-    @Column(name = "hash_key")
-    var hashKey: String? = null,
-
     @Column(name = "created_by")
     var createdBy: String? = null,
 
@@ -57,7 +54,6 @@ data class File(
             "id=$id" +
             ", filename='$filename'" +
             ", filepath='$filepath'" +
-            ", hashKey='$hashKey'" +
             "}"
     }
 

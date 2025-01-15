@@ -62,12 +62,6 @@ class FileQueryService(
                     buildStringSpecification(criteria.filepath, File_.filepath)
                 )
             }
-
-            if (criteria.hashKey != null) {
-                specification = specification.and(
-                    buildStringSpecification(criteria.hashKey, File_.hashKey)
-                )
-            }
         }
         return specification
     }

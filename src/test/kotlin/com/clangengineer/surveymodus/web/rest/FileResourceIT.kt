@@ -3,6 +3,7 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.File
 import com.clangengineer.surveymodus.repository.FileRepository
+import com.clangengineer.surveymodus.service.getSHA512
 import com.clangengineer.surveymodus.service.mapper.FileMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
@@ -12,15 +13,12 @@ import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
 import java.time.Instant
 import java.util.*
 import java.util.concurrent.atomic.AtomicLong
@@ -36,15 +34,6 @@ class FileResourceIT {
 
     @Autowired
     private lateinit var fileMapper: FileMapper
-
-    @Autowired
-    private lateinit var jacksonMessageConverter: MappingJackson2HttpMessageConverter
-
-    @Autowired
-    private lateinit var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
-
-    @Autowired
-    private lateinit var validator: Validator
 
     @Autowired
     private lateinit var em: EntityManager
@@ -79,7 +68,6 @@ class FileResourceIT {
 
         assertThat(testFile.filename).isEqualTo(DEFAULT_FILENAME)
         assertThat(testFile.filepath).isEqualTo(DEFAULT_FILEPATH)
-        assertThat(testFile.hashKey).isEqualTo(DEFAULT_HASH_KEY)
         assertThat(testFile.createdBy).isEqualTo(DEFAULT_CREATED_BY)
     }
 
@@ -135,7 +123,7 @@ class FileResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
             .andExpect(jsonPath("$.[*].filename").value(hasItem(DEFAULT_FILENAME)))
             .andExpect(jsonPath("$.[*].filepath").value(hasItem(DEFAULT_FILEPATH)))
-            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(DEFAULT_HASH_KEY)))
+            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
     }
 
     @Test
@@ -155,7 +143,7 @@ class FileResourceIT {
             .andExpect(jsonPath("$.id").value(file.id?.toInt()))
             .andExpect(jsonPath("$.filename").value(DEFAULT_FILENAME))
             .andExpect(jsonPath("$.filepath").value(DEFAULT_FILEPATH))
-            .andExpect(jsonPath("$.hashKey").value(DEFAULT_HASH_KEY))
+            .andExpect(jsonPath("$.hashKey").value(getSHA512(file.id.toString())))
     }
 
     @Test
@@ -274,36 +262,6 @@ class FileResourceIT {
         defaultFileShouldBeFound("filepath.doesNotContain=$UPDATED_FILEPATH")
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    fun getAllFilesByActivatedIsEqualToSomething() {
-        fileRepository.saveAndFlush(file)
-
-        defaultFileShouldBeFound("hashKey.equals=$DEFAULT_HASH_KEY")
-        defaultFileShouldNotBeFound("hashKey.equals=$UPDATED_HASH_KEY")
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    fun getAllFilesByActivatedIsInShouldWork() {
-        fileRepository.saveAndFlush(file)
-
-        defaultFileShouldBeFound("hashKey.in=$DEFAULT_HASH_KEY,$UPDATED_HASH_KEY")
-        defaultFileShouldNotBeFound("hashKey.in=$UPDATED_HASH_KEY")
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    fun getAllFilesByActivatedIsNullOrNotNull() {
-        fileRepository.saveAndFlush(file)
-
-        defaultFileShouldBeFound("hashKey.specified=true")
-        defaultFileShouldNotBeFound("hashKey.specified=false")
-    }
-
     @Throws(Exception::class)
     private fun defaultFileShouldBeFound(filter: String) {
         restFileMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc&$filter"))
@@ -312,7 +270,7 @@ class FileResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
             .andExpect(jsonPath("$.[*].filename").value(hasItem(DEFAULT_FILENAME)))
             .andExpect(jsonPath("$.[*].filepath").value(hasItem(DEFAULT_FILEPATH)))
-            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(DEFAULT_HASH_KEY)))
+            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
 
         restFileMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)
@@ -353,7 +311,6 @@ class FileResourceIT {
         em.detach(updatedFile)
         updatedFile.filename = UPDATED_FILENAME
         updatedFile.filepath = UPDATED_FILEPATH
-        updatedFile.hashKey = UPDATED_HASH_KEY
         updatedFile.createdBy = UPDATED_CREATED_BY
 
         val fileDTO = fileMapper.toDto(updatedFile)
@@ -370,7 +327,6 @@ class FileResourceIT {
         val testFile = fileList[fileList.size - 1]
         assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
         assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
-        assertThat(testFile.hashKey).isEqualTo(UPDATED_HASH_KEY)
     }
 
     @Test
@@ -441,7 +397,6 @@ class FileResourceIT {
             id = file.id
             filename = UPDATED_FILENAME
             filepath = UPDATED_FILEPATH
-            hashKey = UPDATED_HASH_KEY
         }
 
         restFileMockMvc.perform(
@@ -456,7 +411,6 @@ class FileResourceIT {
         val testFile = fileList.last()
         assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
         assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
-        assertThat(testFile.hashKey).isEqualTo(UPDATED_HASH_KEY)
     }
 
     @Test
@@ -471,7 +425,6 @@ class FileResourceIT {
             id = file.id
             filename = UPDATED_FILENAME
             filepath = UPDATED_FILEPATH
-            hashKey = UPDATED_HASH_KEY
         }
 
         restFileMockMvc.perform(
@@ -485,7 +438,6 @@ class FileResourceIT {
         val testFile = fileList.last()
         assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
         assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
-        assertThat(testFile.hashKey).isEqualTo(UPDATED_HASH_KEY)
     }
 
     @Throws(Exception::class)
@@ -571,11 +523,6 @@ class FileResourceIT {
         private const val UPDATED_FILEPATH =
             "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 
-        private const val DEFAULT_HASH_KEY =
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        private const val UPDATED_HASH_KEY =
-            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-
         private const val DEFAULT_CREATED_BY = "system"
         private const val UPDATED_CREATED_BY = "system"
 
@@ -594,7 +541,6 @@ class FileResourceIT {
             val file = File(
                 filename = DEFAULT_FILENAME,
                 filepath = DEFAULT_FILEPATH,
-                hashKey = DEFAULT_HASH_KEY,
                 createdBy = DEFAULT_CREATED_BY,
                 createdDate = Instant.now()
             )
@@ -607,7 +553,6 @@ class FileResourceIT {
             val file = File(
                 filename = UPDATED_FILENAME,
                 filepath = UPDATED_FILEPATH,
-                hashKey = UPDATED_HASH_KEY,
                 createdBy = DEFAULT_CREATED_BY,
                 createdDate = Instant.now()
             )

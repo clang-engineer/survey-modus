@@ -12,7 +12,8 @@ class MultipartFileService {
 
     fun saveMultipartFile(
         fileDTO: FileDTO,
-        multipartFile: MultipartFile) {
+        multipartFile: MultipartFile
+    ) {
         logger.info("Saving file: ${multipartFile.originalFilename}")
 
         val uploadPath = Paths.get("uploads") // 업로드 디렉터리
