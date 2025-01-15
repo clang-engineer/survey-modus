@@ -11,55 +11,55 @@ const icons = {
 
 const administration: NavItemType[] = [
   {
-    id: 'administration',
+    id: '#administration',
     title: 'administration',
     type: 'collapse',
     icon: icons.IconSitemap,
     children: [
       {
-        id: 'user-management',
+        id: '#administration-user-management',
         title: 'user-management',
         type: 'item',
         url: '/admin/user-management',
         breadcrumbs: true,
       },
       {
-        id: 'tracker',
+        id: '#administration-tracker',
         title: 'tracker',
         type: 'item',
         url: '/admin/tracker',
         breadcrumbs: true,
       },
       {
-        id: 'health',
+        id: '#administration-health',
         title: 'health',
         type: 'item',
         url: '/admin/health',
         breadcrumbs: true,
       },
       {
-        id: 'metrics',
+        id: '#administration-metrics',
         title: 'metrics',
         type: 'item',
         url: '/admin/metrics',
         breadcrumbs: true,
       },
       {
-        id: 'configuration',
+        id: '#configuration',
         title: 'configuration',
         type: 'item',
         url: '/admin/configuration',
         breadcrumbs: true,
       },
       {
-        id: 'logs',
+        id: '#logs',
         title: 'logs',
         type: 'item',
         url: '/admin/logs',
         breadcrumbs: true,
       },
       {
-        id: 'docs',
+        id: '#docs',
         title: 'docs',
         type: 'item',
         url: '/admin/docs',

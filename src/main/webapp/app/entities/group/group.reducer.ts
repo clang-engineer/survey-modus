@@ -75,6 +75,14 @@ export const deleteEntity = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const createAndUpdateEntities = createAsyncThunk(
+  'group/create_and_update_entity',
+  (entities: IGroup[], thunkAPI) => {
+    return axios.put<IGroup[]>(`${apiUrl}/all`, [...entities.map(entity => cleanEntity(entity))]);
+  },
+  { serializeError: serializeAxiosError }
+);
+
 // slice
 
 export const GroupSlice = createEntitySlice({
@@ -107,12 +115,18 @@ export const GroupSlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = action.payload.data;
       })
+      .addMatcher(isFulfilled(createAndUpdateEntities), (state, action) => {
+        state.updating = false;
+        state.loading = false;
+        state.updateSuccess = true;
+        state.entities = action.payload.data;
+      })
       .addMatcher(isPending(getEntities, getEntity), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;
       })
-      .addMatcher(isPending(createEntity, updateEntity, partialUpdateEntity, deleteEntity), state => {
+      .addMatcher(isPending(createEntity, updateEntity, partialUpdateEntity, deleteEntity, createAndUpdateEntities), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.updating = true;

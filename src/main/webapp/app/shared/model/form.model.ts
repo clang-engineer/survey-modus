@@ -6,6 +6,7 @@ export interface IForm {
   title?: string;
   description?: string | null;
   activated?: boolean | null;
+  orderNo?: number;
   user?: IUser;
   category?: ICategory;
 }

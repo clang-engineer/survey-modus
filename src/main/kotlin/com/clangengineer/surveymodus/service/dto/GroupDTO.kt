@@ -17,6 +17,8 @@ data class GroupDTO(
 
     var activated: Boolean? = null,
 
+    var orderNo: Int? = null,
+
     var user: UserDTO? = null,
 
     var users: MutableSet<UserDTO> = mutableSetOf(),

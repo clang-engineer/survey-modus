@@ -4,7 +4,6 @@ import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.Company
 import com.clangengineer.surveymodus.domain.Group
 import com.clangengineer.surveymodus.domain.User
-import com.clangengineer.surveymodus.domain.enumeration.level
 import com.clangengineer.surveymodus.repository.GroupRepository
 import com.clangengineer.surveymodus.service.mapper.GroupMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -68,6 +67,7 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testGroup.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(DEFAULT_ACTIVATED)
+        assertThat(testGroup.orderNo).isEqualTo(DEFAULT_ORDER_NO)
         assertThat(testGroup.user).isEqualTo(group.user)
         assertThat(testGroup.users).isEqualTo(group.users)
         assertThat(testGroup.companies).isEqualTo(group.companies)
@@ -128,6 +128,7 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].users[*].id").value(Matchers.containsInAnyOrder(*expectedUserIds)))
             .andExpect(jsonPath("$.[*].companies[*].id").value(Matchers.containsInAnyOrder(*expectedCompanyIds)))
     }
@@ -151,6 +152,7 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
+            .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
             .andExpect(jsonPath("$.user.id").value(group.user?.id?.toInt()))
             .andExpect(jsonPath("$.users[*].id").value(Matchers.containsInAnyOrder(*expectedUserIds)))
             .andExpect(jsonPath("$.companies[*].id").value(Matchers.containsInAnyOrder(*expectedCompanyIds)))
@@ -347,6 +349,7 @@ class GroupResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].user.id").value(hasItem(group.user?.id?.toInt())))
             .andExpect(jsonPath("$.[*].users[*].id").value(hasItem(group.users.first().id?.toInt())))
             .andExpect(jsonPath("$.[*].companies[*].id").value(hasItem(group.companies.first().id?.toInt())))
@@ -391,6 +394,7 @@ class GroupResourceIT {
         updatedGroup.title = UPDATED_TITLE
         updatedGroup.description = UPDATED_DESCRIPTION
         updatedGroup.activated = UPDATED_ACTIVATED
+        updatedGroup.orderNo = UPDATED_ORDER_NO
 
         val updatedUser = UserResourceIT.createEntity(em)
         em.persist(updatedUser)
@@ -417,6 +421,7 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(UPDATED_TITLE)
         assertThat(testGroup.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testGroup.orderNo).isEqualTo(UPDATED_ORDER_NO)
         assertThat(testGroup.user).isEqualTo(updatedUser)
         assertThat(testGroup.users).isEqualTo(updatedUsers)
         assertThat(testGroup.companies).isEqualTo(updatedCompanies)
@@ -495,6 +500,7 @@ class GroupResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            orderNo = UPDATED_ORDER_NO
         }
 
         restGroupMockMvc.perform(
@@ -510,6 +516,7 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(UPDATED_TITLE)
         assertThat(testGroup.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testGroup.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     // todo: fix this test
@@ -526,6 +533,7 @@ class GroupResourceIT {
             title = UPDATED_TITLE
             description = UPDATED_DESCRIPTION
             activated = UPDATED_ACTIVATED
+            orderNo = UPDATED_ORDER_NO
         }
 
         restGroupMockMvc.perform(
@@ -541,6 +549,7 @@ class GroupResourceIT {
         assertThat(testGroup.title).isEqualTo(UPDATED_TITLE)
         assertThat(testGroup.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testGroup.activated).isEqualTo(UPDATED_ACTIVATED)
+        assertThat(testGroup.orderNo).isEqualTo(UPDATED_ORDER_NO)
     }
 
     @Throws(Exception::class)
@@ -627,8 +636,8 @@ class GroupResourceIT {
         private const val DEFAULT_ACTIVATED: Boolean = false
         private const val UPDATED_ACTIVATED: Boolean = true
 
-        private val DEFAULT_TYPE: level = level.EASY
-        private val UPDATED_TYPE: level = level.NORMAL
+        private const val DEFAULT_ORDER_NO: Int = 1
+        private const val UPDATED_ORDER_NO: Int = 2
 
         private val ENTITY_API_URL: String = "/api/groups"
         private val ENTITY_API_URL_ID: String = ENTITY_API_URL + "/{id}"
@@ -642,6 +651,7 @@ class GroupResourceIT {
                 title = DEFAULT_TITLE,
                 description = DEFAULT_DESCRIPTION,
                 activated = DEFAULT_ACTIVATED,
+                orderNo = DEFAULT_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)
@@ -664,6 +674,7 @@ class GroupResourceIT {
                 title = UPDATED_TITLE,
                 description = UPDATED_DESCRIPTION,
                 activated = UPDATED_ACTIVATED,
+                orderNo = UPDATED_ORDER_NO
             )
 
             val user = UserResourceIT.createEntity(em)

@@ -72,4 +72,11 @@ class GroupService(
 
         groupRepository.deleteById(id)
     }
+
+    fun saveAll(groupDTOs: List<GroupDTO>): List<GroupDTO> {
+        log.debug("Request to save and update Groups : $groupDTOs")
+
+        return groupRepository.saveAll(groupDTOs.map(groupMapper::toEntity))
+            .map(groupMapper::toDto)
+    }
 }

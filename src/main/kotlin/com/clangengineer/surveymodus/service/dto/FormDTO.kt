@@ -17,6 +17,8 @@ data class FormDTO(
 
     var activated: Boolean? = null,
 
+    var orderNo: Int? = null,
+
     var user: UserDTO? = null,
 
     var category: CategoryDTO? = null

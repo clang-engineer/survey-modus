@@ -13,6 +13,7 @@ const wizard: NavItemType = {
       icon: IconSitemap,
       type: 'item',
       url: '/wizard/form',
+      breadcrumbs: false,
     },
     {
       id: 'wizard-company',
@@ -20,6 +21,7 @@ const wizard: NavItemType = {
       icon: IconSitemap,
       type: 'item',
       url: '/wizard/company',
+      breadcrumbs: false,
     },
     {
       id: 'wizard-group',
@@ -27,6 +29,7 @@ const wizard: NavItemType = {
       icon: IconUsers,
       type: 'item',
       url: '/wizard/group',
+      breadcrumbs: false,
     },
   ],
 };
