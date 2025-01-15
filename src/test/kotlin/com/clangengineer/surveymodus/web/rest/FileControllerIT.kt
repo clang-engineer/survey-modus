@@ -29,18 +29,24 @@ class FileControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun `test save entity and create multipart file on server`() {
+    fun `test save entity and create multipart files on server`() {
         val databaseSizeBeforeCreate = fileRepository.findAll().size
 
-        val mockMultipartFile = MockMultipartFile("multipartFile", "test.txt", "text/plain", "test data".toByteArray())
+        val list = mutableListOf<MockMultipartFile>()
+
+        for (i in 0..2) {
+            list.add(MockMultipartFile("multipartFiles", "test$i.txt", "text/plain", "test data".toByteArray()))
+        }
 
         mockMvc.perform(
             multipart("/api/files/upload")
-                .file(mockMultipartFile)
+                .file(list[0])
+                .file(list[1])
+                .file(list[2])
                 .contentType(MediaType.MULTIPART_FORM_DATA)
         ).andExpect(status().isCreated)
 
         val databaseSizeAfterCreate = fileRepository.findAll().size
-        assertThat(databaseSizeAfterCreate).isEqualTo(databaseSizeBeforeCreate + 1)
+        assertThat(databaseSizeAfterCreate).isEqualTo(databaseSizeBeforeCreate + 3)
     }
 }

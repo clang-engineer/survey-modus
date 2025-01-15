@@ -24,16 +24,18 @@ class FileController(
     private var applicationName: String? = null
 
     @PostMapping("/files/upload")
-    fun uploadFile(@RequestBody multipartFile: MultipartFile): ResponseEntity<FileDTO> {
+    fun uploadFile(
+        @RequestBody multipartFiles: List<MultipartFile>
+    ): ResponseEntity<List<FileDTO>> {
         log.debug("REST request to upload file")
 
-        val result = multipartFileService.createEntityAndSaveMultipartFile(multipartFile)
+        val result = multipartFileService.createEntityAndSaveMultipartFiles(multipartFiles)
 
-        return ResponseEntity.created(URI("/api/forms/updload?file=${multipartFile.originalFilename}"))
+        return ResponseEntity.created(URI("/api/forms/updload"))
             .headers(
                 HeaderUtil.createEntityCreationAlert(
                     applicationName, true,
-                    FileResource.ENTITY_NAME, multipartFile.originalFilename
+                    FileResource.ENTITY_NAME, result.size.toString()
                 )
             ).body(result)
     }
