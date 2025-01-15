@@ -1,12 +1,12 @@
-id;filename;filepath;encoded_filename;created_by;last_modified_by
-1;testfile1;testfile1.txt;encoded_filename1.txt;admin;admin
-2;testfile2;testfile2.txt;encoded_filename2.txt;admin;admin
-3;testfile3;testfile3.txt;encoded_filename3.txt;admin;admin
-4;testfile4;testfile4.txt;encoded_filename4.txt;admin;admin
-5;testfile5;testfile5.txt;encoded_filename5.txt;admin;admin
-6;testfile6;testfile6.txt;encoded_filename6.txt;admin;admin
-7;testfile7;testfile7.txt;encoded_filename7.txt;admin;admin
-8;testfile8;testfile8.txt;encoded_filename8.txt;admin;admin
-9;testfile9;testfile9.txt;encoded_filename9.txt;admin;admin
-10;testfile10;testfile10.txt;encoded_filename10.txt;admin;admin
+id;filename;filepath;hash_key;created_by;last_modified_by
+1;testfile1;testfile1.txt;hash_key1.txt;admin;admin
+2;testfile2;testfile2.txt;hash_key2.txt;admin;admin
+3;testfile3;testfile3.txt;hash_key3.txt;admin;admin
+4;testfile4;testfile4.txt;hash_key4.txt;admin;admin
+5;testfile5;testfile5.txt;hash_key5.txt;admin;admin
+6;testfile6;testfile6.txt;hash_key6.txt;admin;admin
+7;testfile7;testfile7.txt;hash_key7.txt;admin;admin
+8;testfile8;testfile8.txt;hash_key8.txt;admin;admin
+9;testfile9;testfile9.txt;hash_key9.txt;admin;admin
+10;testfile10;testfile10.txt;hash_key10.txt;admin;admin
 
