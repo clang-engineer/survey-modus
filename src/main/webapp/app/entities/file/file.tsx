@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { getSortState, JhiItemCount, JhiPagination, Translate } from 'react-jhipster';
+import { Link as BaseLink, useLocation, useNavigate } from 'react-router-dom';
+import { getSortState, JhiItemCount, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities } from './file.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Box, Button, Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import { IconArrowsSort, IconEye, IconPencil, IconTrash, IconRefresh } from '@tabler/icons';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 export const File = () => {
   const dispatch = useAppDispatch();
@@ -78,130 +82,137 @@ export const File = () => {
   };
 
   return (
-    <div>
-      <h2 id="file-heading" data-cy="FileHeading">
-        <Translate contentKey="surveyModusApp.file.home.title">Files</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+    <MainCard>
+      <Box id="file-heading" data-cy="FileHeading">
+        <Box display="flex" justifyContent="flex-end" alignItems="center">
+          <Button className="me-2" variant="contained" color="secondary" size="small" onClick={handleSyncList} disabled={loading}>
+            <FontAwesomeIcon icon="sync" spin={loading} /> &nbsp;
             <Translate contentKey="surveyModusApp.file.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/file/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+            onClick={() => navigate('/entities/file/new')}
+          >
+            <FontAwesomeIcon icon="plus" /> &nbsp;
             <Translate contentKey="surveyModusApp.file.home.createLabel">Create new File</Translate>
-          </Link>
-        </div>
-      </h2>
-      <div className="table-responsive">
-        {fileList && fileList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="surveyModusApp.file.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="surveyModusApp.file.title">Title</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="surveyModusApp.file.description">Description</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('activated')}>
-                  <Translate contentKey="surveyModusApp.file.activated">Activated</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('type')}>
-                  <Translate contentKey="surveyModusApp.file.type">Type</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="surveyModusApp.file.user">User</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {fileList.map((file, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`/entities/file/${file.id}`} color="link" size="sm">
-                      {file.id}
+          </Button>
+        </Box>
+      </Box>
+      {fileList && fileList.length > 0 ? (
+        <Table
+          sx={{
+            '& .MuiTableCell-head, & .MuiTableCell-body': {
+              textAlign: 'center',
+            },
+          }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell className="hand" onClick={sort('id')}>
+                <Translate contentKey="surveyModusApp.file.id">ID</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('filename')}>
+                <Translate contentKey="surveyModusApp.file.filename">filename</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('filepath')}>
+                <Translate contentKey="surveyModusApp.file.filepath">filepath</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell className="hand" onClick={sort('hashKey')}>
+                <Translate contentKey="surveyModusApp.file.hashKey">hashkey</Translate>
+                &nbsp; <IconArrowsSort size={'1rem'} />
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {fileList.map((file, i) => (
+              <TableRow key={`entity-${i}`} data-cy="entityTable">
+                <TableCell>
+                  <Link component={BaseLink} to={`/entities/file/${file.id}`}>
+                    {file.id}
+                  </Link>
+                </TableCell>
+                <TableCell>{file.filename}</TableCell>
+                <TableCell>{file.filepath}</TableCell>
+                <TableCell>{file.hashKey}</TableCell>
+                <TableCell className="text-end">
+                  <ButtonGroup size={'small'}>
+                    <Button data-cy="entityDetailsButton" color={'primary'} onClick={() => navigate(`/entities/file/${file.id}`)}>
+                      <IconEye size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.view">View</Translate>
+                      </Typography>
                     </Button>
-                  </td>
-                  <td>{file.title}</td>
-                  <td>{file.description}</td>
-                  <td>{file.activated ? 'true' : 'false'}</td>
-                  <td>
-                    <Translate contentKey={`surveyModusApp.level.${file.type}`} />
-                  </td>
-                  <td>{file.user ? file.user.login : ''}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/entities/file/${file.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/entities/file/${file.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/entities/file/${file.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="surveyModusApp.file.home.notFound">No Files found</Translate>
-            </div>
-          )
-        )}
-      </div>
+                    <Button
+                      data-cy="entityEditButton"
+                      color={'secondary'}
+                      onClick={() =>
+                        navigate(
+                          `/entities/file/${file.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                        )
+                      }
+                    >
+                      <IconPencil size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.edit">Edit</Translate>
+                      </Typography>
+                    </Button>
+                    <Button
+                      data-cy="entityDeleteButton"
+                      color={'error'}
+                      onClick={() =>
+                        navigate(
+                          `/entities/file/${file.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`
+                        )
+                      }
+                    >
+                      <IconTrash size={'1rem'} />{' '}
+                      <Typography variant={'subtitle2'} color={'inherit'}>
+                        <Translate contentKey="entity.action.delete">Delete</Translate>
+                      </Typography>
+                    </Button>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        !loading && (
+          <div className="alert alert-warning">
+            <Translate contentKey="surveyModusApp.file.home.notFound">No Files found</Translate>
+          </div>
+        )
+      )}
       {totalItems ? (
-        <div className={fileList && fileList.length > 0 ? '' : 'd-none'}>
-          <div className="justify-content-center d-flex">
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          className={`${(fileList && fileList.length > 0) ?? 'd-none'} mt-3`}
+        >
+          <Box display="flex" justifyContent="center" className="mt-2">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
-          </div>
-          <div className="justify-content-center d-flex">
-            <JhiPagination
-              activePage={paginationState.activePage}
-              onSelect={handlePagination}
-              maxButtons={5}
-              itemsPerPage={paginationState.itemsPerPage}
-              totalItems={totalItems}
+          </Box>
+          <Box display="flex" justifyContent="center" className="mt-2">
+            <Pagination
+              page={paginationState.activePage}
+              onChange={(e, page) => handlePagination(page)}
+              count={Math.ceil(totalItems / paginationState.itemsPerPage)}
             />
-          </div>
-        </div>
+          </Box>
+        </Box>
       ) : (
         ''
       )}
-    </div>
+    </MainCard>
   );
 };
 

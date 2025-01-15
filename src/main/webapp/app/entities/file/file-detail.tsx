@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './file.reducer';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
+import { Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
+import { gridSpacing } from 'app/berry/store/constant';
+import { IconArrowBack, IconPencil } from '@tabler/icons';
 
 export const FileDetail = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
 
@@ -18,62 +21,102 @@ export const FileDetail = () => {
 
   const fileEntity = useAppSelector(state => state.file.entity);
   return (
-    <Row>
-      <Col md="8">
-        <h2 data-cy="fileDetailsHeading">
-          <Translate contentKey="surveyModusApp.file.detail.title">File</Translate>
-        </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="id">
+    <MainCard
+      title={
+        <Typography variant="h4">
+          <Translate contentKey="surveyModusApp.file.detail.title">File</Translate> [<b>{fileEntity.id}</b>]
+        </Typography>
+      }
+    >
+      <Grid container spacing={gridSpacing}>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="global.field.id">ID</Translate>
-            </span>
-          </dt>
-          <dd>{fileEntity.id}</dd>
-          <dt>
-            <span id="title">
+            </Typography>
+            <Typography>{fileEntity.id}</Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.file.title">Title</Translate>
-            </span>
-          </dt>
-          <dd>{fileEntity.title}</dd>
-          <dt>
-            <span id="description">
+            </Typography>
+            <Typography> {fileEntity.title} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.file.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{fileEntity.description}</dd>
-          <dt>
-            <span id="activated">
+            </Typography>
+            <Typography> {fileEntity.description} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
               <Translate contentKey="surveyModusApp.file.activated">Activated</Translate>
-            </span>
-          </dt>
-          <dd>{fileEntity.activated ? 'true' : 'false'}</dd>
-          <dt>
-            <span id="type">
-              <Translate contentKey="surveyModusApp.file.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{fileEntity.type}</dd>
-          <dt>
-            <Translate contentKey="surveyModusApp.file.user">User</Translate>
-          </dt>
-          <dd>{fileEntity.user ? fileEntity.user.login : ''}</dd>
-        </dl>
-        <Button tag={Link} to="/file" replace color="info" data-cy="entityDetailsBackButton">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/entities/file/${fileEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
-      </Col>
-    </Row>
+            </Typography>
+            <Typography> {fileEntity.activated ? 'true' : 'false'} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="surveyModusApp.file.user">User</Translate>
+            </Typography>
+            <Typography> {fileEntity.user ? fileEntity.user.login : ''} </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="surveyModusApp.file.users">User List</Translate>
+            </Typography>
+            <Typography>
+              {fileEntity.users
+                ? fileEntity.users.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.login}</>
+                      {index === fileEntity.users.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h4">
+              <Translate contentKey="surveyModusApp.file.companies">Company List</Translate>
+            </Typography>
+            <Typography>
+              {fileEntity.companies
+                ? fileEntity.companies.map((val, index) => (
+                    <span key={val.id}>
+                      <>{val.title}</>
+                      {index === fileEntity.companies.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <ButtonGroup variant="contained" size="small">
+            <Button onClick={() => navigate('/entities/file')} data-cy="entityDetailsBackButton">
+              <IconArrowBack size={'1rem'} />
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </Button>
+            <Button onClick={() => navigate(`/entities/file/${fileEntity.id}/edit`)} color="secondary">
+              <IconPencil size={'1rem'} />
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </Button>
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    </MainCard>
   );
 };
 

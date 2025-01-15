@@ -2,20 +2,20 @@
   "surveyModusApp": {
     "file:": {
       "home": {
-        "title": "Points",
+        "title": "Files",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Point",
-        "createOrEditLabel": "Create or edit a Point",
-        "notFound": "No Points found"
+        "createLabel": "Create a new File",
+        "createOrEditLabel": "Create or edit a File",
+        "notFound": "No Files found"
       },
-      "created": "A new Point is created with identifier {{ param }}",
-      "updated": "A Point is updated with identifier {{ param }}",
-      "deleted": "A Point is deleted with identifier {{ param }}",
+      "created": "A new File is created with identifier {{ param }}",
+      "updated": "A File is updated with identifier {{ param }}",
+      "deleted": "A File is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Point {{ id }}?"
+        "question": "Are you sure you want to delete File {{ id }}?"
       },
       "detail": {
-        "title": "Point"
+        "title": "File"
       },
       "id": "ID",
       "filename": "Filename",

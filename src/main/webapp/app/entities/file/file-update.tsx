@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Translate, translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { createEntity, getEntity, reset, updateEntity } from './file.reducer';
 
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IFile } from 'app/shared/model/file.model';
-import { level } from 'app/shared/model/enumerations/level.model';
-import { getEntity, updateEntity, createEntity, reset } from './file.reducer';
+import { IconArrowBackUp, IconDeviceFloppy } from '@tabler/icons';
+
+import { Button, ButtonGroup, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
+import Loader from 'app/berry/ui-component/Loader';
+import { gridSpacing } from 'app/berry/store/constant';
+
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import MainCard from 'app/berry/ui-component/cards/MainCard';
 
 export const FileUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const users = useAppSelector(state => state.userManagement.users);
   const fileEntity = useAppSelector(state => state.file.entity);
   const loading = useAppSelector(state => state.file.loading);
   const updating = useAppSelector(state => state.file.updating);
   const updateSuccess = useAppSelector(state => state.file.updateSuccess);
-  const levelValues = Object.keys(level);
 
   const handleClose = () => {
     navigate('/entities/file' + location.search);
@@ -39,8 +38,6 @@ export const FileUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
-
-    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -49,11 +46,16 @@ export const FileUpdate = () => {
     }
   }, [updateSuccess]);
 
+  useEffect(() => {
+    if (!isNew) {
+      formik.setValues(fileEntity);
+    }
+  }, [fileEntity]);
+
   const saveEntity = values => {
     const entity = {
       ...fileEntity,
       ...values,
-      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -63,118 +65,113 @@ export const FileUpdate = () => {
     }
   };
 
-  const defaultValues = () =>
-    isNew
-      ? {}
-      : {
-          type: 'EASY',
-          ...fileEntity,
-          user: fileEntity?.user?.id,
-        };
+  const MainCardTitle = () => {
+    return (
+      <Typography variant="h4" id="surveyModusApp.file.home.createOrEditLabel" data-cy="FileCreateUpdateHeading" gutterBottom>
+        <Translate contentKey="surveyModusApp.file.home.createOrEditLabel">Create or edit a File </Translate> &nbsp;
+        {!isNew && `(ID: ${fileEntity.id})`}
+      </Typography>
+    );
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      id: null,
+      filename: '',
+      filepath: '',
+      hashKey: false,
+    },
+    validationSchema: yup.object({
+      id: yup.number().nullable(true),
+      filename: yup
+        .string()
+        .max(100, translate('entity.validation.maxlength', { max: 100 }))
+        .required(translate('entity.validation.required')),
+      filepath: yup.string(),
+      hashKey: yup.boolean().required(translate('entity.validation.hashKey')),
+    }),
+    onSubmit(values) {
+      saveEntity(values);
+    },
+  });
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="surveyModusApp.file.home.createOrEditLabel" data-cy="FileCreateUpdateHeading">
-            <Translate contentKey="surveyModusApp.file.home.createOrEditLabel">Create or edit a File</Translate>
-          </h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col md="8">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? (
-                <ValidatedField
-                  name="id"
-                  required
-                  readOnly
-                  id="file-id"
-                  label={translate('global.field.id')}
-                  validate={{ required: true }}
-                />
-              ) : null}
-              <ValidatedField
-                label={translate('surveyModusApp.file.title')}
-                id="file-title"
-                name="title"
-                data-cy="title"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  minLength: {
-                    value: 20,
-                    message: translate('entity.validation.minlength', { min: 20 }),
-                  },
-                  maxLength: {
-                    value: 100,
-                    message: translate('entity.validation.maxlength', { max: 100 }),
-                  },
-                }}
+    <MainCard title={<MainCardTitle />}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12}>
+            {!isNew ? (
+              <TextField
+                fullWidth
+                id="file-id"
+                name="id"
+                label={translate('global.field.id')}
+                value={fileEntity.id}
+                onChange={formik.handleChange}
+                disabled
+                variant="outlined"
               />
-              <ValidatedField
-                label={translate('surveyModusApp.file.description')}
-                id="file-description"
-                name="description"
-                data-cy="description"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('surveyModusApp.file.activated')}
-                id="file-activated"
-                name="activated"
-                data-cy="activated"
-                check
-                type="checkbox"
-              />
-              <ValidatedField label={translate('surveyModusApp.file.type')} id="file-type" name="type" data-cy="type" type="select">
-                {levelValues.map(l => (
-                  <option value={l} key={l}>
-                    {translate('surveyModusApp.level.' + l)}
-                  </option>
-                ))}
-              </ValidatedField>
-              <ValidatedField
-                id="file-user"
-                name="user"
-                data-cy="user"
-                label={translate('surveyModusApp.file.user')}
-                type="select"
-                required
-              >
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/file" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="file-filename"
+              name="filename"
+              label={translate('surveyModusApp.file.filename')}
+              value={formik.values.filename}
+              onChange={formik.handleChange}
+              error={formik.touched.filename && Boolean(formik.errors.filename)}
+              helperText={formik.touched.filename && formik.errors.filename}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="file-filepath"
+              name="filepath"
+              label={translate('surveyModusApp.file.filepath')}
+              value={formik.values.filepath}
+              onChange={formik.handleChange}
+              error={formik.touched.filepath && Boolean(formik.errors.filepath)}
+              helperText={formik.touched.filepath && formik.errors.filepath}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="file-hashKey"
+              name="hashKey"
+              label={translate('surveyModusApp.file.hashKey')}
+              value={formik.values.hashKey}
+              onChange={formik.handleChange}
+              error={formik.touched.hashKey && Boolean(formik.errors.hashKey)}
+              helperText={formik.touched.hashKey && formik.errors.hashKey}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <ButtonGroup size="small">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={() => navigate('/entities/file')} color="primary">
+                <IconArrowBackUp size={'1rem'} />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
-                &nbsp;
+              <Button color="secondary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <IconDeviceFloppy size={'1rem'} /> &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-            </ValidatedForm>
-          )}
-        </Col>
-      </Row>
-    </div>
+            </ButtonGroup>
+          </Grid>
+        </Grid>
+      </form>
+      {loading ?? <Loader />}
+    </MainCard>
   );
 };
 

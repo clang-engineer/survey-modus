@@ -49,6 +49,13 @@ const entity: NavItemType[] = [
         url: '/entities/group',
         breadcrumbs: true,
       },
+      {
+        id: '#file',
+        title: 'file',
+        type: 'item',
+        url: '/entities/file',
+        breadcrumbs: true,
+      },
     ],
   },
 ];
