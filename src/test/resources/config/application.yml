@@ -97,3 +97,7 @@ management:
   health:
     mail:
       enabled: false
+
+application:
+  storage:
+    path: './doc/test'
