@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { createAndUpdateEntities, getEntities } from 'app/entities/group/group.reducer';
-import { Alert, Grid, Typography } from '@mui/material';
+import { Alert, Grid, Typography, IconButton, Box } from '@mui/material';
 import { gridSpacing } from 'app/berry/store/constant';
 import CheckIcon from '@mui/icons-material/Check';
 import GroupWizardGridContainer from 'app/modules/wizard/group-wizard/group-wizard-list/group-wizard-grid-container';
 import WizardListToolbar from 'app/modules/wizard/component/wizard-list-title';
 import WizardListUpdateModal from 'app/modules/wizard/component/wizard-list-update-modal';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const GroupWizardList = () => {
   const dispatch = useAppDispatch();
@@ -43,15 +45,25 @@ const GroupWizardList = () => {
       <Grid item xs={12} id="group-heading" data-cy="GroupHeading">
         <WizardListToolbar
           title={
-            <Typography variant="h4">
-              <Translate contentKey="surveyModusApp.group.home.title">Groups</Translate>
-            </Typography>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <IconButton
+                size="small"
+                color="primary"
+                onClick={() => {
+                  wizardListUpdateModalRef.current?.open();
+                }}
+                disabled={loading}
+              >
+                <FontAwesomeIcon icon="cog" size="sm" />
+              </IconButton>{' '}
+              &nbsp;
+              <Typography variant="h4">
+                <Translate contentKey="surveyModusApp.group.home.title">Groups</Translate>
+              </Typography>
+            </Box>
           }
           items={groupList}
           onSyncListClick={getAllEntities}
-          onModalOpenClick={() => {
-            wizardListUpdateModalRef.current?.open();
-          }}
           onAddNewClick={() => {
             navigate('/wizard/form/new');
           }}

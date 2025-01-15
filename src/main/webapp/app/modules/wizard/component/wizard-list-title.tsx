@@ -15,7 +15,6 @@ interface IWizardListToolbarProps {
   items: any[];
   title: JSX.Element;
   onSyncListClick: () => void;
-  onModalOpenClick: () => void;
   onAddNewClick: () => void;
   loading: boolean;
 }
@@ -39,17 +38,6 @@ const WizardListToolbar = (props: IWizardListToolbarProps) => {
     >
       {props.title}
       <ButtonGroup variant="text" aria-label="text button group" size="small">
-        <AnimateButton>
-          <Button
-            color="primary"
-            onClick={() => {
-              props.onModalOpenClick();
-            }}
-            disabled={loading}
-          >
-            <FontAwesomeIcon icon="cog" />
-          </Button>
-        </AnimateButton>
         <AnimateButton>
           <Button color="secondary" onClick={() => props.onSyncListClick()} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />
