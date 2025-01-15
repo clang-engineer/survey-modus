@@ -20,24 +20,20 @@ class FileController(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    companion object {
-        const val ENTITY_NAME = "file"
-    }
-
     @Value("\${jhipster.clientApp.name}")
     private var applicationName: String? = null
 
     @PostMapping("/files/upload")
-    fun uploadFile(@RequestBody file: MultipartFile): ResponseEntity<FileDTO> {
+    fun uploadFile(@RequestBody multipartFile: MultipartFile): ResponseEntity<FileDTO> {
         log.debug("REST request to upload file")
 
-        val result = multipartFileService.saveMultipartFile(file)
+        val result = multipartFileService.createEntityAndSaveMultipartFile(multipartFile)
 
-        return ResponseEntity.created(URI("/api/forms/updload?file=${file.originalFilename}"))
+        return ResponseEntity.created(URI("/api/forms/updload?file=${multipartFile.originalFilename}"))
             .headers(
                 HeaderUtil.createEntityCreationAlert(
                     applicationName, true,
-                    FormResource.ENTITY_NAME, file.originalFilename
+                    FileResource.ENTITY_NAME, multipartFile.originalFilename
                 )
             ).body(result)
     }
