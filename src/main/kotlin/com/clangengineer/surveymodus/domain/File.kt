@@ -1,5 +1,6 @@
 package com.clangengineer.surveymodus.domain
 
+import com.clangengineer.surveymodus.service.getSHA512
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -39,6 +40,11 @@ data class File(
     @Column(name = "last_modified_date")
     var lastModifiedDate: Instant? = null,
 ) : Serializable {
+    val hashKey: String
+        get() {
+            return getSHA512(id.toString())
+        }
+
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }

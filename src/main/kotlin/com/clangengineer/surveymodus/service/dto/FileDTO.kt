@@ -1,6 +1,5 @@
 package com.clangengineer.surveymodus.service.dto
 
-import com.clangengineer.surveymodus.service.getSHA512
 import java.io.Serializable
 import java.time.Instant
 import java.util.*
@@ -17,6 +16,8 @@ data class FileDTO(
 
     var filepath: String? = null,
 
+    var hashKey: String? = null,
+
     var createdBy: String? = null,
 
     var createdDate: Instant? = null,
@@ -25,11 +26,6 @@ data class FileDTO(
 
     var lastModifiedDate: Instant? = null,
 ) : Serializable {
-    val hashKey: String
-        get() {
-            return getSHA512(id.toString())
-        }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is FileDTO) return false
