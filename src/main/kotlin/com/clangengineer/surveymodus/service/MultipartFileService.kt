@@ -5,18 +5,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.UUID
+import java.util.*
 
 class MultipartFileService {
-    private final val logger = LoggerFactory.getLogger(MultipartFileService::class.java)
+    private val logger = LoggerFactory.getLogger(MultipartFileService::class.java)
 
-    fun saveMultipartFile(
-        fileDTO: FileDTO,
-        multipartFile: MultipartFile
-    ) {
+    fun saveMultipartFile(fileDTO: FileDTO, multipartFile: MultipartFile) {
         logger.info("Saving file: ${multipartFile.originalFilename}")
 
-        val uploadPath = Paths.get("uploads") // 업로드 디렉터리
+        val uploadPath = fileDTO.filepath?.let { Paths.get(it) } ?: Paths.get("./doc")
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath) // 디렉터리 생성
         }
