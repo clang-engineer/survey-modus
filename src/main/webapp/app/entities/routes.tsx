@@ -10,6 +10,7 @@ import Company from './company';
 import Category from './category';
 import Form from './form';
 import Field from './field';
+import File from './file';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -25,6 +26,7 @@ export default () => {
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
         <Route path="point/*" element={<Point />} />
         <Route path="user-point/*" element={<UserPoint />} />
+        <Route path="file/*" element={<File />} />
       </ErrorBoundaryRoutes>
     </div>
   );
