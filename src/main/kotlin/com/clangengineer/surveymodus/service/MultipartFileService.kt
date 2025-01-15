@@ -21,28 +21,29 @@ class MultipartFileService(
     fun saveMultipartFile(multipartFile: MultipartFile): FileDTO {
         logger.info("Saving file: ${multipartFile.originalFilename}")
 
-        val fileDTO = FileDTO(
-            filename = multipartFile.originalFilename,
-            filepath = "./doc",
-            createdBy = "system"
-        )
-
-        // save file
+        val fileDTO = getFileDTO(multipartFile)
         val file = fileMapper.toEntity(fileDTO)
-        fileRepository.save(file)
+        fileRepository.save(fileMapper.toEntity(fileDTO))
 
-        val uploadPath = fileDTO.filepath?.let { Paths.get(it) } ?: Paths.get("./doc")
+        val uploadPath = file.filepath?.let { Paths.get(it) } ?: Paths.get("./doc")
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath)
         }
 
-        val hashedFileName = getSHA512(file.id.toString())
-        val targetPath = uploadPath.resolve(hashedFileName)
+        val targetPath = uploadPath.resolve(fileDTO.hashKey)
 
         multipartFile.inputStream.use { inputStream ->
             Files.copy(inputStream, targetPath)
         }
 
         return fileMapper.toDto(file)
+    }
+
+    private fun getFileDTO(multipartFile: MultipartFile): FileDTO {
+        return FileDTO(
+            filename = multipartFile.originalFilename,
+            filepath = "./doc",
+            createdBy = "system"
+        )
     }
 }
