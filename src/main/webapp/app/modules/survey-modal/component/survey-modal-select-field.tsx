@@ -27,7 +27,7 @@ const SurveyModalSelectField = (props: ISurveyModalSelectBoxProps) => {
         variant="standard"
         fullWidth
       >
-        <MenuItem value="-" disabled>
+        <MenuItem value={null} disabled>
           <em>None</em>
         </MenuItem>
         {field.lookups.map(option => (
