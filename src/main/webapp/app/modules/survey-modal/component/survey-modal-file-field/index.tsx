@@ -53,8 +53,9 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       try {
         const response = await uploadFilesToServer(acceptedFiles);
         if (response.status == 201) {
-          setFiles(prevFiles => [...prevFiles, ...response.data]);
-          const fileIds = response.data.map((file: { id: number }) => file.id).join(';');
+          const newFiles = [...files, ...response.data];
+          setFiles(newFiles);
+          const fileIds = newFiles.map((file: { id: number }) => file.id).join(';');
           props.formik.setFieldValue(`${props.field.id}`, fileIds);
         } else {
           setError('File upload failed. Please try again.');
