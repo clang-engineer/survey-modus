@@ -1,5 +1,4 @@
 import com.clangengineer.surveymodus.IntegrationTest
-import com.clangengineer.surveymodus.config.ApplicationProperties
 import com.clangengineer.surveymodus.repository.FileRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -23,9 +22,6 @@ class FileControllerIT {
     @Autowired
     private lateinit var fileRepository: FileRepository
 
-    @Autowired
-    private lateinit var applicationProperties: ApplicationProperties
-
     @Test
     @Transactional
     @Throws(Exception::class)
@@ -35,7 +31,14 @@ class FileControllerIT {
         val list = mutableListOf<MockMultipartFile>()
 
         for (i in 0..2) {
-            list.add(MockMultipartFile("multipartFiles", "test$i.txt", "text/plain", "test data".toByteArray()))
+            list.add(
+                MockMultipartFile(
+                    "multipartFiles",
+                    "test$i.txt",
+                    "text/plain",
+                    "test data".toByteArray()
+                )
+            )
         }
 
         mockMvc.perform(
@@ -48,5 +51,41 @@ class FileControllerIT {
 
         val databaseSizeAfterCreate = fileRepository.findAll().size
         assertThat(databaseSizeAfterCreate).isEqualTo(databaseSizeBeforeCreate + 3)
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun `test download exist file from server`() {
+        val list = mutableListOf<MockMultipartFile>()
+
+        for (i in 0..2) {
+            list.add(
+                MockMultipartFile(
+                    "multipartFiles",
+                    "test$i.txt",
+                    "text/plain",
+                    "test data".toByteArray()
+                )
+            )
+        }
+
+        mockMvc.perform(
+            multipart("/api/files/upload")
+                .file(list[0])
+                .file(list[1])
+                .file(list[2])
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+        ).andExpect(status().isCreated)
+
+        val file = fileRepository.findAll().first()
+
+        val mockResponse = mockMvc.perform(
+            get("/api/files/download")
+                .param("fileId", file.id.toString())
+        ).andExpect(status().isOk)
+
+        val content = mockResponse.andReturn().response.contentAsByteArray
+        assertThat(content).isNotEmpty
     }
 }

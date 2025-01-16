@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 @Service
 @Transactional
@@ -38,7 +39,7 @@ class MultipartFileService(
             val targetPath = uploadPath.resolve(file.hashKey)
 
             multipartFile.inputStream.use { inputStream ->
-                Files.copy(inputStream, targetPath)
+                Files.copy(inputStream, targetPath, REPLACE_EXISTING)
             }
 
             fileDTOList.add(fileMapper.toDto(file))
@@ -55,5 +56,15 @@ class MultipartFileService(
             size = multipartFile.size,
             createdBy = "system"
         )
+    }
+
+    fun getPhysicalFileOnDiskByFileEntityId(id: Long): ByteArray {
+        logger.info("Getting physical file on disk by file entity id: $id")
+
+        val file = fileRepository.findById(id).orElseThrow { throw RuntimeException("File not found") }
+
+        val filePath = Paths.get("${storage.path}/${file.hashKey}")
+
+        return Files.readAllBytes(filePath)
     }
 }
