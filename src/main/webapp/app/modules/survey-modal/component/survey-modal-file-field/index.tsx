@@ -84,7 +84,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   };
 
   const onDownloadButtonClick = (file: IFile) => {
-    downloadFileFromServer(file.id);
+    downloadFileFromServer(file);
   };
 
   return (

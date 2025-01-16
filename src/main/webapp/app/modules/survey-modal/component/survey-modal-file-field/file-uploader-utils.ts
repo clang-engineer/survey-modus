@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IFile } from 'app/shared/model/file.model';
 
 const uploadFilesToServer = async (files: File[]) => {
   const formData = new FormData();
@@ -16,9 +17,9 @@ const uploadFilesToServer = async (files: File[]) => {
   }
 };
 
-const downloadFileFromServer = async (fileId: number) => {
+const downloadFileFromServer = async (file: IFile) => {
   try {
-    const response = await axios.get(`/api/files/download?fileId=${fileId}`, {
+    const response = await axios.get(`/api/files/download?fileId=${file.id}`, {
       responseType: 'blob', // Blob 형태로 응답 받기
     });
 
@@ -33,8 +34,8 @@ const downloadFileFromServer = async (fileId: number) => {
     link.href = url;
 
     // 서버에서 파일 이름 정보를 전달하지 않으면 기본 이름 지정
-    const fileName = `file_${fileId}.pdf`; // 원하는 기본 파일 이름 설정
-    link.download = fileName;
+    const [name, extension] = file.name.split('.'); // 파일 이름에서 확장자 추출
+    link.download = `${name}.${extension}`;
 
     // 다운로드 트리거
     document.body.appendChild(link);
