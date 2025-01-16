@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Box, FormControl, IconButton, Typography } from '@mui/material';
+import { Alert, Box, FormControl, IconButton, Typography, ButtonGroup } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
-import { IconTrash } from '@tabler/icons';
+import { IconDownload, IconTrash } from '@tabler/icons';
 import { uploadFilesToServer } from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
 
@@ -72,12 +72,16 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     maxFiles: 5,
   });
 
-  const onRemoveFile = (file: IFile) => {
+  const onRemoveButtonClick = (file: IFile) => {
     setFiles(prevFiles => prevFiles.filter(prevFile => prevFile !== file));
     formik.setFieldValue(
       `${field.id}`,
       files.filter(prevFile => prevFile !== file)
     );
+  };
+
+  const onDownloadButtonClick = (file: IFile) => {
+    alert('Download file to be implemented');
   };
 
   return (
@@ -114,17 +118,26 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         {files.length > 0 && <Typography variant="h6">Uploaded Files:</Typography>}
         {files.map((file: IFile, index) => (
           <Box display="flex" alignItems="center" key={index}>
+            <Typography variant="body2">
+              {file.name} ({file.size} bytes)
+            </Typography>
+            &nbsp;
             <IconButton
               size="small"
               onClick={() => {
-                onRemoveFile(file);
+                onDownloadButtonClick(file);
+              }}
+            >
+              <IconDownload size={'12px'} />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => {
+                onRemoveButtonClick(file);
               }}
             >
               <IconTrash size={'12px'} />
             </IconButton>
-            <Typography variant="body2">
-              {file.name} ({file.size} bytes)
-            </Typography>
           </Box>
         ))}
         <Box sx={{ mt: 2 }}>
