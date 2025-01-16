@@ -8,8 +8,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useDropzone } from 'react-dropzone';
 import { IconTrash } from '@tabler/icons';
 import { uploadFilesToServer } from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities } from 'app/entities/file/file.reducer';
 import { IFile } from 'app/shared/model/file.model';
 
 interface ISurveyModalTextFieldProps {
@@ -18,28 +16,15 @@ interface ISurveyModalTextFieldProps {
 }
 
 const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
-  const dispatch = useAppDispatch();
-
   const { field, formik } = props;
   const [files, setFiles] = useState<IFile[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const fileEntities = useAppSelector(state => state.file.entities);
-
   React.useEffect(() => {
-    dispatch(getEntities({}));
-  }, []);
-
-  React.useEffect(() => {
-    if (fileEntities && fileEntities.length > 0) {
-      const fileIds = formik.values[field.id.toString()];
-      if (fileIds) {
-        const fileIdList = fileIds.split(';').map(id => parseInt(id));
-        const selectedFiles = fileEntities.filter(file => fileIdList.includes(file.id));
-        setFiles(selectedFiles);
-      }
+    if (formik.values[field.id]) {
+      setFiles(formik.values[field.id]);
     }
-  }, [fileEntities]);
+  }, [formik.values[field.id]]);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -55,8 +40,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         if (response.status == 201) {
           const newFiles = [...files, ...response.data];
           setFiles(newFiles);
-          const fileIds = newFiles.map((file: { id: number }) => file.id).join(';');
-          props.formik.setFieldValue(`${props.field.id}`, fileIds);
+          props.formik.setFieldValue(`${props.field.id}`, newFiles);
         } else {
           setError('File upload failed. Please try again.');
         }
@@ -92,10 +76,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     setFiles(prevFiles => prevFiles.filter(prevFile => prevFile !== file));
     formik.setFieldValue(
       `${field.id}`,
-      files
-        .filter(prevFile => prevFile !== file)
-        .map(file => file.id)
-        .join(';')
+      files.filter(prevFile => prevFile !== file)
     );
   };
 
@@ -131,7 +112,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       </Box>
       <Box sx={{ mt: 2 }}>
         {files.length > 0 && <Typography variant="h6">Uploaded Files:</Typography>}
-        {files.map((file: IFile, index) => (
+        {files?.map((file: IFile, index) => (
           <Box display="flex" alignItems="center" key={index}>
             <IconButton
               size="small"
