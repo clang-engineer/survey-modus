@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Box, FormControl, IconButton, Typography, ButtonGroup } from '@mui/material';
+import { Alert, Box, FormControl, IconButton, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
@@ -7,7 +7,10 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
 import { IconDownload, IconTrash } from '@tabler/icons';
-import { uploadFilesToServer } from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
+import {
+  downloadFileFromServer,
+  uploadFilesToServer,
+} from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
 
 interface ISurveyModalTextFieldProps {
@@ -37,14 +40,14 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
 
       try {
         const response = await uploadFilesToServer(acceptedFiles);
-        if (response.status == 201) {
+        if (response.status === 201) {
           const newFiles = [...files, ...response.data];
           setFiles(newFiles);
           props.formik.setFieldValue(`${props.field.id}`, newFiles);
         } else {
           setError('File upload failed. Please try again.');
         }
-      } catch (error) {
+      } catch (e) {
         setError('File upload failed. Please try again.');
       }
     },
@@ -55,8 +58,8 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     onDrop,
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif'],
-      // "video/*": [".mp4", ".avi", ".mkv"],
-      // "audio/*": [".mp3", ".wav", ".flac"],
+      'video/*': ['.mp4', '.avi', '.mkv'],
+      'audio/*': ['.mp3', '.wav', '.flac'],
       'application/pdf': ['.pdf'],
       'application/msword': ['.doc', '.docx'],
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
@@ -68,8 +71,8 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       'application/zip': ['.zip'],
     },
     multiple: true,
-    maxSize: 10485760,
-    maxFiles: 5,
+    // maxSize: 10485760,
+    // maxFiles: 5,
   });
 
   const onRemoveButtonClick = (file: IFile) => {
@@ -81,7 +84,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   };
 
   const onDownloadButtonClick = (file: IFile) => {
-    alert('Download file to be implemented');
+    downloadFileFromServer(file.id);
   };
 
   return (
