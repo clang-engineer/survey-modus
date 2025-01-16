@@ -112,7 +112,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       </Box>
       <Box sx={{ mt: 2 }}>
         {files.length > 0 && <Typography variant="h6">Uploaded Files:</Typography>}
-        {files?.map((file: IFile, index) => (
+        {files.map((file: IFile, index) => (
           <Box display="flex" alignItems="center" key={index}>
             <IconButton
               size="small"
@@ -122,7 +122,9 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
             >
               <IconTrash size={'12px'} />
             </IconButton>
-            <Typography variant="body2">{file.filename} ( bytes)</Typography>
+            <Typography variant="body2">
+              {file.name} ({file.size} bytes)
+            </Typography>
           </Box>
         ))}
         <Box sx={{ mt: 2 }}>

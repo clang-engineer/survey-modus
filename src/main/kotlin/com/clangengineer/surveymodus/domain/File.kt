@@ -22,11 +22,17 @@ data class File(
 
     @get: NotNull
     @get: Size(max = 100)
-    @Column(name = "filename", length = 100, nullable = false)
-    var filename: String? = null,
+    @Column(name = "name", length = 100, nullable = false)
+    var name: String? = null,
 
-    @Column(name = "filepath")
-    var filepath: String? = null,
+    @Column(name = "path")
+    var path: String? = null,
+
+    @Column(name = "size")
+    var size: Long? = null,
+
+    @Column(name = "type")
+    var type: String? = null,
 
     @Column(name = "created_by")
     var createdBy: String? = null,
@@ -58,8 +64,10 @@ data class File(
     override fun toString(): String {
         return "File{" +
             "id=$id" +
-            ", filename='$filename'" +
-            ", filepath='$filepath'" +
+            ", name='$name'" +
+            ", path='$path'" +
+            ", size=$size" +
+            ", type='$type'" +
             "}"
     }
 

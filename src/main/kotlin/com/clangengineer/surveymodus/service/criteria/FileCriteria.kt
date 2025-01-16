@@ -10,16 +10,20 @@ import java.io.Serializable
 @SuppressWarnings("common-java:DuplicatedBlocks")
 data class FileCriteria(
     var id: LongFilter? = null,
-    var filename: StringFilter? = null,
-    var filepath: StringFilter? = null,
+    var name: StringFilter? = null,
+    var path: StringFilter? = null,
+    var type: StringFilter? = null,
+    var size: LongFilter? = null,
     var hashKey: StringFilter? = null,
 ) : Serializable, Criteria {
 
     constructor(other: FileCriteria) :
         this(
             other.id?.copy(),
-            other.filename?.copy(),
-            other.filepath?.copy(),
+            other.name?.copy(),
+            other.path?.copy(),
+            other.type?.copy(),
+            other.size?.copy(),
             other.hashKey?.copy(),
         )
 

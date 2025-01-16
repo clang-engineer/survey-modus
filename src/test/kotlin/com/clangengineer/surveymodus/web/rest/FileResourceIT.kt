@@ -66,8 +66,8 @@ class FileResourceIT {
         assertThat(fileList).hasSize(databaseSizeBeforeCreate + 1)
         val testFile = fileList[fileList.size - 1]
 
-        assertThat(testFile.filename).isEqualTo(DEFAULT_FILENAME)
-        assertThat(testFile.filepath).isEqualTo(DEFAULT_FILEPATH)
+        assertThat(testFile.name).isEqualTo(DEFAULT_NAME)
+        assertThat(testFile.path).isEqualTo(DEFAULT_PATH)
         assertThat(testFile.createdBy).isEqualTo(DEFAULT_CREATED_BY)
     }
 
@@ -96,7 +96,7 @@ class FileResourceIT {
     fun checkTitleIsRequired() {
         val databaseSizeBeforeTest = fileRepository.findAll().size
 
-        file.filename = null
+        file.name = null
 
         val fileDTO = fileMapper.toDto(file)
 
@@ -121,8 +121,8 @@ class FileResourceIT {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
-            .andExpect(jsonPath("$.[*].filename").value(hasItem(DEFAULT_FILENAME)))
-            .andExpect(jsonPath("$.[*].filepath").value(hasItem(DEFAULT_FILEPATH)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
     }
 
@@ -141,8 +141,8 @@ class FileResourceIT {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(file.id?.toInt()))
-            .andExpect(jsonPath("$.filename").value(DEFAULT_FILENAME))
-            .andExpect(jsonPath("$.filepath").value(DEFAULT_FILEPATH))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.path").value(DEFAULT_PATH))
             .andExpect(jsonPath("$.hashKey").value(getSHA512(file.id.toString())))
     }
 
@@ -168,8 +168,8 @@ class FileResourceIT {
     fun getAllFilesByTitleIsEqualToSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filename.equals=$DEFAULT_FILENAME")
-        defaultFileShouldNotBeFound("filename.equals=$UPDATED_FILENAME")
+        defaultFileShouldBeFound("name.equals=$DEFAULT_NAME")
+        defaultFileShouldNotBeFound("name.equals=$UPDATED_FILENAME")
     }
 
     @Test
@@ -178,8 +178,8 @@ class FileResourceIT {
     fun getAllFilesByTitleIsInShouldWork() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filename.in=$DEFAULT_FILENAME,$UPDATED_FILENAME")
-        defaultFileShouldNotBeFound("filename.in=$UPDATED_FILENAME")
+        defaultFileShouldBeFound("name.in=$DEFAULT_NAME,$UPDATED_FILENAME")
+        defaultFileShouldNotBeFound("name.in=$UPDATED_FILENAME")
     }
 
     @Test
@@ -188,8 +188,8 @@ class FileResourceIT {
     fun getAllFilesByTitleIsNullOrNotNull() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filename.specified=true")
-        defaultFileShouldNotBeFound("filename.specified=false")
+        defaultFileShouldBeFound("name.specified=true")
+        defaultFileShouldNotBeFound("name.specified=false")
     }
 
     @Test
@@ -198,8 +198,8 @@ class FileResourceIT {
     fun getAllFilesByTitleContainsSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filename.contains=$DEFAULT_FILENAME")
-        defaultFileShouldNotBeFound("filename.contains=$UPDATED_FILENAME")
+        defaultFileShouldBeFound("name.contains=$DEFAULT_NAME")
+        defaultFileShouldNotBeFound("name.contains=$UPDATED_FILENAME")
     }
 
     @Test
@@ -208,8 +208,8 @@ class FileResourceIT {
     fun getAllFilesByTitleNotContainsSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldNotBeFound("filename.doesNotContain=$DEFAULT_FILENAME")
-        defaultFileShouldBeFound("filename.doesNotContain=$UPDATED_FILENAME")
+        defaultFileShouldNotBeFound("name.doesNotContain=$DEFAULT_NAME")
+        defaultFileShouldBeFound("name.doesNotContain=$UPDATED_FILENAME")
     }
 
     @Test
@@ -218,8 +218,8 @@ class FileResourceIT {
     fun getAllFilesByDescriptionIsEqualToSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filepath.equals=$DEFAULT_FILEPATH")
-        defaultFileShouldNotBeFound("filepath.equals=$UPDATED_FILEPATH")
+        defaultFileShouldBeFound("path.equals=$DEFAULT_PATH")
+        defaultFileShouldNotBeFound("path.equals=$UPDATED_FILEPATH")
     }
 
     @Test
@@ -228,8 +228,8 @@ class FileResourceIT {
     fun getAllFilesByDescriptionIsInShouldWork() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filepath.in=$DEFAULT_FILEPATH,$UPDATED_FILEPATH")
-        defaultFileShouldNotBeFound("filepath.in=$UPDATED_FILEPATH")
+        defaultFileShouldBeFound("path.in=$DEFAULT_PATH,$UPDATED_FILEPATH")
+        defaultFileShouldNotBeFound("path.in=$UPDATED_FILEPATH")
     }
 
     @Test
@@ -238,8 +238,8 @@ class FileResourceIT {
     fun getAllFilesByDescriptionIsNullOrNotNull() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filepath.specified=true")
-        defaultFileShouldNotBeFound("filepath.specified=false")
+        defaultFileShouldBeFound("path.specified=true")
+        defaultFileShouldNotBeFound("path.specified=false")
     }
 
     @Test
@@ -248,8 +248,8 @@ class FileResourceIT {
     fun getAllFilesByDescriptionContainsSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldBeFound("filepath.contains=$DEFAULT_FILEPATH")
-        defaultFileShouldNotBeFound("filepath.contains=$UPDATED_FILEPATH")
+        defaultFileShouldBeFound("path.contains=$DEFAULT_PATH")
+        defaultFileShouldNotBeFound("path.contains=$UPDATED_FILEPATH")
     }
 
     @Test
@@ -258,8 +258,8 @@ class FileResourceIT {
     fun getAllFilesByDescriptionNotContainsSomething() {
         fileRepository.saveAndFlush(file)
 
-        defaultFileShouldNotBeFound("filepath.doesNotContain=$DEFAULT_FILEPATH")
-        defaultFileShouldBeFound("filepath.doesNotContain=$UPDATED_FILEPATH")
+        defaultFileShouldNotBeFound("path.doesNotContain=$DEFAULT_PATH")
+        defaultFileShouldBeFound("path.doesNotContain=$UPDATED_FILEPATH")
     }
 
     @Throws(Exception::class)
@@ -268,8 +268,8 @@ class FileResourceIT {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
-            .andExpect(jsonPath("$.[*].filename").value(hasItem(DEFAULT_FILENAME)))
-            .andExpect(jsonPath("$.[*].filepath").value(hasItem(DEFAULT_FILEPATH)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
 
         restFileMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
@@ -309,8 +309,8 @@ class FileResourceIT {
 
         val updatedFile = fileRepository.findById(file.id).get()
         em.detach(updatedFile)
-        updatedFile.filename = UPDATED_FILENAME
-        updatedFile.filepath = UPDATED_FILEPATH
+        updatedFile.name = UPDATED_FILENAME
+        updatedFile.path = UPDATED_FILEPATH
         updatedFile.createdBy = UPDATED_CREATED_BY
 
         val fileDTO = fileMapper.toDto(updatedFile)
@@ -325,8 +325,8 @@ class FileResourceIT {
         val fileList = fileRepository.findAll()
         assertThat(fileList).hasSize(databaseSizeBeforeUpdate)
         val testFile = fileList[fileList.size - 1]
-        assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
-        assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
+        assertThat(testFile.name).isEqualTo(UPDATED_FILENAME)
+        assertThat(testFile.path).isEqualTo(UPDATED_FILEPATH)
     }
 
     @Test
@@ -395,8 +395,8 @@ class FileResourceIT {
 
         val partialUpdatedFile = File().apply {
             id = file.id
-            filename = UPDATED_FILENAME
-            filepath = UPDATED_FILEPATH
+            name = UPDATED_FILENAME
+            path = UPDATED_FILEPATH
         }
 
         restFileMockMvc.perform(
@@ -409,8 +409,8 @@ class FileResourceIT {
         val fileList = fileRepository.findAll()
         assertThat(fileList).hasSize(databaseSizeBeforeUpdate)
         val testFile = fileList.last()
-        assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
-        assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
+        assertThat(testFile.name).isEqualTo(UPDATED_FILENAME)
+        assertThat(testFile.path).isEqualTo(UPDATED_FILEPATH)
     }
 
     @Test
@@ -423,8 +423,8 @@ class FileResourceIT {
 
         val partialUpdatedFile = File().apply {
             id = file.id
-            filename = UPDATED_FILENAME
-            filepath = UPDATED_FILEPATH
+            name = UPDATED_FILENAME
+            path = UPDATED_FILEPATH
         }
 
         restFileMockMvc.perform(
@@ -436,8 +436,8 @@ class FileResourceIT {
         val fileList = fileRepository.findAll()
         assertThat(fileList).hasSize(databaseSizeBeforeUpdate)
         val testFile = fileList.last()
-        assertThat(testFile.filename).isEqualTo(UPDATED_FILENAME)
-        assertThat(testFile.filepath).isEqualTo(UPDATED_FILEPATH)
+        assertThat(testFile.name).isEqualTo(UPDATED_FILENAME)
+        assertThat(testFile.path).isEqualTo(UPDATED_FILEPATH)
     }
 
     @Throws(Exception::class)
@@ -513,15 +513,21 @@ class FileResourceIT {
 
     companion object {
 
-        private const val DEFAULT_FILENAME =
+        private const val DEFAULT_NAME =
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         private const val UPDATED_FILENAME =
             "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 
-        private const val DEFAULT_FILEPATH =
+        private const val DEFAULT_PATH =
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         private const val UPDATED_FILEPATH =
             "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+
+        private const val DEFAULT_SIZE = 1L
+        private const val UPDATED_SIZE = 2L
+
+        private const val DEFAULT_TYPE = "AAAAAAAAAA"
+        private const val UPDATED_TYPE = "BBBBBBBBBB"
 
         private const val DEFAULT_CREATED_BY = "system"
         private const val UPDATED_CREATED_BY = "system"
@@ -539,8 +545,10 @@ class FileResourceIT {
         @JvmStatic
         fun createEntity(em: EntityManager): File {
             val file = File(
-                filename = DEFAULT_FILENAME,
-                filepath = DEFAULT_FILEPATH,
+                name = DEFAULT_NAME,
+                path = DEFAULT_PATH,
+                size = DEFAULT_SIZE,
+                type = DEFAULT_TYPE,
                 createdBy = DEFAULT_CREATED_BY,
                 createdDate = Instant.now()
             )
@@ -551,8 +559,10 @@ class FileResourceIT {
         @JvmStatic
         fun createUpdatedEntity(em: EntityManager): File {
             val file = File(
-                filename = UPDATED_FILENAME,
-                filepath = UPDATED_FILEPATH,
+                name = UPDATED_FILENAME,
+                path = UPDATED_FILEPATH,
+                size = UPDATED_SIZE,
+                type = UPDATED_TYPE,
                 createdBy = DEFAULT_CREATED_BY,
                 createdDate = Instant.now()
             )

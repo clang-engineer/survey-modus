@@ -9,8 +9,10 @@
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="filename" type="varchar(255)"/>
-            <column name="filepath" type="varchar(255)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="path" type="varchar(255)"/>
+            <column name="size" type="bigint"/>
+            <column name="type" type="varchar(255)"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -27,8 +29,10 @@
             tableName="tbl_file"
             usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="filename" type="string"/>
-            <column name="filepath" type="string"/>
+            <column name="name" type="string"/>
+            <column name="path" type="string"/>
+            <column name="size" type="numeric"/>
+            <column name="type" type="string"/>
             <column name="created_by" type="string"/>
             <column name="last_modified_by" type="string"/>
         </loadData>

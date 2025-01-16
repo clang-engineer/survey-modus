@@ -3,8 +3,10 @@ import { level } from 'app/shared/model/enumerations/level.model';
 
 export interface IFile {
   id?: number;
-  filename?: string;
-  filepath?: string | null;
+  name?: string;
+  path?: string | null;
+  type?: string | null;
+  size?: number | null;
   hashKey?: string | null;
 }
 

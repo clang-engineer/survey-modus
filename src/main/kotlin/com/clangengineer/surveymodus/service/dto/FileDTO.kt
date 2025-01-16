@@ -12,9 +12,13 @@ data class FileDTO(
 
     @get: NotNull
     @get: Size(max = 100)
-    var filename: String? = null,
+    var name: String? = null,
 
-    var filepath: String? = null,
+    var path: String? = null,
+
+    var size: Long? = null,
+
+    var type: String? = null,
 
     var hashKey: String? = null,
 

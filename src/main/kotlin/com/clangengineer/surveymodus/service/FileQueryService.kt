@@ -52,14 +52,26 @@ class FileQueryService(
                 specification = specification.and(buildRangeSpecification(criteria.id, File_.id))
             }
 
-            if (criteria.filename != null) {
+            if (criteria.name != null) {
                 specification =
-                    specification.and(buildStringSpecification(criteria.filename, File_.filename))
+                    specification.and(buildStringSpecification(criteria.name, File_.name))
             }
 
-            if (criteria.filepath != null) {
+            if (criteria.path != null) {
                 specification = specification.and(
-                    buildStringSpecification(criteria.filepath, File_.filepath)
+                    buildStringSpecification(criteria.path, File_.path)
+                )
+            }
+
+            if (criteria.type != null) {
+                specification = specification.and(
+                    buildStringSpecification(criteria.type, File_.type)
+                )
+            }
+
+            if (criteria.size != null) {
+                specification = specification.and(
+                    buildRangeSpecification(criteria.size, File_.size)
                 )
             }
         }

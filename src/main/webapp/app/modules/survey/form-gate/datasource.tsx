@@ -58,7 +58,7 @@ const DataSource = () => {
       case type.DATE:
         return dayjs(value).format('YYYY-MM-DD');
       case type.FILE:
-        return value && value.length > 0 ? value.map(file => file.filename).join(', ') : '';
+        return value && value.length > 0 ? value.map(file => file.name).join(', ') : '';
       default:
         return value;
     }

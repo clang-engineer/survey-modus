@@ -49,8 +49,10 @@ class MultipartFileService(
 
     private fun getFileDTO(multipartFile: MultipartFile): FileDTO {
         return FileDTO(
-            filename = multipartFile.originalFilename,
-            filepath = "${storage.path}/${multipartFile.originalFilename}",
+            name = multipartFile.originalFilename,
+            path = "${storage.path}/${multipartFile.originalFilename}",
+            type = multipartFile.contentType,
+            size = multipartFile.size,
             createdBy = "system"
         )
     }
