@@ -12,7 +12,7 @@ import DataSource from 'app/modules/survey/form-gate/datasource';
 import { IconDatabase, IconPlaylistAdd } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
-import SurveyModal from 'app/modules/survey-modal';
+import SurveyModal from 'app/modules/survey/modal';
 
 import { create } from 'react-modal-promise';
 import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';

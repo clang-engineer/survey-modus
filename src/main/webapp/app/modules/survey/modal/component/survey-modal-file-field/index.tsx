@@ -10,7 +10,7 @@ import { IconDownload, IconTrash } from '@tabler/icons';
 import {
   downloadFileFromServer,
   uploadFilesToServer,
-} from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
+} from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
 
 interface ISurveyModalTextFieldProps {
