@@ -1,13 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import { Box, FormControl, IconButton, styled, Typography, Alert } from '@mui/material';
+import { Alert, Box, FormControl, IconButton, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
-import { IconX, IconTrash } from '@tabler/icons';
+import { IconTrash } from '@tabler/icons';
 import { uploadFilesToServer } from 'app/modules/survey-modal/component/survey-modal-file-field/file-uploader-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntities } from 'app/entities/file/file.reducer';
+import { IFile } from 'app/shared/model/file.model';
 
 interface ISurveyModalTextFieldProps {
   field: IField;
@@ -15,8 +18,28 @@ interface ISurveyModalTextFieldProps {
 }
 
 const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const dispatch = useAppDispatch();
+
+  const { field, formik } = props;
+  const [files, setFiles] = useState<IFile[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const fileEntities = useAppSelector(state => state.file.entities);
+
+  React.useEffect(() => {
+    dispatch(getEntities({}));
+  }, []);
+
+  React.useEffect(() => {
+    if (fileEntities && fileEntities.length > 0) {
+      const fileIds = formik.values[field.id.toString()];
+      if (fileIds) {
+        const fileIdList = fileIds.split(';').map(id => parseInt(id));
+        const selectedFiles = fileEntities.filter(file => fileIdList.includes(file.id));
+        setFiles(selectedFiles);
+      }
+    }
+  }, [fileEntities]);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -29,12 +52,10 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
 
       try {
         const response = await uploadFilesToServer(acceptedFiles);
-
         if (response.status == 201) {
-          // 성공적으로 업로드된 파일 관리
-          setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
-          const fileNameList = [...files, ...acceptedFiles].map(file => file.name).join(';');
-          props.formik.setFieldValue(`${props.field.id}`, fileNameList);
+          setFiles(prevFiles => [...prevFiles, ...response.data]);
+          const fileIds = response.data.map((file: { id: number }) => file.id).join(';');
+          props.formik.setFieldValue(`${props.field.id}`, fileIds);
         } else {
           setError('File upload failed. Please try again.');
         }
@@ -65,6 +86,17 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     maxSize: 10485760,
     maxFiles: 5,
   });
+
+  const onRemoveFile = (file: IFile) => {
+    setFiles(prevFiles => prevFiles.filter(prevFile => prevFile !== file));
+    formik.setFieldValue(
+      `${field.id}`,
+      files
+        .filter(prevFile => prevFile !== file)
+        .map(file => file.id)
+        .join(';')
+    );
+  };
 
   return (
     <FormControl fullWidth>
@@ -98,19 +130,17 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
       </Box>
       <Box sx={{ mt: 2 }}>
         {files.length > 0 && <Typography variant="h6">Uploaded Files:</Typography>}
-        {files.map((file: File, index) => (
+        {files.map((file: IFile, index) => (
           <Box display="flex" alignItems="center" key={index}>
             <IconButton
               size="small"
               onClick={() => {
-                setFiles(prevFiles => prevFiles.filter(prevFile => prevFile !== file));
+                onRemoveFile(file);
               }}
             >
               <IconTrash size={'12px'} />
             </IconButton>
-            <Typography variant="body2">
-              {file.name} - {file.size} bytes
-            </Typography>
+            <Typography variant="body2">{file.filename} ( bytes)</Typography>
           </Box>
         ))}
         <Box sx={{ mt: 2 }}>
