@@ -126,12 +126,6 @@ const SurveyModal =
       }
     }, [document]);
 
-    useEffect(() => {
-      if (!document || !document.id) {
-        isOpen && updateSuccess && onResolve();
-      }
-    }, [updateSuccess, isOpen]);
-
     return (
       <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition} sx={{ '& .MuiPaper-root': { padding: 0 } }}>
         <AppBar sx={{ position: 'relative' }}>
