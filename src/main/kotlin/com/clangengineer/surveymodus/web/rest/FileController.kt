@@ -3,6 +3,8 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.service.FileService
 import com.clangengineer.surveymodus.service.MultipartFileService
 import com.clangengineer.surveymodus.service.dto.FileDTO
+import com.clangengineer.surveymodus.web.rest.FileResource.Companion.ENTITY_NAME
+import com.clangengineer.surveymodus.web.rest.errors.BadRequestAlertException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.repository.query.Param
@@ -36,11 +38,12 @@ class FileController(
             .headers(
                 HeaderUtil.createEntityCreationAlert(
                     applicationName, true,
-                    FileResource.ENTITY_NAME, result.size.toString()
+                    ENTITY_NAME, result.size.toString()
                 )
             ).body(result)
     }
 
+    @Throws(BadRequestAlertException::class)
     @GetMapping("/files/download")
     fun downloadFile(
         @Param("fileId") fileId: Long,
@@ -48,19 +51,23 @@ class FileController(
     ): ResponseEntity<Unit> {
         log.debug("REST request to download file by id: $fileId")
 
-        val fileEntity = fileService.findOne(fileId)
-        val physicalFile = multipartFileService.getPhysicalFileOnDiskByFileEntityId(fileId)
+        try {
+            val fileEntity = fileService.findOne(fileId)
+            val physicalFile = multipartFileService.getPhysicalFileOnDiskByFileEntityId(fileId)
 
-        fileEntity.ifPresent { f ->
-            response.contentType = f.type
+            fileEntity.ifPresent { f ->
+                response.contentType = f.type
+            }
+
+            response.setHeader("Content-Disposition", "attachment; filename=$fileId.pdf")
+            response.outputStream.write(physicalFile)
+            response.outputStream.flush()
+
+            val header = HeaderUtil.createAlert(applicationName, "file.download", fileId.toString())
+
+            return ResponseEntity.ok().headers(header).build()
+        } catch (e: Exception) {
+            throw BadRequestAlertException("File not found", ENTITY_NAME, "notfound")
         }
-
-        response.setHeader("Content-Disposition", "attachment; filename=$fileId.pdf")
-        response.outputStream.write(physicalFile)
-        response.outputStream.flush()
-
-        val header = HeaderUtil.createAlert(applicationName, "file.download", fileId.toString())
-
-        return ResponseEntity.ok().headers(header).build()
     }
 }

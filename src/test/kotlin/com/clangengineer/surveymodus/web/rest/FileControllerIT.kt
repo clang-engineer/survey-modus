@@ -9,7 +9,7 @@ import org.springframework.mock.web.MockMultipartFile
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 
 @IntegrationTest
@@ -87,5 +87,19 @@ class FileControllerIT {
 
         val content = mockResponse.andReturn().response.contentAsByteArray
         assertThat(content).isNotEmpty
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun `test download not exist file from server`() {
+        mockMvc.perform(
+            get("/api/files/download")
+                .param("fileId", "1")
+        ).andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.title").value("File not found"))
+            .andExpect(jsonPath("$.entityName").value("file"))
+            .andExpect(jsonPath("$.errorKey").value("notfound"))
+            .andExpect(jsonPath("$.message").value("error.notfound"))
     }
 }
