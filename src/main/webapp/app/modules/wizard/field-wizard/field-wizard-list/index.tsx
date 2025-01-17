@@ -126,7 +126,7 @@ const FieldWizardList = () => {
           <IconButton color={'primary'}>
             <Switch
               size="small"
-              checked={items.filter(a => a.activated).length !== 0}
+              checked={items.every(a => a.activated)}
               color="secondary"
               onChange={e => {
                 setItems(
