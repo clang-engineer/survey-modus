@@ -20,7 +20,7 @@ const StyledBox = styled(Box)<{ isDragActive: boolean }>(({ theme, isDragActive 
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: theme.spacing(2),
+  padding: theme.spacing(5),
   margin: theme.spacing(1),
   border: '2px dashed #9e9e9e',
   borderRadius: theme.shape.borderRadius,
