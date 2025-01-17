@@ -14,6 +14,7 @@ import type from 'app/shared/model/enumerations/type.model';
 import dayjs from 'dayjs';
 import { downloadFileFromServer } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
+import DataSourceFileCell from 'app/modules/survey/form-gate/datasource-file-cell';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();
@@ -61,28 +62,7 @@ const DataSource = () => {
         return dayjs(value).format('YYYY-MM-DD');
       case type.FILE:
         const files = value && value.length > 0 ? value : [];
-
-        return (
-          <Box display="flex" flexDirection="row" justifyContent="center">
-            {files.map(file => (
-              <AnimateButton>
-                <Button
-                  variant="text"
-                  color="primary"
-                  onClick={() => {
-                    downloadFileFromServer(file);
-                  }}
-                  startIcon={<IconFile size={10} />}
-                >
-                  <Typography variant="caption" color="primary">
-                    {' '}
-                    {file.name}{' '}
-                  </Typography>
-                </Button>
-              </AnimateButton>
-            ))}
-          </Box>
-        );
+        return <DataSourceFileCell files={files} />;
       default:
         return value;
     }
