@@ -3,7 +3,6 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.File
 import com.clangengineer.surveymodus.repository.FileRepository
-import com.clangengineer.surveymodus.service.getSHA512
 import com.clangengineer.surveymodus.service.mapper.FileMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
@@ -123,7 +122,6 @@ class FileResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
-            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
     }
 
     @Test
@@ -143,7 +141,6 @@ class FileResourceIT {
             .andExpect(jsonPath("$.id").value(file.id?.toInt()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.path").value(DEFAULT_PATH))
-            .andExpect(jsonPath("$.hashKey").value(getSHA512(file.id.toString())))
     }
 
     @Test
@@ -270,7 +267,6 @@ class FileResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(file.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
-            .andExpect(jsonPath("$.[*].hashKey").value(hasItem(getSHA512(file.id.toString()))))
 
         restFileMockMvc.perform(get(ENTITY_API_URL + "/count?sort=id,desc&$filter"))
             .andExpect(status().isOk)

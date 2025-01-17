@@ -1,9 +1,10 @@
 package com.clangengineer.surveymodus.domain
 
-import com.clangengineer.surveymodus.service.getSHA512
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
 import java.time.Instant
 import javax.persistence.*
 import javax.validation.constraints.NotNull
@@ -69,6 +70,13 @@ data class File(
             ", size=$size" +
             ", type='$type'" +
             "}"
+    }
+
+    fun getSHA512(input: String): String {
+        val digest = MessageDigest.getInstance("SHA-512")
+        val hash = digest.digest(input.toByteArray(StandardCharsets.UTF_8))
+
+        return hash.joinToString("") { "%02x".format(it) }
     }
 
     companion object {

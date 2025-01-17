@@ -20,8 +20,6 @@ data class FileDTO(
 
     var type: String? = null,
 
-    var hashKey: String? = null,
-
     var createdBy: String? = null,
 
     var createdDate: Instant? = null,
