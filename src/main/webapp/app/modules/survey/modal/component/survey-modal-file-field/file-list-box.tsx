@@ -33,13 +33,21 @@ const FileFieldListBox = (props: IFileFieldListBoxProps) => {
       </Typography>
       {files.length > 0 ? (
         files.map((file: IFile, index) => (
-          <Box display="flex" alignItems="center" key={index}>
+          <Box
+            display="flex"
+            alignItems="center"
+            key={index}
+            sx={{
+              '& .MuiIconButton-root:hover': {
+                color: theme.palette.primary.dark,
+              },
+            }}
+          >
             <Typography variant="caption">
               {file.name} ({file.size} bytes)
             </Typography>
             &nbsp;
             <IconButton
-              color="primary"
               size="small"
               onClick={() => {
                 props.onDownloadButtonClick(file);
