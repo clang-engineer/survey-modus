@@ -14,6 +14,9 @@ import { IFile } from 'app/shared/model/file.model';
 import FileListBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-list-box';
 import FileTypeBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-type-box';
 import { styled } from '@mui/material/styles';
+import FileCommentModal from 'app/modules/survey/modal/component/survey-modal-file-field/file-comment-modal';
+
+import { create } from 'react-modal-promise';
 
 const StyledBox = styled(Box)<{ isDragActive: boolean }>(({ theme, isDragActive }) => ({
   display: 'flex',
@@ -39,6 +42,8 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   const { field, formik } = props;
   const [files, setFiles] = useState<IFile[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const fileCommentModalRef = React.useRef(null);
 
   React.useEffect(() => {
     if (formik.values[field.id]) {
@@ -97,6 +102,21 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     );
   };
 
+  const showFileCommentModal = (file: IFile) => {
+    create(FileCommentModal({ file }))().then((comment: string) => {
+      const newFiles = formik.values[field.id]?.map((f: IFile) => {
+        if (f.id === file.id) {
+          return {
+            ...f,
+            comment,
+          };
+        }
+        return f;
+      });
+      formik.setFieldValue(`${field.id}`, newFiles);
+    });
+  };
+
   return (
     <FormControl fullWidth>
       {error && (
@@ -117,10 +137,14 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         </Grid>
         <Grid item xs={12}>
           <FileListBox
+            formik={formik}
             files={files}
             onRemoveButtonClick={onRemoveButtonClick}
             onDownloadButtonClick={(file: IFile) => {
               downloadFileFromServer(file);
+            }}
+            onFileCommentButtonClick={(file: IFile) => {
+              showFileCommentModal(file);
             }}
           />
         </Grid>
@@ -128,5 +152,4 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     </FormControl>
   );
 };
-
 export default SurveyModalTextField;

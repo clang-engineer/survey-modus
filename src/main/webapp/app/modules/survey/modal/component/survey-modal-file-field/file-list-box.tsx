@@ -1,14 +1,18 @@
 import React from 'react';
 
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography, TextField } from '@mui/material';
 import { IFile } from 'app/shared/model/file.model';
 
-import { IconDownload, IconTrash } from '@tabler/icons';
+import { IconDownload, IconTrash, IconMessage } from '@tabler/icons';
+
+import { FormikProps } from 'formik';
 
 interface IFileFieldListBoxProps {
   files: IFile[];
+  formik: FormikProps<Record<string, any>>;
   onRemoveButtonClick: (file: IFile) => void;
   onDownloadButtonClick: (file: IFile) => void;
+  onFileCommentButtonClick: (file: IFile) => void;
 }
 
 const FileFieldListBox = (props: IFileFieldListBoxProps) => {
@@ -33,7 +37,7 @@ const FileFieldListBox = (props: IFileFieldListBoxProps) => {
                 props.onDownloadButtonClick(file);
               }}
             >
-              <IconDownload size={'10'} />
+              <IconDownload size={'12'} />
             </IconButton>
             <IconButton
               size="small"
@@ -41,7 +45,15 @@ const FileFieldListBox = (props: IFileFieldListBoxProps) => {
                 props.onRemoveButtonClick(file);
               }}
             >
-              <IconTrash size={'10'} />
+              <IconTrash size={'12'} />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => {
+                props.onFileCommentButtonClick(file);
+              }}
+            >
+              <IconMessage size={'12'} />
             </IconButton>
           </Box>
         ))
