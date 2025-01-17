@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Box, FormControl, Typography } from '@mui/material';
+import { Alert, Box, FormControl, Grid, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
@@ -12,6 +12,7 @@ import {
 } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
 import FileListBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-list-box';
+import FileTypeBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-type-box';
 
 interface ISurveyModalTextFieldProps {
   field: IField;
@@ -117,17 +118,14 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
           {isDragActive ? 'Drop the files here...' : 'Drag & drop some files here, or click to select files'}
         </Typography>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <FileListBox files={files} onRemoveButtonClick={onRemoveButtonClick} onDownloadButtonClick={onDownloadButtonClick} />
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" color="textSecondary">
-            <strong>Accepted file types:</strong> .png, .jpg, .jpeg, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .zip
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            <strong>Max file size:</strong> 10MB
-          </Typography>
-        </Box>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FileTypeBox />
+        </Grid>
+        <Grid item xs={12}>
+          <FileListBox files={files} onRemoveButtonClick={onRemoveButtonClick} onDownloadButtonClick={onDownloadButtonClick} />
+        </Grid>
+      </Grid>
     </FormControl>
   );
 };
