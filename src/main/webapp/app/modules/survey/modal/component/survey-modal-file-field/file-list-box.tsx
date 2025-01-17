@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Box, IconButton, Typography, TextField } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { IFile } from 'app/shared/model/file.model';
 
-import { IconDownload, IconTrash, IconMessage } from '@tabler/icons';
+import { IconDownload, IconMessage, IconMessageOff, IconTrash } from '@tabler/icons';
 
 import { FormikProps } from 'formik';
+
+import { useTheme } from '@mui/material/styles';
 
 interface IFileFieldListBoxProps {
   files: IFile[];
@@ -16,7 +18,13 @@ interface IFileFieldListBoxProps {
 }
 
 const FileFieldListBox = (props: IFileFieldListBoxProps) => {
+  const theme = useTheme();
+
   const { files } = props;
+
+  const isCommentExist = React.useCallback((file: IFile) => {
+    return file['comment'] && file['comment'].length > 0;
+  }, []);
 
   return (
     <Box>
@@ -47,14 +55,19 @@ const FileFieldListBox = (props: IFileFieldListBoxProps) => {
             >
               <IconTrash size={'12'} />
             </IconButton>
-            <IconButton
-              size="small"
-              onClick={() => {
-                props.onFileCommentButtonClick(file);
-              }}
-            >
-              <IconMessage size={'12'} />
-            </IconButton>
+            <Tooltip title={file['comment'] || 'No comment'} enterDelay={100} leaveDelay={100} placement="right" arrow>
+              <IconButton
+                size="small"
+                sx={{
+                  color: isCommentExist(file) ? theme.palette.text.primary : theme.palette.text.disabled,
+                }}
+                onClick={() => {
+                  props.onFileCommentButtonClick(file);
+                }}
+              >
+                {isCommentExist(file) ? <IconMessage size={'12'} /> : <IconMessageOff size={'12'} />}
+              </IconButton>
+            </Tooltip>
           </Box>
         ))
       ) : (
