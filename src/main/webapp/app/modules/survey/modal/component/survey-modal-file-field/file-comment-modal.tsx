@@ -4,10 +4,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { TextField, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { IFile } from 'app/shared/model/file.model';
 
@@ -23,7 +21,6 @@ const FileCommentModal =
     const [localComment, setLocalComment] = React.useState<string>('');
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     React.useEffect(() => {
       if (file) {
@@ -36,16 +33,13 @@ const FileCommentModal =
     };
 
     return (
-      <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-        <DialogTitle id="responsive-dialog-title">
-          <Typography variant="h6">File Comment</Typography>
-        </DialogTitle>
+      <Dialog open={isOpen} onClose={handleClose}>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText minWidth="400px">
             <TextField
               id="comment"
               name="comment"
-              label="Comment"
+              label={`${file.name}`}
               multiline
               rows={4}
               fullWidth
@@ -56,14 +50,15 @@ const FileCommentModal =
         </DialogContent>
         <DialogActions>
           <Button
+            size="small"
             onClick={() => {
-              onResolve(false);
               handleClose();
             }}
           >
             Cancel
           </Button>
           <Button
+            size="small"
             onClick={() => {
               onResolve(localComment);
             }}
