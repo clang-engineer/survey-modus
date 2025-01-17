@@ -1,17 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Box, FormControl, IconButton, Typography } from '@mui/material';
+import { Alert, Box, FormControl, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { useDropzone } from 'react-dropzone';
-import { IconDownload, IconTrash } from '@tabler/icons';
 import {
   downloadFileFromServer,
   uploadFilesToServer,
 } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
+import FileListBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-list-box';
 
 interface ISurveyModalTextFieldProps {
   field: IField;
@@ -118,31 +118,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         </Typography>
       </Box>
       <Box sx={{ mt: 2 }}>
-        {files.length > 0 && <Typography variant="h6">Uploaded Files:</Typography>}
-        {files.map((file: IFile, index) => (
-          <Box display="flex" alignItems="center" key={index}>
-            <Typography variant="body2">
-              {file.name} ({file.size} bytes)
-            </Typography>
-            &nbsp;
-            <IconButton
-              size="small"
-              onClick={() => {
-                onDownloadButtonClick(file);
-              }}
-            >
-              <IconDownload size={'12px'} />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() => {
-                onRemoveButtonClick(file);
-              }}
-            >
-              <IconTrash size={'12px'} />
-            </IconButton>
-          </Box>
-        ))}
+        <FileListBox files={files} onRemoveButtonClick={onRemoveButtonClick} onDownloadButtonClick={onDownloadButtonClick} />
         <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="textSecondary">
             <strong>Accepted file types:</strong> .png, .jpg, .jpeg, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .zip
