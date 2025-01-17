@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import NoContentBox from 'app/shared/component/no-content-box';
 import Loader from 'app/berry/ui-component/Loader';
-import { IconEdit, IconTrash } from '@tabler/icons';
+import { IconEdit, IconFile, IconTrash } from '@tabler/icons';
 import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
@@ -12,6 +12,8 @@ import SurveyModal from 'app/modules/survey/modal';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
 import dayjs from 'dayjs';
+import { downloadFileFromServer } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
+import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();
@@ -58,7 +60,29 @@ const DataSource = () => {
       case type.DATE:
         return dayjs(value).format('YYYY-MM-DD');
       case type.FILE:
-        return value && value.length > 0 ? value.map(file => file.name).join(', ') : '';
+        const files = value && value.length > 0 ? value : [];
+
+        return (
+          <Box display="flex" flexDirection="row" justifyContent="center">
+            {files.map(file => (
+              <AnimateButton>
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => {
+                    downloadFileFromServer(file);
+                  }}
+                  startIcon={<IconFile size={10} />}
+                >
+                  <Typography variant="caption" color="primary">
+                    {' '}
+                    {file.name}{' '}
+                  </Typography>
+                </Button>
+              </AnimateButton>
+            ))}
+          </Box>
+        );
       default:
         return value;
     }
