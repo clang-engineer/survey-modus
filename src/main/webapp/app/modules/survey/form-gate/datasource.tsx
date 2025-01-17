@@ -60,9 +60,10 @@ const DataSource = () => {
     switch (field.attribute.type) {
       case type.DATE:
         return dayjs(value).format('YYYY-MM-DD');
-      case type.FILE:
+      case type.FILE: {
         const files = value && value.length > 0 ? value : [];
         return <DataSourceFileCell files={files} />;
+      }
       default:
         return value;
     }

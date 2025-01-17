@@ -47,7 +47,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
   }, [formik.values[field.id]]);
 
   const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
+    (acceptedFiles: File[]) => {
       setError(null); // 이전 에러 초기화
 
       if (files.length + acceptedFiles.length > 5) {
@@ -55,8 +55,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         return;
       }
 
-      try {
-        const response = await uploadFilesToServer(acceptedFiles);
+      uploadFilesToServer(acceptedFiles).then(response => {
         if (response.status === 201) {
           const newFiles = [...files, ...response.data];
           setFiles(newFiles);
@@ -64,9 +63,7 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
         } else {
           setError('File upload failed. Please try again.');
         }
-      } catch (e) {
-        setError('File upload failed. Please try again.');
-      }
+      });
     },
     [files]
   );

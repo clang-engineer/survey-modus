@@ -17,7 +17,7 @@ const DataSourceFileCell = (props: IDataSourceFileCellProps) => {
   return (
     <Box display="flex" flexDirection="row" justifyContent="center">
       {files.map(file => (
-        <AnimateButton>
+        <AnimateButton key={file.id}>
           <Button
             variant="text"
             color="primary"
