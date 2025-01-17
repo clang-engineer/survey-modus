@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Box, FormControl, Typography } from '@mui/material';
+import { Alert, Box, FormControl, Grid, Typography } from '@mui/material';
 import { IField } from 'app/shared/model/field.model';
 import { FormikProps } from 'formik';
 
@@ -12,6 +12,23 @@ import {
 } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 import { IFile } from 'app/shared/model/file.model';
 import FileListBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-list-box';
+import FileTypeBox from 'app/modules/survey/modal/component/survey-modal-file-field/file-type-box';
+import { styled } from '@mui/material/styles';
+
+const StyledBox = styled(Box)<{ isDragActive: boolean }>(({ theme, isDragActive }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: theme.spacing(2),
+  margin: theme.spacing(1),
+  border: '2px dashed #9e9e9e',
+  borderRadius: theme.shape.borderRadius,
+  textAlign: 'center',
+  backgroundColor: isDragActive ? '#f5f5f5' : '#ffffff',
+  cursor: 'pointer',
+  transition: 'background-color 0.2s',
+}));
 
 interface ISurveyModalTextFieldProps {
   field: IField;
@@ -83,10 +100,6 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
     );
   };
 
-  const onDownloadButtonClick = (file: IFile) => {
-    downloadFileFromServer(file);
-  };
-
   return (
     <FormControl fullWidth>
       {error && (
@@ -94,40 +107,27 @@ const SurveyModalTextField = (props: ISurveyModalTextFieldProps) => {
           {error}
         </Alert>
       )}
-      <Box
-        {...getRootProps()}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 2,
-          m: 1,
-          border: '2px dashed #9e9e9e',
-          borderRadius: 2,
-          textAlign: 'center',
-          backgroundColor: isDragActive ? '#f5f5f5' : '#ffffff',
-          cursor: 'pointer',
-          transition: 'background-color 0.2s',
-        }}
-      >
+      <StyledBox {...getRootProps()} isDragActive={isDragActive}>
         <input {...getInputProps()} />
         <CloudUploadIcon color="primary" />
         <Typography variant="body1" sx={{ mt: 1 }}>
           {isDragActive ? 'Drop the files here...' : 'Drag & drop some files here, or click to select files'}
         </Typography>
-      </Box>
-      <Box sx={{ mt: 2 }}>
-        <FileListBox files={files} onRemoveButtonClick={onRemoveButtonClick} onDownloadButtonClick={onDownloadButtonClick} />
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" color="textSecondary">
-            <strong>Accepted file types:</strong> .png, .jpg, .jpeg, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .zip
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            <strong>Max file size:</strong> 10MB
-          </Typography>
-        </Box>
-      </Box>
+      </StyledBox>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FileTypeBox />
+        </Grid>
+        <Grid item xs={12}>
+          <FileListBox
+            files={files}
+            onRemoveButtonClick={onRemoveButtonClick}
+            onDownloadButtonClick={(file: IFile) => {
+              downloadFileFromServer(file);
+            }}
+          />
+        </Grid>
+      </Grid>
     </FormControl>
   );
 };
