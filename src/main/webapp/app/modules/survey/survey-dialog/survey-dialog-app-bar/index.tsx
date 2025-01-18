@@ -6,10 +6,13 @@ import { FormikProps } from 'formik';
 import { IForm } from 'app/shared/model/form.model';
 import { useAppSelector } from 'app/config/store';
 
+import { IconMessages } from '@tabler/icons';
+
 interface IDialogAppBarProps {
   form: IForm;
   formik: FormikProps<Record<string, any>>;
   onResolve: () => void;
+  onClickMessagesButton: () => void;
 }
 
 const DialogAppBar = (props: IDialogAppBarProps) => {
@@ -17,6 +20,10 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
 
   const loading = useAppSelector(state => state.documentReducer.loading);
   const updating = useAppSelector(state => state.documentReducer.updating);
+
+  const onClickMessagesButton = () => {
+    props.onClickMessagesButton();
+  };
 
   return (
     <AppBar sx={{ position: 'relative' }}>
@@ -35,6 +42,15 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
         <Typography sx={{ ml: 2, flex: 1 }} variant="h4" color="inherit">
           {form.title}
         </Typography>
+        <IconButton
+          color="inherit"
+          onClick={() => {
+            onClickMessagesButton();
+          }}
+          disabled={loading || updating}
+        >
+          <IconMessages />
+        </IconButton>
         <Button
           color="inherit"
           onClick={() => {
