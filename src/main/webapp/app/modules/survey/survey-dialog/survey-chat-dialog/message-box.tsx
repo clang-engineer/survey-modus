@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, ButtonGroup, Divider, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
-import { IconMessage } from '@tabler/icons';
+import { IconMessage, IconPencil, IconTrash } from '@tabler/icons';
 import { useAppSelector } from 'app/config/store';
 
 interface IMessageBoxProps {
   messages: any[];
   currentIndex: any;
+  onDeleteMessage: (index: number) => void;
 }
 
 const MessageBox = (props: IMessageBoxProps) => {
@@ -41,6 +42,20 @@ const MessageBox = (props: IMessageBoxProps) => {
             {currentMessage.createdBy}
           </Typography>
           &nbsp;
+          {isCurrentUser && (
+            <ButtonGroup size="small" variant="text">
+              <IconButton>
+                <IconPencil size={'12px'} color={labelColor} />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  props.onDeleteMessage(currentIndex);
+                }}
+              >
+                <IconTrash size={'12px'} color={labelColor} />
+              </IconButton>
+            </ButtonGroup>
+          )}
         </Box>
         <Box
           border={1}

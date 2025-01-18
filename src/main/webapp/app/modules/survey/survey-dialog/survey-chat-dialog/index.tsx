@@ -75,6 +75,13 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     formik.submitForm();
   };
 
+  const onMessageDelete = (index: number) => {
+    const newMessages = [...messages];
+    newMessages.splice(index, 1);
+    formik.setFieldValue('messages', newMessages);
+    formik.submitForm();
+  };
+
   return (
     <Dialog
       open={isOpen}
@@ -94,7 +101,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
                 .filter(m => m)
                 .sort((a, b) => a.createdDate - b.createdDate)
                 .map((message, index) => {
-                  return <MessageBox key={index} messages={messages} currentIndex={index} />;
+                  return <MessageBox key={index} messages={messages} currentIndex={index} onDeleteMessage={onMessageDelete} />;
                 })}
             </Box>
           </DialogContentText>
