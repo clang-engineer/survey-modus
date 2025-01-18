@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar, Box, Button, Dialog, Grid, IconButton, Slide, Toolbar, Typography } from '@mui/material';
-
-import CloseIcon from '@mui/icons-material/Close';
+import { Box, Dialog, Grid, Slide, Typography } from '@mui/material';
 
 import { TransitionProps } from '@mui/material/transitions';
 import { IForm } from 'app/shared/model/form.model';
@@ -22,6 +20,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
 import { IDocument } from 'app/shared/model/document.model';
 import { ICompany } from 'app/shared/model/company.model';
+import DialogAppBar from 'app/modules/survey/modal/dialog-app-bar';
 
 interface IFieldWizardPreviewModalProps {
   company: ICompany;
@@ -102,7 +101,12 @@ const SurveyModal =
           dispatch(
             updateDocument({
               collectionId: form.category.id,
-              document: { id: document.id, companyId: company.id, formId: form.id, fields: mappedFields },
+              document: {
+                id: document.id,
+                companyId: company.id,
+                formId: form.id,
+                fields: mappedFields,
+              },
             })
           );
         } else {
@@ -128,33 +132,7 @@ const SurveyModal =
 
     return (
       <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition} sx={{ '& .MuiPaper-root': { padding: 0 } }}>
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => {
-                formik.resetForm();
-                onResolve();
-              }}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h4" color="inherit">
-              {form.title}
-            </Typography>
-            <Button
-              color="inherit"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              disabled={loading || updating}
-            >
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <DialogAppBar form={form} formik={formik} onResolve={onResolve} />
         <Grid container spacing={2} paddingY={theme.spacing(2)}>
           {fields.length > 0 ? (
             fields
