@@ -4,15 +4,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-import { Box, IconButton, TextField, Typography } from '@mui/material';
+import { Box, IconButton, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { IconSend } from '@tabler/icons';
 import { FormikProps } from 'formik';
 import { useAppSelector } from 'app/config/store';
-
-import dayjs from 'dayjs';
+import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
 
 interface IDocumentChatModalProps {
   formik: FormikProps<Record<string, any>>;
@@ -24,7 +23,6 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     close: handleClose,
   }));
 
-  const perfectScrollbarRef = React.useRef(null);
   const { formik } = props;
 
   const theme = useTheme();
@@ -41,8 +39,10 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
   }, [formik]);
 
   React.useLayoutEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (isOpen) {
+      scrollToBottom();
+    }
+  }, [isOpen, messages]);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -54,78 +54,70 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
 
   const scrollToBottom = () => {
     setTimeout(() => {
-      if (perfectScrollbarRef.current) {
-        const psInstance = perfectScrollbarRef.current;
-        if (psInstance && psInstance.scrollTo) {
-          // PerfectScrollbar의 scrollTo 메서드를 호출
-          psInstance.scrollTo(0, psInstance.scrollHeight);
-        } else if (psInstance._container) {
-          // _container 직접 접근
-          const container = psInstance._container;
-          container.scrollTop = container.scrollHeight;
-        }
+      const dialog = document.querySelector('.dialog-content-scrollable');
+      if (dialog) {
+        dialog.scrollTo({ top: dialog.scrollHeight, behavior: 'auto' });
+      } else {
+        console.warn('Scroll target not found.');
       }
-    }, 100);
+    }, 0);
   };
 
-  const MessageBox = (props: { message: any }) => {
-    const { message } = props;
-
-    return (
-      <Box bgcolor="background.paper" boxShadow={1} marginBottom={1}>
-        <Box p={1}>
-          <Typography variant="body1">{message.message}</Typography>
-        </Box>
-        <Box p={1} display="flex">
-          <Typography variant="caption">{message.createdBy}</Typography>&nbsp;
-          <Typography variant="caption">{dayjs(message.createdDate).format('YYYY-MM-DD HH:mm')}</Typography>
-        </Box>
-      </Box>
-    );
+  const onMessageSend = () => {
+    formik.setFieldValue('messages', [
+      ...messages,
+      {
+        message: comment,
+        createdBy: account.login,
+        createdDate: new Date(),
+      },
+    ]);
+    formik.submitForm();
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
-      <DialogContent
-        sx={{
-          '& .ps__rail-y': {
-            display: 'none',
-          },
-        }}
-      >
-        <PerfectScrollbar
-          ref={perfectScrollbarRef}
-          style={{
-            maxHeight: '600px',
-            overflowY: 'auto',
-          }}
-        >
-          <DialogContentText>
+    <Dialog
+      open={isOpen}
+      onClose={handleClose}
+      sx={{
+        '& .dialog-content-scrollable': {
+          padding: '8px',
+          marginBottom: 1,
+        },
+      }}
+    >
+      <DialogContent className="dialog-content-scrollable" sx={{ '& .ps__rail-y': { display: 'none' } }}>
+        <PerfectScrollbar>
+          <DialogContentText maxWidth="500px" maxHeight="600px">
             <Box width="500px">
               {messages
                 .filter(m => m)
                 .sort((a, b) => a.createdDate - b.createdDate)
                 .map((message, index) => {
-                  return <MessageBox key={index} message={message} />;
+                  return <MessageBox key={index} messages={messages} currentIndex={index} />;
                 })}
             </Box>
           </DialogContentText>
         </PerfectScrollbar>
       </DialogContent>
       <DialogActions>
-        <TextField id="comment" name="comment" fullWidth size="small" value={comment} onChange={e => setComment(e.target.value)} />
+        <TextField
+          id="comment"
+          name="comment"
+          fullWidth
+          size="small"
+          value={comment}
+          onChange={e => setComment(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onMessageSend();
+            }
+          }}
+        />
         <IconButton
           size="small"
           onClick={() => {
-            formik.setFieldValue('messages', [
-              ...messages,
-              {
-                message: comment,
-                createdBy: account.login,
-                createdDate: new Date(),
-              },
-            ]);
-            formik.submitForm();
+            onMessageSend();
           }}
         >
           <IconSend size={'1rem'} />
