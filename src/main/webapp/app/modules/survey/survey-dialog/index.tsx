@@ -102,13 +102,14 @@ const SurveyModal =
         <SurveyDialogAppBar
           form={form}
           formik={formik}
+          document={document}
           onResolve={onResolve}
           onClickMessagesButton={() => {
             chatDialogRef.current.open();
           }}
         />
         <SurveyDialogContent fields={fields} formik={formik} />
-        <SurveyChatDialog ref={chatDialogRef} formik={formik} />
+        <SurveyChatDialog ref={chatDialogRef} formik={formik} form={form} document={document} />
       </Dialog>
     );
   };

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Box, ButtonGroup, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Divider, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
-import { IconMessage, IconPencil, IconTrash } from '@tabler/icons';
+import { IconPencil, IconTrash } from '@tabler/icons';
 import { useAppSelector } from 'app/config/store';
 
 interface IMessageBoxProps {
@@ -29,31 +29,26 @@ const MessageBox = (props: IMessageBoxProps) => {
     <Box>
       {showDate && (
         <Divider sx={{ marginBottom: theme.spacing(2) }}>
-          <Typography variant="subtitle2" align="center" color={labelColor}>
+          <Typography variant="subtitle2" align="center">
             {dayjs(currentMessage.createdDate).format('YYYY-MM-DD')}
           </Typography>
         </Divider>
       )}
       <Box marginBottom={2}>
         <Box display="flex" alignItems="center" justifyContent={isCurrentUser ? 'flex-start' : 'flex-end'}>
-          <IconMessage size={'1rem'} color={labelColor} />
-          &nbsp;
-          <Typography variant="caption" color={labelColor}>
-            {currentMessage.createdBy}
-          </Typography>
-          &nbsp;
+          <Typography variant="caption">{currentMessage.createdBy}</Typography>
           {isCurrentUser && (
             <ButtonGroup size="small" variant="text">
-              <IconButton>
+              <Button>
                 <IconPencil size={'12px'} color={labelColor} />
-              </IconButton>
-              <IconButton
+              </Button>
+              <Button
                 onClick={() => {
                   props.onDeleteMessage(currentIndex);
                 }}
               >
                 <IconTrash size={'12px'} color={labelColor} />
-              </IconButton>
+              </Button>
             </ButtonGroup>
           )}
         </Box>

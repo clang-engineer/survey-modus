@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import { Box, IconButton, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -12,8 +13,14 @@ import { IconSend } from '@tabler/icons';
 import { FormikProps } from 'formik';
 import { useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
+import { IForm } from 'app/shared/model/form.model';
+import { IDocument } from 'app/shared/model/document.model';
+
+import { Typography } from '@mui/material';
 
 interface IDocumentChatModalProps {
+  form: IForm;
+  document: IDocument;
   formik: FormikProps<Record<string, any>>;
 }
 
@@ -23,7 +30,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     close: handleClose,
   }));
 
-  const { formik } = props;
+  const { formik, form } = props;
 
   const theme = useTheme();
   const account = useAppSelector(state => state.authentication.account);
@@ -87,13 +94,29 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
       open={isOpen}
       onClose={handleClose}
       sx={{
-        '& .dialog-content-scrollable': {
-          padding: '8px',
-          marginBottom: 1,
+        '& .MuiPaper-root': {
+          padding: 0,
         },
       }}
     >
-      <DialogContent className="dialog-content-scrollable" sx={{ '& .ps__rail-y': { display: 'none' } }}>
+      <DialogTitle
+        style={{
+          backgroundColor: theme.palette.grey[100],
+          padding: '8px',
+        }}
+      >
+        <Typography variant="h6" component="div" style={{ padding: '8px' }}>
+          {form.title} : {props.document.id}
+        </Typography>
+      </DialogTitle>
+      <DialogContent
+        className="dialog-content-scrollable"
+        sx={{ '& .ps__rail-y': { display: 'none' } }}
+        style={{
+          padding: '8px',
+          backgroundColor: theme.palette.grey[100],
+        }}
+      >
         <PerfectScrollbar>
           <DialogContentText maxWidth="500px" maxHeight="600px">
             <Box width="500px">
@@ -107,7 +130,12 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
           </DialogContentText>
         </PerfectScrollbar>
       </DialogContent>
-      <DialogActions>
+      <DialogActions
+        style={{
+          backgroundColor: theme.palette.grey[100],
+          padding: '8px',
+        }}
+      >
         <TextField
           id="comment"
           name="comment"

@@ -1,22 +1,24 @@
 import React from 'react';
 
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormikProps } from 'formik';
 import { IForm } from 'app/shared/model/form.model';
 import { useAppSelector } from 'app/config/store';
 
 import { IconMessages } from '@tabler/icons';
+import { IDocument } from 'app/shared/model/document.model';
 
 interface IDialogAppBarProps {
   form: IForm;
+  document: IDocument;
   formik: FormikProps<Record<string, any>>;
   onResolve: () => void;
   onClickMessagesButton: () => void;
 }
 
 const DialogAppBar = (props: IDialogAppBarProps) => {
-  const { form, formik } = props;
+  const { form, formik, document } = props;
 
   const loading = useAppSelector(state => state.documentReducer.loading);
   const updating = useAppSelector(state => state.documentReducer.updating);
@@ -39,18 +41,23 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
         >
           <CloseIcon />
         </IconButton>
-        <Typography sx={{ ml: 2, flex: 1 }} variant="h4" color="inherit">
-          {form.title}
-        </Typography>
-        <IconButton
-          color="inherit"
-          onClick={() => {
-            onClickMessagesButton();
-          }}
-          disabled={loading || updating}
-        >
-          <IconMessages />
-        </IconButton>
+        <Box display="flex" alignItems="center" flexGrow={1} justifyContent="flex-start">
+          <Typography variant="h4" color="inherit">
+            {form.title} : {document.id}
+          </Typography>
+          &nbsp;&nbsp;
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={() => {
+              onClickMessagesButton();
+            }}
+            disabled={loading || updating}
+          >
+            {' '}
+            <IconMessages />
+          </IconButton>
+        </Box>
         <Button
           color="inherit"
           onClick={() => {
