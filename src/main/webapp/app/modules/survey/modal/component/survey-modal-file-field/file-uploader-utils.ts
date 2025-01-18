@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IFile } from 'app/shared/model/file.model';
-
+import { toast } from 'react-toastify';
 const uploadFilesToServer = async (files: File[]) => {
   const formData = new FormData();
   files.forEach(file => formData.append('multipartFiles', file)); // 'files'는 서버가 기대하는 필드 이름
@@ -45,6 +45,7 @@ const downloadFileFromServer = async (file: IFile) => {
     link.remove();
     URL.revokeObjectURL(url);
   } catch (error) {
+    toast.error('파일 다운로드 중 오류가 발생했습니다.');
     console.error('Error downloading the file:', error);
   }
 };
