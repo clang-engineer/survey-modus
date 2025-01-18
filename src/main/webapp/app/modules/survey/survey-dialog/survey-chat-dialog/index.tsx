@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { Box, IconButton, TextField, Typography } from '@mui/material';
+import { IconButton, TextField, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -36,6 +36,8 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
   const [isOpen, setIsOpen] = React.useState(false);
   const [messages, setMessages] = React.useState([]);
   const [comment, setComment] = React.useState('');
+
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   React.useEffect(() => {
     if (formik.values.messages) {
@@ -78,6 +80,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
       },
     ]);
     formik.submitForm();
+    setComment('');
   };
 
   const onMessageDelete = (index: number) => {
@@ -96,6 +99,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
           padding: 0,
         },
       }}
+      fullScreen={fullScreen}
     >
       <DialogTitle
         style={{
@@ -116,15 +120,13 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         }}
       >
         <PerfectScrollbar>
-          <DialogContentText maxWidth="500px" height="600px">
-            <Box width="500px">
-              {messages
-                .filter(m => m)
-                .sort((a, b) => a.createdDate - b.createdDate)
-                .map((message, index) => {
-                  return <MessageBox key={index} messages={messages} currentIndex={index} onDeleteMessage={onMessageDelete} />;
-                })}
-            </Box>
+          <DialogContentText>
+            {messages
+              .filter(m => m)
+              .sort((a, b) => a.createdDate - b.createdDate)
+              .map((message, index) => {
+                return <MessageBox key={index} messages={messages} currentIndex={index} onDeleteMessage={onMessageDelete} />;
+              })}
           </DialogContentText>
         </PerfectScrollbar>
       </DialogContent>
