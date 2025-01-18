@@ -115,6 +115,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
           }}
         />
         <IconButton
+          color="primary"
           size="small"
           onClick={() => {
             onMessageSend();
