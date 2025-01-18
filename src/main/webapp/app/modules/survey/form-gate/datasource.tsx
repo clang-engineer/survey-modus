@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { Box, Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import NoContentBox from 'app/shared/component/no-content-box';
 import Loader from 'app/berry/ui-component/Loader';
-import { IconEdit, IconFile, IconTrash } from '@tabler/icons';
+import { IconEdit, IconTrash } from '@tabler/icons';
 import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
@@ -12,8 +12,6 @@ import SurveyModal from 'app/modules/survey/modal';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
 import dayjs from 'dayjs';
-import { downloadFileFromServer } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
-import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import DataSourceFileCell from 'app/modules/survey/form-gate/datasource-file-cell';
 
 const DataSource = () => {

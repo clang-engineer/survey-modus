@@ -1,12 +1,12 @@
 import React from 'react';
 import { IFile } from 'app/shared/model/file.model';
-import { downloadFileFromServer } from 'app/modules/survey/modal/component/survey-modal-file-field/file-uploader-utils';
 
 import { Box, Divider, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { IconFileDownload } from '@tabler/icons';
 
 import { useTheme } from '@mui/material/styles';
+import { downloadFileFromServer } from 'app/modules/survey/file-manage-utils';
 
 interface IDataSourceFileCellProps {
   files: IFile[];

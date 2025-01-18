@@ -6,12 +6,12 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
-import SurveyModalTextField from 'app/modules/survey/modal/component/survey-modal-text-field';
-import SurveyModalDateField from 'app/modules/survey/modal/component/survey-modal-date-field';
-import SurveyModalSelectField from 'app/modules/survey/modal/component/survey-modal-select-field';
-import SurveyModalRadioField from 'app/modules/survey/modal/component/survey-modal-radio-field';
-import SurveyModalCheckboxField from 'app/modules/survey/modal/component/survey-modal-checkbox-field';
-import SurveyModalFileField from 'app/modules/survey/modal/component/survey-modal-file-field';
+import SurveyModalTextField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-text-field';
+import SurveyModalDateField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-date-field';
+import SurveyModalSelectField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-select-field';
+import SurveyModalRadioField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-radio-field';
+import SurveyModalCheckboxField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-checkbox-field';
+import SurveyModalFileField from 'app/modules/survey/modal/survey-dialog-content/component/survey-modal-file-field';
 
 import { FormikProps } from 'formik';
 
