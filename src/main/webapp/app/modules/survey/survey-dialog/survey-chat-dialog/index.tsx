@@ -118,7 +118,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         }}
       >
         <PerfectScrollbar>
-          <DialogContentText maxWidth="500px" maxHeight="600px">
+          <DialogContentText maxWidth="500px" height="600px">
             <Box width="500px">
               {messages
                 .filter(m => m)

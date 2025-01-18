@@ -36,8 +36,7 @@ const MessageBox = (props: IMessageBoxProps) => {
       )}
       <Box marginBottom={2}>
         <Box display="flex" alignItems="center" justifyContent={isCurrentUser ? 'flex-start' : 'flex-end'}>
-          <Typography variant="caption">{currentMessage.createdBy}</Typography>
-          {isCurrentUser && (
+          {isCurrentUser ? (
             <ButtonGroup size="small" variant="text">
               <Button>
                 <IconPencil size={'12px'} color={labelColor} />
@@ -50,6 +49,8 @@ const MessageBox = (props: IMessageBoxProps) => {
                 <IconTrash size={'12px'} color={labelColor} />
               </Button>
             </ButtonGroup>
+          ) : (
+            <Typography variant="caption">{currentMessage.createdBy}</Typography>
           )}
         </Box>
         <Box
@@ -69,7 +70,7 @@ const MessageBox = (props: IMessageBoxProps) => {
         </Box>
         <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
           <Typography color={labelColor} variant="caption">
-            {dayjs(currentMessage.createdDate).format('HH:mm:ss')}
+            {dayjs(currentMessage.createdDate).format('HH:mm A')}
           </Typography>
         </Box>
       </Box>
