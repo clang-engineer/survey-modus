@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Box, Button, ButtonGroup, Divider, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
@@ -34,45 +33,38 @@ const MessageBox = (props: IMessageBoxProps) => {
           </Typography>
         </Divider>
       )}
-      <Box marginBottom={2}>
-        <Box display="flex" alignItems="center" justifyContent={isCurrentUser ? 'flex-start' : 'flex-end'}>
-          {isCurrentUser ? (
-            <ButtonGroup size="small" variant="text">
-              <Button>
-                <IconPencil size={'12px'} color={labelColor} />
-              </Button>
-              <Button
-                onClick={() => {
-                  props.onDeleteMessage(currentIndex);
-                }}
-              >
-                <IconTrash size={'12px'} color={labelColor} />
-              </Button>
-            </ButtonGroup>
-          ) : (
-            <Typography variant="caption">{currentMessage.createdBy}</Typography>
-          )}
-        </Box>
+      <Box marginBottom={2} display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
         <Box
-          border={1}
-          borderRadius={2}
-          padding={2}
-          borderColor={theme.palette.grey[300]}
           sx={{
-            overflowWrap: 'break-word',
-            wordWrap: 'break-word',
-            wordBreak: 'break-word',
-            hyphens: 'auto',
-            backgroundColor: theme.palette.background.default,
+            position: 'relative',
+            maxWidth: '70%',
+            padding: theme.spacing(1.5),
+            borderRadius: isCurrentUser ? '20px 20px 0 20px' : '20px 20px 20px 0',
+            backgroundColor: isCurrentUser ? theme.palette.primary.main : theme.palette.grey[300],
+            color: isCurrentUser ? theme.palette.primary.contrastText : theme.palette.text.primary,
+            boxShadow: theme.shadows[2],
           }}
         >
           <Typography variant="body1">{currentMessage.message}</Typography>
         </Box>
-        <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
-          <Typography color={labelColor} variant="caption">
-            {dayjs(currentMessage.createdDate).format('HH:mm A')}
-          </Typography>
-        </Box>
+      </Box>
+      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'} mt={1}>
+        {isCurrentUser ? (
+          <Button
+            onClick={() => {
+              props.onDeleteMessage(currentIndex);
+            }}
+          >
+            <IconTrash size={'12px'} color={labelColor} />
+          </Button>
+        ) : (
+          <Typography variant="caption">{currentMessage.createdBy}</Typography>
+        )}
+      </Box>
+      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'} mt={0.5}>
+        <Typography color={labelColor} variant="caption">
+          {dayjs(currentMessage.createdDate).format('HH:mm A')}
+        </Typography>
       </Box>
     </Box>
   );
