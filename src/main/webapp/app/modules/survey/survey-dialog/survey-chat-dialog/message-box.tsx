@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, ButtonGroup, Divider, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Divider, Typography, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
 import { IconPencil, IconTrash } from '@tabler/icons';
@@ -25,7 +25,7 @@ const MessageBox = (props: IMessageBoxProps) => {
   const labelColor = theme.palette.text.secondary;
 
   return (
-    <Box>
+    <Box marginBottom={theme.spacing(1)}>
       {showDate && (
         <Divider sx={{ marginBottom: theme.spacing(2) }}>
           <Typography variant="subtitle2" align="center">
@@ -33,7 +33,21 @@ const MessageBox = (props: IMessageBoxProps) => {
           </Typography>
         </Divider>
       )}
-      <Box marginBottom={2} display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
+      {!isCurrentUser ? (
+        <Box display="flex">
+          <Typography variant="caption">{currentMessage.createdBy}</Typography>
+        </Box>
+      ) : null}
+      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
+        {isCurrentUser ? (
+          <IconButton
+            onClick={() => {
+              props.onDeleteMessage(currentIndex);
+            }}
+          >
+            <IconTrash size={'12px'} color={labelColor} />
+          </IconButton>
+        ) : null}
         <Box
           sx={{
             position: 'relative',
@@ -48,20 +62,7 @@ const MessageBox = (props: IMessageBoxProps) => {
           <Typography variant="body1">{currentMessage.message}</Typography>
         </Box>
       </Box>
-      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'} mt={1}>
-        {isCurrentUser ? (
-          <Button
-            onClick={() => {
-              props.onDeleteMessage(currentIndex);
-            }}
-          >
-            <IconTrash size={'12px'} color={labelColor} />
-          </Button>
-        ) : (
-          <Typography variant="caption">{currentMessage.createdBy}</Typography>
-        )}
-      </Box>
-      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'} mt={0.5}>
+      <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
         <Typography color={labelColor} variant="caption">
           {dayjs(currentMessage.createdDate).format('HH:mm A')}
         </Typography>
