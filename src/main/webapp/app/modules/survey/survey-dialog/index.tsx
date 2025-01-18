@@ -11,8 +11,8 @@ import { useAppDispatch } from 'app/config/store';
 import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
 import { IDocument } from 'app/shared/model/document.model';
 import { ICompany } from 'app/shared/model/company.model';
-import SurveyDialogAppBar from 'app/modules/survey/modal/survey-dialog-app-bar';
-import SurveyDialogContent from 'app/modules/survey/modal/survey-dialog-content';
+import SurveyDialogAppBar from 'app/modules/survey/survey-dialog/survey-dialog-app-bar';
+import SurveyDialogContent from 'app/modules/survey/survey-dialog/survey-dialog-content';
 
 interface IFieldWizardPreviewModalProps {
   company: ICompany;

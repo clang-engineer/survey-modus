@@ -8,7 +8,7 @@ import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
 import { DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
-import SurveyModal from 'app/modules/survey/modal';
+import SurveyModal from 'app/modules/survey/survey-dialog';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
 import dayjs from 'dayjs';
