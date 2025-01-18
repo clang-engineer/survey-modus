@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-import { Grid, IconButton, TextField } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -24,6 +24,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     close: handleClose,
   }));
 
+  const perfectScrollbarRef = React.useRef(null);
   const { formik } = props;
 
   const theme = useTheme();
@@ -39,6 +40,10 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     }
   }, [formik]);
 
+  React.useLayoutEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -47,36 +52,63 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
     setIsOpen(false);
   };
 
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (perfectScrollbarRef.current) {
+        const psInstance = perfectScrollbarRef.current;
+        if (psInstance && psInstance.scrollTo) {
+          // PerfectScrollbar의 scrollTo 메서드를 호출
+          psInstance.scrollTo(0, psInstance.scrollHeight);
+        } else if (psInstance._container) {
+          // _container 직접 접근
+          const container = psInstance._container;
+          container.scrollTop = container.scrollHeight;
+        }
+      }
+    }, 100);
+  };
+
   const MessageBox = (props: { message: any }) => {
     const { message } = props;
 
     return (
-      <Grid item xs={12}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <strong>{message.createdBy}</strong>
-          </Grid>
-          <Grid item xs={12}>
-            {message.message}
-          </Grid>
-          <Grid item xs={12}>
-            <small>{dayjs(message.createdDate).format('YYYY-MM-DD HH:mm')}</small>
-          </Grid>
-        </Grid>
-      </Grid>
+      <Box bgcolor="background.paper" boxShadow={1} marginBottom={1}>
+        <Box p={1}>
+          <Typography variant="body1">{message.message}</Typography>
+        </Box>
+        <Box p={1} display="flex">
+          <Typography variant="caption">{message.createdBy}</Typography>&nbsp;
+          <Typography variant="caption">{dayjs(message.createdDate).format('YYYY-MM-DD HH:mm')}</Typography>
+        </Box>
+      </Box>
     );
   };
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogContent>
-        <PerfectScrollbar options={{ suppressScrollX: true }}>
+      <DialogContent
+        sx={{
+          '& .ps__rail-y': {
+            display: 'none',
+          },
+        }}
+      >
+        <PerfectScrollbar
+          ref={perfectScrollbarRef}
+          style={{
+            maxHeight: '600px',
+            overflowY: 'auto',
+          }}
+        >
           <DialogContentText>
-            <Grid container spacing={1} minWidth="400px" minHeight="400px">
-              {messages.map((message, index) => {
-                return <MessageBox key={index} message={message} />;
-              })}
-            </Grid>
+            <Box width="500px">
+              {messages
+                .filter(m => m)
+                .sort((a, b) => a.createdDate - b.createdDate)
+                .map((message, index) => {
+                  return <MessageBox key={index} message={message} />;
+                })}
+            </Box>
           </DialogContentText>
         </PerfectScrollbar>
       </DialogContent>
@@ -93,6 +125,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
                 createdDate: new Date(),
               },
             ]);
+            formik.submitForm();
           }}
         >
           <IconSend size={'1rem'} />
