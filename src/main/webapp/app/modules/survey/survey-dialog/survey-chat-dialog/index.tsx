@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { Box, IconButton, TextField } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -15,8 +15,6 @@ import { useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
 import { IForm } from 'app/shared/model/form.model';
 import { IDocument } from 'app/shared/model/document.model';
-
-import { Typography } from '@mui/material';
 
 interface IDocumentChatModalProps {
   form: IForm;
@@ -117,7 +115,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
           backgroundColor: theme.palette.grey[100],
         }}
       >
-        <PerfectScrollbar scrollX={false}>
+        <PerfectScrollbar>
           <DialogContentText maxWidth="500px" height="600px">
             <Box width="500px">
               {messages

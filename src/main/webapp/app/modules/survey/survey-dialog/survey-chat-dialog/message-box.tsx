@@ -20,7 +20,8 @@ const MessageBox = (props: IMessageBoxProps) => {
   const currentMessage = messages[currentIndex];
   const showDate = currentIndex === 0 || dayjs(currentMessage.createdDate).diff(dayjs(messages[currentIndex - 1].createdDate), 'day') > 0;
 
-  const isCurrentUser = currentMessage.createdBy === account.login;
+  // const isCurrentUser = currentMessage.createdBy === account.login;
+  const isCurrentUser = Math.random() > 0.5;
 
   const labelColor = theme.palette.text.secondary;
 
@@ -57,6 +58,7 @@ const MessageBox = (props: IMessageBoxProps) => {
             backgroundColor: isCurrentUser ? theme.palette.primary.main : theme.palette.grey[300],
             color: isCurrentUser ? theme.palette.primary.contrastText : theme.palette.text.primary,
             boxShadow: theme.shadows[2],
+            wordBreak: 'break-word',
           }}
         >
           <Typography variant="body1">{currentMessage.message}</Typography>
