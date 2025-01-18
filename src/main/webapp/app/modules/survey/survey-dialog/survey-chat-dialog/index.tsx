@@ -9,12 +9,14 @@ import { IconButton, TextField, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import { IconSend } from '@tabler/icons';
+import { IconSend, IconX } from '@tabler/icons';
 import { FormikProps } from 'formik';
 import { useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
 import { IForm } from 'app/shared/model/form.model';
 import { IDocument } from 'app/shared/model/document.model';
+import Transitions from 'app/berry/ui-component/extended/Transitions';
+import SlideTransition from 'app/shared/component/slide-transition';
 
 interface IDocumentChatModalProps {
   form: IForm;
@@ -92,6 +94,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
 
   return (
     <Dialog
+      TransitionComponent={SlideTransition}
       open={isOpen}
       onClose={handleClose}
       sx={{
@@ -105,11 +108,15 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         style={{
           backgroundColor: theme.palette.grey[100],
           padding: '8px',
+          borderBottom: `1px solid ${theme.palette.grey[300]}`,
         }}
       >
         <Typography variant="h6" component="div" style={{ padding: '8px' }}>
           {form.title} : {props.document.id}
         </Typography>
+        <IconButton style={{ position: 'absolute', right: '8px', top: '8px' }} onClick={handleClose}>
+          <IconX size={'1rem'} />
+        </IconButton>
       </DialogTitle>
       <DialogContent
         className="dialog-content-scrollable"
@@ -117,6 +124,8 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         style={{
           padding: '8px',
           backgroundColor: theme.palette.grey[100],
+          width: fullScreen ? '100%' : '500px',
+          height: fullScreen ? '100%' : '600px',
         }}
       >
         <PerfectScrollbar>
