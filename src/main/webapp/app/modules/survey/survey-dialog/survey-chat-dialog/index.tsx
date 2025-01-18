@@ -15,7 +15,6 @@ import { useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
 import { IForm } from 'app/shared/model/form.model';
 import { IDocument } from 'app/shared/model/document.model';
-import Transitions from 'app/berry/ui-component/extended/Transitions';
 import SlideTransition from 'app/shared/component/slide-transition';
 
 interface IDocumentChatModalProps {
@@ -130,12 +129,18 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
       >
         <PerfectScrollbar>
           <DialogContentText>
-            {messages
-              .filter(m => m)
-              .sort((a, b) => a.createdDate - b.createdDate)
-              .map((message, index) => {
-                return <MessageBox key={index} messages={messages} currentIndex={index} onDeleteMessage={onMessageDelete} />;
-              })}
+            {messages.length === 0 ? (
+              <Typography variant="body1" align="center">
+                No messages
+              </Typography>
+            ) : (
+              messages
+                .filter(m => m)
+                .sort((a, b) => a.createdDate - b.createdDate)
+                .map((message, index) => {
+                  return <MessageBox key={index} messages={messages} currentIndex={index} onDeleteMessage={onMessageDelete} />;
+                })
+            )}
           </DialogContentText>
         </PerfectScrollbar>
       </DialogContent>
