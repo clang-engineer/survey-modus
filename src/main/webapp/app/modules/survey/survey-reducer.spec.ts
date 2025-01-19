@@ -4,17 +4,10 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  createDocument,
-  deleteDocument,
-  getDocumentById,
-  getDocumentsByCompanyIdAndFormId,
-  reset,
-  updateDocument,
-} from './document.reducer';
-import { defaultValue } from 'app/shared/model/document.model';
+import reducer, { createSurvey, deleteSurvey, getSurveyById, getSurveysByCompanyIdAndFormId, reset, updateSurvey } from './survey.reducer';
+import { defaultValue } from 'app/shared/model/survey.model';
 
-describe('Document reducer tests', () => {
+describe('Survey reducer tests', () => {
   function isEmpty(element): boolean {
     if (element instanceof Array) {
       return element.length === 0;
@@ -26,8 +19,8 @@ describe('Document reducer tests', () => {
   const initialState = {
     loading: false,
     errorMessage: null,
-    documents: [],
-    document: defaultValue,
+    surveys: [],
+    survey: defaultValue,
     updating: false,
     updateSuccess: false,
   };
@@ -39,8 +32,8 @@ describe('Document reducer tests', () => {
       updating: false,
       updateSuccess: false,
     });
-    expect(isEmpty(state.documents));
-    expect(isEmpty(state.document));
+    expect(isEmpty(state.surveys));
+    expect(isEmpty(state.survey));
   }
 
   function testMultipleTypes(types, payload, testFunction, error?) {
@@ -63,7 +56,7 @@ describe('Document reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      testMultipleTypes([getDocumentsByCompanyIdAndFormId.pending.type, getDocumentById.pending.type], {}, state => {
+      testMultipleTypes([getSurveysByCompanyIdAndFormId.pending.type, getSurveyById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -73,7 +66,7 @@ describe('Document reducer tests', () => {
     });
 
     it('should set state to updating', () => {
-      testMultipleTypes([createDocument.pending.type, updateDocument.pending.type, deleteDocument.pending.type], {}, state => {
+      testMultipleTypes([createSurvey.pending.type, updateSurvey.pending.type, deleteSurvey.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -87,11 +80,11 @@ describe('Document reducer tests', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
         [
-          getDocumentsByCompanyIdAndFormId.rejected.type,
-          getDocumentById.rejected.type,
-          createDocument.rejected.type,
-          updateDocument.rejected.type,
-          deleteDocument.rejected.type,
+          getSurveysByCompanyIdAndFormId.rejected.type,
+          getSurveyById.rejected.type,
+          createSurvey.rejected.type,
+          updateSurvey.rejected.type,
+          deleteSurvey.rejected.type,
         ],
         'some error',
         state => {
@@ -107,68 +100,68 @@ describe('Document reducer tests', () => {
   });
 
   describe('Successes', () => {
-    it('should fetch all documents', () => {
+    it('should fetch all surveys', () => {
       const payload = {
         data: [
           {
             id: '1',
-            name: 'document',
+            name: 'survey',
           },
         ],
       };
-      const state = reducer(undefined, { type: getDocumentsByCompanyIdAndFormId.fulfilled.type, payload });
+      const state = reducer(undefined, { type: getSurveysByCompanyIdAndFormId.fulfilled.type, payload });
       expect(state).toMatchObject({
         loading: false,
-        documents: payload.data,
+        surveys: payload.data,
       });
     });
 
-    it('should fetch a single document', () => {
+    it('should fetch a single survey', () => {
       const payload = {
         data: {
           id: '1',
-          name: 'document',
+          name: 'survey',
         },
       };
-      const state = reducer(undefined, { type: getDocumentById.fulfilled.type, payload });
+      const state = reducer(undefined, { type: getSurveyById.fulfilled.type, payload });
       expect(state).toMatchObject({
         loading: false,
-        document: payload.data,
+        survey: payload.data,
       });
     });
 
-    it('should create a document', () => {
+    it('should create a survey', () => {
       const payload = {
         data: {
           id: '1',
-          name: 'document',
+          name: 'survey',
         },
       };
-      const state = reducer(undefined, { type: createDocument.fulfilled.type, payload });
+      const state = reducer(undefined, { type: createSurvey.fulfilled.type, payload });
       expect(state).toMatchObject({
         updating: false,
         updateSuccess: true,
-        document: payload.data,
+        survey: payload.data,
       });
     });
 
-    it('should update a document', () => {
+    it('should update a survey', () => {
       const payload = {
         data: {
           id: '1',
-          name: 'document',
+          name: 'survey',
         },
       };
-      const state = reducer(undefined, { type: updateDocument.fulfilled.type, payload });
+      const state = reducer(undefined, { type: updateSurvey.fulfilled.type, payload });
       expect(state).toMatchObject({
         updating: false,
         updateSuccess: true,
-        document: payload.data,
+        survey: payload.data,
       });
     });
 
-    it('should delete a document', () => {
-      const state = reducer(undefined, { type: deleteDocument.fulfilled.type });
+    it('should delete a survey', () => {
+      const state = reducer(undefined, { type: deleteSurvey.fulfilled.type });
       expect(state).toMatchObject({
         updating: false,
         updateSuccess: true,
@@ -190,67 +183,67 @@ describe('Document reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches FETCH_DOCUMENT_LIST actions', async () => {
+    it('dispatches FETCH_SURVEY_LIST actions', async () => {
       const expectedActions = [
         {
-          type: getDocumentsByCompanyIdAndFormId.pending.type,
+          type: getSurveysByCompanyIdAndFormId.pending.type,
         },
         {
-          type: getDocumentsByCompanyIdAndFormId.fulfilled.type,
+          type: getSurveysByCompanyIdAndFormId.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getDocumentsByCompanyIdAndFormId({ collectionId: 1, companyId: 1, formId: 1 }));
+      await store.dispatch(getSurveysByCompanyIdAndFormId({ collectionId: 1, companyId: 1, formId: 1 }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches FETCH_DOCUMENT actions', async () => {
+    it('dispatches FETCH_SURVEY actions', async () => {
       const expectedActions = [
         {
-          type: getDocumentById.pending.type,
+          type: getSurveyById.pending.type,
         },
         {
-          type: getDocumentById.fulfilled.type,
+          type: getSurveyById.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getDocumentById({ collectionId: 1, documentId: '1' }));
+      await store.dispatch(getSurveyById({ collectionId: 1, surveyId: '1' }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches CREATE_DOCUMENT actions', async () => {
+    it('dispatches CREATE_SURVEY actions', async () => {
       const expectedActions = [
-        { type: createDocument.pending.type },
-        { type: getDocumentsByCompanyIdAndFormId.pending.type },
-        { type: createDocument.fulfilled.type, payload: resolvedObject },
+        { type: createSurvey.pending.type },
+        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: createSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(createDocument({ collectionId: 1, document: { companyId: 1, formId: 1 } }));
+      await store.dispatch(createSurvey({ collectionId: 1, survey: { companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches UPDATE_DOCUMENT actions', async () => {
+    it('dispatches UPDATE_SURVEY actions', async () => {
       const expectedActions = [
-        { type: updateDocument.pending.type },
-        { type: getDocumentsByCompanyIdAndFormId.pending.type },
-        { type: updateDocument.fulfilled.type, payload: resolvedObject },
+        { type: updateSurvey.pending.type },
+        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: updateSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(updateDocument({ collectionId: 1, document: { id: '1' } }));
+      await store.dispatch(updateSurvey({ collectionId: 1, survey: { id: '1', companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches DELETE_DOCUMENT actions', async () => {
+    it('dispatches DELETE_SURVEY actions', async () => {
       const expectedActions = [
-        { type: deleteDocument.pending.type },
-        { type: getDocumentsByCompanyIdAndFormId.pending.type },
-        { type: deleteDocument.fulfilled.type, payload: resolvedObject },
+        { type: deleteSurvey.pending.type },
+        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: deleteSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(deleteDocument({ collectionId: 1, document: { _id: '1', companyId: 1, formId: 1 } }));
+      await store.dispatch(deleteSurvey({ collectionId: 1, survey: { id: '1', companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);

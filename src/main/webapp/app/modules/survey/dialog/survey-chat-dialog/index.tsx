@@ -14,17 +14,17 @@ import { FormikProps } from 'formik';
 import { useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/dialog/survey-chat-dialog/message-box';
 import { IForm } from 'app/shared/model/form.model';
-import { IDocument } from 'app/shared/model/document.model';
+import { ISurvey } from 'app/shared/model/survey.model';
 import SlideTransition from 'app/shared/component/slide-transition';
 import PaperComponent from 'app/shared/component/draggable-dialog';
 
-interface IDocumentChatModalProps {
+interface ISurveyChatModalProps {
   form: IForm;
-  document: IDocument;
+  survey;
   formik: FormikProps<Record<string, any>>;
 }
 
-const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref: React.Ref<any>) => {
+const SurveyChatDialog = React.forwardRef((props: ISurveyChatModalProps, ref: React.Ref<any>) => {
   React.useImperativeHandle(ref, () => ({
     open: handleOpen,
     close: handleClose,
@@ -115,7 +115,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         }}
       >
         <Typography variant="h6" component="div" style={{ padding: '8px' }}>
-          {form.title} : {props.document?.id}
+          {form.title} : {props.survey?.id}
         </Typography>
         <IconButton style={{ position: 'absolute', right: '8px', top: '8px' }} onClick={handleClose}>
           <IconX size={'1rem'} />
@@ -181,4 +181,4 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
   );
 });
 
-export default DocumentChatDialog;
+export default SurveyChatDialog;

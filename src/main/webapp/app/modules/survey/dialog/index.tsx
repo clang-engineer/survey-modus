@@ -6,8 +6,8 @@ import { useFormik } from 'formik';
 
 import { useTheme } from '@mui/material/styles';
 import { useAppDispatch } from 'app/config/store';
-import { createDocument, updateDocument } from 'app/modules/document/document.reducer';
-import { IDocument } from 'app/shared/model/document.model';
+import { createSurvey, updateSurvey } from 'app/modules/survey/survey.reducer';
+import { ISurvey } from 'app/shared/model/survey.model';
 import { ICompany } from 'app/shared/model/company.model';
 import SurveyDialogAppBar from 'app/modules/survey/dialog/survey-dialog-app-bar';
 import SurveyDialogContent from 'app/modules/survey/dialog/survey-dialog-content';
@@ -18,7 +18,7 @@ interface IFieldWizardPreviewModalProps {
   company: ICompany;
   form: IForm;
   fields: IField[];
-  document?: IDocument;
+  survey?: ISurvey;
 }
 
 const SurveyModal =
@@ -29,7 +29,7 @@ const SurveyModal =
 
     const chatDialogRef = React.useRef(null);
 
-    const { company, form, fields, document } = props;
+    const { company, form, fields, survey } = props;
 
     const handleClose = () => {
       onReject();
@@ -54,12 +54,12 @@ const SurveyModal =
             key,
             value: values[key],
           }));
-        if (document && document.id) {
+        if (survey && survey.id) {
           dispatch(
-            updateDocument({
+            updateSurvey({
               collectionId: form.category.id,
-              document: {
-                id: document.id,
+              survey: {
+                id: survey.id,
                 companyId: company.id,
                 formId: form.id,
                 fields: mappedFields,
@@ -68,9 +68,9 @@ const SurveyModal =
           );
         } else {
           dispatch(
-            createDocument({
+            createSurvey({
               collectionId: form.category.id,
-              document: { companyId: company.id, formId: form.id, fields: mappedFields },
+              survey: { companyId: company.id, formId: form.id, fields: mappedFields },
             })
           );
         }
@@ -78,14 +78,14 @@ const SurveyModal =
     });
 
     useEffect(() => {
-      if (document && document.id) {
-        const doc = document.fields.reduce((acc, field) => {
+      if (survey && survey.id) {
+        const doc = survey.fields.reduce((acc, field) => {
           acc[field.key] = field.value;
           return acc;
         }, {});
         formik.setValues(doc);
       }
-    }, [document]);
+    }, [survey]);
 
     return (
       <Dialog
@@ -98,14 +98,14 @@ const SurveyModal =
         <SurveyDialogAppBar
           form={form}
           formik={formik}
-          document={document}
+          survey={survey}
           onResolve={onResolve}
           onClickMessagesButton={() => {
             chatDialogRef.current.open();
           }}
         />
         <SurveyDialogContent fields={fields} formik={formik} />
-        <SurveyChatDialog ref={chatDialogRef} formik={formik} form={form} document={document} />
+        <SurveyChatDialog ref={chatDialogRef} formik={formik} form={form} survey={survey} />
       </Dialog>
     );
   };

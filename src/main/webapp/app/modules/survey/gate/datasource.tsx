@@ -6,8 +6,8 @@ import Loader from 'app/berry/ui-component/Loader';
 import { IconEdit, IconTrash } from '@tabler/icons';
 import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
-import { deleteDocument } from 'app/modules/document/document.reducer';
-import { DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
+import { deleteSurvey } from 'app/modules/survey/survey.reducer';
+import { SURVEY_ID, ISurvey } from 'app/shared/model/survey.model';
 import SurveyModal from 'app/modules/survey/dialog';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
@@ -18,7 +18,7 @@ const DataSource = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(state => state.field.loading);
   const fieldEntities = useAppSelector(state => state.field.entities);
-  const documents = useAppSelector<IDocument[]>(state => state.documentReducer.documents);
+  const surveys = useAppSelector<ISurvey[]>(state => state.survey.surveys);
   const formEntity = useAppSelector(state => state.form.entity);
   const companyEntity = useAppSelector(state => state.company.entity);
 
@@ -36,24 +36,24 @@ const DataSource = () => {
       })
     )().then(result => {
       if (result) {
-        dispatch(deleteDocument({ collectionId: formEntity.category.id, document: row }));
+        dispatch(deleteSurvey({ collectionId: formEntity.category.id, survey: row }));
       }
     });
   };
 
-  const onEditButtonClick = (document: IDocument) => {
+  const onEditButtonClick = (survey: ISurvey) => {
     create(
       SurveyModal({
         company: companyEntity,
         form: formEntity,
         fields: fieldEntities.filter(field => field.activated),
-        document,
+        survey,
       })
     )();
   };
 
-  const getFormattedDocumentValue = (document: IDocument, field: IField) => {
-    const value = document.fields.find(f => String(f.key) === String(field.id))?.value;
+  const getFormattedSurveyValue = (survey: ISurvey, field: IField) => {
+    const value = survey.fields.find(f => String(f.key) === String(field.id))?.value;
 
     switch (field.attribute.type) {
       case type.DATE:
@@ -69,7 +69,7 @@ const DataSource = () => {
 
   return (
     <>
-      {fieldEntities.length === 0 || documents.length === 0 ? (
+      {fieldEntities.length === 0 || surveys.length === 0 ? (
         <NoContentBox />
       ) : (
         <TableContainer>
@@ -86,21 +86,21 @@ const DataSource = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {documents.map((document, index) => (
+              {surveys.map((survey, index) => (
                 <TableRow key={index}>
                   <TableCell width="100" align="center">
-                    {document[DOCUMENT_ID]}
+                    {survey[SURVEY_ID]}
                   </TableCell>
                   {localFields.map(field => (
                     <TableCell key={field.id} align="center">
-                      {getFormattedDocumentValue(document, field)}
+                      {getFormattedSurveyValue(survey, field)}
                     </TableCell>
                   ))}
                   <TableCell width="100">
                     <ButtonGroup size="small" variant="text">
                       <Button
                         onClick={() => {
-                          onEditButtonClick(document);
+                          onEditButtonClick(survey);
                         }}
                       >
                         {' '}
@@ -108,7 +108,7 @@ const DataSource = () => {
                       </Button>
                       <Button
                         onClick={() => {
-                          onDeleteButtonClick(document);
+                          onDeleteButtonClick(survey);
                         }}
                       >
                         {' '}
