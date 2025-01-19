@@ -111,7 +111,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
         }}
       >
         <Typography variant="h6" component="div" style={{ padding: '8px' }}>
-          {form.title} : {props.document.id}
+          {form.title} : {props.document?.id}
         </Typography>
         <IconButton style={{ position: 'absolute', right: '8px', top: '8px' }} onClick={handleClose}>
           <IconX size={'1rem'} />

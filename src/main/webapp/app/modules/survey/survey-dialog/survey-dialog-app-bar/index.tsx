@@ -43,7 +43,7 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
         </IconButton>
         <Box display="flex" alignItems="center" flexGrow={1} justifyContent="flex-start">
           <Typography variant="h4" color="inherit">
-            {form.title} : {document.id}
+            {form.title} : {document?.id}
           </Typography>
           &nbsp;&nbsp;
           <IconButton
