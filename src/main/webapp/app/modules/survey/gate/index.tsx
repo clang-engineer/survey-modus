@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, IconButton, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -9,16 +9,12 @@ import { getEntity as getCompany } from 'app/entities/company/company.reducer';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import DataSource from 'app/modules/survey/gate/datasource';
-import { IconDatabase, IconPlaylistAdd } from '@tabler/icons';
-import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
-import SurveyModal from 'app/modules/survey/dialog';
-
-import { create } from 'react-modal-promise';
 import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';
 import useConfig from 'app/berry/hooks/useConfig';
+import GateTitle from 'app/modules/survey/gate/gate-title';
 
-const FormGate = () => {
+const Gate = () => {
   const dispatch = useAppDispatch();
   const { onChangeSurveyInfo } = useConfig();
   const { companyId, formId } = useParams<{ companyId: string; formId: string }>();
@@ -50,48 +46,19 @@ const FormGate = () => {
   useEffect(() => {
     if (companyEntity.id && formEntity.id) {
       dispatch(
-        getDocumentsByCompanyIdAndFormId({ collectionId: formEntity.category.id, companyId: companyEntity.id, formId: formEntity.id })
+        getDocumentsByCompanyIdAndFormId({
+          collectionId: formEntity.category.id,
+          companyId: companyEntity.id,
+          formId: formEntity.id,
+        })
       );
     }
   }, [companyEntity, formEntity]);
 
-  const onClickCreateButton = () => {
-    create(
-      SurveyModal({
-        company: companyEntity,
-        form: formEntity,
-        fields: fieldEntities.filter(field => field.activated),
-      })
-    )();
-  };
-
-  const CardTitle = () => {
-    return (
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box display="flex" alignItems="center">
-          <Typography variant="h4">
-            <IconDatabase size={'1rem'} /> {formEntity.title}
-          </Typography>
-          &nbsp;&nbsp;
-          <Typography variant="caption">
-            ({companyEntity.title}, {formEntity.description})
-          </Typography>
-        </Box>
-        <Box>
-          <AnimateButton>
-            <IconButton color="primary" size="small" onClick={onClickCreateButton}>
-              <IconPlaylistAdd />
-            </IconButton>
-          </AnimateButton>
-        </Box>
-      </Box>
-    );
-  };
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <SubCard title={<CardTitle />}>
+        <SubCard title={<GateTitle />}>
           <DataSource />
         </SubCard>
       </Grid>
@@ -99,4 +66,4 @@ const FormGate = () => {
   );
 };
 
-export default FormGate;
+export default Gate;
