@@ -8,9 +8,9 @@ import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
 import com.clangengineer.surveymodus.service.dto.CompanyDTO
-import com.clangengineer.surveymodus.service.dto.DocumentDTO
 import com.clangengineer.surveymodus.service.dto.FieldDTO
 import com.clangengineer.surveymodus.service.dto.FormDTO
+import com.clangengineer.surveymodus.service.dto.SurveyDTO
 import com.clangengineer.surveymodus.service.mapper.CompanyMapper
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
 import com.clangengineer.surveymodus.service.mapper.FormMapper
@@ -32,7 +32,7 @@ import javax.persistence.EntityManager
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class DocumentControllerIT {
+class SurveyControllerIT {
     @Autowired
     private lateinit var datasourceMockMvc: MockMvc
 
@@ -94,13 +94,13 @@ class DocumentControllerIT {
             )
         }
 
-        val document =
-            DocumentDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+        val survey =
+            SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
         datasourceMockMvc.perform(
-            post("/api/collections/${form.category!!.id}/documents")
+            post("/api/surveys?collectionId=${form.category!!.id}")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(convertObjectToJsonBytes(document))
+                .content(convertObjectToJsonBytes(survey))
         ).andExpect(status().isCreated())
 
         val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
@@ -125,12 +125,11 @@ class DocumentControllerIT {
                 )
             }
 
-            val document = DocumentDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
-            mongoTemplate.save(document, form.category!!.id.toString())
+            val survey = SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+            mongoTemplate.save(survey, form.category!!.id.toString())
         }
 
-        val API_URI =
-            "/api/collections/${form.category!!.id}/documents?companyId=${company.id}&formId=${form.id}"
+        val API_URI = "/api/surveys?collectionId=${form.category!!.id}&companyId=${company.id}&formId=${form.id}"
         datasourceMockMvc.perform(get(API_URI))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -149,12 +148,12 @@ class DocumentControllerIT {
             )
         }
 
-        val document =
-            DocumentDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+        val survey =
+            SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
-        val result = mongoTemplate.save(document, form.category!!.id.toString()) as DocumentDTO
+        val result = mongoTemplate.save(survey, form.category!!.id.toString()) as SurveyDTO
 
-        datasourceMockMvc.perform(get("/api/collections/${form.category!!.id}/documents/${result.id}"))
+        datasourceMockMvc.perform(get("/api/surveys/${result.id}?collectionId=${form.category!!.id}"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(result.id))
@@ -172,26 +171,26 @@ class DocumentControllerIT {
             )
         }
 
-        val document =
-            DocumentDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+        val survey =
+            SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
-        val result = mongoTemplate.save(document, form.category!!.id.toString())
+        val result = mongoTemplate.save(survey, form.category!!.id.toString())
 
-        val updatedRow = document.copy()
+        val updatedRow = survey.copy()
 
         val updatedFieldsMapArray = mutableListOf<Map<String, Any>>()
         fieldList.forEach { updatedFieldsMapArray.add(mapOf("key" to it.id.toString(), "value" to Math.random())) }
         updatedRow.fields = updatedFieldsMapArray
 
         datasourceMockMvc.perform(
-            put("/api/collections/${form.category!!.id}/documents/${result.id}")
+            put("/api/surveys/${result.id}?collectionId=${form.category!!.id}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(updatedRow))
         ).andExpect(status().isOk())
 
         val updatedResult = mongoTemplate.findById(
             result.id,
-            DocumentDTO::class.java,
+            SurveyDTO::class.java,
             form.category!!.id.toString()
         )
         assertThat(updatedResult!!.fields).isEqualTo(updatedRow.fields)
@@ -208,11 +207,11 @@ class DocumentControllerIT {
             )
         }
 
-        val document =
-            DocumentDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
-        val result = mongoTemplate.save(document, form.category!!.id.toString()) as DocumentDTO
+        val survey =
+            SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+        val result = mongoTemplate.save(survey, form.category!!.id.toString()) as SurveyDTO
 
-        datasourceMockMvc.perform(delete("/api/collections/${form.category!!.id}/documents/${result.id}"))
+        datasourceMockMvc.perform(delete("/api/surveys/${result.id}?collectionId=${form.category!!.id}"))
             .andExpect(status().isNoContent())
 
         val deletedResult = mongoTemplate.findById(

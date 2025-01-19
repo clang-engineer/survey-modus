@@ -2,7 +2,7 @@ package com.clangengineer.surveymodus.service.dto
 
 import org.bson.types.ObjectId
 
-data class DocumentDTO(
+data class SurveyDTO(
     var _id: ObjectId? = null,
     var companyId: Long? = null,
     var formId: Long? = null,
