@@ -16,6 +16,7 @@ import MessageBox from 'app/modules/survey/dialog/survey-chat-dialog/message-box
 import { IForm } from 'app/shared/model/form.model';
 import { IDocument } from 'app/shared/model/document.model';
 import SlideTransition from 'app/shared/component/slide-transition';
+import PaperComponent from 'app/shared/component/draggable-dialog';
 
 interface IDocumentChatModalProps {
   form: IForm;
@@ -94,6 +95,7 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
   return (
     <Dialog
       TransitionComponent={SlideTransition}
+      PaperComponent={!fullScreen ? PaperComponent : undefined}
       open={isOpen}
       onClose={handleClose}
       sx={{
@@ -104,7 +106,9 @@ const DocumentChatDialog = React.forwardRef((props: IDocumentChatModalProps, ref
       fullScreen={fullScreen}
     >
       <DialogTitle
+        id="draggable-dialog-title"
         style={{
+          cursor: 'move',
           backgroundColor: theme.palette.grey[100],
           padding: '8px',
           borderBottom: `1px solid ${theme.palette.grey[300]}`,
