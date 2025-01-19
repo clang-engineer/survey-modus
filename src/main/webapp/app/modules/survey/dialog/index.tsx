@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { Dialog, Slide } from '@mui/material';
-
-import { TransitionProps } from '@mui/material/transitions';
+import { Dialog } from '@mui/material';
 import { IForm } from 'app/shared/model/form.model';
 import { IField } from 'app/shared/model/field.model';
 import { useFormik } from 'formik';
@@ -14,6 +12,7 @@ import { ICompany } from 'app/shared/model/company.model';
 import SurveyDialogAppBar from 'app/modules/survey/dialog/survey-dialog-app-bar';
 import SurveyDialogContent from 'app/modules/survey/dialog/survey-dialog-content';
 import SurveyChatDialog from 'app/modules/survey/dialog/survey-chat-dialog';
+import SlideTransition from 'app/shared/component/slide-transition';
 
 interface IFieldWizardPreviewModalProps {
   company: ICompany;
@@ -21,15 +20,6 @@ interface IFieldWizardPreviewModalProps {
   fields: IField[];
   document?: IDocument;
 }
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<unknown>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
@@ -98,7 +88,13 @@ const SurveyModal =
     }, [document]);
 
     return (
-      <Dialog fullScreen open={isOpen} onClose={handleClose} TransitionComponent={Transition} sx={{ '& .MuiPaper-root': { padding: 0 } }}>
+      <Dialog
+        fullScreen
+        open={isOpen}
+        onClose={handleClose}
+        TransitionComponent={SlideTransition}
+        sx={{ '& .MuiPaper-root': { padding: 0 } }}
+      >
         <SurveyDialogAppBar
           form={form}
           formik={formik}
