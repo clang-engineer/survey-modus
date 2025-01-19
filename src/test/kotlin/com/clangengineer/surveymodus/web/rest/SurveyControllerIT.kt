@@ -1,9 +1,9 @@
 package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
-import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
-import com.clangengineer.surveymodus.config.DOCUMENT_FIELDS_PROPERTY
-import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
+import com.clangengineer.surveymodus.config.SURVEY_COMPANY_ID
+import com.clangengineer.surveymodus.config.SURVEY_FIELDS_PROPERTY
+import com.clangengineer.surveymodus.config.SURVEY_FORM_ID
 import com.clangengineer.surveymodus.domain.Field
 import com.clangengineer.surveymodus.domain.embeddable.FieldAttribute
 import com.clangengineer.surveymodus.domain.enumeration.type
@@ -105,9 +105,9 @@ class SurveyControllerIT {
 
         val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
         assertThat(result).hasSize(1)
-        assertThat(result[0][DOCUMENT_COMPANY_ID]).isEqualTo(company.id)
-        assertThat(result[0][DOCUMENT_FORM_ID]).isEqualTo(form.id)
-        assertThat(result[0][DOCUMENT_FIELDS_PROPERTY]).isEqualTo(fieldMapArray)
+        assertThat(result[0][SURVEY_COMPANY_ID]).isEqualTo(company.id)
+        assertThat(result[0][SURVEY_FORM_ID]).isEqualTo(form.id)
+        assertThat(result[0][SURVEY_FIELDS_PROPERTY]).isEqualTo(fieldMapArray)
     }
 
     @Test
@@ -129,7 +129,9 @@ class SurveyControllerIT {
             mongoTemplate.save(survey, form.category!!.id.toString())
         }
 
-        val API_URI = "/api/surveys?collectionId=${form.category!!.id}&companyId=${company.id}&formId=${form.id}"
+        val filterString = "companyId.equals=${company.id}&formId.equals=${form.id}"
+
+        val API_URI = "/api/surveys?collectionId=${form.category!!.id}&$filterString"
         datasourceMockMvc.perform(get(API_URI))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))

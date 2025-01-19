@@ -1,8 +1,9 @@
 package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.surveymodus.config.DOCUMENT_COMPANY_ID
-import com.clangengineer.surveymodus.config.DOCUMENT_FORM_ID
-import com.clangengineer.surveymodus.config.DOCUMENT_OBJECT_ID
+import com.clangengineer.surveymodus.config.SURVEY_COMPANY_ID
+import com.clangengineer.surveymodus.config.SURVEY_FORM_ID
+import com.clangengineer.surveymodus.config.SURVEY_OBJECT_ID
+import com.clangengineer.surveymodus.service.criteria.SurveyCriteria
 import com.clangengineer.surveymodus.service.dto.SurveyDTO
 import org.bson.types.ObjectId
 import org.slf4j.LoggerFactory
@@ -46,15 +47,11 @@ class SurveyController {
     @GetMapping("/surveys")
     fun findAllSurvey(
         @RequestParam collectionId: String,
-        @RequestParam companyId: Long,
-        @RequestParam formId: Long
+        criteria: SurveyCriteria,
     ): ResponseEntity<List<SurveyDTO>> {
-        log.debug("REST request to get all Surveys in collection : $collectionId for form : $formId")
+        log.debug("REST request to get all Surveys in collection by criteria : $criteria")
 
-        val ct1 = Criteria.where(DOCUMENT_COMPANY_ID).`is`(companyId)
-        val ct2 = Criteria.where(DOCUMENT_FORM_ID).`is`(formId)
-
-        val query = Query.query(Criteria().andOperator(ct1, ct2))
+        val query = buildQueryFromCriteria(criteria)
 
         val result = mongoTemplate.find(query, SurveyDTO::class.java, collectionId)
 
@@ -68,7 +65,7 @@ class SurveyController {
     ): ResponseEntity<SurveyDTO> {
         log.debug("REST request to get Survey : $surveyId in collection : $collectionId")
 
-        val query = Query.query(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(surveyId)))
+        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(surveyId)))
 
         val result = mongoTemplate.findOne(query, SurveyDTO::class.java, collectionId)
 
@@ -83,10 +80,10 @@ class SurveyController {
     ): ResponseEntity<SurveyDTO> {
         log.debug("REST request to update Survey : $surveyId in collection : $collectionId")
 
-        val query = Query.query(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(surveyId)))
+        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(surveyId)))
 
         val update = Update()
-        survey.filterKeys { it != DOCUMENT_OBJECT_ID }.forEach { key, value ->
+        survey.filterKeys { it != SURVEY_OBJECT_ID }.forEach { key, value ->
             update.set(key, value)
         }
 
@@ -101,12 +98,32 @@ class SurveyController {
     fun deleteSurvey(@PathVariable surveyId: String, @RequestParam collectionId: String): ResponseEntity<Void> {
         log.debug("REST request to delete Survey : $surveyId in collection : $collectionId")
 
-        val query = Query.query(Criteria.where(DOCUMENT_OBJECT_ID).`is`(ObjectId(surveyId)))
+        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(surveyId)))
 
         mongoTemplate.remove(query, SurveyDTO::class.java, collectionId)
 
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, OBJECT_NAME, surveyId))
             .build()
+    }
+
+    fun buildQueryFromCriteria(criteria: SurveyCriteria): Query {
+        val queryCriteria = mutableListOf<Criteria>()
+
+        criteria.companyId?.let {
+            it.equals?.let { value -> queryCriteria.add(Criteria.where(SURVEY_COMPANY_ID).`is`(value)) }
+        }
+
+        criteria.formId?.let {
+            it.equals?.let { value -> queryCriteria.add(Criteria.where(SURVEY_FORM_ID).`is`(value)) }
+        }
+
+        val query = if (queryCriteria.isNotEmpty()) {
+            Query().addCriteria(Criteria().andOperator(*queryCriteria.toTypedArray()))
+        } else {
+            Query()
+        }
+
+        return query
     }
 }
