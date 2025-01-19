@@ -13,6 +13,7 @@ import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';
 import useConfig from 'app/berry/hooks/useConfig';
 import GateTitle from 'app/modules/survey/gate/gate-title';
+import ChatBoxFab from 'app/modules/survey/chat-box';
 
 const Gate = () => {
   const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ const Gate = () => {
         <SubCard title={<GateTitle />}>
           <DataSource />
         </SubCard>
+        <ChatBoxFab />
       </Grid>
     </Grid>
   );
