@@ -8,10 +8,10 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useDropzone } from 'react-dropzone';
 import { downloadFileFromServer, uploadFilesToServer } from 'app/modules/survey/file-manage-utils';
 import { IFile } from 'app/shared/model/file.model';
-import FileListBox from 'app/modules/survey/survey-dialog/survey-dialog-content/component/survey-modal-file-field/file-list-box';
-import FileTypeBox from 'app/modules/survey/survey-dialog/survey-dialog-content/component/survey-modal-file-field/file-type-box';
+import FileListBox from 'app/modules/survey/dialog/survey-dialog-content/component/survey-modal-file-field/file-list-box';
+import FileTypeBox from 'app/modules/survey/dialog/survey-dialog-content/component/survey-modal-file-field/file-type-box';
 import { styled } from '@mui/material/styles';
-import FileCommentModal from 'app/modules/survey/survey-dialog/survey-dialog-content/component/survey-modal-file-field/file-comment-modal';
+import FileCommentModal from 'app/modules/survey/dialog/survey-dialog-content/component/survey-modal-file-field/file-comment-modal';
 
 import { create } from 'react-modal-promise';
 

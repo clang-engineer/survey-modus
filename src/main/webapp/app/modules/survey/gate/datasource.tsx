@@ -8,11 +8,11 @@ import { create } from 'react-modal-promise';
 import PromiseModal from 'app/shared/component/promise-modal';
 import { deleteDocument } from 'app/modules/document/document.reducer';
 import { DOCUMENT_ID, IDocument } from 'app/shared/model/document.model';
-import SurveyModal from 'app/modules/survey/survey-dialog';
+import SurveyModal from 'app/modules/survey/dialog';
 import { IField } from 'app/shared/model/field.model';
 import type from 'app/shared/model/enumerations/type.model';
 import dayjs from 'dayjs';
-import DataSourceFileCell from 'app/modules/survey/form-gate/datasource-file-cell';
+import DataSourceFileCell from 'app/modules/survey/gate/datasource-file-cell';
 
 const DataSource = () => {
   const dispatch = useAppDispatch();

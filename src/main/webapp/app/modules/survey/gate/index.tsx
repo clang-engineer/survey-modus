@@ -8,11 +8,11 @@ import { getEntity as getForm } from 'app/entities/form/form.reducer';
 import { getEntity as getCompany } from 'app/entities/company/company.reducer';
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
-import DataSource from 'app/modules/survey/form-gate/datasource';
+import DataSource from 'app/modules/survey/gate/datasource';
 import { IconDatabase, IconPlaylistAdd } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
-import SurveyModal from 'app/modules/survey/survey-dialog';
+import SurveyModal from 'app/modules/survey/dialog';
 
 import { create } from 'react-modal-promise';
 import { getDocumentsByCompanyIdAndFormId } from 'app/modules/document/document.reducer';

@@ -18,7 +18,7 @@ import { IconArrowBackUp, IconChecklist, IconDeviceFloppy, IconEye, IconSettings
 import { useTheme } from '@mui/material/styles';
 
 import { create } from 'react-modal-promise';
-import SurveyModal from 'app/modules/survey/survey-dialog';
+import SurveyModal from 'app/modules/survey/dialog';
 import { IField } from 'app/shared/model/field.model';
 import useFieldWizardConfig from 'app/modules/wizard/field-wizard/field-wizard.config';
 import FieldWizardUpdateModal from 'app/modules/wizard/field-wizard/field-wizard-list/component/field-wizard-update.modal';

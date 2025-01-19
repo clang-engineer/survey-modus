@@ -12,7 +12,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { IconSend, IconX } from '@tabler/icons';
 import { FormikProps } from 'formik';
 import { useAppSelector } from 'app/config/store';
-import MessageBox from 'app/modules/survey/survey-dialog/survey-chat-dialog/message-box';
+import MessageBox from 'app/modules/survey/dialog/survey-chat-dialog/message-box';
 import { IForm } from 'app/shared/model/form.model';
 import { IDocument } from 'app/shared/model/document.model';
 import SlideTransition from 'app/shared/component/slide-transition';
