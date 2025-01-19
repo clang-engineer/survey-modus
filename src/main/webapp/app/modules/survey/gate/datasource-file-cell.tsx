@@ -16,8 +16,8 @@ const DataSourceFileCell = (props: IDataSourceFileCellProps) => {
   const theme = useTheme();
   const { files } = props;
 
-  const TooltipTitle = (props: { file: IFile }) => {
-    const { file } = props;
+  const TooltipTitle = (tooltipProps: { file: IFile }) => {
+    const { file } = tooltipProps;
 
     return (
       <Box
