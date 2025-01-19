@@ -63,7 +63,7 @@ const FileCommentModal =
               onResolve(localComment);
             }}
           >
-            Save
+            Apply
           </Button>
         </DialogActions>
       </Dialog>
