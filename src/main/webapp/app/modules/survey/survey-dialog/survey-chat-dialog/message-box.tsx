@@ -18,7 +18,7 @@ const MessageBox = (props: IMessageBoxProps) => {
   const account = useAppSelector(state => state.authentication.account);
 
   const currentMessage = messages[currentIndex];
-  const showDate = currentIndex === 0 || dayjs(currentMessage.createdDate).diff(dayjs(messages[currentIndex - 1].createdDate), 'day') > 0;
+  const showDate = currentIndex === 0 || !dayjs(currentMessage.createdDate).isSame(dayjs(messages[currentIndex - 1].createdDate), 'day');
 
   const isCurrentUser = currentMessage.createdBy === account.login;
   // const isCurrentUser = Math.random() > 0.5;
