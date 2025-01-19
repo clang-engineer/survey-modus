@@ -1,8 +1,5 @@
 package com.clangengineer.surveymodus.web.rest
 
-import com.clangengineer.surveymodus.config.SURVEY_COMPANY_ID
-import com.clangengineer.surveymodus.config.SURVEY_FORM_ID
-import com.clangengineer.surveymodus.config.SURVEY_OBJECT_ID
 import com.clangengineer.surveymodus.service.SurveyService
 import com.clangengineer.surveymodus.service.criteria.SurveyCriteria
 import com.clangengineer.surveymodus.service.dto.SurveyDTO
@@ -11,8 +8,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.query.Criteria
-import org.springframework.data.mongodb.core.query.Query
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import tech.jhipster.web.util.HeaderUtil
@@ -31,9 +26,6 @@ class SurveyController(
     companion object {
         const val OBJECT_NAME = "survey"
     }
-
-    @Autowired
-    private lateinit var mongoTemplate: MongoTemplate
 
     @PostMapping("/surveys")
     fun createSurvey(@RequestBody survey: SurveyDTO): ResponseEntity<SurveyDTO> {
@@ -68,6 +60,7 @@ class SurveyController(
     fun updateSurvey(@PathVariable surveyId: String, @RequestBody survey: SurveyDTO): ResponseEntity<SurveyDTO> {
         log.debug("REST request to update Survey : $surveyId")
 
+        survey._id = ObjectId(surveyId)
         val result = surveyService.update(survey)
 
         return ResponseEntity.ok()
@@ -76,35 +69,13 @@ class SurveyController(
     }
 
     @DeleteMapping("/surveys/{surveyId}")
-    fun deleteSurvey(@PathVariable surveyId: String, @RequestParam collectionId: String): ResponseEntity<Void> {
-        log.debug("REST request to delete Survey : $surveyId in collection : $collectionId")
+    fun deleteSurvey(@PathVariable surveyId: String): ResponseEntity<Void> {
+        log.debug("REST request to delete Survey : $surveyId")
 
-        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(surveyId)))
-
-        mongoTemplate.remove(query, SurveyDTO::class.java, collectionId)
+        surveyService.delete(surveyId)
 
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, OBJECT_NAME, surveyId))
             .build()
-    }
-
-    fun buildQueryFromCriteria(criteria: SurveyCriteria): Query {
-        val queryCriteria = mutableListOf<Criteria>()
-
-        criteria.companyId?.let {
-            it.equals?.let { value -> queryCriteria.add(Criteria.where(SURVEY_COMPANY_ID).`is`(value)) }
-        }
-
-        criteria.formId?.let {
-            it.equals?.let { value -> queryCriteria.add(Criteria.where(SURVEY_FORM_ID).`is`(value)) }
-        }
-
-        val query = if (queryCriteria.isNotEmpty()) {
-            Query().addCriteria(Criteria().andOperator(*queryCriteria.toTypedArray()))
-        } else {
-            Query()
-        }
-
-        return query
     }
 }

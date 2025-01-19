@@ -214,13 +214,13 @@ class SurveyControllerIT {
             SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
         val result = mongoTemplate.save(survey, form.category!!.id.toString()) as SurveyDTO
 
-        datasourceMockMvc.perform(delete("/api/surveys/${result.id}?collectionId=${form.category!!.id}"))
+        datasourceMockMvc.perform(delete("/api/surveys/${result.id}"))
             .andExpect(status().isNoContent())
 
         val deletedResult = mongoTemplate.findById(
             result._id,
             Map::class.java,
-            form.category!!.id.toString()
+            OBJECT_NAME
         )
         assertThat(deletedResult).isNull()
     }
