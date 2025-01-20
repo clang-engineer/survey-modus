@@ -40,4 +40,13 @@ class MessageController(
 
         return ResponseEntity.ok(result)
     }
+
+    @DeleteMapping("/messages/{id}")
+    fun deleteMessage(@PathVariable id: String): ResponseEntity<Void> {
+        log.debug("REST request to delete Message : $id")
+
+        messageService.delete(id)
+
+        return ResponseEntity.noContent().build()
+    }
 }

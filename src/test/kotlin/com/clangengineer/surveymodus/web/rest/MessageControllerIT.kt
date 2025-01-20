@@ -59,7 +59,6 @@ class MessageControllerIT {
         )
 
         mongoTemplate.save(message, OBJECT_NAME)
-
         restMessageMockMvc.perform(
             get("/api/messages")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,5 +67,27 @@ class MessageControllerIT {
             .andExpect(jsonPath("\$").isArray)
             .andExpect(jsonPath("\$[0].message").value("message"))
             .andExpect(jsonPath("\$[0].companyId").value(1))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun `delete message`() {
+        val message = mongoTemplate.save(
+            MessageDTO(
+                message = "message",
+                companyId = 1L
+            ),
+            OBJECT_NAME
+        )
+        restMessageMockMvc.perform(
+            delete("/api/messages/${message.id}")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNoContent)
+
+        val messageList =
+            mongoTemplate.findAll(MessageDTO::class.java, OBJECT_NAME)
+
+        assertThat(messageList).isEmpty()
     }
 }

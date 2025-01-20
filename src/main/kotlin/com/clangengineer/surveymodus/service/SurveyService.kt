@@ -1,9 +1,9 @@
 package com.clangengineer.surveymodus.service
 
+import com.clangengineer.surveymodus.config.MONGO_OBJECT_ID
 import com.clangengineer.surveymodus.config.SURVEY_COMPANY_ID
 import com.clangengineer.surveymodus.config.SURVEY_FIELDS_PROPERTY
 import com.clangengineer.surveymodus.config.SURVEY_FORM_ID
-import com.clangengineer.surveymodus.config.SURVEY_OBJECT_ID
 import com.clangengineer.surveymodus.service.criteria.SurveyCriteria
 import com.clangengineer.surveymodus.service.dto.SurveyDTO
 import com.clangengineer.surveymodus.web.rest.SurveyController.Companion.OBJECT_NAME
@@ -38,7 +38,7 @@ class SurveyService(val mongoTemplate: MongoTemplate) {
     fun findOne(id: String): SurveyDTO {
         log.debug("REST request to get Survey : $id")
 
-        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(id)))
+        val query = Query.query(Criteria.where(MONGO_OBJECT_ID).`is`(ObjectId(id)))
 
         return mongoTemplate.findOne(query, SurveyDTO::class.java, OBJECT_NAME) ?: throw RuntimeException("Survey not found")
     }
@@ -46,7 +46,7 @@ class SurveyService(val mongoTemplate: MongoTemplate) {
     fun update(survey: SurveyDTO): SurveyDTO {
         log.debug("REST request to update Survey : $survey")
 
-        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(survey.id)))
+        val query = Query.query(Criteria.where(MONGO_OBJECT_ID).`is`(ObjectId(survey.id)))
 
         val update = Update()
 
@@ -60,7 +60,7 @@ class SurveyService(val mongoTemplate: MongoTemplate) {
     fun delete(id: String) {
         log.debug("REST request to delete Survey : $id")
 
-        val query = Query.query(Criteria.where(SURVEY_OBJECT_ID).`is`(ObjectId(id)))
+        val query = Query.query(Criteria.where(MONGO_OBJECT_ID).`is`(ObjectId(id)))
 
         mongoTemplate.remove(query, OBJECT_NAME)
     }
