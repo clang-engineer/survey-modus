@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { defaultValue, SURVEY_COMPANY_ID, SURVEY_FORM_ID, SURVEY_ID, ISurvey } from 'app/shared/model/survey.model';
+import { defaultValue, ISurvey, SURVEY_COMPANY_ID, SURVEY_FORM_ID, SURVEY_ID } from 'app/shared/model/survey.model';
 import axios from 'axios';
 import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 
@@ -14,34 +14,26 @@ const initialState = {
 
 export const getSurveyById = createAsyncThunk(
   'survey/fetch_survey',
-  async (props: { collectionId: number; surveyId: string }) => {
-    const requestUrl = `api/surveys/${props.surveyId}?collectionId=${props.collectionId}`;
+  async (props: { surveyId: string }) => {
+    const requestUrl = `api/surveys/${props.surveyId}`;
     return axios.get<ISurvey>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
-export const getSurveysByCompanyIdAndFormId = createAsyncThunk(
-  'survey/fetch_surveys',
-  async (props: { collectionId: number; companyId: number; formId: number }) => {
-    const { collectionId, companyId, formId } = props;
-    const requestUrl = `api/surveys?collectionId=${collectionId}&companyId=${companyId}&formId=${formId}`;
-    return axios.get<ISurvey[]>(requestUrl);
-  }
-);
+export const getSurveys = createAsyncThunk('survey/fetch_surveys', async (props: { query: string }) => {
+  const requestUrl = `api/surveys?${props.query}`;
+  return axios.get<ISurvey[]>(requestUrl);
+});
 
 export const createSurvey = createAsyncThunk(
   'survey/create_survey',
-  async (props: { collectionId: number; survey: ISurvey }, thunkAPI) => {
-    const { collectionId, survey } = props;
-    const result = await axios.post<ISurvey>(`api/surveys?collectionId=${collectionId}`, survey);
-    thunkAPI.dispatch(
-      getSurveysByCompanyIdAndFormId({
-        collectionId,
-        companyId: survey[SURVEY_COMPANY_ID],
-        formId: survey[SURVEY_FORM_ID],
-      })
-    );
+  async (props: { survey: ISurvey }, thunkAPI) => {
+    const { survey } = props;
+    const result = await axios.post<ISurvey>(`api/surveys`, survey);
+
+    const query = `companyId.equals=${survey[SURVEY_COMPANY_ID]}&formId.equals=${survey[SURVEY_FORM_ID]}`;
+    thunkAPI.dispatch(getSurveys({ query }));
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -49,18 +41,13 @@ export const createSurvey = createAsyncThunk(
 
 export const updateSurvey = createAsyncThunk(
   'survey/update_survey',
-  async (props: { collectionId: number; survey: ISurvey }, thunkAPI) => {
-    const { collectionId, survey } = props;
+  async (props: { survey: ISurvey }, thunkAPI) => {
+    const { survey } = props;
 
-    const result = await axios.put<ISurvey>(`api/surveys/${survey[SURVEY_ID]}?collectionId=${collectionId}`, props.survey);
+    const result = await axios.put<ISurvey>(`api/surveys/${survey[SURVEY_ID]}`, props.survey);
 
-    thunkAPI.dispatch(
-      getSurveysByCompanyIdAndFormId({
-        collectionId,
-        companyId: survey[SURVEY_COMPANY_ID],
-        formId: survey[SURVEY_FORM_ID],
-      })
-    );
+    const query = `companyId.equals=${survey[SURVEY_COMPANY_ID]}&formId.equals=${survey[SURVEY_FORM_ID]}`;
+    thunkAPI.dispatch(getSurveys({ query }));
     return result;
   },
   { serializeError: serializeAxiosError }
@@ -68,19 +55,14 @@ export const updateSurvey = createAsyncThunk(
 
 export const deleteSurvey = createAsyncThunk(
   'survey/delete_survey',
-  async (props: { collectionId: number; survey: ISurvey }, thunkAPI) => {
-    const { collectionId, survey } = props;
+  async (props: { survey: ISurvey }, thunkAPI) => {
+    const { survey } = props;
 
-    const requestUrl = `api/surveys/${props.survey[SURVEY_ID]}?collectionId=${collectionId}`;
+    const requestUrl = `api/surveys/${props.survey[SURVEY_ID]}`;
     const result = await axios.delete(requestUrl);
 
-    thunkAPI.dispatch(
-      getSurveysByCompanyIdAndFormId({
-        collectionId,
-        companyId: survey[SURVEY_COMPANY_ID],
-        formId: survey[SURVEY_FORM_ID],
-      })
-    );
+    const query = `companyId.equals=${survey[SURVEY_COMPANY_ID]}&formId.equals=${survey[SURVEY_FORM_ID]}`;
+    thunkAPI.dispatch(getSurveys({ query }));
 
     return result;
   },
@@ -106,7 +88,7 @@ export const SurveySlice = createSlice({
         state.updateSuccess = true;
         state.survey = defaultValue;
       })
-      .addMatcher(isFulfilled(getSurveysByCompanyIdAndFormId), (state, action) => {
+      .addMatcher(isFulfilled(getSurveys), (state, action) => {
         const { data, headers } = action.payload;
         return {
           ...state,
@@ -120,7 +102,7 @@ export const SurveySlice = createSlice({
         state.updateSuccess = true;
         state.survey = action.payload.data;
       })
-      .addMatcher(isPending(getSurveysByCompanyIdAndFormId, getSurveyById), state => {
+      .addMatcher(isPending(getSurveys, getSurveyById), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;
@@ -130,7 +112,7 @@ export const SurveySlice = createSlice({
         state.updateSuccess = false;
         state.updating = true;
       })
-      .addMatcher(isRejected(getSurveysByCompanyIdAndFormId, getSurveyById, createSurvey, updateSurvey, deleteSurvey), (state, action) => {
+      .addMatcher(isRejected(getSurveys, getSurveyById, createSurvey, updateSurvey, deleteSurvey), (state, action) => {
         state.loading = false;
         state.updating = false;
         state.updateSuccess = false;

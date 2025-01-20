@@ -57,7 +57,6 @@ const SurveyModal =
         if (survey && survey.id) {
           dispatch(
             updateSurvey({
-              collectionId: form.category.id,
               survey: {
                 id: survey.id,
                 companyId: company.id,
@@ -69,7 +68,6 @@ const SurveyModal =
         } else {
           dispatch(
             createSurvey({
-              collectionId: form.category.id,
               survey: { companyId: company.id, formId: form.id, fields: mappedFields },
             })
           );
