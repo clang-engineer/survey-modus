@@ -1,19 +1,19 @@
 package com.clangengineer.surveymodus.web.rest
 
+import com.clangengineer.surveymodus.service.MessageQueryService
 import com.clangengineer.surveymodus.service.MessageService
+import com.clangengineer.surveymodus.service.criteria.MessageCriteria
 import com.clangengineer.surveymodus.service.dto.MessageDTO
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 @RestController
 @RequestMapping("/api")
 class MessageController(
-    private val messageService: MessageService
+    private val messageService: MessageService,
+    private val messageQueryService: MessageQueryService
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -30,5 +30,14 @@ class MessageController(
         return ResponseEntity.created(
             URI("/api/messages/${result.id}")
         ).body(result)
+    }
+
+    @GetMapping("/messages")
+    fun getAllMessages(criteria: MessageCriteria): ResponseEntity<List<MessageDTO>> {
+        log.debug("REST request to get all Messages")
+
+        val result = messageQueryService.findAll(criteria)
+
+        return ResponseEntity.ok(result)
     }
 }

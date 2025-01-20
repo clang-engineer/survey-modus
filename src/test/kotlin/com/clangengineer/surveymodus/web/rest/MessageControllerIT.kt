@@ -2,6 +2,7 @@ package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.service.dto.MessageDTO
+import com.clangengineer.surveymodus.web.rest.MessageController.Companion.OBJECT_NAME
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,11 +40,33 @@ class MessageControllerIT {
                 .content(convertObjectToJsonBytes(message))
         ).andExpect(status().isCreated)
 
-        val messageList = mongoTemplate.findAll(MessageDTO::class.java)
+        val messageList =
+            mongoTemplate.findAll(MessageDTO::class.java, OBJECT_NAME)
 
         assertThat(messageList).hasSize(1)
         val testMessage = messageList[0]
         assertThat(testMessage.message).isEqualTo("message")
         assertThat(testMessage.companyId).isEqualTo(1L)
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    fun `test get all messages`() {
+        val message = MessageDTO(
+            message = "message",
+            companyId = 1L
+        )
+
+        mongoTemplate.save(message, OBJECT_NAME)
+
+        restMessageMockMvc.perform(
+            get("/api/messages")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("\$").isArray)
+            .andExpect(jsonPath("\$[0].message").value("message"))
+            .andExpect(jsonPath("\$[0].companyId").value(1))
     }
 }
