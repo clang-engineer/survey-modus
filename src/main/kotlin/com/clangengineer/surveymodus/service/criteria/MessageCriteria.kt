@@ -1,12 +1,13 @@
 package com.clangengineer.surveymodus.service.criteria
 
 import tech.jhipster.service.Criteria
+import tech.jhipster.service.filter.LongFilter
 import tech.jhipster.service.filter.StringFilter
 import java.io.Serializable
 
 data class MessageCriteria(
     var id: StringFilter? = null,
-    var companyId: StringFilter? = null,
+    var companyId: LongFilter? = null,
 ) : Serializable, Criteria {
 
     constructor(other: MessageCriteria) :

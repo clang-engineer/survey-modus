@@ -13,7 +13,7 @@ import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
 import { getSurveys } from 'app/modules/survey/survey.reducer';
 import useConfig from 'app/berry/hooks/useConfig';
 import GateTitle from 'app/modules/survey/gate/gate-title';
-import ChatBoxFab from 'app/modules/survey/chat-box';
+import ChatBoxFab from 'app/modules/message';
 
 const Gate = () => {
   const dispatch = useAppDispatch();

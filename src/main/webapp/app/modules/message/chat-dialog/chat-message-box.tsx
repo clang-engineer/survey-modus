@@ -1,12 +1,13 @@
 import React from 'react';
-import { Box, Button, ButtonGroup, Divider, Typography, IconButton } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
-import { IconPencil, IconTrash } from '@tabler/icons';
+import { IconTrash } from '@tabler/icons';
 import { useAppSelector } from 'app/config/store';
+import { IMessage } from 'app/shared/model/message.model';
 
 interface IMessageBoxProps {
-  messages: any[];
+  messages: IMessage[];
   currentIndex: any;
   onDeleteMessage: (index: number) => void;
 }
@@ -61,7 +62,7 @@ const ChatMessageBox = (props: IMessageBoxProps) => {
             wordBreak: 'break-word',
           }}
         >
-          <Typography variant="body1">{currentMessage.message}</Typography>
+          <Typography variant="body1">{currentMessage.content}</Typography>
         </Box>
       </Box>
       <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>

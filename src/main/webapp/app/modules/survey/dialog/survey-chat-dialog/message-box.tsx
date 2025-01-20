@@ -61,7 +61,7 @@ const MessageBox = (props: IMessageBoxProps) => {
             wordBreak: 'break-word',
           }}
         >
-          <Typography variant="body1">{currentMessage.message}</Typography>
+          <Typography variant="body1">{currentMessage.content}</Typography>
         </Box>
       </Box>
       <Box display="flex" justifyContent={isCurrentUser ? 'flex-end' : 'flex-start'}>
