@@ -30,7 +30,7 @@ class MessageControllerIT {
     @Throws(Exception::class)
     fun `test create message`() {
         val message = MessageDTO(
-            message = "message",
+            content = "message",
             companyId = 1L
         )
 
@@ -45,7 +45,7 @@ class MessageControllerIT {
 
         assertThat(messageList).hasSize(1)
         val testMessage = messageList[0]
-        assertThat(testMessage.message).isEqualTo("message")
+        assertThat(testMessage.content).isEqualTo("message")
         assertThat(testMessage.companyId).isEqualTo(1L)
     }
 
@@ -54,7 +54,7 @@ class MessageControllerIT {
     @Throws(Exception::class)
     fun `test get all messages`() {
         val message = MessageDTO(
-            message = "message",
+            content = "message",
             companyId = 1L
         )
 
@@ -65,7 +65,7 @@ class MessageControllerIT {
         ).andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("\$").isArray)
-            .andExpect(jsonPath("\$[0].message").value("message"))
+            .andExpect(jsonPath("\$[0].content").value("message"))
             .andExpect(jsonPath("\$[0].companyId").value(1))
     }
 
@@ -75,7 +75,7 @@ class MessageControllerIT {
     fun `delete message`() {
         val message = mongoTemplate.save(
             MessageDTO(
-                message = "message",
+                content = "message",
                 companyId = 1L
             ),
             OBJECT_NAME
