@@ -64,6 +64,7 @@ class SecurityConfiguration(
             .antMatchers("/test/**").permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/authenticate/2fa").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()

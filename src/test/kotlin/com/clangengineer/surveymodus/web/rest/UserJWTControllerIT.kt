@@ -100,4 +100,24 @@ class UserJWTControllerIT {
             .andExpect(jsonPath("\$.id_token").doesNotExist())
             .andExpect(header().doesNotExist("Authorization"))
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun `test staff user authorize`() {
+        val login = LoginVM(username = "01012345678", password = "test")
+
+        mockMvc.perform(
+            post("/api/authenticate/2fa")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(login))
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("\$.id_token").isString)
+            .andExpect(jsonPath("\$.id_token").isNotEmpty)
+            .andExpect(
+                header().string(
+                    "Authorization", not(nullValue())
+                )
+            )
+    }
 }

@@ -1,5 +1,6 @@
 package com.clangengineer.surveymodus.web.rest
 
+import com.clangengineer.surveymodus.security.STAFF
 import com.clangengineer.surveymodus.security.jwt.JWTFilter
 import com.clangengineer.surveymodus.security.jwt.TokenProvider
 import com.clangengineer.surveymodus.web.rest.vm.LoginVM
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -28,9 +30,11 @@ class UserJWTController(
     @PostMapping("/authenticate")
     fun authorize(@Valid @RequestBody loginVM: LoginVM): ResponseEntity<JWTToken> {
 
-        val authenticationToken = UsernamePasswordAuthenticationToken(loginVM.username, loginVM.password)
+        val authenticationToken =
+            UsernamePasswordAuthenticationToken(loginVM.username, loginVM.password)
 
-        val authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken)
+        val authentication =
+            authenticationManagerBuilder.getObject().authenticate(authenticationToken)
         SecurityContextHolder.getContext().authentication = authentication
         val jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe ?: false)
         val httpHeaders = HttpHeaders()
@@ -42,4 +46,21 @@ class UserJWTController(
      * Object to return as body in JWT Authentication.
      */
     class JWTToken(@get:JsonProperty("id_token") var idToken: String?)
+
+    @PostMapping("/authenticate/2fa")
+    fun authorize2fa(@Valid @RequestBody loginVM: LoginVM): ResponseEntity<JWTToken> {
+
+        val authentication = UsernamePasswordAuthenticationToken(
+            loginVM.username,
+            loginVM.password,
+            listOf(SimpleGrantedAuthority(STAFF))
+        )
+
+        SecurityContextHolder.getContext().authentication = authentication
+
+        val jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe ?: false)
+        val httpHeaders = HttpHeaders()
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
+        return ResponseEntity(JWTToken(jwt), httpHeaders, HttpStatus.OK)
+    }
 }
