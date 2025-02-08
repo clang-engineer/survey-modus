@@ -64,24 +64,24 @@ const SurveyDialog = () => {
   return (
     <>
       <Tooltip title="choose form" arrow={true} placement="left">
-        <StyledFab color="secondary" size="small" variant="circular" onClick={handleOpen}>
+        <StyledFab
+          color={open ? 'primary' : 'secondary'}
+          size="small"
+          variant="circular"
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
           <AnimateButton>
             <IconButton color="inherit" size="small" disableRipple aria-label="live customize">
-              <IconLocation />
+              {open ? <IconScript /> : <IconLocation />}
             </IconButton>
           </AnimateButton>
         </StyledFab>
       </Tooltip>
       <Box sx={{ position: 'fixed', right: 0, bottom: 100 }}>
         <Backdrop open={open} />
-        <StyledSpeedDial
-          ariaLabel="SpeedDial openIcon example"
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-          hidden={true}
-          // direction="left"
-        >
+        <StyledSpeedDial ariaLabel="SpeedDial openIcon example" open={open} hidden={true}>
           {surveyInfo.forms
             .filter(f => f)
             .sort((a, b) => b.id - a.id)
