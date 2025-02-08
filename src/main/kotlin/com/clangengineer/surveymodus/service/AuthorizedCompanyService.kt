@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class StaffService(
+class AuthorizedCompanyService(
     private val jdbcTemplate: JdbcTemplate,
     private val companyService: CompanyService
 ) {

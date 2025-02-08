@@ -13,12 +13,12 @@ import javax.persistence.EntityManager
 @IntegrationTest
 @Transactional
 @WithMockUser
-class StaffServiceIT {
+class AuthorizedCompanyServiceIT {
     @Autowired
     private lateinit var em: EntityManager
 
     @Autowired
-    private lateinit var staffService: StaffService
+    private lateinit var authorizedCompanyService: AuthorizedCompanyService
 
     @Test
     fun `test fetch companies by staff phone`() {
@@ -41,7 +41,7 @@ class StaffServiceIT {
             em.persist(company)
             em.flush()
         }
-        val companies = staffService.fetchCompaniesByStaffPhone(phone)
+        val companies = authorizedCompanyService.fetchCompaniesByStaffPhone(phone)
 
         assertThat(companies).hasSize(10)
     }
