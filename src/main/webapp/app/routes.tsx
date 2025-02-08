@@ -87,7 +87,8 @@ const AppRoutes = () => {
         <Route
           element={
             <PrivateRoute>
-              <MainLayout />
+              {/*<MainLayout />*/}
+              <JhLayout />
             </PrivateRoute>
           }
         >
