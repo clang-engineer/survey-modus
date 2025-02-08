@@ -1,5 +1,5 @@
 const SURVEY_ID = 'id';
-const SURVEY_OBJECT_ID = '_id';
+const MONGO_OBJECT_ID = '_id';
 const SURVEY_COMPANY_ID = 'companyId';
 const SURVEY_FORM_ID = 'formId';
 
@@ -17,4 +17,4 @@ const defaultValue: Readonly<ISurvey> = {
   fields: [],
 };
 
-export { ISurvey, SURVEY_ID, SURVEY_OBJECT_ID, SURVEY_COMPANY_ID, SURVEY_FORM_ID, defaultValue };
+export { ISurvey, SURVEY_ID, MONGO_OBJECT_ID, SURVEY_COMPANY_ID, SURVEY_FORM_ID, defaultValue };

@@ -15,6 +15,7 @@ import passwordReset from 'app/modules/account/password-reset/password-reset.red
 import entitiesReducers from 'app/entities/reducers';
 import berryReducer from 'app/berry/store/reducer';
 import survey from 'app/modules/survey/survey.reducer';
+import message from 'app/modules/message/message.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const rootReducer: ReducersMapObject = {
@@ -33,6 +34,7 @@ const rootReducer: ReducersMapObject = {
   ...entitiesReducers,
   ...berryReducer,
   survey,
+  message,
 };
 
 export default rootReducer;

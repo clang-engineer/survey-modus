@@ -14,6 +14,7 @@ import com.clangengineer.surveymodus.service.dto.SurveyDTO
 import com.clangengineer.surveymodus.service.mapper.CompanyMapper
 import com.clangengineer.surveymodus.service.mapper.FieldMapper
 import com.clangengineer.surveymodus.service.mapper.FormMapper
+import com.clangengineer.surveymodus.web.rest.SurveyController.Companion.OBJECT_NAME
 import org.assertj.core.api.Assertions.*
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
@@ -86,7 +87,7 @@ class SurveyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testCreateDocumentInCollection() {
+    fun testCreateSurveyInCollection() {
         val fieldMapArray = mutableListOf<Map<String, Any>>()
         fieldList.forEach {
             fieldMapArray.add(
@@ -94,16 +95,15 @@ class SurveyControllerIT {
             )
         }
 
-        val survey =
-            SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
+        val survey = SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
         datasourceMockMvc.perform(
-            post("/api/surveys?collectionId=${form.category!!.id}")
+            post("/api/surveys")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(survey))
         ).andExpect(status().isCreated())
 
-        val result = mongoTemplate.findAll(Map::class.java, form.category!!.id.toString())
+        val result = mongoTemplate.findAll(Map::class.java, OBJECT_NAME)
         assertThat(result).hasSize(1)
         assertThat(result[0][SURVEY_COMPANY_ID]).isEqualTo(company.id)
         assertThat(result[0][SURVEY_FORM_ID]).isEqualTo(form.id)
@@ -113,7 +113,7 @@ class SurveyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testFindAllDocumentsInCollectionsByFormId() {
+    fun testFindAllSurveysInCollectionsByFormId() {
         for (i in 1..5) {
             val fieldMapArray = mutableListOf<Map<String, Any>>()
             fieldList.forEach {
@@ -126,12 +126,12 @@ class SurveyControllerIT {
             }
 
             val survey = SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
-            mongoTemplate.save(survey, form.category!!.id.toString())
+            mongoTemplate.save(survey, OBJECT_NAME)
         }
 
         val filterString = "companyId.equals=${company.id}&formId.equals=${form.id}"
 
-        val API_URI = "/api/surveys?collectionId=${form.category!!.id}&$filterString"
+        val API_URI = "/api/surveys?$filterString"
         datasourceMockMvc.perform(get(API_URI))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -142,7 +142,7 @@ class SurveyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testFindOneDocumentByDocumentId() {
+    fun testFindOneSurveyBySurveyId() {
         val fieldMapArray = mutableListOf<Map<String, Any>>()
         fieldList.forEach {
             fieldMapArray.add(
@@ -153,19 +153,20 @@ class SurveyControllerIT {
         val survey =
             SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
-        val result = mongoTemplate.save(survey, form.category!!.id.toString()) as SurveyDTO
+        val result = mongoTemplate.save(survey, OBJECT_NAME) as SurveyDTO
 
-        datasourceMockMvc.perform(get("/api/surveys/${result.id}?collectionId=${form.category!!.id}"))
+        datasourceMockMvc.perform(get("/api/surveys/${result.id}"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(result.id))
+            .andExpect(jsonPath("$.companyId").value(company.id.toString()))
             .andExpect(jsonPath("$.formId").value(form.id.toString()))
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testUpdateDocumentByDocumentId() {
+    fun testUpdateSurveyBySurveyId() {
         val fieldMapArray = mutableListOf<Map<String, Any>>()
         fieldList.forEach {
             fieldMapArray.add(
@@ -176,7 +177,7 @@ class SurveyControllerIT {
         val survey =
             SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
 
-        val result = mongoTemplate.save(survey, form.category!!.id.toString())
+        val result = mongoTemplate.save(survey, OBJECT_NAME)
 
         val updatedRow = survey.copy()
 
@@ -185,7 +186,7 @@ class SurveyControllerIT {
         updatedRow.fields = updatedFieldsMapArray
 
         datasourceMockMvc.perform(
-            put("/api/surveys/${result.id}?collectionId=${form.category!!.id}")
+            put("/api/surveys/${result.id}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes(updatedRow))
         ).andExpect(status().isOk())
@@ -193,7 +194,7 @@ class SurveyControllerIT {
         val updatedResult = mongoTemplate.findById(
             result.id,
             SurveyDTO::class.java,
-            form.category!!.id.toString()
+            OBJECT_NAME
         )
         assertThat(updatedResult!!.fields).isEqualTo(updatedRow.fields)
     }
@@ -201,7 +202,7 @@ class SurveyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun testRemoveDocumentByDocumentId() {
+    fun testRemoveSurveyBySurveyId() {
         val fieldMapArray = mutableListOf<Map<String, Any>>()
         fieldList.forEach {
             fieldMapArray.add(
@@ -213,13 +214,13 @@ class SurveyControllerIT {
             SurveyDTO(companyId = company.id, formId = form.id, fields = fieldMapArray)
         val result = mongoTemplate.save(survey, form.category!!.id.toString()) as SurveyDTO
 
-        datasourceMockMvc.perform(delete("/api/surveys/${result.id}?collectionId=${form.category!!.id}"))
+        datasourceMockMvc.perform(delete("/api/surveys/${result.id}"))
             .andExpect(status().isNoContent())
 
         val deletedResult = mongoTemplate.findById(
             result._id,
             Map::class.java,
-            form.category!!.id.toString()
+            OBJECT_NAME
         )
         assertThat(deletedResult).isNull()
     }

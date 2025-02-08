@@ -10,18 +10,19 @@ import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { IconSend, IconX } from '@tabler/icons';
-import { useAppSelector } from 'app/config/store';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/dialog/survey-chat-dialog/message-box';
 import SlideTransition from 'app/shared/component/slide-transition';
 import PaperComponent from 'app/shared/component/draggable-dialog';
+import { createEntity as createMessage, getEntities as getMessages } from 'app/modules/message/message.reducer';
 
 const ChatDialog = ({ isOpen, onResolve, onReject }) => {
-  const companyEntity = useAppSelector(state => state.company.entity);
-
   const theme = useTheme();
-  const account = useAppSelector(state => state.authentication.account);
+  const dispatch = useAppDispatch();
 
-  const [messages, setMessages] = React.useState([]);
+  const companyEntity = useAppSelector(state => state.company.entity);
+  const messages = useAppSelector(state => state.message.entities);
+
   const [comment, setComment] = React.useState('');
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -31,6 +32,14 @@ const ChatDialog = ({ isOpen, onResolve, onReject }) => {
       scrollToBottom();
     }
   }, [isOpen, messages]);
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    const query = `companyId.equals=${companyEntity?.id}`;
+    dispatch(getMessages({ query }));
+  }, [isOpen]);
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -44,6 +53,7 @@ const ChatDialog = ({ isOpen, onResolve, onReject }) => {
   };
 
   const onMessageSend = () => {
+    dispatch(createMessage({ companyId: companyEntity?.id, content: comment }));
     setComment('');
   };
 

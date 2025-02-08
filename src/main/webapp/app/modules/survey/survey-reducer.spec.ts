@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, { createSurvey, deleteSurvey, getSurveyById, getSurveysByCompanyIdAndFormId, reset, updateSurvey } from './survey.reducer';
+import reducer, { createSurvey, deleteSurvey, getSurveyById, getSurveys, reset, updateSurvey } from './survey.reducer';
 import { defaultValue } from 'app/shared/model/survey.model';
 
 describe('Survey reducer tests', () => {
@@ -56,7 +56,7 @@ describe('Survey reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      testMultipleTypes([getSurveysByCompanyIdAndFormId.pending.type, getSurveyById.pending.type], {}, state => {
+      testMultipleTypes([getSurveys.pending.type, getSurveyById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -80,7 +80,7 @@ describe('Survey reducer tests', () => {
     it('should set state to loading and reset error message', () => {
       testMultipleTypes(
         [
-          getSurveysByCompanyIdAndFormId.rejected.type,
+          getSurveys.rejected.type,
           getSurveyById.rejected.type,
           createSurvey.rejected.type,
           updateSurvey.rejected.type,
@@ -109,7 +109,7 @@ describe('Survey reducer tests', () => {
           },
         ],
       };
-      const state = reducer(undefined, { type: getSurveysByCompanyIdAndFormId.fulfilled.type, payload });
+      const state = reducer(undefined, { type: getSurveys.fulfilled.type, payload });
       expect(state).toMatchObject({
         loading: false,
         surveys: payload.data,
@@ -186,14 +186,15 @@ describe('Survey reducer tests', () => {
     it('dispatches FETCH_SURVEY_LIST actions', async () => {
       const expectedActions = [
         {
-          type: getSurveysByCompanyIdAndFormId.pending.type,
+          type: getSurveys.pending.type,
         },
         {
-          type: getSurveysByCompanyIdAndFormId.fulfilled.type,
+          type: getSurveys.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getSurveysByCompanyIdAndFormId({ collectionId: 1, companyId: 1, formId: 1 }));
+      const query = `?collectionId=1&companyId=1&formId=1`;
+      await store.dispatch(getSurveys({ query }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
@@ -208,7 +209,8 @@ describe('Survey reducer tests', () => {
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getSurveyById({ collectionId: 1, surveyId: '1' }));
+      const query = `?collectionId=1&companyId=1&formId=1`;
+      await store.dispatch(getSurveyById({ surveyId: '1' }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
@@ -216,10 +218,10 @@ describe('Survey reducer tests', () => {
     it('dispatches CREATE_SURVEY actions', async () => {
       const expectedActions = [
         { type: createSurvey.pending.type },
-        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: getSurveys.pending.type },
         { type: createSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(createSurvey({ collectionId: 1, survey: { companyId: 1, formId: 1 } }));
+      await store.dispatch(createSurvey({ survey: { companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
@@ -228,10 +230,10 @@ describe('Survey reducer tests', () => {
     it('dispatches UPDATE_SURVEY actions', async () => {
       const expectedActions = [
         { type: updateSurvey.pending.type },
-        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: getSurveys.pending.type },
         { type: updateSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(updateSurvey({ collectionId: 1, survey: { id: '1', companyId: 1, formId: 1 } }));
+      await store.dispatch(updateSurvey({ survey: { id: '1', companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
@@ -240,10 +242,10 @@ describe('Survey reducer tests', () => {
     it('dispatches DELETE_SURVEY actions', async () => {
       const expectedActions = [
         { type: deleteSurvey.pending.type },
-        { type: getSurveysByCompanyIdAndFormId.pending.type },
+        { type: getSurveys.pending.type },
         { type: deleteSurvey.fulfilled.type, payload: resolvedObject },
       ];
-      await store.dispatch(deleteSurvey({ collectionId: 1, survey: { id: '1', companyId: 1, formId: 1 } }));
+      await store.dispatch(deleteSurvey({ survey: { id: '1', companyId: 1, formId: 1 } }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);

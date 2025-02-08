@@ -7,7 +7,7 @@ import { IconSettings } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 import { create } from 'react-modal-promise';
-import ChatDialog from 'app/modules/survey/chat-box/chat-dialog';
+import ChatDialog from 'app/modules/message/chat-dialog';
 
 const ChatBoxFab = () => {
   const theme = useTheme();

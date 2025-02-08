@@ -10,10 +10,10 @@ import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import DataSource from 'app/modules/survey/gate/datasource';
 import { getEntities as getFieldList } from 'app/entities/field/field.reducer';
-import { getSurveysByCompanyIdAndFormId } from 'app/modules/survey/survey.reducer';
+import { getSurveys } from 'app/modules/survey/survey.reducer';
 import useConfig from 'app/berry/hooks/useConfig';
 import GateTitle from 'app/modules/survey/gate/gate-title';
-import ChatBoxFab from 'app/modules/survey/chat-box';
+import ChatBoxFab from 'app/modules/message';
 
 const Gate = () => {
   const dispatch = useAppDispatch();
@@ -46,13 +46,8 @@ const Gate = () => {
 
   useEffect(() => {
     if (companyEntity.id && formEntity.id) {
-      dispatch(
-        getSurveysByCompanyIdAndFormId({
-          collectionId: formEntity.category.id,
-          companyId: companyEntity.id,
-          formId: formEntity.id,
-        })
-      );
+      const query = `companyId.equals=${companyEntity.id}&formId.equals=${formEntity.id}`;
+      dispatch(getSurveys({ query }));
     }
   }, [companyEntity, formEntity]);
 

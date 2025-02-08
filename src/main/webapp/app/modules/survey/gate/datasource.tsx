@@ -36,7 +36,7 @@ const DataSource = () => {
       })
     )().then(result => {
       if (result) {
-        dispatch(deleteSurvey({ collectionId: formEntity.category.id, survey: row }));
+        dispatch(deleteSurvey({ survey: row }));
       }
     });
   };
