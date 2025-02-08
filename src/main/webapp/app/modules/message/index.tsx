@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import { Fab, IconButton, Tooltip } from '@mui/material';
-import { IconSettings } from '@tabler/icons';
+import { IconSettings, IconBrandHipchat } from '@tabler/icons';
 
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
@@ -22,7 +22,7 @@ const ChatBoxFab = () => {
         <Fab
           component="div"
           onClick={noFabClick}
-          size="medium"
+          size="small"
           variant="circular"
           color="secondary"
           sx={{
@@ -31,16 +31,16 @@ const ChatBoxFab = () => {
             borderBottomLeftRadius: '50%',
             borderTopRightRadius: '50%',
             borderBottomRightRadius: '4px',
-            bottom: 10,
+            bottom: 82,
             position: 'fixed',
-            right: 10,
+            right: 28,
             zIndex: 1200,
             boxShadow: theme.customShadows.secondary,
           }}
         >
-          <AnimateButton type="rotate">
-            <IconButton color="inherit" size="large" disableRipple aria-label="live customize">
-              <IconSettings />
+          <AnimateButton>
+            <IconButton color="inherit" size="small" disableRipple aria-label="live customize">
+              <IconBrandHipchat />
             </IconButton>
           </AnimateButton>
         </Fab>

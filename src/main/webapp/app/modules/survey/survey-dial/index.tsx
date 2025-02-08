@@ -23,16 +23,9 @@ const SurveyDialog = () => {
   };
 
   return (
-    <Box sx={{ position: 'fixed', right: 10, bottom: 10 }}>
+    <Box sx={{ position: 'fixed', right: 16, bottom: 16 }}>
       <Backdrop open={open} />
-      <SpeedDial
-        ariaLabel="SpeedDial tooltip example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-      >
+      <SpeedDial ariaLabel="SpeedDial tooltip example" icon={<SpeedDialIcon />} onClose={handleClose} onOpen={handleOpen} open={open}>
         {surveyInfo.forms
           .filter(f => f)
           .sort((a, b) => b.id - a.id)

@@ -14,6 +14,7 @@ import { getSurveys } from 'app/modules/survey/survey.reducer';
 import useConfig from 'app/berry/hooks/useConfig';
 import GateTitle from 'app/modules/survey/gate/gate-title';
 import ChatBoxFab from 'app/modules/message';
+import SurveyDial from 'app/modules/survey/survey-dial';
 
 const Gate = () => {
   const dispatch = useAppDispatch();
@@ -58,6 +59,7 @@ const Gate = () => {
           <DataSource />
         </SubCard>
         <ChatBoxFab />
+        <SurveyDial />
       </Grid>
     </Grid>
   );
