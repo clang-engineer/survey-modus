@@ -21,7 +21,6 @@ import javax.persistence.EntityManager
 
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
 class CompanyControllerIT {
     @Autowired
     private lateinit var companyRepository: CompanyRepository
@@ -38,6 +37,7 @@ class CompanyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
+    @WithMockUser
     fun createAndUpdateAllCompanysTest() {
         val company1 = CompanyResourceIT.createEntity(em)
         em.persist(company1)
@@ -96,10 +96,10 @@ class CompanyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    @WithMockUser(login, authorities = [USER])
+    @WithMockUser("ownlogin", authorities = [USER])
     fun `fetch companies of own`() {
         val user = UserResourceIT.createEntity(em)
-        user.login = login
+        user.login = "ownlogin"
         em.persist(user)
 
         val company = CompanyResourceIT.createEntity(em)
@@ -117,12 +117,12 @@ class CompanyControllerIT {
     @Test
     @Transactional
     @Throws(Exception::class)
-    @WithMockUser(login, authorities = [USER])
+    @WithMockUser("grouplogin", authorities = [USER])
     fun `fetch companies of group`() {
         val group = GroupResourceIT.createEntity(em)
         val company = CompanyResourceIT.createEntity(em)
         val user = UserResourceIT.createEntity(em)
-        user.login = login
+        user.login = "grouplogin"
 
         em.persist(company)
         em.persist(user)
@@ -142,6 +142,5 @@ class CompanyControllerIT {
 
     companion object {
         const val phone = "1234567890"
-        const val login = "normal_user"
     }
 }
