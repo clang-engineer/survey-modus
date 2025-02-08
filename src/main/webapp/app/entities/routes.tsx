@@ -23,10 +23,10 @@ export default () => {
         <Route path="field/*" element={<Field />} />
         <Route path="company/*" element={<Company />} />
         <Route path="group/*" element={<Group />} />
+        <Route path="file/*" element={<File />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
         <Route path="point/*" element={<Point />} />
         <Route path="user-point/*" element={<UserPoint />} />
-        <Route path="file/*" element={<File />} />
       </ErrorBoundaryRoutes>
     </div>
   );
