@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntities as getCompanyList } from 'app/entities/company/company.reducer';
+import { fetchAuthorizedCompanies } from 'app/entities/company/company.reducer';
+
 import SubCard from 'app/berry/ui-component/cards/SubCard';
 
 import { Box, Grid, Typography } from '@mui/material';
@@ -22,7 +23,7 @@ const SurveyRouter = () => {
 
   useEffect(() => {
     if (companies.length === 0 && user.id) {
-      dispatch(getCompanyList({ query: `userId.equals=${user.id}` }));
+      dispatch(fetchAuthorizedCompanies());
     }
   }, [companies, user.id]);
 
@@ -68,7 +69,7 @@ const SurveyRouter = () => {
           <Typography variant="h4">Survey Router</Typography>
         </Grid>
         {companies
-          .filter(c => c && c.activated)
+          .filter(c => c)
           .sort((a, b) => a.orderNo - b.orderNo)
           .map((company, index) => (
             <Grid
