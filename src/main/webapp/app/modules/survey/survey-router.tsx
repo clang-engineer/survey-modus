@@ -56,7 +56,7 @@ const SurveyRouter = () => {
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         '& .MuiCard-root': {
           cursor: 'pointer',
         },
@@ -75,7 +75,7 @@ const SurveyRouter = () => {
             <Grid
               key={index}
               item
-              xs={12}
+              xs={6}
               // sm={6}
               lg={4}
               sx={{
@@ -100,6 +100,7 @@ const SurveyRouter = () => {
               >
                 <p>{company.description}</p>
               </SubCard>
+              <br />
             </Grid>
           ))}
       </Grid>
