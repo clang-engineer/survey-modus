@@ -97,7 +97,7 @@ class CompanyControllerIT {
     @Transactional
     @Throws(Exception::class)
     @WithMockUser(login, authorities = [USER])
-    fun `fetch companies of owner`() {
+    fun `fetch companies of own`() {
         val user = UserResourceIT.createEntity(em)
         user.login = login
         em.persist(user)
@@ -106,6 +106,32 @@ class CompanyControllerIT {
         company.user = user
         em.persist(company)
 
+        em.flush()
+
+        mockMvc.perform(get("/api/companys/authorized").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("\$.[*].id").value(hasItem(company.id!!.toInt())))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    @WithMockUser(login, authorities = [USER])
+    fun `fetch companies of group`() {
+        val group = GroupResourceIT.createEntity(em)
+        val company = CompanyResourceIT.createEntity(em)
+        val user = UserResourceIT.createEntity(em)
+        user.login = login
+
+        em.persist(company)
+        em.persist(user)
+        em.flush()
+
+        group.companies = mutableSetOf(company)
+        group.users = mutableSetOf(user)
+
+        em.persist(group)
         em.flush()
 
         mockMvc.perform(get("/api/companys/authorized").contentType(MediaType.APPLICATION_JSON))

@@ -52,11 +52,16 @@ class CompanyController(
             result = authorizedCompanyService.fetchCompaniesByStaffPhone(phone)
         } else {
             val user = userService.getUserWithAuthorities().orElseThrow { RuntimeException("User not logged in") }
-            result = companyQueryService.findByCriteria(
+            val owns = companyQueryService.findByCriteria(
                 CompanyCriteria(
                     userId = LongFilter().apply { equals = user.id }
                 )
             )
+
+            val login = getCurrentUserLogin().orElseThrow { RuntimeException("User not logged in") }
+            val groups = authorizedCompanyService.fetchCompaniesInGroupByUserLogin(login)
+
+            result = (owns + groups).distinctBy { it.id }
         }
 
         return ResponseEntity.ok().body(result)
