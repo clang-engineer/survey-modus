@@ -3,6 +3,8 @@ package com.clangengineer.surveymodus.service
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.embeddable.Staff
 import com.clangengineer.surveymodus.web.rest.CompanyResourceIT
+import com.clangengineer.surveymodus.web.rest.GroupResourceIT
+import com.clangengineer.surveymodus.web.rest.UserResourceIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -44,5 +46,27 @@ class AuthorizedCompanyServiceIT {
         val companies = authorizedCompanyService.fetchCompaniesByStaffPhone(phone)
 
         assertThat(companies).hasSize(10)
+    }
+
+    @Test
+    fun `fetch companies in group by user login`() {
+        val group = GroupResourceIT.createEntity(em)
+        val company = CompanyResourceIT.createEntity(em)
+        val user = UserResourceIT.createEntity(em)
+
+        em.persist(company)
+        em.persist(user)
+        em.flush()
+
+        group.companies = mutableSetOf(company)
+        group.users = mutableSetOf(user)
+
+        em.persist(group)
+        em.flush()
+
+        val companies = authorizedCompanyService.fetchCompaniesInGroupByUserLogin(user.login!!)
+
+        assertThat(companies).hasSize(1)
+        assertThat(companies[0].id).isEqualTo(company.id)
     }
 }

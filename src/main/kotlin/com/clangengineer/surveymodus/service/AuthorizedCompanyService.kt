@@ -1,8 +1,10 @@
 package com.clangengineer.surveymodus.service
 
 import com.clangengineer.surveymodus.repository.CompanyRepository
+import com.clangengineer.surveymodus.repository.GroupRepository
 import com.clangengineer.surveymodus.service.dto.CompanyDTO
 import com.clangengineer.surveymodus.service.mapper.CompanyMapper
+import com.clangengineer.surveymodus.service.mapper.GroupMapper
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
@@ -13,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional
 class AuthorizedCompanyService(
     private val jdbcTemplate: JdbcTemplate,
     private val companyRepository: CompanyRepository,
-    private val companyMapper: CompanyMapper
+    private val companyMapper: CompanyMapper,
+    private val groupRepository: GroupRepository,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -35,6 +38,16 @@ class AuthorizedCompanyService(
             companyRepository.findById(id)
                 .map { companyMapper.toDto(it) }
                 .orElse(null)
+        }
+    }
+
+    fun fetchCompaniesInGroupByUserLogin(login: String): List<CompanyDTO> {
+        log.debug("Request to fetch companies in group by user login : $login")
+
+        val groups = groupRepository.findByUsersLogin(login)
+
+        return groups.flatMap { group ->
+            group.companies.map { companyMapper.toDto(it) }
         }
     }
 }

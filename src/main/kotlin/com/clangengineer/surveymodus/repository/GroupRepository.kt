@@ -28,4 +28,6 @@ interface GroupRepository : JpaRepository<Group, Long>, JpaSpecificationExecutor
 
     @Query("select g from Group g left join fetch g.user where g.id =:id")
     fun findOneWithToOneRelationships(@Param("id") id: Long?): Optional<Group>
+
+    fun findByUsersLogin(login: String): MutableList<Group>
 }
