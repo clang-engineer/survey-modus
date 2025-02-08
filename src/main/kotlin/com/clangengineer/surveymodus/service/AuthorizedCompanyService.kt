@@ -1,6 +1,8 @@
 package com.clangengineer.surveymodus.service
 
+import com.clangengineer.surveymodus.repository.CompanyRepository
 import com.clangengineer.surveymodus.service.dto.CompanyDTO
+import com.clangengineer.surveymodus.service.mapper.CompanyMapper
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
@@ -10,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class AuthorizedCompanyService(
     private val jdbcTemplate: JdbcTemplate,
-    private val companyService: CompanyService
+    private val companyRepository: CompanyRepository,
+    private val companyMapper: CompanyMapper
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -29,7 +32,9 @@ class AuthorizedCompanyService(
         ) { rs, _ -> rs.getLong("id") }
 
         return companyIds.mapNotNull { id ->
-            companyService.findOne(id).orElse(null)
+            companyRepository.findById(id)
+                .map { companyMapper.toDto(it) }
+                .orElse(null)
         }
     }
 }
