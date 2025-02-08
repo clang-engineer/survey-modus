@@ -4,7 +4,6 @@ import com.clangengineer.surveymodus.repository.CompanyRepository
 import com.clangengineer.surveymodus.repository.GroupRepository
 import com.clangengineer.surveymodus.service.dto.CompanyDTO
 import com.clangengineer.surveymodus.service.mapper.CompanyMapper
-import com.clangengineer.surveymodus.service.mapper.GroupMapper
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

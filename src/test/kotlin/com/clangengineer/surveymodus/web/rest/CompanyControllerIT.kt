@@ -1,9 +1,13 @@
 package com.clangengineer.surveymodus.web.rest
 
 import com.clangengineer.surveymodus.IntegrationTest
+import com.clangengineer.surveymodus.domain.embeddable.Staff
 import com.clangengineer.surveymodus.repository.CompanyRepository
+import com.clangengineer.surveymodus.security.STAFF
+import com.clangengineer.surveymodus.security.USER
 import com.clangengineer.surveymodus.service.mapper.CompanyMapper
 import org.assertj.core.api.Assertions.*
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -56,5 +60,62 @@ class CompanyControllerIT {
 
         val updated = companyRepository.findById(company1.id!!).get()
         assertThat(updated).isEqualTo(company1)
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    @WithMockUser(phone, authorities = [STAFF])
+    fun `fetch authorized companies of staff`() {
+        val company = CompanyResourceIT.createEntity(em)
+
+        var mockStaff = Staff(
+            firstName = "test_firstName",
+            lastName = "test_lastName",
+            email = "test_email",
+            activated = true,
+            langKey = "ko",
+            phone = phone
+        )
+        val staffs = company.staffs
+        staffs.add(mockStaff)
+        company.staffs = staffs
+
+        em.persist(company)
+        em.flush()
+
+        mockMvc.perform(
+            get("/api/companys/authorized")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("\$.[*].id").value(hasItem(company.id!!.toInt())))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    @WithMockUser(login, authorities = [USER])
+    fun `fetch companies of owner`() {
+        val user = UserResourceIT.createEntity(em)
+        user.login = login
+        em.persist(user)
+
+        val company = CompanyResourceIT.createEntity(em)
+        company.user = user
+        em.persist(company)
+
+        em.flush()
+
+        mockMvc.perform(get("/api/companys/authorized").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("\$.[*].id").value(hasItem(company.id!!.toInt())))
+    }
+
+    companion object {
+        const val phone = "1234567890"
+        const val login = "normal_user"
     }
 }
