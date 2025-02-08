@@ -84,6 +84,11 @@ export const createAndUpdateEntities = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const fetchAuthorizedCompanies = createAsyncThunk('company/fetch_authorized_companies', async () => {
+  const requestUrl = `${apiUrl}/authorized`;
+  return axios.get<ICompany[]>(requestUrl);
+});
+
 // slice
 
 export const CompanySlice = createEntitySlice({
@@ -100,7 +105,7 @@ export const CompanySlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = {};
       })
-      .addMatcher(isFulfilled(getEntities), (state, action) => {
+      .addMatcher(isFulfilled(getEntities, fetchAuthorizedCompanies), (state, action) => {
         const { data, headers } = action.payload;
 
         return {
@@ -122,7 +127,7 @@ export const CompanySlice = createEntitySlice({
         state.updateSuccess = true;
         state.entities = action.payload.data;
       })
-      .addMatcher(isPending(getEntities, getEntity), state => {
+      .addMatcher(isPending(getEntities, getEntity, fetchAuthorizedCompanies), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;

@@ -8,6 +8,7 @@ import reducer, {
   createAndUpdateEntities,
   createEntity,
   deleteEntity,
+  fetchAuthorizedCompanies,
   getEntities,
   getEntity,
   partialUpdateEntity,
@@ -61,7 +62,7 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getEntities.pending.type, getEntity.pending.type], {}, state => {
+      testMultipleTypes([getEntities.pending.type, getEntity.pending.type, fetchAuthorizedCompanies.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -108,6 +109,7 @@ describe('Entities reducer tests', () => {
           partialUpdateEntity.rejected.type,
           deleteEntity.rejected.type,
           createAndUpdateEntities.rejected.type,
+          fetchAuthorizedCompanies.rejected.type,
         ],
         'some message',
         state => {
@@ -192,6 +194,21 @@ describe('Entities reducer tests', () => {
         ...initialState,
         updating: false,
         updateSuccess: true,
+        entities: payload.data,
+      });
+    });
+
+    it('should fetch all authorized companies', () => {
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }], headers: { 'x-total-count': 123 } };
+      expect(
+        reducer(undefined, {
+          type: fetchAuthorizedCompanies.fulfilled.type,
+          payload,
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        totalItems: payload.headers['x-total-count'],
         entities: payload.data,
       });
     });
@@ -328,6 +345,21 @@ describe('Entities reducer tests', () => {
         },
       ];
       await store.dispatch(createAndUpdateEntities([{ id: 456 }, { id: 789 }]));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches FETCH_AUTHORIZED_COMPANY_LIST actions', async () => {
+      const expectedActions = [
+        {
+          type: fetchAuthorizedCompanies.pending.type,
+        },
+        {
+          type: fetchAuthorizedCompanies.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(fetchAuthorizedCompanies());
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
