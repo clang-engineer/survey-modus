@@ -3,10 +3,9 @@ package com.clangengineer.surveymodus.service
 import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.embeddable.Staff
 import com.clangengineer.surveymodus.web.rest.CompanyResourceIT
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -16,9 +15,6 @@ import javax.persistence.EntityManager
 @WithMockUser
 class StaffServiceIT {
     @Autowired
-    private lateinit var jdbcTemplate: JdbcTemplate
-
-    @Autowired
     private lateinit var em: EntityManager
 
     @Autowired
@@ -26,28 +22,27 @@ class StaffServiceIT {
 
     @Test
     fun `test fetch companies by staff phone`() {
-        val company = CompanyResourceIT.createEntity(em)
-
-        val staffs = company.staffs
-
+        val phone = "1234567890"
         val staff = Staff(
             firstName = "test_first_name",
             lastName = "test_last_name",
             email = "test_email@test.com",
             activated = true,
             langKey = "en",
-            phone = "1234567890"
+            phone = phone
         )
 
-        staffs.add(staff)
-        company.staffs = staffs
+        // Create 10 companies and add the staff to them
+        for (i in 1..10) {
+            val company = CompanyResourceIT.createEntity(em)
+            val staffs = company.staffs
+            staffs.add(staff)
+            company.staffs = staffs
+            em.persist(company)
+            em.flush()
+        }
+        val companies = staffService.fetchCompaniesByStaffPhone(phone)
 
-        em.persist(company)
-        em.flush()
-
-        val companies = staffService.fetchCompaniesByStaffPhone("1234567890")
-
-        assertEquals(1, companies.size)
-        assertEquals(company.id, companies[0].id)
+        assertThat(companies).hasSize(10)
     }
 }
