@@ -1,11 +1,11 @@
 import './header.scss';
 
 import React, { useState } from 'react';
-import { Storage, Translate } from 'react-jhipster';
+import { Storage } from 'react-jhipster';
 import { Collapse, Nav, Navbar, NavbarToggler } from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Brand, Survey, Home } from './header-components';
+import { Brand, Home, Survey } from './header-components';
 import { AccountMenu, AdminMenu, EntitiesMenu, LocaleMenu, WizardsMenu } from '../menus';
 import { useAppDispatch } from 'app/config/store';
 import { setLocale } from 'app/shared/reducers/locale';
@@ -44,7 +44,7 @@ const Header = (props: IHeaderProps) => {
             <Home />
             <Survey />
             {props.isAuthenticated && <EntitiesMenu />}
-            {props.isAuthenticated && <WizardsMenu />}
+            {props.isAuthenticated && props.isAdmin && <WizardsMenu />}
             {props.isAuthenticated && props.isAdmin && (
               <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
             )}
