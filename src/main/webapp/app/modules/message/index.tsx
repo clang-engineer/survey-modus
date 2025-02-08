@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import { Fab, IconButton, Tooltip } from '@mui/material';
-import { IconSettings, IconBrandHipchat } from '@tabler/icons';
+import { IconBrandHipchat } from '@tabler/icons';
 
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
@@ -18,7 +18,7 @@ const ChatBoxFab = () => {
 
   return (
     <>
-      <Tooltip title="Leave a message">
+      <Tooltip title="Leave a message" arrow={true} placement="left">
         <Fab
           component="div"
           onClick={noFabClick}
@@ -31,9 +31,9 @@ const ChatBoxFab = () => {
             borderBottomLeftRadius: '50%',
             borderTopRightRadius: '50%',
             borderBottomRightRadius: '4px',
-            bottom: 82,
+            bottom: 20,
             position: 'fixed',
-            right: 28,
+            right: 20,
             zIndex: 1200,
             boxShadow: theme.customShadows.secondary,
           }}
