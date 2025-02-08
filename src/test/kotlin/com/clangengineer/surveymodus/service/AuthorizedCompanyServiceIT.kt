@@ -49,7 +49,7 @@ class AuthorizedCompanyServiceIT {
     }
 
     @Test
-    fun `fetch companies in group by user login`() {
+    fun `fetch companies in activated group by user login`() {
         val group = GroupResourceIT.createEntity(em)
         val company = CompanyResourceIT.createEntity(em)
         val user = UserResourceIT.createEntity(em)
@@ -58,6 +58,7 @@ class AuthorizedCompanyServiceIT {
         em.persist(user)
         em.flush()
 
+        group.activated = true
         group.companies = mutableSetOf(company)
         group.users = mutableSetOf(user)
 
@@ -68,5 +69,27 @@ class AuthorizedCompanyServiceIT {
 
         assertThat(companies).hasSize(1)
         assertThat(companies[0].id).isEqualTo(company.id)
+    }
+
+    @Test
+    fun `fetch companies in deactived group by user login`() {
+        val group = GroupResourceIT.createEntity(em)
+        val company = CompanyResourceIT.createEntity(em)
+        val user = UserResourceIT.createEntity(em)
+
+        em.persist(company)
+        em.persist(user)
+        em.flush()
+
+        group.activated = false
+        group.companies = mutableSetOf(company)
+        group.users = mutableSetOf(user)
+
+        em.persist(group)
+        em.flush()
+
+        val companies = authorizedCompanyService.fetchCompaniesInGroupByUserLogin(user.login!!)
+
+        assertThat(companies).isEmpty()
     }
 }

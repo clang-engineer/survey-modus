@@ -128,6 +128,7 @@ class CompanyControllerIT {
         em.persist(user)
         em.flush()
 
+        group.activated = true
         group.companies = mutableSetOf(company)
         group.users = mutableSetOf(user)
 
