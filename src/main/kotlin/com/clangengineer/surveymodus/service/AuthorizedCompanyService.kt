@@ -45,8 +45,10 @@ class AuthorizedCompanyService(
 
         val groups = groupRepository.findByUsersLogin(login)
 
-        return groups.flatMap { group ->
-            group.companies.map { companyMapper.toDto(it) }
-        }
+        return groups
+            .filter { it.activated!! }
+            .flatMap { group ->
+                group.companies.map { companyMapper.toDto(it) }
+            }
     }
 }
