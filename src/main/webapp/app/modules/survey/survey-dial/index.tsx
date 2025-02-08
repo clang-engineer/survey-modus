@@ -53,12 +53,9 @@ const SurveyDialog = () => {
   const { drawerType, container, layout, surveyInfo } = useConfig();
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const onClickForm = (form: IForm) => {
     navigate(`/survey/companies/${surveyInfo.company.id}/forms/${form.id}`);
-    handleClose();
+    setOpen(false);
   };
 
   return (
