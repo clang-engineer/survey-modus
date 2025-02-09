@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
@@ -7,11 +6,11 @@ import useConfig from 'app/berry/hooks/useConfig';
 import { useNavigate } from 'react-router-dom';
 import { IForm } from 'app/shared/model/form.model';
 
-import { Fab, IconButton, Tooltip } from '@mui/material';
+import { Box, Fab, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 
-import { IconLocation, IconScript } from '@tabler/icons';
+import { IconListDetails, IconLocation, IconScript } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 const StyledFab = styled(Fab)({
@@ -85,8 +84,17 @@ const SurveyDialog = () => {
             .map(form => (
               <SpeedDialAction
                 key={form.id}
-                icon={<IconScript />}
-                tooltipTitle={form.title}
+                icon={<IconListDetails />}
+                tooltipTitle={
+                  <Box sx={{ color: 'white' }}>
+                    <Typography variant="h4" color="inherit">
+                      {form.title}
+                    </Typography>
+                    <Typography variant="caption" color="inherit">
+                      {form.description}
+                    </Typography>
+                  </Box>
+                }
                 tooltipOpen
                 onClick={() => {
                   onClickForm(form);
