@@ -167,12 +167,21 @@ export const AuthenticationSlice = createSlice({
           loginSuccess: true,
         };
       })
-      .addMatcher(isRejected(authenticate, authenticateStaffAccount, getAccount), (state, action) => {
+      .addMatcher(isRejected(authenticate, authenticateStaffAccount), (state, action) => {
         return {
           ...initialState,
           errorMessage: action.error.message,
           showModalLogin: true,
           loginError: true,
+        };
+      })
+      .addMatcher(isRejected(getAccount), (state, action) => {
+        return {
+          ...initialState,
+          errorMessage: action.error.message,
+          showModalLogin: true,
+          loginError: true,
+          sessionHasBeenFetched: true,
         };
       });
   },

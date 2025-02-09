@@ -36,11 +36,11 @@ export const Home = () => (
 export const Survey = () => {
   const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
 
-  const linkTo = isAuthenticated ? '/survey' : '/survey/login';
+  // const linkTo = isAuthenticated ? '/survey' : '/survey/login';
 
   return (
     <NavItem>
-      <NavLink tag={Link} to={linkTo} className="d-flex align-items-center">
+      <NavLink tag={Link} to={'/survey'} className="d-flex align-items-center">
         <FontAwesomeIcon icon="home" />
         <span>
           <Translate contentKey="global.menu.survey">Survey</Translate>
