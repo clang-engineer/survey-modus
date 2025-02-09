@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Storage } from 'react-jhipster';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 import { serializeAxiosError } from './reducer.utils';
 
 import { AppThunk } from 'app/config/store';
@@ -39,6 +39,10 @@ export const getAccount = createAsyncThunk('authentication/get_account', async (
   serializeError: serializeAxiosError,
 });
 
+export const getStaffAccount = createAsyncThunk('authentication/get_staff_account', async () => axios.get<any>('api/account/staff'), {
+  serializeError: serializeAxiosError,
+});
+
 interface IAuthParams {
   username: string;
   password: string;
@@ -48,6 +52,19 @@ interface IAuthParams {
 export const authenticate = createAsyncThunk(
   'authentication/login',
   async (auth: IAuthParams) => axios.post<any>('api/authenticate', auth),
+  {
+    serializeError: serializeAxiosError,
+  }
+);
+
+interface IStaffAuthParams {
+  phone: string;
+  otp: string;
+}
+
+export const authenticateStaffAccount = createAsyncThunk(
+  'authentication/loginStaff',
+  async (auth: IStaffAuthParams) => axios.post<any>('api/authenticate/staff', auth),
   {
     serializeError: serializeAxiosError,
   }
@@ -118,28 +135,21 @@ export const AuthenticationSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(authenticate.rejected, (state, action) => ({
-        ...initialState,
-        errorMessage: action.error.message,
-        showModalLogin: true,
-        loginError: true,
-      }))
-      .addCase(authenticate.fulfilled, state => ({
-        ...state,
-        loading: false,
-        loginError: false,
-        showModalLogin: false,
-        loginSuccess: true,
-      }))
-      .addCase(getAccount.rejected, (state, action) => ({
-        ...state,
-        loading: false,
-        isAuthenticated: false,
-        sessionHasBeenFetched: true,
-        showModalLogin: true,
-        errorMessage: action.error.message,
-      }))
-      .addCase(getAccount.fulfilled, (state, action) => {
+      // .addCase(getAccount.rejected, (state, action) => ({
+      //   ...state,
+      //   loading: false,
+      //   isAuthenticated: false,
+      //   sessionHasBeenFetched: true,
+      //   showModalLogin: true,
+      //   errorMessage: action.error.message,
+      // }))
+      .addMatcher(isPending(authenticate, authenticateStaffAccount, getAccount, getStaffAccount), state => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addMatcher(isFulfilled(getAccount, getStaffAccount), (state, action) => {
         const isAuthenticated = action.payload && action.payload.data && action.payload.data.activated;
         return {
           ...state,
@@ -149,11 +159,22 @@ export const AuthenticationSlice = createSlice({
           account: action.payload.data,
         };
       })
-      .addCase(authenticate.pending, state => {
-        state.loading = true;
+      .addMatcher(isFulfilled(authenticate, authenticateStaffAccount), state => {
+        return {
+          ...state,
+          loading: false,
+          loginError: false,
+          showModalLogin: false,
+          loginSuccess: true,
+        };
       })
-      .addCase(getAccount.pending, state => {
-        state.loading = true;
+      .addMatcher(isRejected(authenticate, authenticateStaffAccount, getAccount, getStaffAccount), (state, action) => {
+        return {
+          ...initialState,
+          errorMessage: action.error.message,
+          showModalLogin: true,
+          loginError: true,
+        };
       });
   },
 });

@@ -4,14 +4,16 @@ import sinon from 'sinon';
 import { Storage } from 'react-jhipster';
 import configureStore from 'redux-mock-store';
 
-import authentication, {
+import reducer, {
   authenticate,
+  authenticateStaffAccount,
   authError,
   clearAuth,
   clearAuthentication,
   clearAuthToken,
   getAccount,
   getSession,
+  getStaffAccount,
   initialState,
   login,
   logout,
@@ -20,99 +22,108 @@ import authentication, {
 import { setLocale, updateLocale } from 'app/shared/reducers/locale';
 
 describe('Authentication reducer tests', () => {
-  function isAccountEmpty(state): boolean {
-    return Object.keys(state.account).length === 0;
+  function isEmpty(element): boolean {
+    if (element instanceof Array) {
+      return element.length === 0;
+    } else {
+      return Object.keys(element).length === 0;
+    }
+  }
+
+  function testInitialState(state) {
+    expect(state).toMatchObject({
+      loading: false,
+      isAuthenticated: false,
+      errorMessage: null,
+      loginSuccess: false,
+      loginError: false,
+      showModalLogin: false,
+      redirectMessage: null,
+    });
+    expect(isEmpty(state.account));
+  }
+
+  function testMultipleTypes(types, payload, testFunction, error?) {
+    types.forEach(e => {
+      testFunction(reducer(undefined, { type: e, payload, error }));
+    });
   }
 
   describe('Common tests', () => {
     it('should return the initial state', () => {
-      const toTest = authentication(undefined, { type: '' });
-      expect(toTest).toMatchObject({
-        loading: false,
-        isAuthenticated: false,
-        errorMessage: null, // Errors returned from server side
-        loginSuccess: false,
-        loginError: false, // Errors returned from server side
-        showModalLogin: false,
-        redirectMessage: null,
-      });
-      expect(isAccountEmpty(toTest));
+      testInitialState(reducer(undefined, { type: '' }));
     });
   });
 
   describe('Requests', () => {
     it('should detect a request', () => {
-      expect(authentication(undefined, { type: authenticate.pending.type })).toMatchObject({
-        loading: true,
-      });
-      expect(authentication(undefined, { type: getAccount.pending.type })).toMatchObject({
-        loading: true,
-      });
+      testMultipleTypes(
+        [authenticate.pending.type, authenticateStaffAccount.pending.type, getAccount.pending.type, getStaffAccount.pending.type],
+        {},
+        state => {
+          expect(state).toMatchObject({
+            loading: true,
+          });
+        }
+      );
+    });
+  });
+
+  describe('Failure', () => {
+    it('should set a message in errorMessage', () => {
+      testMultipleTypes(
+        [authenticate.rejected.type, authenticateStaffAccount.rejected.type, getAccount.rejected.type, getStaffAccount.rejected.type],
+        'some message',
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: 'some message',
+            loading: false,
+          });
+          expect(isEmpty(state));
+        },
+        {
+          message: 'some message',
+        }
+      );
     });
   });
 
   describe('Success', () => {
     it('should detect a success on login', () => {
-      const toTest = authentication(undefined, { type: authenticate.fulfilled.type });
-      expect(toTest).toMatchObject({
-        loading: false,
-        loginError: false,
-        loginSuccess: true,
-        showModalLogin: false,
+      testMultipleTypes([authenticate.fulfilled.type, authenticateStaffAccount.fulfilled.type], {}, state => {
+        expect(state).toMatchObject({
+          loading: false,
+          loginError: false,
+          loginSuccess: true,
+          showModalLogin: false,
+        });
       });
     });
 
     it('should detect a success on get session and be authenticated', () => {
-      const payload = { data: { activated: true } };
-      const toTest = authentication(undefined, { type: getAccount.fulfilled.type, payload });
-      expect(toTest).toMatchObject({
-        isAuthenticated: true,
-        loading: false,
-        account: payload.data,
+      testMultipleTypes([getAccount.fulfilled.type, getStaffAccount.fulfilled.type], { data: { activated: true } }, state => {
+        expect(state).toMatchObject({
+          isAuthenticated: true,
+          loading: false,
+          account: { activated: true },
+        });
       });
     });
 
     it('should detect a success on get session and not be authenticated', () => {
-      const payload = { data: { activated: false } };
-      const toTest = authentication(undefined, { type: getAccount.fulfilled.type, payload });
-      expect(toTest).toMatchObject({
-        isAuthenticated: false,
-        loading: false,
-        account: payload.data,
+      testMultipleTypes([getAccount.fulfilled.type, getStaffAccount.fulfilled.type], { data: { activated: false } }, state => {
+        expect(state).toMatchObject({
+          isAuthenticated: false,
+          loading: false,
+          account: { activated: false },
+        });
       });
-    });
-  });
-
-  describe('Failure', () => {
-    it('should detect a failure on login', () => {
-      const error = { message: 'Something happened.' };
-      const toTest = authentication(undefined, { type: authenticate.rejected.type, error });
-
-      expect(toTest).toMatchObject({
-        errorMessage: error.message,
-        showModalLogin: true,
-        loginError: true,
-      });
-      expect(isAccountEmpty(toTest));
-    });
-
-    it('should detect a failure', () => {
-      const error = { message: 'Something happened.' };
-      const toTest = authentication(undefined, { type: getAccount.rejected.type, error });
-
-      expect(toTest).toMatchObject({
-        loading: false,
-        isAuthenticated: false,
-        showModalLogin: true,
-        errorMessage: error.message,
-      });
-      expect(isAccountEmpty(toTest));
     });
   });
 
   describe('Other cases', () => {
     it('should properly reset the current state when a logout is requested', () => {
-      const toTest = authentication(undefined, logoutSession());
+      const toTest = reducer(undefined, logoutSession());
       expect(toTest).toMatchObject({
         loading: false,
         isAuthenticated: false,
@@ -122,12 +133,12 @@ describe('Authentication reducer tests', () => {
         errorMessage: null,
         redirectMessage: null,
       });
-      expect(isAccountEmpty(toTest));
+      expect(isEmpty(toTest));
     });
 
     it('should properly define an error message and change the current state to display the login modal', () => {
       const message = 'redirect me please';
-      const toTest = authentication(undefined, authError(message));
+      const toTest = reducer(undefined, authError(message));
       expect(toTest).toMatchObject({
         loading: false,
         isAuthenticated: false,
@@ -137,11 +148,11 @@ describe('Authentication reducer tests', () => {
         errorMessage: null,
         redirectMessage: message,
       });
-      expect(isAccountEmpty(toTest));
+      expect(isEmpty(toTest));
     });
 
     it('should clear authentication', () => {
-      const toTest = authentication({ ...initialState, isAuthenticated: true }, clearAuth());
+      const toTest = reducer({ ...initialState, isAuthenticated: true }, clearAuth());
       expect(toTest).toMatchObject({
         loading: false,
         showModalLogin: true,
