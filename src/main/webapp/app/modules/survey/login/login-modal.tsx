@@ -8,9 +8,13 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 
 import axios from 'axios';
+import { useAppDispatch } from 'app/config/store';
+import { loginStaff } from 'app/shared/reducers/authentication';
 
-const LoginModal = () => {
+const SurveyLoginModal = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const [step, setStep] = React.useState(0);
 
   const formik = useFormik({
@@ -26,21 +30,18 @@ const LoginModal = () => {
         .matches(/^01[0-9]{9,10}$/, 'Please enter a valid mobile number (ex: 01x-xxxx-xxxx)'),
       otp: step === 1 ? yup.number().required('Required') : yup.number(),
     }),
-    onSubmit(values) {
+    onSubmit({ phone, otp }, { setFieldError, setSubmitting, setValues }) {
       if (step === 0) {
-        submitIssueOTP(values.phone);
+        submitIssueOTP(phone);
       } else {
-        submitVerifyOTP({
-          phone: values.phone,
-          otp: values.otp,
-        });
+        dispatch(loginStaff(phone, otp));
       }
     },
   });
 
   const submitIssueOTP = (phone: string) => {
     axios
-      .post('/api/staff/issue-otp', phone, {
+      .post('/api/otp/staff', phone, {
         headers: {
           'Content-Type': 'text/plain',
         },
@@ -54,14 +55,6 @@ const LoginModal = () => {
         formik.setFieldError('phone', 'Failed to issue OTP (Please check your mobile number)');
         setStep(0);
       });
-  };
-
-  const submitVerifyOTP = data => {
-    axios.post('/api/staff/authenticate', data).then(response => {
-      if (response.status === 200) {
-        handleClose();
-      }
-    });
   };
 
   const handleClose = () => {
@@ -149,4 +142,4 @@ const LoginModal = () => {
   );
 };
 
-export default LoginModal;
+export default SurveyLoginModal;

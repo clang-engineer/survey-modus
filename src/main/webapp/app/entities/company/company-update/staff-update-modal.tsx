@@ -84,7 +84,7 @@ const CompanyStaffDynamicInputModal = React.forwardRef((props: { formik: any }, 
         .string()
         .required('Phone is required')
         // .matches(/^\d{3}-?\d{3,4}-?\d{4}$/, 'Invalid phone number')
-        .matches(/^\d{3}-\d{3,4}-\d{4}$/, 'Invalid phone number (ex: 010-1234-5678)')
+        // .matches(/^\d{3}-\d{3,4}-\d{4}$/, 'Invalid phone number (ex: 010-1234-5678)')
         .max(13, 'Phone number must be at most 13 characters')
         .test('unique', 'Phone already exists', value => {
           return checkUnique('phone', value);

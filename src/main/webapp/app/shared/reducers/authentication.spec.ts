@@ -14,8 +14,10 @@ import reducer, {
   getAccount,
   getSession,
   getStaffAccount,
+  getStaffSession,
   initialState,
   login,
+  loginStaff,
   logout,
   logoutSession,
 } from 'app/shared/reducers/authentication';
@@ -196,6 +198,28 @@ describe('Authentication reducer tests', () => {
       expect(store.getActions()).toMatchObject(expectedActions);
     });
 
+    it('dispatches GET_STAFF_SESSION_PENDING and GET_STAFF_SESSION_FULFILLED actions', async () => {
+      const expectedActions = [
+        {
+          type: getStaffAccount.pending.type,
+        },
+        {
+          type: getStaffAccount.fulfilled.type,
+          payload: resolvedObject,
+        },
+        {
+          type: setLocale.pending.type,
+        },
+        updateLocale('en'),
+        {
+          type: setLocale.fulfilled.type,
+          payload: 'en',
+        },
+      ];
+      await store.dispatch(getStaffSession());
+      expect(store.getActions()).toMatchObject(expectedActions);
+    });
+
     it('dispatches LOGOUT actions', async () => {
       const expectedActions = [logoutSession()];
       await store.dispatch(logout());
@@ -228,7 +252,29 @@ describe('Authentication reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
+
+    it('dispatches LOGIN_STAFF, GET_STAFF_SESSION and SET_LOCALE success and request actions', async () => {
+      const loginResponse = { headers: { authorization: 'auth' } };
+      axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
+      const expectedActions = [
+        {
+          type: authenticateStaffAccount.pending.type,
+        },
+        {
+          type: authenticateStaffAccount.fulfilled.type,
+          payload: loginResponse,
+        },
+        {
+          type: getStaffAccount.pending.type,
+        },
+      ];
+      await store.dispatch(loginStaff('test', 'test'));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
   });
+
   describe('clearAuthToken', () => {
     let store;
     beforeEach(() => {

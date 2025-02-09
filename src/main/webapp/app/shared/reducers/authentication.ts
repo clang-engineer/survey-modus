@@ -27,8 +27,17 @@ export type AuthenticationState = Readonly<typeof initialState>;
 
 export const getSession = (): AppThunk => async (dispatch, getState) => {
   await dispatch(getAccount());
-
   const { account } = getState().authentication;
+  await setAccountLocale(account, dispatch);
+};
+
+export const getStaffSession = (): AppThunk => async (dispatch, getState) => {
+  await dispatch(getStaffAccount());
+  const { account } = getState().authentication;
+  await setAccountLocale(account, dispatch);
+};
+
+const setAccountLocale = async (account, dispatch) => {
   if (account && account.langKey) {
     const langKey = Storage.session.get('locale', account.langKey);
     await dispatch(setLocale(langKey));
@@ -39,7 +48,7 @@ export const getAccount = createAsyncThunk('authentication/get_account', async (
   serializeError: serializeAxiosError,
 });
 
-export const getStaffAccount = createAsyncThunk('authentication/get_staff_account', async () => axios.get<any>('api/account/staff'), {
+export const getStaffAccount = createAsyncThunk('authentication/get_staff_account', async () => axios.get<any>('api/staff-info'), {
   serializeError: serializeAxiosError,
 });
 
@@ -57,17 +66,10 @@ export const authenticate = createAsyncThunk(
   }
 );
 
-interface IStaffAuthParams {
-  phone: string;
-  otp: string;
-}
-
 export const authenticateStaffAccount = createAsyncThunk(
   'authentication/loginStaff',
-  async (auth: IStaffAuthParams) => axios.post<any>('api/authenticate/staff', auth),
-  {
-    serializeError: serializeAxiosError,
-  }
+  async (auth: { phone: string; otp: string }) => axios.post<any>('api/authenticate/staff', auth),
+  { serializeError: serializeAxiosError }
 );
 
 export const login: (username: string, password: string, rememberMe?: boolean) => AppThunk =
@@ -86,6 +88,17 @@ export const login: (username: string, password: string, rememberMe?: boolean) =
     }
     dispatch(getSession());
   };
+
+export const loginStaff: (phone: string, otp: string) => AppThunk = (phone, otp) => async dispatch => {
+  const result = await dispatch(authenticateStaffAccount({ phone, otp }));
+  const response = result.payload as AxiosResponse;
+  const bearerToken = response?.headers?.authorization;
+  if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
+    const jwt = bearerToken.slice(7, bearerToken.length);
+    Storage.local.set(AUTH_TOKEN_KEY, jwt);
+  }
+  dispatch(getStaffSession());
+};
 
 export const clearAuthToken = () => {
   if (Storage.local.get(AUTH_TOKEN_KEY)) {
