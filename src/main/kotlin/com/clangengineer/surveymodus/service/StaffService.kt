@@ -1,9 +1,9 @@
 package com.clangengineer.surveymodus.service
 
-import com.clangengineer.surveymodus.domain.embeddable.Staff
+import com.clangengineer.surveymodus.security.STAFF
 import com.clangengineer.surveymodus.security.getCurrentUserLogin
+import com.clangengineer.surveymodus.service.dto.StaffDTO
 import org.slf4j.LoggerFactory
-import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,7 +26,7 @@ class StaffService(
         return count != null && count > 0
     }
 
-    fun getStaffSession(): Staff {
+    fun getStaffSession(): StaffDTO {
         log.debug("REST request to get staff info")
 
         val phone = getCurrentUserLogin().orElseThrow { RuntimeException("User could not be found") }
@@ -39,15 +39,17 @@ class StaffService(
 
         val params = mapOf("phone" to phone)
 
-        return jdbcTemplate.query( sql, params
+        return jdbcTemplate.query(
+            sql, params
         ) { rs, _ ->
-            Staff(
+            StaffDTO(
                 firstName = rs.getString("first_name"),
                 lastName = rs.getString("last_name"),
                 email = rs.getString("email"),
                 activated = rs.getBoolean("activated"),
                 langKey = rs.getString("lang_key"),
-                phone = rs.getString("phone")
+                phone = rs.getString("phone"),
+                authorities = mutableSetOf(STAFF)
             )
         }.firstOrNull() ?: throw RuntimeException("No staff found for phone: $phone")
     }

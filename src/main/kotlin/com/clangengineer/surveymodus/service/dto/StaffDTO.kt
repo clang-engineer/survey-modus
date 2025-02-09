@@ -7,4 +7,5 @@ data class StaffDTO(
     var activated: Boolean? = null,
     var langKey: String? = null,
     var phone: String? = null,
+    var authorities: MutableSet<String> = mutableSetOf()
 )
