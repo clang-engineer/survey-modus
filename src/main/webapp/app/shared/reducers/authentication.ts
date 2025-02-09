@@ -28,16 +28,6 @@ export type AuthenticationState = Readonly<typeof initialState>;
 export const getSession = (): AppThunk => async (dispatch, getState) => {
   await dispatch(getAccount());
   const { account } = getState().authentication;
-  await setAccountLocale(account, dispatch);
-};
-
-export const getStaffSession = (): AppThunk => async (dispatch, getState) => {
-  await dispatch(getStaffAccount());
-  const { account } = getState().authentication;
-  await setAccountLocale(account, dispatch);
-};
-
-const setAccountLocale = async (account, dispatch) => {
   if (account && account.langKey) {
     const langKey = Storage.session.get('locale', account.langKey);
     await dispatch(setLocale(langKey));
@@ -97,7 +87,7 @@ export const loginStaff: (phone: string, otp: string) => AppThunk = (phone, otp)
     const jwt = bearerToken.slice(7, bearerToken.length);
     Storage.local.set(AUTH_TOKEN_KEY, jwt);
   }
-  dispatch(getStaffSession());
+  dispatch(getSession());
 };
 
 export const clearAuthToken = () => {

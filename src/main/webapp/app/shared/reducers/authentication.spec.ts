@@ -14,7 +14,6 @@ import reducer, {
   getAccount,
   getSession,
   getStaffAccount,
-  getStaffSession,
   initialState,
   login,
   loginStaff,
@@ -195,28 +194,6 @@ describe('Authentication reducer tests', () => {
         },
       ];
       await store.dispatch(getSession());
-      expect(store.getActions()).toMatchObject(expectedActions);
-    });
-
-    it('dispatches GET_STAFF_SESSION_PENDING and GET_STAFF_SESSION_FULFILLED actions', async () => {
-      const expectedActions = [
-        {
-          type: getStaffAccount.pending.type,
-        },
-        {
-          type: getStaffAccount.fulfilled.type,
-          payload: resolvedObject,
-        },
-        {
-          type: setLocale.pending.type,
-        },
-        updateLocale('en'),
-        {
-          type: setLocale.fulfilled.type,
-          payload: 'en',
-        },
-      ];
-      await store.dispatch(getStaffSession());
       expect(store.getActions()).toMatchObject(expectedActions);
     });
 

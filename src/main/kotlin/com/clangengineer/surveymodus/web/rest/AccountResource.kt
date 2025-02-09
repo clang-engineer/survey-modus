@@ -3,6 +3,7 @@ package com.clangengineer.surveymodus.web.rest
 import com.clangengineer.surveymodus.repository.UserRepository
 import com.clangengineer.surveymodus.security.getCurrentUserLogin
 import com.clangengineer.surveymodus.service.MailService
+import com.clangengineer.surveymodus.service.StaffService
 import com.clangengineer.surveymodus.service.UserService
 import com.clangengineer.surveymodus.service.dto.AdminUserDTO
 import com.clangengineer.surveymodus.service.dto.PasswordChangeDTO
@@ -25,7 +26,8 @@ import javax.validation.Valid
 class AccountResource(
     private val userRepository: UserRepository,
     private val userService: UserService,
-    private val mailService: MailService
+    private val mailService: MailService,
+    private val staffService: StaffService
 ) {
 
     internal class AccountResourceException(message: String) : RuntimeException(message)
@@ -83,10 +85,23 @@ class AccountResource(
      * @throws RuntimeException `500 (Internal Server Error)` if the user couldn't be returned.
      */
     @GetMapping("/account")
-    fun getAccount(): AdminUserDTO =
-        userService.getUserWithAuthorities()
+    fun getAccount(): Any {
+        val user = userService.getUserWithAuthorities()
             .map { AdminUserDTO(it) }
-            .orElseThrow { AccountResourceException("User could not be found") }
+            .orElse(null)
+
+        if (user != null) {
+            return user
+        }
+
+        val staff = staffService.getStaffSession()
+
+        if (staff != null) {
+            return staff
+        }
+
+        throw AccountResourceException("User could not be found")
+    }
 
     /**
      * POST  /account : update the current user information.

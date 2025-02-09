@@ -22,10 +22,10 @@ const SurveyRouter = () => {
   const companies = useAppSelector(state => state.company.entities);
 
   useEffect(() => {
-    if (companies.length === 0 && user.id) {
+    if (companies.length === 0 && user) {
       dispatch(fetchAuthorizedCompanies());
     }
-  }, [companies, user.id]);
+  }, [companies, user]);
 
   useEffect(() => {
     if (companies.length === 1) {
