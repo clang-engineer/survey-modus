@@ -7,7 +7,7 @@ import { IconBrandHipchat } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 import { create } from 'react-modal-promise';
-import ChatDialog from 'app/modules/message/chat-dialog';
+import ChatDialog from 'app/modules/survey/fab/message/chat-dialog';
 
 const ChatBoxFab = () => {
   const theme = useTheme();

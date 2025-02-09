@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import MessageBox from 'app/modules/survey/dialog/survey-chat-dialog/message-box';
 import SlideTransition from 'app/shared/component/slide-transition';
 import PaperComponent from 'app/shared/component/draggable-dialog';
-import { createEntity as createMessage, getEntities as getMessages } from 'app/modules/message/message.reducer';
+import { createEntity as createMessage, getEntities as getMessages } from 'app/modules/survey/fab/message/message.reducer';
 
 const ChatDialog = ({ isOpen, onResolve, onReject }) => {
   const theme = useTheme();
