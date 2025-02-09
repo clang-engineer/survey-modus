@@ -134,14 +134,14 @@ export const AuthenticationSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      // .addCase(getAccount.rejected, (state, action) => ({
-      //   ...state,
-      //   loading: false,
-      //   isAuthenticated: false,
-      //   sessionHasBeenFetched: true,
-      //   showModalLogin: true,
-      //   errorMessage: action.error.message,
-      // }))
+      .addCase(getAccount.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        sessionHasBeenFetched: true,
+        showModalLogin: true,
+        errorMessage: action.error.message,
+      }))
       .addMatcher(isPending(authenticate, authenticateStaffAccount, getAccount), state => {
         return {
           ...state,
@@ -173,15 +173,6 @@ export const AuthenticationSlice = createSlice({
           errorMessage: action.error.message,
           showModalLogin: true,
           loginError: true,
-        };
-      })
-      .addMatcher(isRejected(getAccount), (state, action) => {
-        return {
-          ...initialState,
-          errorMessage: action.error.message,
-          showModalLogin: true,
-          loginError: true,
-          sessionHasBeenFetched: true,
         };
       });
   },
