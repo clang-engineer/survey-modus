@@ -36,7 +36,7 @@ class StaffController(
     fun issueOtp(@RequestBody phone: String): ResponseEntity<Void> {
         log.debug("REST request to issue OTP for Staff : $phone")
 
-        return if (staffService.checkStaffExist(phone)) {
+        return if (staffService.checkActivatedStaffExist(phone)) {
             // todo: issue OTP
             ResponseEntity.ok().build()
         } else {

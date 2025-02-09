@@ -34,13 +34,17 @@ class StaffControllerIT {
         em.persist(company)
         em.flush()
 
-        mockMvc.perform(post("/api/staff/issue-otp").content("1234567890").contentType("application/json")).andExpect(status().isOk)
+        mockMvc.perform(post("/api/staff/issue-otp").content("1234567890")
+            .contentType("text/plain"))
+            .andExpect(status().isOk)
     }
 
     @Test
     @Transactional
     fun `test not exists staff issue otp`() {
-        mockMvc.perform(post("/api/staff/issue-otp").content("1234567890").contentType("application/json")).andExpect(status().isBadRequest)
+        mockMvc.perform(post("/api/staff/issue-otp").content("1234567890")
+            .contentType("text/plain"))
+            .andExpect(status().isBadRequest)
     }
 
     @Test

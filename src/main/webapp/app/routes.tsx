@@ -16,8 +16,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
-import Login3 from 'app/berry/views/pages/authentication/authentication3/Login3';
-import SurveyLogin from 'app/modules/survey/survey-login';
+import SurveyLogin from 'app/modules/survey/login';
 
 const loading = <div>loading ...</div>;
 
