@@ -4,6 +4,7 @@ import { Translate } from 'react-jhipster';
 import { NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAppSelector } from 'app/config/store';
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
@@ -32,13 +33,19 @@ export const Home = () => (
   </NavItem>
 );
 
-export const Survey = () => (
-  <NavItem>
-    <NavLink tag={Link} to="/survey" className="d-flex align-items-center">
-      <FontAwesomeIcon icon="home" />
-      <span>
-        <Translate contentKey="global.menu.survey">Survey</Translate>
-      </span>
-    </NavLink>
-  </NavItem>
-);
+export const Survey = () => {
+  const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
+
+  const linkTo = isAuthenticated ? '/survey' : '/survey/login';
+
+  return (
+    <NavItem>
+      <NavLink tag={Link} to={linkTo} className="d-flex align-items-center">
+        <FontAwesomeIcon icon="home" />
+        <span>
+          <Translate contentKey="global.menu.survey">Survey</Translate>
+        </span>
+      </NavLink>
+    </NavItem>
+  );
+};
