@@ -17,6 +17,7 @@ import { sendActivity } from 'app/config/websocket-middleware';
 import MainLayout from 'app/berry/layout/MainLayout';
 import JhLayout from 'app/shared/layout/jh-layout';
 import Login3 from 'app/berry/views/pages/authentication/authentication3/Login3';
+import SurveyLogin from 'app/modules/survey/survey-login';
 
 const loading = <div>loading ...</div>;
 
@@ -57,6 +58,7 @@ const AppRoutes = () => {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="logout" element={<Logout />} />
+          <Route path="survey/login" element={<SurveyLogin />} />
         </Route>
 
         {/* account routes */}
@@ -125,7 +127,6 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         />
-        <Route path="survey/login" element={<Login3 />} />
         <Route path="*" element={<PageNotFound />} />
       </ErrorBoundaryRoutes>
     </div>

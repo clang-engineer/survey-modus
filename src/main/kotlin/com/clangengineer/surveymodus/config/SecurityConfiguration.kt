@@ -70,6 +70,8 @@ class SecurityConfiguration(
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(ADMIN)
             .antMatchers("/api/two-factor-authentications/**").permitAll()
+            .antMatchers("/api/staff/issue-otp").permitAll()
+            .antMatchers("/api/staff/authenticate").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/**").authenticated()
             .antMatchers("/management/health").permitAll()
