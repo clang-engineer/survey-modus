@@ -1,11 +1,25 @@
 package com.clangengineer.surveymodus.service.dto
 
-data class StaffDTO(
-    var firstName: String? = null,
-    var lastName: String? = null,
-    var email: String? = null,
-    var activated: Boolean? = null,
-    var langKey: String? = null,
+class StaffDTO(
+    firstName: String? = null,
+    lastName: String? = null,
+    email: String? = null,
+    activated: Boolean? = null,
+    langKey: String? = null,
     var phone: String? = null,
-    var authorities: MutableSet<String> = mutableSetOf()
+    authorities: MutableSet<String> = mutableSetOf()
+) : AdminUserDTO(
+    login = null,
+    id = null,
+    firstName = firstName,
+    lastName = lastName,
+    email = email,
+    imageUrl = null,
+    activated = activated,
+    langKey = langKey,
+    createdBy = null,
+    createdDate = null,
+    lastModifiedBy = null,
+    lastModifiedDate = null,
+    authorities = authorities
 )

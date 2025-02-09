@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.Optional
 
 @Service
 @Transactional
@@ -26,7 +27,7 @@ class StaffService(
         return count != null && count > 0
     }
 
-    fun getStaffSession(): StaffDTO {
+    fun getStaffSession(): Optional<StaffDTO> {
         log.debug("REST request to get staff info")
 
         val phone = getCurrentUserLogin().orElseThrow { RuntimeException("User could not be found") }
@@ -39,7 +40,7 @@ class StaffService(
 
         val params = mapOf("phone" to phone)
 
-        return jdbcTemplate.query(
+        val result = jdbcTemplate.query(
             sql, params
         ) { rs, _ ->
             StaffDTO(
@@ -51,6 +52,8 @@ class StaffService(
                 phone = rs.getString("phone"),
                 authorities = mutableSetOf(STAFF)
             )
-        }.firstOrNull() ?: throw RuntimeException("No staff found for phone: $phone")
+        }.firstOrNull()
+
+        return Optional.ofNullable(result)
     }
 }
