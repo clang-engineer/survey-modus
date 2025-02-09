@@ -4,6 +4,7 @@ import com.clangengineer.surveymodus.IntegrationTest
 import com.clangengineer.surveymodus.domain.User
 import com.clangengineer.surveymodus.repository.UserRepository
 import com.clangengineer.surveymodus.web.rest.vm.LoginVM
+import com.clangengineer.surveymodus.web.rest.vm.StaffLoginVM
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -99,5 +100,20 @@ class UserJWTControllerIT {
             .andExpect(status().isUnauthorized)
             .andExpect(jsonPath("\$.id_token").doesNotExist())
             .andExpect(header().doesNotExist("Authorization"))
+    }
+
+    @Test
+    @Transactional
+    fun `test authenticate`() {
+        val login = StaffLoginVM(phone = "1234567890", otp = "123456")
+        mockMvc.perform(
+            post("/api/authenticate/staff")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(login))
+        ).andExpect(status().isOk)
+            .andExpect(jsonPath("\$.id_token").isString)
+            .andExpect(jsonPath("\$.id_token").isNotEmpty)
+            .andExpect(header().string("Authorization", not(nullValue())))
+            .andExpect(header().string("Authorization", not(`is`(emptyString()))))
     }
 }
