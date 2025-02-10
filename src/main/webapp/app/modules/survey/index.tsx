@@ -11,11 +11,10 @@ import JhLayout from 'app/shared/layout/jh-layout';
 
 const GateRoutes = () => (
   <ErrorBoundaryRoutes>
-    <Route element={<MinimalLayout />}>
-      <Route index element={<SurveyEntrance />} />
-    </Route>
+    <Route element={<MinimalLayout />}></Route>
     {/*<Route element={<MainLayout />}>*/}
     <Route element={<JhLayout />}>
+      <Route index element={<SurveyEntrance />} />
       <Route path="companies/:companyId/forms/:formId" element={<FormGate />} />
     </Route>
   </ErrorBoundaryRoutes>
