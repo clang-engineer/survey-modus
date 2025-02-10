@@ -89,7 +89,7 @@ class AccountResource(
         return userService.getUserWithAuthorities()
             .map { AdminUserDTO(it) }
             .orElseGet {
-                staffService.getStaffSession() ?: throw AccountResourceException("User could not be found")
+                staffService.getStaffSession().orElseThrow { AccountResourceException("User could not be found") }
             }
     }
 
