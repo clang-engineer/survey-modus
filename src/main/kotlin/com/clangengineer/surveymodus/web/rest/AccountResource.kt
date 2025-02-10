@@ -86,11 +86,13 @@ class AccountResource(
      */
     @GetMapping("/account")
     fun getAccount(): AdminUserDTO {
-        return userService.getUserWithAuthorities()
-            .map { AdminUserDTO(it) }
-            .orElseGet {
-                staffService.getStaffSession().orElseThrow { AccountResourceException("User could not be found") }
-            }
+        val user = userService.getUserWithAuthorities()
+        return if (user.isPresent) {
+            AdminUserDTO(user.get())
+        } else {
+            val staffSession = staffService.getStaffSession()
+            staffSession.orElseThrow { AccountResourceException("User could not be found") }
+        }
     }
 
     /**
