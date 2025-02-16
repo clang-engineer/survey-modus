@@ -5,8 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FormikProps } from 'formik';
 import { IForm } from 'app/shared/model/form.model';
 import { useAppSelector } from 'app/config/store';
-
-import { IconMessages } from '@tabler/icons';
 import { ISurvey } from 'app/shared/model/survey.model';
 
 interface IDialogAppBarProps {
@@ -14,7 +12,6 @@ interface IDialogAppBarProps {
   survey: ISurvey;
   formik: FormikProps<Record<string, any>>;
   onResolve: () => void;
-  onClickMessagesButton: () => void;
 }
 
 const DialogAppBar = (props: IDialogAppBarProps) => {
@@ -22,10 +19,6 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
 
   const loading = useAppSelector(state => state.survey.loading);
   const updating = useAppSelector(state => state.survey.updating);
-
-  const onClickMessagesButton = () => {
-    props.onClickMessagesButton();
-  };
 
   return (
     <AppBar sx={{ position: 'relative' }}>
@@ -46,17 +39,6 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
             {form.title} : {survey?.id}
           </Typography>
           &nbsp;&nbsp;
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={() => {
-              onClickMessagesButton();
-            }}
-            disabled={loading || updating}
-          >
-            {' '}
-            <IconMessages />
-          </IconButton>
         </Box>
         <Button
           color="inherit"
