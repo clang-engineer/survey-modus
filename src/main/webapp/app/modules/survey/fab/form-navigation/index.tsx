@@ -13,6 +13,8 @@ import { styled } from '@mui/material/styles';
 import { IconListDetails, IconLocation, IconScript } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
+import { useTheme } from '@mui/material/styles';
+
 const StyledFab = styled(Fab)({
   borderRadius: 0,
   borderTopLeftRadius: '50%',
@@ -49,6 +51,7 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
 
 const SurveyDialog = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const { drawerType, container, layout, surveyInfo } = useConfig();
 
   const [open, setOpen] = React.useState(false);
@@ -86,7 +89,12 @@ const SurveyDialog = () => {
                 key={form.id}
                 icon={<IconListDetails />}
                 tooltipTitle={
-                  <Box sx={{ color: 'white' }}>
+                  <Box
+                    sx={{
+                      color: form.activated ? 'white' : theme.palette.text.disabled,
+                      textDecoration: form.activated ? 'none' : 'line-through',
+                    }}
+                  >
                     <Typography variant="h4" color="inherit">
                       {form.title}
                     </Typography>
