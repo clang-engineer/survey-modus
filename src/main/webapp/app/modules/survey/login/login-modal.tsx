@@ -12,6 +12,8 @@ import { useAppDispatch } from 'app/config/store';
 import { loginStaff } from 'app/shared/reducers/authentication';
 import TokenExpireTimer from 'app/modules/survey/login/token-expire-timer';
 
+import { toast } from 'react-toastify';
+
 const SurveyLoginModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -55,6 +57,7 @@ const SurveyLoginModal = () => {
           if (tokenExpireTimerRef.current) {
             tokenExpireTimerRef.current.resetTimer();
           }
+          toast.success('OTP has been issued');
         }
       })
       .catch(error => {
@@ -133,7 +136,12 @@ const SurveyLoginModal = () => {
       <Title />
       <DialogContent className="pb-0">
         <DialogForm />
-        <TokenExpireTimer ref={tokenExpireTimerRef} />
+        <TokenExpireTimer
+          ref={tokenExpireTimerRef}
+          reissueOtp={() => {
+            submitIssueOTP(formik.values.phone);
+          }}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClickCancel}>Cancel</Button>

@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
+
+import { IconRefresh } from '@tabler/icons';
 
 const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
@@ -8,7 +10,11 @@ const formatTime = (seconds: number) => {
   return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 };
 
-const TokenExpireTimer = React.forwardRef((props, ref) => {
+interface ITokenExpireTimerProps {
+  reissueOtp: () => void;
+}
+
+const TokenExpireTimer = React.forwardRef((props: ITokenExpireTimerProps, ref) => {
   React.useImperativeHandle(ref, () => ({
     resetTimer() {
       setTimeLeft(180);
@@ -44,8 +50,17 @@ const TokenExpireTimer = React.forwardRef((props, ref) => {
   }
 
   return (
-    <Box display="flex" justifyContent="flex-end">
-      <Typography variant="body2" color="primary">
+    <Box display="flex" justifyContent="flex-end" alignItems="center">
+      <IconButton
+        size="small"
+        onClick={() => {
+          props.reissueOtp();
+          setTimeLeft(180);
+        }}
+      >
+        <IconRefresh size="1rem" />
+      </IconButton>
+      <Typography variant="body2" color="textSecondary">
         {comment}
       </Typography>
     </Box>
