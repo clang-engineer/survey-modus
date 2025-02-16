@@ -7,11 +7,14 @@ import { IForm } from 'app/shared/model/form.model';
 import { useAppSelector } from 'app/config/store';
 import { ISurvey } from 'app/shared/model/survey.model';
 
+import { IconMessage } from '@tabler/icons';
+
 interface IDialogAppBarProps {
   form: IForm;
   survey: ISurvey;
   formik: FormikProps<Record<string, any>>;
   onResolve: () => void;
+  onMemoOpenClick: () => void;
 }
 
 const DialogAppBar = (props: IDialogAppBarProps) => {
@@ -39,6 +42,14 @@ const DialogAppBar = (props: IDialogAppBarProps) => {
             {form.title} : {survey?.id}
           </Typography>
           &nbsp;&nbsp;
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              props.onMemoOpenClick();
+            }}
+          >
+            <IconMessage size={24} />
+          </IconButton>
         </Box>
         <Button
           color="inherit"

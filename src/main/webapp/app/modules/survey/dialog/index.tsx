@@ -10,6 +10,7 @@ import { ICompany } from 'app/shared/model/company.model';
 import SurveyDialogAppBar from 'app/modules/survey/dialog/survey-dialog-app-bar';
 import SurveyDialogContent from 'app/modules/survey/dialog/survey-dialog-content';
 import SlideTransition from 'app/shared/component/slide-transition';
+import SurveyMemo from 'app/modules/survey/dialog/survey-memo';
 
 interface IFieldWizardPreviewModalProps {
   company: ICompany;
@@ -22,6 +23,7 @@ const SurveyModal =
   (props: IFieldWizardPreviewModalProps) =>
   ({ isOpen, onResolve, onReject }) => {
     const dispatch = useAppDispatch();
+    const memoRef = React.useRef(null);
 
     const { company, form, fields, survey } = props;
 
@@ -87,8 +89,15 @@ const SurveyModal =
         TransitionComponent={SlideTransition}
         sx={{ '& .MuiPaper-root': { padding: 0 } }}
       >
-        <SurveyDialogAppBar form={form} formik={formik} survey={survey} onResolve={onResolve} />
+        <SurveyDialogAppBar
+          form={form}
+          formik={formik}
+          survey={survey}
+          onResolve={onResolve}
+          onMemoOpenClick={() => memoRef.current.openDialog()}
+        />
         <SurveyDialogContent fields={fields} formik={formik} />
+        <SurveyMemo ref={memoRef} survey={survey} formik={formik} />
       </Dialog>
     );
   };
