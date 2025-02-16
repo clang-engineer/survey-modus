@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 
@@ -10,10 +10,13 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import { useAppDispatch } from 'app/config/store';
 import { loginStaff } from 'app/shared/reducers/authentication';
+import TokenExpireTimer from 'app/modules/survey/login/token-expire-timer';
 
 const SurveyLoginModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const tokenExpireTimerRef = useRef(null);
 
   const [step, setStep] = React.useState(0);
 
@@ -49,6 +52,9 @@ const SurveyLoginModal = () => {
       .then(response => {
         if (response.status === 200) {
           setStep(1);
+          if (tokenExpireTimerRef.current) {
+            tokenExpireTimerRef.current.resetTimer();
+          }
         }
       })
       .catch(error => {
@@ -125,8 +131,9 @@ const SurveyLoginModal = () => {
   return (
     <Dialog open={true} onClose={handleClose}>
       <Title />
-      <DialogContent>
+      <DialogContent className="pb-0">
         <DialogForm />
+        <TokenExpireTimer ref={tokenExpireTimerRef} />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClickCancel}>Cancel</Button>

@@ -29,10 +29,8 @@ const TokenExpireTimer = React.forwardRef((props, ref) => {
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  const timeoutStatusCommnet = React.useMemo(() => {
+  const comment = React.useMemo(() => {
     switch (timeLeft) {
-      case -1:
-        return 'Token not requested';
       case 0:
         return 'Token has expired';
       case 180:
@@ -41,10 +39,14 @@ const TokenExpireTimer = React.forwardRef((props, ref) => {
     }
   }, [timeLeft]);
 
+  if (timeLeft === -1) {
+    return null;
+  }
+
   return (
     <Box display="flex" justifyContent="flex-end">
       <Typography variant="body2" color="primary">
-        {timeoutStatusCommnet}
+        {comment}
       </Typography>
     </Box>
   );
