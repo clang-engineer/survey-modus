@@ -13,7 +13,7 @@ import { ICompany } from 'app/shared/model/company.model';
 import { toast } from 'react-toastify';
 import { gridSpacing } from 'app/berry/store/constant';
 
-const SurveyRouter = () => {
+const SurveyEntrance = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -108,4 +108,4 @@ const SurveyRouter = () => {
   );
 };
 
-export default SurveyRouter;
+export default SurveyEntrance;

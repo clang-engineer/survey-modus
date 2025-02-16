@@ -85,22 +85,14 @@ class AccountResource(
      * @throws RuntimeException `500 (Internal Server Error)` if the user couldn't be returned.
      */
     @GetMapping("/account")
-    fun getAccount(): Any {
+    fun getAccount(): AdminUserDTO {
         val user = userService.getUserWithAuthorities()
-            .map { AdminUserDTO(it) }
-            .orElse(null)
-
-        if (user != null) {
-            return user
+        return if (user.isPresent) {
+            AdminUserDTO(user.get())
+        } else {
+            val staffSession = staffService.getStaffSession()
+            staffSession.orElseThrow { AccountResourceException("User could not be found") }
         }
-
-        val staff = staffService.getStaffSession()
-
-        if (staff != null) {
-            return staff
-        }
-
-        throw AccountResourceException("User could not be found")
     }
 
     /**

@@ -13,7 +13,6 @@ import reducer, {
   clearAuthToken,
   getAccount,
   getSession,
-  getStaffAccount,
   initialState,
   login,
   loginStaff,
@@ -58,22 +57,18 @@ describe('Authentication reducer tests', () => {
 
   describe('Requests', () => {
     it('should detect a request', () => {
-      testMultipleTypes(
-        [authenticate.pending.type, authenticateStaffAccount.pending.type, getAccount.pending.type, getStaffAccount.pending.type],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            loading: true,
-          });
-        }
-      );
+      testMultipleTypes([authenticate.pending.type, authenticateStaffAccount.pending.type, getAccount.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          loading: true,
+        });
+      });
     });
   });
 
   describe('Failure', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes(
-        [authenticate.rejected.type, authenticateStaffAccount.rejected.type, getAccount.rejected.type, getStaffAccount.rejected.type],
+        [authenticate.rejected.type, authenticateStaffAccount.rejected.type, getAccount.rejected.type],
         'some message',
         state => {
           expect(state).toMatchObject({
@@ -102,7 +97,7 @@ describe('Authentication reducer tests', () => {
     });
 
     it('should detect a success on get session and be authenticated', () => {
-      testMultipleTypes([getAccount.fulfilled.type, getStaffAccount.fulfilled.type], { data: { activated: true } }, state => {
+      testMultipleTypes([getAccount.fulfilled.type], { data: { activated: true } }, state => {
         expect(state).toMatchObject({
           isAuthenticated: true,
           loading: false,
@@ -112,7 +107,7 @@ describe('Authentication reducer tests', () => {
     });
 
     it('should detect a success on get session and not be authenticated', () => {
-      testMultipleTypes([getAccount.fulfilled.type, getStaffAccount.fulfilled.type], { data: { activated: false } }, state => {
+      testMultipleTypes([getAccount.fulfilled.type], { data: { activated: false } }, state => {
         expect(state).toMatchObject({
           isAuthenticated: false,
           loading: false,
@@ -242,7 +237,7 @@ describe('Authentication reducer tests', () => {
           payload: loginResponse,
         },
         {
-          type: getStaffAccount.pending.type,
+          type: getAccount.pending.type,
         },
       ];
       await store.dispatch(loginStaff('test', 'test'));

@@ -38,10 +38,6 @@ export const getAccount = createAsyncThunk('authentication/get_account', async (
   serializeError: serializeAxiosError,
 });
 
-export const getStaffAccount = createAsyncThunk('authentication/get_staff_account', async () => axios.get<any>('api/staff-info'), {
-  serializeError: serializeAxiosError,
-});
-
 interface IAuthParams {
   username: string;
   password: string;
@@ -138,21 +134,21 @@ export const AuthenticationSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      // .addCase(getAccount.rejected, (state, action) => ({
-      //   ...state,
-      //   loading: false,
-      //   isAuthenticated: false,
-      //   sessionHasBeenFetched: true,
-      //   showModalLogin: true,
-      //   errorMessage: action.error.message,
-      // }))
-      .addMatcher(isPending(authenticate, authenticateStaffAccount, getAccount, getStaffAccount), state => {
+      .addCase(getAccount.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        sessionHasBeenFetched: true,
+        showModalLogin: true,
+        errorMessage: action.error.message,
+      }))
+      .addMatcher(isPending(authenticate, authenticateStaffAccount, getAccount), state => {
         return {
           ...state,
           loading: true,
         };
       })
-      .addMatcher(isFulfilled(getAccount, getStaffAccount), (state, action) => {
+      .addMatcher(isFulfilled(getAccount), (state, action) => {
         const isAuthenticated = action.payload && action.payload.data && action.payload.data.activated;
         return {
           ...state,
@@ -171,7 +167,7 @@ export const AuthenticationSlice = createSlice({
           loginSuccess: true,
         };
       })
-      .addMatcher(isRejected(authenticate, authenticateStaffAccount, getAccount, getStaffAccount), (state, action) => {
+      .addMatcher(isRejected(authenticate, authenticateStaffAccount), (state, action) => {
         return {
           ...initialState,
           errorMessage: action.error.message,
