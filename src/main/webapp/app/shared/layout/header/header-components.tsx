@@ -44,6 +44,7 @@ export const Survey = () => {
         <FontAwesomeIcon icon="home" />
         <span>
           <Translate contentKey="global.menu.survey">Survey</Translate>
+          {isAuthenticated ? '' : ' Login'}
         </span>
       </NavLink>
     </NavItem>
