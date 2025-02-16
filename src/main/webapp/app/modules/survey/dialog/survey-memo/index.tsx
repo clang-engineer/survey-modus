@@ -30,8 +30,12 @@ const SurveyMemo = React.forwardRef((props: ISurveyMemoProps, ref) => {
   const [memo, setMemo] = React.useState('');
 
   React.useEffect(() => {
-    setMemo(formik.values.memo);
-  }, [formik.values.memo]);
+    if (open) {
+      setMemo(formik.values.memo);
+    } else {
+      setMemo('');
+    }
+  }, [formik.values.memo, open]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,7 +43,6 @@ const SurveyMemo = React.forwardRef((props: ISurveyMemoProps, ref) => {
 
   const handleClose = () => {
     setOpen(false);
-    setMemo('');
   };
 
   return (
