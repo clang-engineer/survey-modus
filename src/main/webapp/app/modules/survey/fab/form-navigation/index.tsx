@@ -10,10 +10,12 @@ import { Box, Fab, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 
-import { IconListDetails, IconLocation, IconScript } from '@tabler/icons';
+import { IconListDetails, IconLocation, IconScript, IconForbid, IconMistOff } from '@tabler/icons';
 import AnimateButton from 'app/berry/ui-component/extended/AnimateButton';
 
 import { useTheme } from '@mui/material/styles';
+
+import { toast } from 'react-toastify';
 
 const StyledFab = styled(Fab)({
   borderRadius: 0,
@@ -86,8 +88,15 @@ const SurveyDialog = () => {
             .sort((a, b) => b.id - a.id)
             .map(form => (
               <SpeedDialAction
+                sx={{
+                  '.MuiButtonBase-root': {
+                    '&:hover': {
+                      cursor: form.activated ? 'pointer' : 'not-allowed',
+                    },
+                  },
+                }}
                 key={form.id}
-                icon={<IconListDetails />}
+                icon={form.activated ? <IconListDetails /> : <IconMistOff />}
                 tooltipTitle={
                   <Box
                     sx={{
@@ -105,7 +114,11 @@ const SurveyDialog = () => {
                 }
                 tooltipOpen
                 onClick={() => {
-                  onClickForm(form);
+                  if (form.activated) {
+                    onClickForm(form);
+                  } else {
+                    toast.error('This form is not activated');
+                  }
                 }}
               />
             ))}
